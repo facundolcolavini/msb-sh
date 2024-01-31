@@ -1,4 +1,4 @@
-import type { Location, Neighborhood, Option, Value } from "@interfaces/selects.form.interfaces";
+import type { Location, Neighborhood, Option, Value } from "../interfaces/selects.form.interfaces";
 
 // Función para capitalizar la primera letra de cada palabra
 export const capitalize = (str: string): string => {
