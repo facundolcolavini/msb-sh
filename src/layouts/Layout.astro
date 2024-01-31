@@ -1,0 +1,95 @@
+---
+import { ViewTransitions } from "astro:transitions";
+
+import Navbar from "@components/Navbar.astro";
+import "@fontsource/cormorant";
+import Footer from "@layouts/Footer.astro";
+
+const user = {
+  name: "José",
+  lastname: "Perez",
+  email: "jose@example.com",
+  avatar: null,
+};
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="view-transition" content="same-origin" />
+    <title>{title}</title>
+    <ViewTransitions />
+  </head>
+  <body>
+
+    <div id="app" class="relative h-screen">
+      <header class="[grid-area:header]">
+        <Navbar user={user} />
+      </header>
+      <main class="[grid-area:main]">
+        <!-- <ContainerLayout> -->
+        <slot />
+        <!--   </ContainerLayout> -->
+      </main>
+      <footer class="[grid-area:footer]">
+        <Footer />
+      </footer>
+    </div>
+    <style is:global>
+      @font-face {
+        font-family: "Gotham";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 130%; /* 26px */
+        src: url("/fonts/Gotham-Light.otf") format("otf");
+      }
+
+      * {
+        box-sizing: border-box;
+        min-width: 0;
+      }
+
+      body {
+        background-color: #f3f4f6;
+        font-family: "Gotham", sans-serif;
+        min-height: 100vh;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        text-wrap: balance;
+      }
+
+      p {
+        text-wrap: pretty;
+      }
+
+      #app {
+        display: grid;
+        grid-template-areas:
+          "header"
+          "main"
+          "footer";
+        grid-template-rows: auto 1fr auto;
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,210 @@
+---
+type SliderProps = {
+  colsNr?: number;
+  height: number;
+  width: number;
+  classSlide: string;
+};
+
+const {
+  colsNr,
+  height = 90,
+  width = 100,
+  classSlide,
+} = Astro.props as SliderProps;
+---
+
+<div
+  class={`w-full relative  h-[${height}vh] max-w-[${width}vw] flex justify-center items-center ${classSlide}`}
+>
+  <div class="wrapper flex justify-center items-center">
+    {/* Botón Izquierdo */}
+    <button
+      id="left"
+      class="btn btn-left rounded-full bg-gray-100 hover:bg-gray-300 text-black p-2 cursor-pointer"
+      aria-label="Previous slide"
+    >
+      &#10094;
+    </button>
+    <ul class={"carousel"}>
+      <slot />
+    </ul>
+    <button
+      id="right"
+      class="btn btn-right rounded-full bg-gray-100 hover:bg-gray-300 text-black p-2 cursor-pointer"
+      aria-label="Next slide"
+    >
+      &#10095;
+    </button>
+  </div>
+</div>
+
+<style define:vars={{ colsNr }}>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .slider-container {
+    /* Body */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: #dfdfdf;
+    padding: 0 35px;
+  }
+  .wrapper {
+    width: 100%;
+    position: relative;
+  }
+  .wrapper .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    z-index: 3;
+    position: absolute;
+    line-height: 50px;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+  .wrapper .btn-left:first-child {
+    left: 0;
+  }
+  .wrapper .btn-right:last-child {
+    right: 0;
+  }
+  .wrapper .carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% / var(--colsNr)) - 20px);
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: 0;
+  }
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+  .carouse :where(.card, .img) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .carousel.no-transition {
+    scroll-behavior: auto;
+  }
+  .carousel.dragging {
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+  .carousel.dragging .card {
+    cursor: grab;
+    user-select: none;
+  }
+  .carousel .card {
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    list-style: none;
+    border-radius: 8px;
+    display: flex;
+    cursor: pointer;
+
+    flex-direction: column;
+  }
+  .card .img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+  .card .img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Media queries */
+
+  @media screen and (max-width: 1100px) {
+    .slider-container {
+      /* Body */
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      background-color: #dfdfdf;
+      padding: 0 35px;
+    }
+    .wrapper .carousel {
+      display: grid;
+      grid-auto-columns: calc((100% / 2) - 12px);
+    }
+  }
+  @media screen and (max-width: 900px) {
+    .slider-container {
+      /* Body */
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      background-color: #dfdfdf;
+      padding: 0 35px;
+    }
+    .wrapper .carousel {
+      grid-auto-columns: calc((100% / 2) - 9px);
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    .slider-container {
+      /* Body */
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      background-color: #dfdfdf;
+      padding: 0 35px;
+    }
+    .wrapper .carousel {
+      grid-auto-columns: calc((100% / 2) - 9px);
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .slider-container {
+      /* Body */
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      background-color: #dfdfdf;
+      padding: 0 35px;
+    }
+    .wrapper .carousel {
+      grid-auto-columns: 100%;
+    }
+  }
+</style>
+
+<script type="module" define:vars={{ classSlide }}>
+  import { initializeSliders } from "/src/scripts/slider.js";
+  initializeSliders(`.${classSlide}`);
+  document.addEventListener("astro:page-load", (event) => {
+    initializeSliders(`.${classSlide}`);
+  });
+</script>

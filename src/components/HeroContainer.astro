@@ -1,0 +1,22 @@
+---
+interface Props {
+  img: string;
+}
+
+const { img } = Astro.props;
+---
+
+<section class="relative bg-no-repeat z-0 bg-cover  h-[100vh] md:h-[70vh]  w-full max-w-[100vw]">
+    
+    <img
+    class="absolute h-full w-full animate-fadeIn object-cover object-center animate-duration-1000 animate-ease-in-out z-0"
+    src={img}
+    alt="Propiedades cover"
+  />
+  <div
+    class="absolute inset-0 m-auto w-full h-full flex justify-center flex-col items-center bg-black bg-opacity-30"
+  >
+    <slot />
+  </div>
+
+</section>

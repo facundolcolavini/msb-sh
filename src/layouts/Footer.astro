@@ -1,0 +1,118 @@
+---
+import Link from "@components/ui/Link.astro";
+import { Image } from "astro:assets";
+import Icon from "node_modules/astro-icon/components/Icon.astro";
+---
+
+<footer
+  class="bg-secondary-msb text-black shadow-inner flex justify-between items-center"
+>
+  <div class="mx-auto py-20 container">
+    <div class="grid grid-cols lg:grid-cols-2 md:grid-cols-2">
+      <div class="w-full sm:w-auto mb-6 sm:mb-16">
+        <h2
+          class="text-3xl font-bold mb-4 flex justify-center md:justify-start lg:justify-start"
+        >
+          <Link
+            href="/"
+            checkActive={false}
+            class="flex flex-shrink items-center justify-center space-x-3"
+          >
+            <Image
+              width={300}
+              height={82}
+              class="object-contain px-1 aspect-auto flex flex-shrink items-center justify-center"
+              src={"/images/logo.png"}
+              alt="Logo"
+            />
+          </Link>
+        </h2>
+        <div
+          class="flex justify-center md:justify-start lg:justify-start align-middle mb-4"
+        >
+          <a href="#" class="mr-2"><Icon size={24} name="social-facebook" /></a>
+          <a href="#" class="mr-2"><Icon size={24} name="social-instagram" /></a
+          >
+          <a href="#" class="mr-2"><Icon size={24} name="social-youtube" /></a>
+          <a href="#" class="mr-2"><Icon size={24} name="social-whatsapp" /></a>
+        </div>
+        <div
+          class="mb-4 flex align-center justify-center md:justify-start lg:justify-start gap-2"
+        >
+          <Icon size={24} class="self-center" name="mail-green" />
+          <a
+            href="mailto:info@matiasszpira.com.ar"
+            class="self-center text-sm text-center font-semibold"
+            >info@matiasszpira.com.ar</a
+          >
+        </div>
+        <div
+          class="flex align-center justify-center md:justify-start lg:justify-start gap-1"
+        >
+          <Icon size={24} class="self-center" name="mail-green" />
+          <a
+            href="mailto:caba@matiasszpira.com.ar"
+            class="self-center text-sm text-center font-semibold"
+            >caba@matiasszpira.com.ar</a
+          >
+        </div>
+      </div>
+      <div
+        class="grid grid-cols-1 w-100 md:grid-cols-2 xl:grid-cols-4 justify-center w-full gap-5"
+      >
+        <div class="mb-6 sm:mb-0">
+          <h3
+            class="text-sm text-center md:text-start lg:text-start font-semibold mb-4 text-[#4E5A2B]"
+          >
+            QUÉ QUIERO
+          </h3>
+          <ul
+            class="w-100 text-center md:text-start lg:text-start grid gap-y-4"
+          >
+            <li class="mb-1"><a href="#" class="text-sm">Comprar</a></li>
+            <li class="mb-1"><a href="#" class="text-sm">Alquilar</a></li>
+            <li><a href="#" class="text-sm">Alquiler Temporario</a></li>
+          </ul>
+        </div>
+        <div class="mb-6 sm:mb-0">
+          <h3
+            class="text-sm text-center md:text-start lg:text-start font-semibold mb-4 text-[#4E5A2B]"
+          >
+            EMPRENDIMIENTOS
+          </h3>
+          <ul
+            class="w-100 text-center md:text-start lg:text-start grid gap-y-4"
+          >
+            <li class="mb-1"><a href="#" class="text-sm">En Pozo</a></li>
+            <li class="mb-1">
+              <a href="#" class="text-sm">En Construcción</a>
+            </li>
+            <li><a href="#" class="text-sm">Terminado</a></li>
+          </ul>
+        </div>
+        <div class="mb-6 sm:mb-0">
+          <h3 class="text-sm text-center md:text-start lg:text-start font-semibold mb-4 text-nowrap  text-[#4E5A2B]">
+            NUESTROS SERVICIOS
+          </h3>
+          <ul
+            class="w-100 text-center md:text-start lg:text-start grid gap-y-4"
+          >
+            <li class="mb-1"><a href="#" class="text-sm">Tasaciones</a></li>
+            <li><a href="#" class="text-sm">Administración</a></li>
+          </ul>
+        </div>
+        <div >
+          <h3 class="text-sm text-center md:text-start lg:text-start font-semibold mb-4 text-nowrap  text-[#4E5A2B]">
+            SUCURSALES
+          </h3>
+          <ul
+            class="w-100 text-center md:text-start lg:text-start grid gap-y-4"
+          >
+            <li class="mb-1"><a href="#" class="text-sm font-semibold mb-2  text-[#4E5A2B]">NOSOTROS</a></li>
+            <li><a href="#" class="text-sm font-semibold mb-2  text-[#4E5A2B]">CONTACTO</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,31 @@
+---
+import Map from "@components/Map.astro";
+import Layout from "@layouts/Layout.astro";
+import { getDetailsProperties } from "@services/get-details-properties";
+
+
+
+import { getCode } from "@utils/getCode";
+
+export const prerender = false;
+const googleApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY;
+const { prop } = Astro.params;
+const code = getCode(prop as string);
+
+const data = await getDetailsProperties({ codigo_ficha: code ?? "" });
+
+const center = {
+  lat: Number(data.fichas[0]?.in_coo.split(",")[0]),
+  lng: Number(data.fichas[0]?.in_coo.split(",")[1]),
+};
+const dir = data.fichas[0]?.direccion_completa;
+---
+
+<Layout title={"Detalle"} description="detalles">
+  <Map center={center} label={dir} />
+
+</Layout>
+<script async src=`https://maps.googleapis.com/maps/api/js?key=${googleApiKey}&libraries=places&callback=initMap`>
+
+    </script>
+@services/get-details-properties

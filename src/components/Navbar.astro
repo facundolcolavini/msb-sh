@@ -1,0 +1,220 @@
+---
+// Import the navigation data and types
+import { navItems } from "@data/navItems";
+import { Image } from "astro:assets";
+import Icon from "node_modules/astro-icon/components/Icon.astro";
+import NavDropDown from "./preact/NavDropDown";
+import Link from "./ui/Link.astro";
+
+// Combine all navigation items into one array for easier mapping
+---
+
+<!-- Menú de navegación para pantallas grandes --><!-- Navbar para pantallas grandes -->
+<nav class="relative hidden lg:block bg-secondary-msb shadow-lg border-t-8 border-primary-msb">
+  <div class="container mx-auto flex justify-between items-center py-4">
+    <!-- Logo y enlace principal -->
+    <Link href="/" checkActive={false} class="flex items-center space-x-3">
+      <Image width={180} height={70} src={"/images/logo.png"} alt="Logo" />
+    </Link>
+
+    <!-- Menú de navegación para pantallas grandes -->
+    <ul
+      class="flex flex-col font-semibold p-4 lg:p-0 rtl:space-x-reverse lg:flex-row-reverse lg:mt-0 md:border-0 gap-4"
+    >
+      <!-- Elementos del menú aquí -->
+      {
+        navItems.map((item) => (
+          <li class="flex items-center ">
+            <Link class="flex justify-between mt-1 items-start gap-5">
+              {item.dropdown ? (
+                <Link class=" rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb  ">
+                  <NavDropDown client:load >
+                    <span
+                      slot="label"
+                      class="font-primary-font-msb font-semibold text-xs  hover:text-primary-msb uppercase text-gray-600  "
+                    >
+                      {item.label}
+                    </span>
+                    <div slot="childrenDrop">
+                      <div
+                        class={`absolute right-0  mt-2 px-1 lg:top-8 left-0 py-2 w-max rounded-md bg-secondary-msb shadow-lg z-20 animate-fadeIn`}
+                      >
+                        {item.dropdown &&
+                          item.dropdown?.map((item) =>
+                            item.href ? (
+                              <Link
+                                href={item.href ?? ""}
+                                class="block px-3 py-2  font-primary-font-msb text-sm border border-none "
+                              >
+                                <span class="font-primary-font-msb  font-semibold text-xs  hover:text-primary-msb hover:border-b-primary-msb uppercase ">
+                                  {item.label}
+                                </span>
+                              </Link>
+                            ) : (
+                              <span class="block px-3 py-2  font-semibold  text-sm font-primary-font-msb  text-primary-msb  ">
+                                {item.label}
+                              </span>
+                            ),
+                          )}
+                      </div>
+                    </div>
+                  </NavDropDown>
+                  <Icon
+                    slot="after"
+                    class=" ml-2 w-4 h-4"
+                    name="chevron-down"
+                  />
+                </Link>
+              ) : (
+                <Link
+                  href={item.dropdown ? "" : item.href}
+                  class="flex flex-row items-center rounded-none hover:border-b-4 px-0 "
+                >
+                  <span class="font-primary-font-msb font-semibold text-xs hover:text-primary-msb uppercase hover:border-b-primary-msb hover:border-primary-msb hover:transition-all  ">
+                    {item.label}
+                  </span>
+                </Link>
+              )}
+            </Link>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Botón de iniciar sesión -->
+    <Link
+      id="ButtonLogin"
+      class="flex items-center justify-end h-10 px-8 border rounded bg-primary-msb text-tertiary-text-msb hover:bg-primary-bg-hover-msb cursor-pointer font-medium font-primary-font-msb border-text-primary-msb transition"
+    >
+      Iniciar sesión
+    </Link>
+  </div>
+</nav>
+
+<!-- Navbar para pantallas móviles -->
+<nav class="relative lg:hidden bg-secondary-msb shadow-md">
+  <div class="py-5 px-8 flex justify-between items-center">
+    <!-- Logo y enlace principal -->
+    <div>
+      <Link href="/" checkActive={false} class="flex justify-center">
+        <Image
+          width={150}
+          height={20}
+          src={"/images/logo.png"}
+          alt="Logo"
+          class="h-8 text-center items-center"
+        />
+      </Link>
+    </div>
+    <!-- Botón de menú para pantallas pequeñas -->
+    <button
+      type="button"
+      data-collapse-toggle="mobile-menu"
+      class="inline-flex items-center justify-center w-10 h-10 p-2 text-sm rounded-lg hover:bg-primary-bg-hover-msb focus:outline-none focus:ring"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+    >
+      <Icon name="menu" />
+    </button>
+  </div>
+
+  <!-- Menú de navegación móvil para pantallas pequeñas -->
+  <div
+    class="hidden w-full absolute top-13 bg-secondary-msb z-10 shadow-sm animate-dropDown"
+    id="mobile-menu"
+  >
+    <div class="shadow-md rounded-b-lg">
+      <div class="flex justify-start gap-5 items-end px-6 py-3 border-b">
+        <Icon size={40} scale={20} name="userDefault" />
+        <div>
+          <h2 class="text-lg">Usuario</h2>
+          <p class="text-gray-600">usuario@gmail.com</p>
+        </div>
+      </div>
+      <ul class="text-gray-700">
+        {
+          navItems.map((item) => (
+            <li class="flex  items-center justify-between w-100 flex-row  px-6 py-3 border-b ">
+              {item.dropdown ? (
+                <div class="relative flex justify-between place-items-start gap-2  hover:border-primary-msb">
+                  {item.icon && <Icon size={28} scale={1} name={item?.icon} />}
+                  <Link class="flex  justify-start">
+                    <NavDropDown client:load>
+                      <span
+                        slot="label"
+                        class="font-primary-font-msb font-semibold text-xs  text-gray-600 hover:text-primary-msb uppercase "
+                      >
+                        {item.label}
+                      </span>
+                      <div slot="childrenDrop">
+                        <div
+                          class={`relative w-100 right-0  mt-2 px-1 lg:top-8 left-0 py-2 w-max rounded-md bg-secondary-msb  z-20 animate-fadeIn`}
+                        >
+                          {item.dropdown &&
+                            item.dropdown?.map((item) =>
+                              item.href ? (
+                                <Link
+                                  href={item.href ?? ""}
+                                  class="block px-3 py-2  font-primary-font-msb text-sm border border-none "
+                                >
+                                  <span class="font-primary-font-msb  font-semibold text-xs  hover:text-primary-msb hover:border-b-primary-msb uppercase text-gray-600 ">
+                                    {item.label}
+                                  </span>
+                                </Link>
+                              ) : (
+                                <span class="block px-3 py-2  font-semibold   font-primary-font-msb text-xs text-primary-msb uppercase ">
+                                  {item.label}
+                                </span>
+                              ),
+                            )}
+                        </div>
+                      </div>
+                    </NavDropDown>
+
+                    <Icon
+                      slot="after"
+                      class=" ml-2 w-4 h-4 flex self-start items-end"
+                      name="chevron-down"
+                    />
+                  </Link>
+                </div>
+              ) : (
+                <div class="flex justify-between items-center gap-2 ">
+                  {item.icon && <Icon size={28} scale={1} name={item?.icon} />}
+                  <Link
+                    href={item.dropdown ? "" : item.href}
+                    class="text-lg flex flex-row items-center hover:transition-all font-primary-font-msb px-0 "
+                  >
+                    <span class=" font-primary-font-msb font-semibold text-xs hover:text-primary-msb uppercase ">
+                      {item.label}
+                    </span>
+                  </Link>
+                </div>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const toggleButtons = document.querySelectorAll(
+      '[data-collapse-toggle="mobile-menu"]',
+    );
+
+    toggleButtons.forEach((button) => {
+      const targetId = button.getAttribute("data-collapse-toggle");
+      const targetElement = document.getElementById(targetId!);
+
+      button.addEventListener("click", () => {
+        if (targetElement) {
+          targetElement.classList.toggle("hidden");
+          targetElement.classList.toggle("block");
+        }
+      });
+    });
+  });
+</script>
