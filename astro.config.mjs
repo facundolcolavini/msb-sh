@@ -2,7 +2,7 @@ import preact from "@astrojs/preact";
 import tailwind from "@astrojs/tailwind";
 import vercel from '@astrojs/vercel/serverless';
 import icon from "astro-icon";
-import { defineConfig, squooshImageService } from "astro/config";
+import { defineConfig /* , squooshImageService */ } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,7 +17,7 @@ export default defineConfig({
   output: "server",
   adapter: vercel(),
 
-  image: {
+/*   image: {
     service: squooshImageService(),
-  },
+  }, */
 });
