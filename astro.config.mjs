@@ -1,6 +1,6 @@
 import preact from "@astrojs/preact";
 import tailwind from "@astrojs/tailwind";
-import vercel from "@astrojs/vercel/serverless";
+import vercel from '@astrojs/vercel/static';
 import icon from "astro-icon";
 import { defineConfig, squooshImageService } from "astro/config";
 
