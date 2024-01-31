@@ -357,7 +357,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
 
               ) : (
                 <>
-                  {Array.isArray(results?.fichas) && results.fichas.map((result: File,) => (
+                  {Array.isArray(results?.fichas) && results?.fichas?.map((result: File,) => (
                     <CardProperty
                       cardData={result}
                       key={`${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`} // Aquí estás utilizando result.id como clave
