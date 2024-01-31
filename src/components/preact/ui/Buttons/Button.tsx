@@ -1,7 +1,8 @@
-import HeartIcon from '@components/preact/Icons/HeartIcon';
+
 import clsx from 'clsx';
 import type { FunctionComponent, JSX } from 'preact';
 import { twMerge } from 'tailwind-merge';
+import HeartIcon from '../../Icons/HeartIcon';
 
 interface Props extends JSX.HTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'disabled';

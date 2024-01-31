@@ -1,9 +1,10 @@
-import { WhatsAppIcon } from "@components/preact/Icons/WhatsAppIcon copy";
+
 import type { HTMLAttributes } from "astro/types";
 import clsx from "clsx";
 import type { FunctionComponent } from "preact";
 import { twMerge } from "tailwind-merge";
 import { PaperLocationIcon } from '../../Icons/PaperLocationIcon';
+import { WhatsAppIcon } from "../../Icons/WhatsAppIcon copy";
 
 interface Props extends HTMLAttributes<"a"> {
     suc_name: string;

@@ -1,17 +1,17 @@
-import { useSearch } from "@hooks/useSearch"
-import type { APIResponseResultsRecords, File, Result } from "@interfaces/results.records.interfaces"
-import type { ResultLocation, Results } from "@interfaces/selects.form.interfaces"
-import { formatOptions, type OutputOption } from "@utils/formats"
+
 import { useEffect, useState } from "preact/hooks"
 import { filterItems, resetFilter, searchParamsStore } from "src/store/filterStore"
 import { ArrowSortIcon } from "../Icons/ArrowSortIcon"
 import SearchIcon from "../Icons/SearchIcon"
+import SearchDebounce from "../Search/SearchDebounce"
 import CardResultSkeleton from "../Skeletons/CardResultSkeleton"
 import Button from "../ui/Buttons/Button"
 import CardProperty from "../ui/Cards/CardProperty"
-import InputField from "../ui/Inputs/InputField"
 import SelectField from "../ui/Selects/SelectField"
-import SearchDebounce from "../Search/SearchDebounce"
+import type { ResultLocation, Results } from "src/interfaces/selects.form.interfaces"
+import { formatOptions, type OutputOption } from "src/utils/formats"
+import type { APIResponseResultsRecords, File, Result } from "src/interfaces/results.records.interfaces"
+import { useSearch } from "src/hooks/useSearch"
 
 
 
@@ -20,7 +20,7 @@ interface Props {
   locations: ResultLocation
 }
 
-const ResultsPage = ({ selects,locations }: Props) => {
+const ResultsPage = ({ selects, locations }: Props) => {
   const filterStore = filterItems.get();
   const searchPStore = searchParamsStore.get()
 
@@ -225,7 +225,7 @@ const ResultsPage = ({ selects,locations }: Props) => {
           <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filterStore.tipo_propiedad} opts={tipo_propiedad} />
         </div>
         <div className="md:col-1 lg:col-start-4  lg:col-end-13 md:col-start-1 md:col-end-4 flex gap-4  w-full flex-grow ">
-          <SearchDebounce filterOptsLocations={{in_iub}} />
+          <SearchDebounce filterOptsLocations={{ in_iub }} />
           <div className="hidden md:flex lg:hidden gap-4">
             <Button
               variant="primary"

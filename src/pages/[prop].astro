@@ -1,29 +1,27 @@
 ---
-import Map from "@components/Map.astro";
-import Layout from "@layouts/Layout.astro";
-import { getDetailsProperties } from "@services/get-details-properties";
+import MapGoogle from "src/components/MapGoogle.astro";
+import type { Result } from "src/interfaces/results.records.interfaces";
+import Layout from "src/layouts/Layout.astro";
+import { getDetailsProperties } from "src/services/get-details-properties";
+import { getCode } from "src/utils/getCode";
 
-
-
-import { getCode } from "@utils/getCode";
 
 export const prerender = false;
 const googleApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY;
 const { prop } = Astro.params;
 const code = getCode(prop as string);
 
-const data = await getDetailsProperties({ codigo_ficha: code ?? "" });
+const data = await getDetailsProperties({ codigo_ficha: code ?? "" }) as Result;
 
 const center = {
-  lat: Number(data.fichas[0]?.in_coo.split(",")[0]),
-  lng: Number(data.fichas[0]?.in_coo.split(",")[1]),
+  lat:  Number((Array.isArray( data.fichas)  && data.fichas[0]?.in_coo.split(",")[0])) || 0,
+  lng: Number((Array.isArray( data.fichas)  && data.fichas[0]?.in_coo.split(",")[1])) || 0
 };
-const dir = data.fichas[0]?.direccion_completa;
+const dir = Array.isArray( data.fichas)  && data.fichas[0]?.direccion_completa || "No hay dirección";
 ---
 
 <Layout title={"Detalle"} description="detalles">
-  <Map center={center} label={dir} />
-
+  <MapGoogle center={center} label={dir} /> // Provide the correct props to the Map component
 </Layout>
 <script async src=`https://maps.googleapis.com/maps/api/js?key=${googleApiKey}&libraries=places&callback=initMap`>
 

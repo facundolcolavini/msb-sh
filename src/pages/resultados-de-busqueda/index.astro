@@ -1,8 +1,8 @@
 ---
-import ResultsPage from "@components/preact/Results/ResultsPage";
-import type { ResultLocation, Results } from "@interfaces/selects.form.interfaces";
-import Layout from "@layouts/Layout.astro";
-import { getAllSelects, getLocations } from "@services/get-selects-form";
+import ResultsPage from "../../components/preact/Results/ResultsPage";
+import type { ResultLocation, Results } from "../../interfaces/selects.form.interfaces";
+import Layout from "../../layouts/Layout.astro";
+import { getAllSelects, getLocations } from "../../services/get-selects-form";
 /* Fetch selects */
 const selects = (await getAllSelects()) as Results;
 const locations = (await getLocations()) as ResultLocation;

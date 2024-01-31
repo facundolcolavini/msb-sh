@@ -6,8 +6,9 @@ Store que manejara el estado de los filtros de la busqueda en el home y resultad
 
 */
 
-import type { OutputOption } from '@utils/formats';
+
 import { atom, map } from 'nanostores';
+import type { OutputOption } from 'src/utils/formats';
 
 export type Filters = {
   [key: string]: OutputOption

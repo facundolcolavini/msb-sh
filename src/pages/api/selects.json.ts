@@ -1,5 +1,6 @@
-import { fetchData } from "@utils/fetch-data";
+
 import type { APIContext, APIRoute } from "astro";
+import { fetchData } from "src/utils/fetch-data";
 
 export const GET: APIRoute = async ({ url }) => {
     // Extrae los parámetros de consulta de la URL

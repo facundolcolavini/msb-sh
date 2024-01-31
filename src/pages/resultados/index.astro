@@ -1,11 +1,16 @@
 ---
-import ResultsPage from "@components/preact/Results/ResultsPage";
-import type { Result } from "@interfaces/results.records.interfaces";
-import Layout from "@layouts/Layout.astro";
+import ResultsPage from "src/components/preact/Results/ResultsPage";
+import type { ResultLocation, Results } from "src/interfaces/selects.form.interfaces";
+import Layout from "src/layouts/Layout.astro";
+import { getAllSelects, getLocations } from "src/services/get-selects-form";
+
+
+const selects = (await getAllSelects()) as Results;
+const locations = (await getLocations()) as ResultLocation;
 const title= "Resultados de la búsqueda";
 ---
 
 
 <Layout title={title} description="resultados de la busqueda">
-    <ResultsPage  client:visible/>
+    <ResultsPage  client:visible selects={selects}  locations={locations} />
 </Layout>
