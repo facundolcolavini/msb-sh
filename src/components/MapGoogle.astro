@@ -23,22 +23,22 @@ const label2 = label;
     });
 
     const iconSize = new google.maps.Size(45, 40); // Tamaño del icono
-/*     const redIcon = {
-      url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
+    const redIcon = {
+      url: "public/icons/map-ping.svg",
       scaledSize: iconSize,
       labelOrigin: new google.maps.Point(iconSize.width / 2, 0), // Punto de origen de la etiqueta
-    }; */
+    };
     const marker = new google.maps.Marker({
       position: center2,
       map: map,
       
-  /*     icon: redIcon, */
-     /*  label: {
+      icon: redIcon,
+      label: {
         text: label2,
         color: "#000000",
         fontWeight: "bold",
         fontSize: "14px",
-      }, */
+      },
       animation: google.maps.Animation.DROP,
       optimized: true,
     });
