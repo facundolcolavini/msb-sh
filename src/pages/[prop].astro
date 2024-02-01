@@ -21,9 +21,8 @@ const dir = Array.isArray( data.fichas)  && data.fichas[0]?.direccion_completa |
 ---
 
 <Layout title={"Detalle"} description="detalles">
-  <MapGoogle center={center} label={dir} /> // Provide the correct props to the Map component
+  <MapGoogle center={center} label={dir} /> 
 </Layout>
 <script async src=`https://maps.googleapis.com/maps/api/js?key=${googleApiKey}&libraries=places&callback=initMap`>
 
     </script>
-@services/get-details-properties
