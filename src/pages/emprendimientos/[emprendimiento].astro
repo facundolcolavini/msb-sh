@@ -10,7 +10,7 @@ const { emprendimiento } = Astro.params;
 
 
 
-const data = await getEntrepreneurshipById( emprendimiento ?? "") 
+const data = await getEntrepreneurshipById( emprendimiento ?? "")  as Results;
 
 const center = {
   lat:  Number((Array.isArray( data.emprendimiento)  && data.emprendimiento[0]?.ed_coo.split(",")[0])) || 0,

@@ -22,17 +22,18 @@ const label2 = label;
       center: center2,
     });
 
-    const iconSize = new google.maps.Size(45, 40); // Tamaño del icono
-  /*   const redIcon = {
-      url: "/icons/map-ping.svg",
+    const iconSize = new google.maps.Size(45, 60); // Tamaño del icono
+    const redIcon = {
+      // url de mi src/icons/icon
+      url: '/src/icons/map-pin.svg', // Ruta de la imagen
       scaledSize: iconSize,
       labelOrigin: new google.maps.Point(iconSize.width / 2, 0), // Punto de origen de la etiqueta
-    }; */
+    };
     const marker = new google.maps.Marker({
       position: center2,
       map: map,
       
-      /* icon: redIcon, */
+      icon: redIcon,
       label: {
         text: label2,
         color: "#000000",

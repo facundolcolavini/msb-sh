@@ -41,7 +41,7 @@ const BannerSlider: FunctionalComponent<Props> = ({ slides, sliderTime = 5000, c
 
   return (
 
-    <section class="relative bg-no-repeat z-0 bg-cover h-[100vh] md:h-[70vh] w-full max-w-[100vw]   group">
+    <section class="relative bg-no-repeat z-0 bg-cover h-[100vh] md:h-[70vh] w-full max-w-[100vw]  group">
       <div
         className="w-full h-full bg-center bg-cover duration-500 animate-fade absolute top-0 left-0 z-0"
         style={{
