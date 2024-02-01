@@ -5,9 +5,14 @@
     "resolveJsonModule": true,
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    /* alias */
+    
     "baseUrl": ".",
-   
+    /* alias */
+    "paths": {
+      "@/*": ["src/*"],
+      "@scripts/*": ["src/scripts/*"],
+    }
+    
   },
   "include": [
     "src/**/*.d.ts",

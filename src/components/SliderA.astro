@@ -202,14 +202,18 @@ const {
   }
 </style>
 
-<script type="module" define:vars={{ classSlide }}>
-   import("/src/scripts/slider.js").then((module) => {
+<script  define:vars={{ classSlide }}>
+   import("@scripts/slider.js").then((module) => {
     const { initializeSliders } = module;
 
     initializeSliders(`.${classSlide}`);
   document.addEventListener("astro:page-load", (event) => {
     initializeSliders(`.${classSlide}`);
-  });
+  })
+  }).catch((error) => {
+    console.error("Error loading the module", error);
+  }).finally(() => {
+    console.log("Module loaded");
   });
 
 </script>
