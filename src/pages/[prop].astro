@@ -7,9 +7,11 @@ import { getCode } from "src/utils/getCode";
 
 
 export const prerender = false;
+let code = "";
 const googleApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY;
 const { prop } = Astro.params;
-const code = getCode(prop as string);
+ code = getCode(prop as string);
+
 
 const data = await getDetailsProperties({ codigo_ficha: code ?? "" }) as Result;
 
@@ -18,11 +20,12 @@ const center = {
   lng: Number((Array.isArray( data.fichas)  && data.fichas[0]?.in_coo.split(",")[1])) || 0
 };
 const dir = Array.isArray( data.fichas)  && data.fichas[0]?.direccion_completa || "No hay dirección";
+console.log(prop , 'prop')
 ---
 
 <Layout title={"Detalle"} description="detalles">
   <MapGoogle center={center} label={dir} /> 
 </Layout>
-<script async src=`https://maps.googleapis.com/maps/api/js?key=${googleApiKey}&libraries=places&callback=initMap`>
+<script is:inline src=`https://maps.googleapis.com/maps/api/js?key=${googleApiKey}&libraries=places&callback=initMap`>
 
     </script>

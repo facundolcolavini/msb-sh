@@ -238,9 +238,9 @@ const locations = (await getLocations()) as ResultLocation;
         <SliderA colsNr={2} height={10} width={10} classSlide="slider2">
           {
             entrepreneurship.map(
-              ({ ed_nom, ed_pos, img_princ, ed_est }: EntrePreneurShip) => (
+              ({ ed_nom, ed_pos, img_princ, ed_est, ed_idl }: EntrePreneurShip) => (
                 <CardEntrepreneurship
-                  href="/emprendimientos"
+                  href={`/emprendimientos/${ed_idl}`}
                   addStyles={"card"}
                   cardData={{
                     ed_nom,
