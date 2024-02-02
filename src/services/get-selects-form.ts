@@ -1,13 +1,12 @@
 
-
-import type { APIResponseLocations, APIResponseSelects, ResultLocation, Results } from "src/interfaces/selects.form.interfaces";
+import type { APIResponseLocations, APIResponseSelects, ResultLocation, Results } from "@interfaces/selects.form.interfaces";
 import { fetchData } from "../utils/fetch-data";
 
 
 
 export const getAllSelects = async (): Promise<Results> => {
     const endpoint = 'datos.select.buscador';
-    try {
+    try{
         const res = await fetchData(endpoint) as APIResponseSelects;
         return res.resultado;
     } catch (error) {
@@ -18,7 +17,7 @@ export const getAllSelects = async (): Promise<Results> => {
 
 export const getLocations = async (): Promise<ResultLocation> => {
     const endpoint = 'fichas.ubicaciones';
-    try {
+    try{
         const res = await fetchData(endpoint) as APIResponseLocations;
         return res.resultado;
     } catch (error) {

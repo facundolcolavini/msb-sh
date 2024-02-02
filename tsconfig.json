@@ -5,14 +5,21 @@
     "resolveJsonModule": true,
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    
-    "baseUrl": ".",
     /* alias */
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
+      "@" : ["src"],
+      "@pages/*": ["src/pages/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@components/*": ["src/components/*"],
+      "@assets/*": ["src/assets/*"],
+      "@utils/*": ["src/utils/*"],
+      "@data/*": ["src/data/*"],
+      "@interfaces/*": ["src/interfaces/*"],
       "@scripts/*": ["src/scripts/*"],
+      "@services/*": ["src/services/*"],
+      "@hooks/*": ["src/hooks/*"],
     }
-    
   },
   "include": [
     "src/**/*.d.ts",

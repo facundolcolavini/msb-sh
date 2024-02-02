@@ -1,32 +1,32 @@
 ---
- 
-import MapGoogle from "@/components/MapGoogle.astro";
-import type { Result } from "src/interfaces/results.records.interfaces";
-import Layout from "src/layouts/Layout.astro";
-import { getDetailsProperties } from "src/services/get-details-properties";
-import { getCode } from "src/utils/getCode";
 
+import MapGoogle from "@components/MapGoogle.astro";
+import Layout from "@layouts/Layout.astro";
+import { getDetailsProperties } from "@services/get-details-properties";
+
+
+
+import { getCode } from "@utils/getCode";
 
 export const prerender = false;
-let code = "";
 const googleApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY;
 const { prop } = Astro.params;
- code = getCode(prop as string);
+const code = getCode(prop as string);
 
-
-const data = await getDetailsProperties({ codigo_ficha: code ?? "" }) as Result;
+const data = await getDetailsProperties({ codigo_ficha: code ?? "" });
 
 const center = {
-  lat:  Number((Array.isArray( data.fichas)  && data.fichas[0]?.in_coo.split(",")[0])) || 0,
-  lng: Number((Array.isArray( data.fichas)  && data.fichas[0]?.in_coo.split(",")[1])) || 0
+  lat: Number(Array.isArray(data.fichas) &&data.fichas[0]?.in_coo.split(",")[0]) || 0,
+  lng: Number(Array.isArray(data.fichas) &&data.fichas[0]?.in_coo.split(",")[1]) || 0,
 };
-const dir = Array.isArray( data.fichas)  && data.fichas[0]?.direccion_completa || "No hay dirección";
-console.log(prop , 'prop')
+const dir = Array.isArray(data.fichas) && data.fichas[0]?.direccion_completa || 'No disponible';
 ---
 
 <Layout title={"Detalle"} description="detalles">
-  <MapGoogle center={center} label={dir} /> 
+  <MapGoogle center={center} label={dir} />
+
 </Layout>
-<script is:inline src=`https://maps.googleapis.com/maps/api/js?key=${googleApiKey}&libraries=places&callback=initMap`>
+<script async src=`https://maps.googleapis.com/maps/api/js?key=${googleApiKey}&libraries=places&callback=initMap`>
 
     </script>
+@services/get-details-properties

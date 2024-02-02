@@ -1,6 +1,6 @@
 ---
 // Import the navigation data and types
-import { navItems } from "../data/navItems";
+import { navItems } from "@data/navItems";
 import { Image } from "astro:assets";
 import Icon from "node_modules/astro-icon/components/Icon.astro";
 import NavDropDown from "./preact/NavDropDown";
@@ -40,7 +40,7 @@ import Link from "./ui/Link.astro";
                         class={`absolute right-0  mt-2 px-1 lg:top-8 left-0 py-2 w-max rounded-md bg-secondary-msb shadow-lg z-20 animate-fadeIn`}
                       >
                         {item.dropdown &&
-                          item.dropdown?.map((item: any) =>
+                          item.dropdown?.map((item) =>
                             item.href ? (
                               <Link
                                 href={item.href ?? ""}
@@ -151,7 +151,7 @@ import Link from "./ui/Link.astro";
                           class={`relative w-100 right-0  mt-2 px-1 lg:top-8 left-0 py-2 w-max rounded-md bg-secondary-msb  z-20 animate-fadeIn`}
                         >
                           {item.dropdown &&
-                            item.dropdown?.map((item :any) =>
+                            item.dropdown?.map((item) =>
                               item.href ? (
                                 <Link
                                   href={item.href ?? ""}

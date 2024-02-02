@@ -1,4 +1,5 @@
-import type { File } from "../../../interfaces/results.records.interfaces";
+import type { FileFeaturedProperties } from "@interfaces/featured.properties.interfaces";
+import type { File } from "@interfaces/results.records.interfaces";
 import clsx from "clsx";
 import type { CSSProperties } from "preact/compat";
 
@@ -7,23 +8,23 @@ import type { CSSProperties } from "preact/compat";
 
 interface Props {
     cardData: File /* & FileFeaturedProperties; */
-    className?: string;
-    style?: CSSProperties;
+    className?: string; 
+    style ?: CSSProperties;
 }
-const CardResults = ({ cardData, className, style }: Props) => {
+const CardResults = ({cardData,className,style}:Props) => {
 
     return (
         <div style={style} className={clsx(
             "shadow-lg rounded-lg  bottom-0",
             className
-
+        
         )}>
             <img
-                alt={cardData.id}
+                alt={cardData.id} 
                 className="w-full h-48 object-cover"
                 src={cardData?.img_princ}
                 style="aspect-ratio: 16/9; object-fit: cover;"
-
+           
                 width={266}
                 height={192}
             />
@@ -54,7 +55,7 @@ const CardResults = ({ cardData, className, style }: Props) => {
                         <span className="text-xs bg-red-500 text-white px-2 py-1 rounded"
                         >{cardData.operacion}
                         </span>
-                        {/*             {
+            {/*             {
                             (
                                 <AddToCartFavForm item={cardData} client:visible>
                                     Fav

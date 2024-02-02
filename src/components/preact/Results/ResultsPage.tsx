@@ -1,17 +1,18 @@
-
+import { useSearch } from "@hooks/useSearch"
+import type { APIResponseResultsRecords, Datos, File, Result } from "@interfaces/results.records.interfaces"
+import type { ResultLocation, Results } from "@interfaces/selects.form.interfaces"
+import { formatOptions, type OutputOption } from "@utils/formats"
 import { useEffect, useState } from "preact/hooks"
 import { filterItems, resetFilter, searchParamsStore } from "src/store/filterStore"
 import { ArrowSortIcon } from "../Icons/ArrowSortIcon"
 import SearchIcon from "../Icons/SearchIcon"
-import SearchDebounce from "../Search/SearchDebounce"
 import CardResultSkeleton from "../Skeletons/CardResultSkeleton"
 import Button from "../ui/Buttons/Button"
 import CardProperty from "../ui/Cards/CardProperty"
+
+import Pagination from "@components/preact/Pagination"
+import SearchDebounce from "../Search/SearchDebounce"
 import SelectField from "../ui/Selects/SelectField"
-import type { ResultLocation, Results } from "src/interfaces/selects.form.interfaces"
-import { formatOptions, type OutputOption } from "src/utils/formats"
-import type { APIResponseResultsRecords, File, Result } from "src/interfaces/results.records.interfaces"
-import { useSearch } from "src/hooks/useSearch"
 
 
 
@@ -55,24 +56,23 @@ const ResultsPage = ({ selects, locations }: Props) => {
   valor_maximo = formatOptions(selects.valor.hasta);
 
   const defaultOptions = {
-    tipo_operacion: { value: "V", label: 'Venta' },
+    tipo_operacion: { value: "All", label: 'Venta' },
     tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
     Ambientes: { value: 'All', label: 'Cantidad de Ambientes' },
     calles: { value: 'All', label: 'Calle' },
     sellocalidades: { value: 'All', label: 'Localidad' },
     barrios1: { value: 'All', label: 'Barrio' },
     moneda: { value: 'D', label: 'U$D' },
-    valor_minimo: { value: 'All', label: 'Desde' },
-    valor_maximo: { value: 'All', label: 'Hasta' },
+    valor_minimo: { value: '', label: 'Desde' },
+    valor_maximo: { value: '', label: 'Hasta' },
     rppagina: { value: '15', label: '15' },
     in_iub: { value: '', label: '' }
   }
 
-  const [initialLoad, setInitialLoad] = useState(true);
   const [results, setResults] = useState<Result | null>()
+  const [resetPagination, setResetPagination] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [isActive, setIsActive] = useState(defaultOptions?.tipo_operacion?.value)
-  /*   const [filterParams, setFilterParams] = useState<string>(updatedSearchParams) */
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [monedaSeleccionada, setMonedaSeleccionada] = useState<OutputOption>(defaultOptions?.moneda);
 
   const { handleSelect, resetSelect, handleCheckboxChange, filtersSelected } = useSearch({
@@ -95,24 +95,26 @@ const ResultsPage = ({ selects, locations }: Props) => {
 
   useEffect(() => {
     fetchResults()
+    setResetPagination(false)
+    setIsSubmitting(false)
   }, [])
 
   const fetchResults = async () => {
     try {
       setIsLoading(true);
+
       const response = await fetch(`/api/results.json?${searchParamsStore.get()}`);
       const data: APIResponseResultsRecords = await response.json();
 
       if (data.resultado.fichas?.hasOwnProperty("error")) {
         setResults(null);
         setIsLoading(false);
+        setIsSubmitting(false);
       } else if (response.ok) {
         setIsLoading(false);
-        // Actualizar la URL con los parámetros de búsqueda
         setResults(data.resultado);
-        const currentUrl = window.location.pathname;
-        const newUrl = `${currentUrl}?${searchParamsStore.get()}`;
-        window.history.pushState({}, '', newUrl);
+        setIsSubmitting(false);
+
       }
     } catch (error) {
       console.log(error);
@@ -123,8 +125,6 @@ const ResultsPage = ({ selects, locations }: Props) => {
     // Al darle click lo ordena de menor a mayor si se da otro click lo ordena de mayor a menor y asi sucesivamente
     if (Array.isArray(results?.fichas)) {
       // Asegurar que sean numeros y evitar NaN en el ordenamiento para eso debemos sacarle a la prop precio el signo $ o U$S y el . y convertirlo a numero
-
-
       results?.fichas.map((result) => {
         const precio = result.precio.replace(/[$.]/g, '')
         return {
@@ -154,23 +154,26 @@ const ResultsPage = ({ selects, locations }: Props) => {
   const resetAndFetch = async (e: Event) => {
     e.preventDefault();
     e.stopPropagation();
-
     // Establecer los filtros en los valores predeterminados
     resetSelect(defaultOptions);
-    setIsActive("V");
     setMonedaSeleccionada(defaultOptions.moneda);
-
+    setResetPagination(true)
     // Reinicia el estado de los filtros y realiza el fetch con los filtros predeterminados
     resetFilter(defaultOptions);
-    fetchResults();
+    await fetchResults();
+    setResetPagination(false)
   };
 
   // Obtenemos los searchParams para mandarlo en el fetch y actualizar la url de busqueda.
   const onSubmit = async (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-
+    const currentUrl = window.location.pathname;
+    const newUrl = `${currentUrl}${searchPStore.length > 0 ? `?${searchPStore}` : ''}`;
+    window.history.pushState({}, '', newUrl);
+    setIsSubmitting(true)
     await fetchResults()
+    setResetPagination(false)
   };
 
   return (
@@ -339,7 +342,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
             </div>
           </aside>
 
-          {/* Grilla de Tarjetas */}
+          {/* Grilla de Resultados */}
           <div className="lg:col-start-4 lg:col-end-13">
             {/* Mostrar indicador de carga si los datos están cargando */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 z-1 gap-4 animate-fade">
@@ -357,7 +360,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
 
               ) : (
                 <>
-                  {Array.isArray(results?.fichas) && results?.fichas?.map((result: File,) => (
+                  {Array.isArray(results?.fichas) && results.fichas.map((result: File,) => (
                     <CardProperty
                       cardData={result}
                       key={`${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`} // Aquí estás utilizando result.id como clave
@@ -366,11 +369,21 @@ const ResultsPage = ({ selects, locations }: Props) => {
                   ))}
                 </>
               )}
-
             </div>
-
-
+                      {/* Paginacion */}
+              <div className={'mt-20'}>
+                      <Pagination
+              paginationData={results?.datos as Datos}
+              setData={setResults}
+              setLoading={setIsLoading}
+              resetPagination={resetPagination}
+              isSubmitting={isSubmitting}
+            />
+            </div>
           </div>
+
+      
+        
         </div>
       </div >
 

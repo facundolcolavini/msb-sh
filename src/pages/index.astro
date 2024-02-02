@@ -1,24 +1,33 @@
 ---
-import ButtonLink from "src/components/ButtonLink.astro";
-import HeroContainer from "src/components/HeroContainer.astro";
-import SliderA from "src/components/SliderA.astro";
-import TitleSections from "src/components/TitleSections.astro";
-import BannerSlider from "src/components/preact/BannerSlider";
-import HomeLocation from "src/components/preact/Icons/HomeLocation";
-import HomeMortgageIcon from "src/components/preact/Icons/HomeMortgageIcon";
-import PaperTipsIcon from "src/components/preact/Icons/PaperTipsIcon";
-import SearchHome from "src/components/preact/Search/SearchHome";
-import Button from "src/components/preact/ui/Buttons/Button";
-import CardBranch from "src/components/preact/ui/Cards/CardBranch";
-import CardEntrepreneurship from "src/components/preact/ui/Cards/CardEntrepreneurship";
-import CardProperty from "src/components/preact/ui/Cards/CardProperty";
-import type { APIResponseEntrepreneurship, Results, EntrePreneurShip } from "src/interfaces/entrepreneurship.interfaces";
-import type { APIResponseResultsRecords, File } from "src/interfaces/results.records.interfaces";
-import type { ResultLocation ,Results as ResultSelects} from "src/interfaces/selects.form.interfaces";
-import Layout from "src/layouts/Layout.astro";
-import { getAllSelects, getLocations } from "src/services/get-selects-form";
-import { fetchData } from "src/utils/fetch-data";
+import ButtonLink from "@components/ButtonLink.astro";
+import HeroContainer from "@components/HeroContainer.astro";
+import SliderA from "@components/SliderA.astro";
+import TitleSections from "@components/TitleSections.astro";
+import BannerSlider from "@components/preact/BannerSlider";
+import HomeLocation from "@components/preact/Icons/HomeLocation";
+import HomeMortgageIcon from "@components/preact/Icons/HomeMortgageIcon";
+import PaperTipsIcon from "@components/preact/Icons/PaperTipsIcon";
+import SearchHome from "@components/preact/Search/SearchHome";
 
+import Button from "@components/preact/ui/Buttons/Button";
+import CardBranch from "@components/preact/ui/Cards/CardBranch";
+import CardEntrepreneurship from "@components/preact/ui/Cards/CardEntrepreneurship";
+import CardProperty from "@components/preact/ui/Cards/CardProperty";
+import type {
+  APIResponseEntrepreneurship,
+  EntrePreneurShip,
+} from "@interfaces/entrepreneurship.interfaces";
+import type {
+  APIResponseResultsRecords,
+  File,
+} from "@interfaces/results.records.interfaces";
+import type {
+  ResultLocation,
+  Results,
+} from "@interfaces/selects.form.interfaces";
+import Layout from "@layouts/Layout.astro";
+import { getAllSelects, getLocations } from "@services/get-selects-form";
+import { fetchData } from "@utils/fetch-data";
 
 
 const { resultado } = (await fetchData(
@@ -34,9 +43,10 @@ const titlePage = "Home";
 const description =
   "Propiedades en alquiler y venta - Matías Szpira Bienes Raíces";
 
-const selects = (await getAllSelects()) as ResultSelects;
+const selects = (await getAllSelects()) as Results;
 const locations = (await getLocations()) as ResultLocation;
- 
+
+
 ---
 
 <Layout title={titlePage} , description={description}>
@@ -56,7 +66,12 @@ const locations = (await getLocations()) as ResultLocation;
       </div>
       <!-- Agrega aquí tu buscador -->
 
-      <SearchHome client:load selects={selects} locations={locations} client:load />
+      <SearchHome
+        client:load
+        selects={selects}
+        locations={locations}
+        client:load
+      />
 
       <div></div>
     </div>
@@ -238,7 +253,13 @@ const locations = (await getLocations()) as ResultLocation;
         <SliderA colsNr={2} height={10} width={10} classSlide="slider2">
           {
             entrepreneurship.map(
-              ({ ed_nom, ed_pos, img_princ, ed_est, ed_idl }: EntrePreneurShip) => (
+              ({
+                ed_nom,
+                ed_pos,
+                img_princ,
+                ed_est,
+                ed_idl,
+              }: EntrePreneurShip) => (
                 <CardEntrepreneurship
                   href={`/emprendimientos/${ed_idl}`}
                   addStyles={"card"}
@@ -257,7 +278,7 @@ const locations = (await getLocations()) as ResultLocation;
     </div>
   </section>
   <section class="bg-[#8D8777] py-10" transition:animate={"fade"}>
-    <BannerSlider slides={img[3]} sliderTime={8000} client:load>
+    <BannerSlider slides={img[3]} sliderTime={8000} client:visible>
       <div
         class="grid align-end h-full items-center justify-center lg:justify-end self-end place-content-center text-center lg:text-start container mx-auto relative z-1"
       >

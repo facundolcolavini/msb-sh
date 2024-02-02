@@ -1,9 +1,10 @@
-import type { Location, Neighborhood, Option, Value } from "../interfaces/selects.form.interfaces";
+import type { Location, Neighborhood, Option, Value } from "@interfaces/selects.form.interfaces";
+import he from "he";
 
-// Función para capitalizar la primera letra de cada palabra
+// Función para capitalizar los strings de los selects Lujan y San Pedro
 export const capitalize = (str: string): string => {
-    return str.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
-  };
+  return str.toLowerCase().replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
+};
 
 
 // Función para formatear los datos  devulevos por la API a label y value y omitir ALL INIDISTINTO Y TODAS.
@@ -18,27 +19,27 @@ export function formatOptions(options: InputOption[]): OutputOption[] {
     .filter(option => {
       const description = 'description' in option ? option.description : option?.descripcion;
       const value = 'value' in option ? option.value : ('val' in option ? option.val : '');
-      return !(description === "INDISTINTO" && value === "All" || description === "INDISTINTO" && ('val' in option) && option.val === "" || description === "TODAS" && value === "All") ;
+      return !(description === "INDISTINTO" && value === "All" || description === "INDISTINTO" && ('val' in option) && option.val === "" || description === "TODAS" && value === "All");
     })
     .map((option) => {
       let description: string;
       let value: string;
       if ('description' in option) {
-        description = option.description;
+        description = he.decode(option.description);
         value = option.value || '';
       } else if ('val' in option) {
         description = option.descripcion;
         value = option.val;
       } else if ('id' in option) {
-        description = option.descripcion;
+        description = he.decode(option.descripcion);
         value = option.id;
       }
       else {
-        description = option.descripcion;
+        description = he.decode(option.descripcion);
         value = option.value || '';
       }
       return {
-        label: capitalize(description.toLowerCase()),
+        label: capitalize(he.decode(description)),
         value: value,
       };
     });

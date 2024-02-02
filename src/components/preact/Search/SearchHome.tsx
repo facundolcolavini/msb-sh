@@ -1,22 +1,20 @@
+import type { ResultLocation, Results } from '@interfaces/selects.form.interfaces';
+import { formatOptions, type OutputOption } from '@utils/formats';
 
-
+import { useSearch } from '@hooks/useSearch.ts';
 import { navigate } from 'astro:transitions/client';
+import { useEffect } from 'preact/hooks';
+import { resetFilter, searchParamsStore } from 'src/store/filterStore';
 import SearchIcon from '../Icons/SearchIcon';
 import Button from "../ui/Buttons/Button";
-import InputField from '../ui/Inputs/InputField';
 import SelectField from '../ui/Selects/SelectField';
-import { useEffect } from 'preact/hooks';
 import SearchDebounce from './SearchDebounce';
-import { searchParamsStore } from 'src/store/filterStore';
-import { formatOptions, type OutputOption } from 'src/utils/formats';
-import type { ResultLocation, Results } from 'src/interfaces/selects.form.interfaces';
-import { useSearch } from 'src/hooks/useSearch';
 
 interface Props {
   selects: Results
   locations: ResultLocation
 }
-const SearchHome = ({ selects,locations }: Props) => {
+const SearchHome = ({ selects, locations }: Props) => {
   const searchPStore = searchParamsStore.get()
 
   let tipo_propiedad = [] as OutputOption[];
@@ -27,26 +25,32 @@ const SearchHome = ({ selects,locations }: Props) => {
   in_iub = formatOptions(locations.ubicaciones);
 
 
-  const { handleSelect, resetSelect,handleOnChange, filtersSelected, searchParams } = useSearch({ tipo_propiedad, tipo_operacion, in_iub }, {
+  const { handleSelect, resetSelect, handleOnChange, filtersSelected, searchParams } = useSearch({ tipo_propiedad, tipo_operacion, in_iub }, {
     tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
-    tipo_operacion: { value: 'V', label: 'Venta' },
+    tipo_operacion: { value: 'All', label: 'Venta' },
     in_iub: { value: '', label: '' }
   })
 
   useEffect(() => {
-    // REINICIA EL ESTADO DE LOS FILTROS CUANDO SE CARGA LA PÁGINA
-    resetSelect( {
-      tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
-      tipo_operacion: { value: 'V', label: 'Venta' }, 
-      in_iub: { value: '', label: '' }
-    })
-  },[])
+    // REINICIA EL ESTADO DE LOS FILTROS CUANDO SE CARGA LA PÁGINA HOME
+
+      searchParamsStore.set('')
+      resetFilter({})
+      resetSelect( {
+        tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
+        tipo_operacion: { value: 'All', label: 'Venta' }, 
+        in_iub: { value: '', label: '' }
+      })
+
+
+    
+  }, [])
 
   const send = async (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    navigate(`/resultados-de-busqueda?${searchPStore}`);
+    navigate(`/resultados-de-busqueda${searchPStore.length > 0 ? `?${searchPStore}` : ''}`);
   }
 
   return (
@@ -103,7 +107,7 @@ const SearchHome = ({ selects,locations }: Props) => {
             <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filtersSelected.tipo_propiedad} opts={tipo_propiedad} />
           </div>
           <div className="md:col-1 lg:col-start-4  lg:col-end-11 md:col-start-2 md:col-end-5 flex gap-4  w-full flex-grow ">
-          <SearchDebounce filterOptsLocations={{in_iub}} />
+            <SearchDebounce filterOptsLocations={{ in_iub }} />
             <div className="hidden md:flex lg:hidden gap-4">
               <Button
                 variant="primary"

@@ -1,9 +1,9 @@
 
+import HeartIcon from "@components/preact/Icons/HeartIcon";
 import type { HTMLAttributes } from "astro/types";
 import clsx from 'clsx';
 import { useState, type FunctionComponent } from "preact/compat";
 import { twMerge } from 'tailwind-merge';
-import HeartIcon from "../../Icons/HeartIcon";
 
 interface Props extends HTMLAttributes<"a"> {
     cardData: {

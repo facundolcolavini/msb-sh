@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import InputField from '../ui/Inputs/InputField';
 
-import { addFilterValue, filterItems, resetFilter, searchParamsStore } from '../../../store/filterStore';
+import { addFilterValue, filterItems, searchParamsStore } from '../../../store/filterStore';
 import "../ui/Selects/selectsField.css";
 
 interface Props {
@@ -51,18 +51,17 @@ const SearchDebounce = ({ filterOptsLocations }: Props) => {
         // Ajustar la altura del listado de opciones al contenido
         if (listContainerRef.current) {
             const maxHeight = window.innerHeight - listContainerRef.current.getBoundingClientRect().top - 100; // 20px de margen inferior
-            listContainerRef.current.style.maxHeight =  `${maxHeight}px`;
+            listContainerRef.current.style.maxHeight = `${maxHeight}px`;
         }
     }, [listOpts]);
 
     // Actualizar la url con los filtros del buscador 
     useEffect(() => {
-        if(filters.in_iub?.value === '' && filters.in_iub?.label === '' ) {
-        
-            setSearchTerm({ label: '', value: '' });
+        if (filters.in_iub?.value === '' && filters.in_iub?.label === '') {
+            setSearchTerm({ label: filters?.in_iub?.label, value: filters?.in_iub?.value });
         }
         const currentUrl = window.location.pathname;
-        const newUrl = `${currentUrl}?${searchParamsStore.get()}`;
+        const newUrl = `${currentUrl}${params.length > 0 ? `?${params}` : ''}`;
         window.history.pushState({}, '', newUrl);
 
 
