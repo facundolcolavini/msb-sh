@@ -54,7 +54,7 @@ const SelectField = ({ opts, id, onChange, defaultOption }: SelectFieldProps): J
       <button
         id={String(id)}
         onClick={toggleDropdown}
-        className="w-full px-4 py-2 border h-full bg-white text-gray-700 rounded-md border-primary-text-msb flex justify-between items-center focus:outline-none focus:ring-1 focus:ring-primary-text-msb focus:border-primary-text-msb font-semibold "
+        className="w-full px-4 py-2 border h-full bg-white text-gray-700 rounded-md border-primary-text-msb flex justify-between items-center focus:outline-none focus:ring-1 focus:ring-primary-text-msb focus:border-primary-text-msb font-semibold truncate"
         type="button"
       >
         {selectedOption}

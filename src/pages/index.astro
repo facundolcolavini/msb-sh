@@ -1,5 +1,6 @@
 ---
 import ButtonLink from "@components/ButtonLink.astro";
+import Chat from "@components/Chat.astro";
 import HeroContainer from "@components/HeroContainer.astro";
 import SliderA from "@components/SliderA.astro";
 import TitleSections from "@components/TitleSections.astro";
@@ -29,7 +30,6 @@ import Layout from "@layouts/Layout.astro";
 import { getAllSelects, getLocations } from "@services/get-selects-form";
 import { fetchData } from "@utils/fetch-data";
 
-
 const { resultado } = (await fetchData(
   "fichas.destacadas",
 )) as APIResponseResultsRecords;
@@ -45,119 +45,85 @@ const description =
 
 const selects = (await getAllSelects()) as Results;
 const locations = (await getLocations()) as ResultLocation;
-
-
 ---
 
 <Layout title={titlePage} , description={description}>
-  <HeroContainer img="/images/background-hero.webp">
+  <HeroContainer img="/images/background-hero-2.webp">
     <div
-      class="absolute inset-0 flex flex-col justify-between items-center w-100 mx-auto container"
+      class="absolute inset-0 flex flex-col pb-20 justify-end items-center w-100 mx-auto container"
     >
-      <div class="bg-[#D9D9D9] bg-opacity-40 py-6 min-w-full mt-8">
-        <h1
-          style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.50);" }}
-          class="text-white text-4xl md:text-5xl lg:text-6xl font-base font-semibold font-cormorant text-pretty lg:drop-shadow-2xl text-center"
-        >
-          BUENA <span class="text-primary-text-msb"> GENTE</span>. BUENAS <span
-            class="text-primary-text-msb">RAÍCES</span
-          >. BUENOS <span class="text-primary-text-msb">NEGOCIOS</span>
-        </h1>
+      <div class="bg-[#D9D9D9] bg-opacity-40 p-6 min-w-full">
+        <SearchHome
+          client:load
+          selects={selects}
+          locations={locations}
+          client:load
+        />
       </div>
-      <!-- Agrega aquí tu buscador -->
-
-      <SearchHome
-        client:load
-        selects={selects}
-        locations={locations}
-        client:load
-      />
-
-      <div></div>
     </div>
   </HeroContainer>
-  <section class="bg-secondary-bg-msb">
+  <!-- <div class="fixed right-0 z-50"> -->
+    <Chat/>
+ <!--  </div> -->
+  <section class="bg-secondary-bg-msb  py-10">
     <div class="container mx-auto px-3 md:px-0 lg:px-0">
-      <div class="grid lg:grid-cols-3 ms:px-3 gap-2 py-20">
-        <ButtonLink href="/sumate">
+      <TitleSections
+      class="text-primary-text-msb text-6xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
+    >
+    Buena Gente. Buenas Raíces. Buenos Negocios
+    </TitleSections>
+      <div class="grid md:grid-cols-2 lg:grid-cols-2 ms:px-3 gap-10 py-20 md:px-5">
+        <ButtonLink href="/sumate" class="flex justify-center  lg:justify-end w-100">
           <Button
             variant="outline"
-            addStyles="rounded-lg shadow-lg w-full h-full"
+            addStyles="rounded-lg shadow-lg  w-[450px] "
           >
             <div
-              class="inline-flex lg:justify-center items-center w-full gap-3 py-5"
+            class="flex  items-center  gap-5 py-5"
             >
-              <div class="rounded-full p-2 bg-[#D9D9D9]">
+              <div class="rounded-full p-3 bg-[#D9D9D9]">
                 <HomeMortgageIcon
                   addStyles="object-contain bg-gradient-primary-msb "
-                  w="42"
-                  h="40"
+                  w="43"
+                  h="43"
                 />
               </div>
-              <div class="flex flex-col gap-2 items-stretch">
+              <div class="flex flex-col gap-2 w-100">
                 <h1
-                  class="text-base font-semibold text-primary-text-msb text-left"
+                class="text-base md:text-md lg:text-xl font-semibold text-primary-text-msb text-left text-balance"
                 >
-                  ¿Qué necesito para comprar?
+                ¿Qué necesito para vender?
                 </h1>
-                <p class="text-primary-text-msb text-left font-normal">
-                  Conocé los requisitos para comprar una propiedad
+                <p class="lg:text-lg text-primary-text-msb text-left font-normal">
+                  Conocé los requisitos para vender una propiedad
                 </p>
               </div>
             </div>
           </Button>
         </ButtonLink>
-        <ButtonLink href="/sumate">
+        <ButtonLink href="/sumate" class="flex justify-center  lg:justify-start w-100">
           <Button
             variant="outline"
-            addStyles="rounded-lg shadow-lg w-full h-full"
+            addStyles="rounded-lg w-[450px] shadow-lg "
           >
             <div
-              class="inline-flex lg:justify-center items-center w-full gap-3 py-5"
+              class="flex  items-center  gap-5 py-5"
             >
-              <div class="rounded-full p-2 bg-[#D9D9D9]">
+              <div class="rounded-full p-3 bg-[#D9D9D9]">
                 <HomeLocation
                   addStyles="object-contain bg-gradient-primary-msb "
-                  w="42"
-                  h="40"
+                  w="43"
+                  h="43"
                 />
               </div>
-              <div class="flex flex-col gap-2 items-stretch">
+              <div class="flex flex-col gap-0 w-100">
                 <h1
-                  class="text-base font-semibold text-primary-text-msb text-left"
+                class="text-base md:text-md lg:text-xl font-semibold text-primary-text-msb text-left text-balance"
                 >
                   Guía de Barrios
                 </h1>
-                <p class="text-primary-text-msb text-left font-normal">
+                <p class="lg:text-lg text-primary-text-msb text-left font-normal">
                   Conocé los barrios y elegí tu zona ideal
-                </p>
-              </div>
-            </div>
-          </Button>
-        </ButtonLink>
-        <ButtonLink href="/sumate">
-          <Button
-            variant="outline"
-            addStyles="rounded-lg shadow-lg w-full h-full"
-          >
-            <div
-              class="inline-flex lg:justify-center items-center w-full gap-3 py-5"
-            >
-              <div class="rounded-full p-2 bg-[#D9D9D9]">
-                <PaperTipsIcon
-                  addStyles="object-contain bg-gradient-primary-msb "
-                  w="42"
-                  h="40"
-                />
-              </div>
-              <div class="flex flex-col gap-2 items-stretch">
-                <h1
-                  class="text-base font-semibold text-primary-text-msb text-left"
-                >
-                  Tips de Mudanza
-                </h1>
-                <p class="text-primary-text-msb text-left font-normal">
-                  Guía para mudarte sin estrés, de forma rápida y eficiente
                 </p>
               </div>
             </div>
@@ -169,12 +135,12 @@ const locations = (await getLocations()) as ResultLocation;
   <section class="bg-primary-msb">
     <div class="container mx-auto px-3 md:px-0 lg:px-0 py-20">
       <TitleSections
-        class="text-white text-6xl md:text-7xl lg:text-8xl font-base font-medium font-cormorant text-pretty text-center"
+        class="text-white  text-6xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
       >
         Propiedades Destacadas
       </TitleSections>
       <p
-        class="text-white text-center text-md md:text-lg lg:text-2xl font-light py-5"
+        class="text-white text-center text-md md:text-lg lg:text-2xl font-extralight p-10"
       >
         La mejor selección de inmuebles en las zonas que estás buscando.
       </p>
@@ -199,12 +165,12 @@ const locations = (await getLocations()) as ResultLocation;
     >
       <div class="flex justify-end gap-10 flex-col self-center lg:px-20 p-6">
         <TitleSections
-          class="text-center md:text-centter lg:text-start text-secondary-text-msb text-4xl"
+          class="text-center md:text-centter lg:text-start text-secondary-text-msb text-6xl md:text-7xl lg:text-6xl font-base font-medium font-cormorant text-pretty"
         >
           Nuestros Emprendimientos
         </TitleSections>
         <p
-          class="font-medium text-secondary-text-msb text-center md:text-center lg:text-start text-lg"
+          class="font-extralight text-secondary-text-msb text-center md:text-center lg:text-start text-lg"
         >
           Invertí en bienes raíces, nosotros te asesoramos
         </p>
@@ -290,7 +256,7 @@ const locations = (await getLocations()) as ResultLocation;
         <p
           class="text-white text-lg md:text-xl lg:text-2xl font-normal font-open-sans self-start"
         >
-          Tu descripción o contenido del párrafo aquí.
+        Tasá con nosotros, no dudes en consultarnos.
         </p>
         <ButtonLink
           href="/tasaciones"
@@ -309,12 +275,12 @@ const locations = (await getLocations()) as ResultLocation;
   <section class="bg-secondary-bg-msb py-20" transition:animate="fade">
     <div>
       <TitleSections
-        class="text-primary-text-msb text-6xl md:text-7xl lg:text-8xl font-base font-medium font-cormorant text-pretty text-center"
+        class="text-primary-text-msb text-6xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
       >
         Nuestras Sucursales
       </TitleSections>
       <p
-        class="text-secondary-text-msb text-center text-md md:text-lg lg:text-2xl font-light py-5"
+        class="text-secondary-text-msb text-center text-md md:text-lg lg:text-2xl font-extralight p-10"
       >
         Elegí tu sucursal más cercana
       </p>
@@ -323,40 +289,44 @@ const locations = (await getLocations()) as ResultLocation;
       class="grid grid-cols justify-center md:grid-cols-2 gap-5 lg:gap-2 lg:grid-cols-4 container mx-auto"
     >
       <CardBranch
-        href="https://maps.app.goo.gl/tctkkMnT39ZuecvY6"
-        suc_name="Belgrano"
-        suc_loc="Capital Federal"
-        suc_img="/images/sucursal-belgrano.webp"
-        suc_dir="Av. Juramento 1475, Piso 3 Of. 4"
-        suc_phone="112461-0859"
-        addStyles={"hover:border-primary-border-msb hover:border-4 h-100 transition duration-500 ease-in-out easy-out transform hover:-translate-y-1"}
-      />
-      <CardBranch
         href="https://maps.app.goo.gl/PdCXedJ3XriKhkeD6"
+        whatsAppPhone="5491144161700"
         suc_name="Castelar"
         suc_loc="Casa Central"
         suc_img="/images/sucursal-castelar.webp"
         suc_dir="Avellaneda 976, Castelar"
         suc_phone="4627-8034 / 7548-6846"
-        addStyles={"hover:border-primary-border-msb hover:border-4 h-100 transition duration-500 ease-in-out easy-out transform hover:-translate-y-1"}
+        addStyles={"border-[#A4A4A4]  border-2 hover:border-primary-border-msb hover:border-2 h-100 transition duration-500 ease-in-out  transform hover:-translate-y-1"}
+      />
+      <CardBranch
+        href="https://maps.app.goo.gl/tctkkMnT39ZuecvY6"
+        whatsAppPhone="5491124610859"
+        suc_name="Belgrano"
+        suc_loc="Capital Federal"
+        suc_img="/images/sucursal-belgrano.webp"
+        suc_dir="Av. Juramento 1475, Piso 3 Of. 4"
+        suc_phone="112461-0859"
+        addStyles={"border-[#A4A4A4]  border-2 hover:border-primary-border-msb hover:border-2 h-100 transition duration-500 ease-in-out  transform hover:-translate-y-1"}
       />
       <CardBranch
         href="https://maps.app.goo.gl/Fo5cNCeaXJSRbkEz7"
+        whatsAppPhone="5491123644767"
         suc_name="Fco. Álvarez"
         suc_loc="Colectora Sur Acceso Oeste"
         suc_img="/images/sucursal-fco-alvarez.webp"
         suc_dir="K41 Piso 3, Of. 327"
         suc_phone="2130-9600 / 112364-4767"
-        addStyles={"hover:border-primary-border-msb hover:border-4 h-100 transition duration-500 ease-in-out easy-out transform hover:-translate-y-1"}
+        addStyles={"border-[#A4A4A4]  border-2 hover:border-primary-border-msb hover:border-2 h-100 transition duration-500 ease-in-out  transform hover:-translate-y-1"}
       />
       <CardBranch
         href="https://maps.app.goo.gl/GgiKgSmGr31CvVXw5"
+        whatsAppPhone="5491169425849"
         suc_name="Parque Leloir"
         suc_loc="Complejo Acorus"
         suc_img="/images/sucursal-parque-leloir.webp"
         suc_dir="Martín Fierro 2921, Piso 2 Of. 201"
         suc_phone="4627-8034 / 7548-6846"
-        addStyles={"hover:border-primary-border-msb hover:border-4 h-100 transition duration-500 ease-in-out easy-out transform hover:-translate-y-1"}
+        addStyles={"border-[#A4A4A4]  border-2 hover:border-primary-border-msb hover:border-2 h-100 transition duration-500 ease-in-out  transform hover:-translate-y-1"}
       />
     </div>
   </section>

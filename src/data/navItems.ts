@@ -151,8 +151,8 @@ export const joinUsNavItems: NavI[] = [
 
 export const navItems: NavI[] = [
  
-  ...contactUsNavItems,
   ...joinUsNavItems,
+  ...contactUsNavItems,
   ...ourServicesNavItems,
  /*  ...gatedCommunities, */
 ];

@@ -5,7 +5,7 @@ import type { FunctionComponent } from "preact";
 import { twMerge } from "tailwind-merge";
 import { PaperLocationIcon } from '../../Icons/PaperLocationIcon';
 
-interface Props extends HTMLAttributes<"a"> {
+interface Props extends HTMLAttributes<"div"> {
     suc_name: string;
     suc_loc: string;
     suc_img: string;
@@ -13,15 +13,16 @@ interface Props extends HTMLAttributes<"a"> {
     suc_phone: string;
     addStyles?: string;
     href: string;
+    whatsAppPhone: string;
 }
 
-const CardBranch: FunctionComponent<Props> = ({ href, suc_name, suc_loc, suc_img, suc_dir, suc_phone, addStyles }) => {
-    const styles = twMerge(clsx(" rounded-lg  mx-auto w-full overflow-hidden shadow-lg ", addStyles));
+const CardBranch: FunctionComponent<Props> = ({ href, suc_name, suc_loc, suc_img, suc_dir, suc_phone, whatsAppPhone, addStyles }) => {
+    const styles = twMerge(clsx(" rounded-lg  mx-auto w-full overflow-hidden shadow-lg", addStyles));
     return (
-        <a href={href} target="_blank" className={styles} >
+        <div className={styles}>
             <div class="bg-secondary-msb">
                 <img className="w-full object-cover" src={suc_img} alt={suc_name} />
-                <div className="p-5 border-[#A4A4A4] border-r-2 border-l-2 border-b-2 rounded-b-lg ">
+                <div className="p-5 ">
                     <div className="text-xl font-medium text-nowrap capitalize"><span className="font-extrabold capitalize">{suc_name}</span></div>
                     <p className="text-bg-2-msb  text-md font-bold">
                         {suc_loc}
@@ -33,8 +34,8 @@ const CardBranch: FunctionComponent<Props> = ({ href, suc_name, suc_loc, suc_img
                         </div>
 
                         <div class="flex items-center justify-center gap-1 ">
-                            <span><PaperLocationIcon /></span>
-                            <WhatsAppIcon />
+                            <a href={href} target="_blank"><PaperLocationIcon /></a>
+                            <a href={`https://api.whatsapp.com/send?phone=${whatsAppPhone}`} target="_blank"><WhatsAppIcon /></a>
                         </div>
 
                     </div>
@@ -42,7 +43,7 @@ const CardBranch: FunctionComponent<Props> = ({ href, suc_name, suc_loc, suc_img
                 </div>
 
             </div>
-        </a>
+        </div>
     )
 }
 

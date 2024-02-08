@@ -45,3 +45,17 @@ export function formatOptions(options: InputOption[]): OutputOption[] {
     });
 }
 
+/* 
+Input: Av.%20Presidente%20Peron%20al%2010200
+Output Av. Presidente Peron al 10200
+*/
+
+export function formatearString(inputStr: string): string {
+  // Decodificar los caracteres especiales
+  const decodedStr = decodeURIComponent(inputStr);
+
+  // Reemplazar los guiones con espacios
+  const formattedStr = decodedStr.replace(/-/g, ' ');
+
+  return formattedStr;
+}

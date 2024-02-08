@@ -20,15 +20,22 @@ const SearchHome = ({ selects, locations }: Props) => {
   let tipo_propiedad = [] as OutputOption[];
   let tipo_operacion = [] as OutputOption[];
   let in_iub = [] as OutputOption[];
+  let in_tpr = [] as OutputOption[];
   tipo_propiedad = formatOptions(selects?.tipo);
   tipo_operacion = formatOptions(selects.operacion);
-  in_iub = formatOptions(locations.ubicaciones);
+  in_iub = formatOptions(locations?.ubicaciones);
+  in_tpr = [
+    {
+      value: 'COUNTRY',
+      label: 'Barrios Cerrados y Countries'
+    }
+  ]
 
-
-  const { handleSelect, resetSelect, handleOnChange, filtersSelected, searchParams } = useSearch({ tipo_propiedad, tipo_operacion, in_iub }, {
+  const { handleSelect, resetSelect, handleOnChange, filtersSelected, searchParams } = useSearch({ tipo_propiedad, tipo_operacion, in_iub, in_tpr }, {
     tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
-    tipo_operacion: { value: 'All', label: 'Venta' },
-    in_iub: { value: '', label: '' }
+    tipo_operacion: { value: '', label: '' },
+    in_iub: { value: '', label: '' },
+    in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
   })
 
   useEffect(() => {
@@ -38,8 +45,9 @@ const SearchHome = ({ selects, locations }: Props) => {
       resetFilter({})
       resetSelect( {
         tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
-        tipo_operacion: { value: 'All', label: 'Venta' }, 
-        in_iub: { value: '', label: '' }
+        tipo_operacion: { value: '', label: '' }, 
+        in_iub: { value: '', label: '' },
+        in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
       })
 
 
@@ -58,7 +66,7 @@ const SearchHome = ({ selects, locations }: Props) => {
 
       <div className="container z-1 ">
         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-4 md:px-0 px-3 ">
-          <div className="lg:col-start-1 lg:col-end-4 md:grid-col-start-1 md:grid-col-end-2 flex gap-4">
+          <div className="lg:col-start-1 lg:col-end-3 md:grid-col-start-1 md:grid-col-end-2 flex gap-4">
             <Button
               variant="outline"
               onClick={handleSelect}
@@ -66,10 +74,10 @@ const SearchHome = ({ selects, locations }: Props) => {
               addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
               id="tipo_operacion"
             >
-              Vender
+              Venta
             </Button>
           </div>
-          <div className="lg:col-start-4 lg:col-end-7  md:grid-col-start-2 md:grid-col-end-4 flex gap-4">
+          <div className="lg:col-start-3 lg:col-end-5  md:grid-col-start-2 md:grid-col-end-4 flex gap-4">
             <Button
               variant="outline"
               onClick={handleSelect}
@@ -77,21 +85,10 @@ const SearchHome = ({ selects, locations }: Props) => {
               addStyles={` sm:text-sm md:text-md lg:text-lg w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
               id="tipo_operacion"
             >
-              Alquilar
+              Alquiler
             </Button>
           </div>
-          <div className="lg:col-start-7 lg:col-end-10  md:grid-col-start-1 md:grid-col-end-2 flex gap-4">
-            <Button
-              variant="outline"
-              onClick={handleSelect}
-              value={'M'}
-              addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.tipo_operacion?.value === 'M' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
-              id="tipo_operacion"
-            >
-              Venta y Alquiler
-            </Button>
-          </div>
-          <div className="lg:col-start-10 lg:col-end-13 flex   md:grid-col-start-2 md:grid-col-end-4 gap-4">
+          <div className="lg:col-start-5 lg:col-end-9  md:grid-col-start-1 md:grid-col-end-2 flex gap-4">
             <Button
               variant="outline"
               onClick={handleSelect}
@@ -99,14 +96,25 @@ const SearchHome = ({ selects, locations }: Props) => {
               addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
               id="tipo_operacion"
             >
-              Alquiler Temporiario
+            Alquiler Temporiario
             </Button>
           </div>
-          {/* Selector e input de la fila inferior */}
-          <div className="lg:col-start-1  lg:col-end-4 flex  h-full ">
-            <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filtersSelected.tipo_propiedad} opts={tipo_propiedad} />
+          <div className="lg:col-start-9 lg:col-end-13 flex   md:grid-col-start-2 md:grid-col-end-4 gap-4">
+          <Button
+            variant="outline"
+            onClick={handleSelect} // Llama a handleSelect cuando se hace clic en el botón
+            value={filtersSelected?.in_tpr?.value}
+            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
+            id="in_tpr"
+          >
+            Barrios Cerrados y Countries
+          </Button>
           </div>
-          <div className="md:col-1 lg:col-start-4  lg:col-end-11 md:col-start-2 md:col-end-5 flex gap-4  w-full flex-grow ">
+          {/* Selector e input de la fila inferior */}
+          <div className="lg:col-start-1  lg:col-end-3 flex  h-full  ">
+            <SelectField  id="tipo_propiedad" onChange={handleSelect} defaultOption={filtersSelected?.tipo_propiedad} opts={tipo_propiedad} />
+          </div>
+          <div className="md:col-1 lg:col-start-3  lg:col-end-11 md:col-start-2 md:col-end-5 flex gap-4  w-full flex-grow ">
             <SearchDebounce filterOptsLocations={{ in_iub }} />
             <div className="hidden md:flex lg:hidden gap-4">
               <Button

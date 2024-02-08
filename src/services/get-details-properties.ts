@@ -1,7 +1,7 @@
 import { fetchData } from "@utils/fetch-data";
 import type { APIResponseResultsRecords, Result } from "@interfaces/results.records.interfaces";
 
-const endpoint = 'resultados.fichas';
+const endpoint = 'fichas.propiedades';
 
 export const getDetailsProperties = async (queryParams?:Record<string, string>):Promise<Result> => {
     try {

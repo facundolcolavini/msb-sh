@@ -36,6 +36,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
   let valor_minimo = [] as OutputOption[];
   let valor_maximo = [] as OutputOption[];
   let in_iub = [] as OutputOption[];
+  let in_tpr = [] as OutputOption[];
 
   tipo_propiedad = formatOptions(selects?.tipo);
   tipo_operacion = formatOptions(selects.operacion);
@@ -51,22 +52,28 @@ const ResultsPage = ({ selects, locations }: Props) => {
     value: "D",
     label: "U$D"
   }]
-
+  in_tpr = [
+    {
+      value: 'COUNTRY',
+      label: 'Barrios Cerrados y Countries'
+    }
+  ]
   valor_minimo = formatOptions(selects.valor.desde);
   valor_maximo = formatOptions(selects.valor.hasta);
 
   const defaultOptions = {
-    tipo_operacion: { value: "All", label: 'Venta' },
+    tipo_operacion: { value: '', label: '' },
     tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
     Ambientes: { value: 'All', label: 'Cantidad de Ambientes' },
     calles: { value: 'All', label: 'Calle' },
     sellocalidades: { value: 'All', label: 'Localidad' },
     barrios1: { value: 'All', label: 'Barrio' },
     moneda: { value: 'D', label: 'U$D' },
-    valor_minimo: { value: '', label: 'Desde' },
-    valor_maximo: { value: '', label: 'Hasta' },
+    valor_minimo: { value: 'All', label: 'Desde' },
+    valor_maximo: { value: 'All', label: 'Hasta' },
     rppagina: { value: '15', label: '15' },
-    in_iub: { value: '', label: '' }
+    in_iub: { value: '', label: '' },
+    in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
   }
 
   const [results, setResults] = useState<Result | null>()
@@ -85,7 +92,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
     moneda,
     valor_minimo,
     valor_maximo,
-    in_iub
+    in_iub, in_tpr
   }, {
     ...defaultOptions, moneda:
       monedaSeleccionada
@@ -102,7 +109,6 @@ const ResultsPage = ({ selects, locations }: Props) => {
   const fetchResults = async () => {
     try {
       setIsLoading(true);
-
       const response = await fetch(`/api/results.json?${searchParamsStore.get()}`);
       const data: APIResponseResultsRecords = await response.json();
 
@@ -124,7 +130,6 @@ const ResultsPage = ({ selects, locations }: Props) => {
   const orderAscDesc = () => {
     // Al darle click lo ordena de menor a mayor si se da otro click lo ordena de mayor a menor y asi sucesivamente
     if (Array.isArray(results?.fichas)) {
-      // Asegurar que sean numeros y evitar NaN en el ordenamiento para eso debemos sacarle a la prop precio el signo $ o U$S y el . y convertirlo a numero
       results?.fichas.map((result) => {
         const precio = result.precio.replace(/[$.]/g, '')
         return {
@@ -133,7 +138,6 @@ const ResultsPage = ({ selects, locations }: Props) => {
         }
       })
         .sort((a, b) => a.precio - b.precio)
-
       // Actualizar el estado de los resultados con el ordenamiento 
       setResults({
         ...results,
@@ -180,7 +184,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
     <article className=" py-10">
       {/* Buscador */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-4 md:px-0 px-3 ">
-        <div className="lg:col-start-1 lg:col-end-4 flex gap-4">
+        <div className="lg:col-start-1 lg:col-end-3 flex gap-4">
           <Button
             variant="outline"
             onClick={handleSelect}
@@ -188,10 +192,10 @@ const ResultsPage = ({ selects, locations }: Props) => {
             addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
             id="tipo_operacion"
           >
-            Vender
+            Venta
           </Button>
         </div>
-        <div className="lg:col-start-4 lg:col-end-7   flex gap-4">
+        <div className="lg:col-start-3 lg:col-end-5   flex gap-4">
           <Button
             variant="outline"
             onClick={handleSelect}
@@ -199,21 +203,10 @@ const ResultsPage = ({ selects, locations }: Props) => {
             addStyles={` sm:text-sm md:text-md lg:text-lg w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
             id="tipo_operacion"
           >
-            Alquilar
+            Alquiler
           </Button>
         </div>
-        <div className="lg:col-start-7 lg:col-end-10 flex gap-4">
-          <Button
-            variant="outline"
-            onClick={handleSelect}
-            value={'M'}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.tipo_operacion?.value === 'M' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
-            id="tipo_operacion"
-          >
-            Venta y Alquiler
-          </Button>
-        </div>
-        <div className="lg:col-start-10 lg:col-end-13 flex  gap-4">
+        <div className="lg:col-start-5 lg:col-end-9 flex gap-4">
           <Button
             variant="outline"
             onClick={handleSelect}
@@ -223,11 +216,23 @@ const ResultsPage = ({ selects, locations }: Props) => {
           >
             Alquiler Temporiario
           </Button>
+
         </div>
-        <div className="lg:col-start-1 lg:col-end-4">
+        <div className="lg:col-start-9 lg:col-end-13 flex  gap-4">
+          <Button
+            variant="outline"
+            onClick={handleSelect} // Llama a handleSelect cuando se hace clic en el botón
+            value={filtersSelected?.in_tpr?.value}
+            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
+            id="in_tpr"
+          >
+            Barrios Cerrados y Countries
+          </Button>
+        </div>
+        <div className="lg:col-start-1 lg:col-end-3">
           <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filterStore.tipo_propiedad} opts={tipo_propiedad} />
         </div>
-        <div className="md:col-1 lg:col-start-4  lg:col-end-13 md:col-start-1 md:col-end-4 flex gap-4  w-full flex-grow ">
+        <div className="md:col-1 lg:col-start-3  lg:col-end-13 md:col-start-1 md:col-end-4 flex gap-4  w-full flex-grow ">
           <SearchDebounce filterOptsLocations={{ in_iub }} />
           <div className="hidden md:flex lg:hidden gap-4">
             <Button
@@ -364,26 +369,25 @@ const ResultsPage = ({ selects, locations }: Props) => {
                     <CardProperty
                       cardData={result}
                       key={`${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`} // Aquí estás utilizando result.id como clave
-                      href={`/propiedades/${result.direccion_completa}`}
+                      href={`resultados-de-busqueda/${result.operacion}/${result.in_loc}/${result.direccion_completa}/${result.in_suc}/${result.in_num}`}
                     />
                   ))}
                 </>
               )}
             </div>
-                      {/* Paginacion */}
-              <div className={'mt-20'}>
-                      <Pagination
-              paginationData={results?.datos as Datos}
-              setData={setResults}
-              setLoading={setIsLoading}
-              resetPagination={resetPagination}
-              isSubmitting={isSubmitting}
-            />
+            {/* Paginacion */}
+            <div className={'mt-20'}>
+              {results?.datos === undefined ? <></> : (
+                <Pagination
+                  paginationData={results?.datos as Datos}
+                  setData={setResults}
+                  setLoading={setIsLoading}
+                  resetPagination={resetPagination}
+                  isSubmitting={isSubmitting}
+                />
+              )}
             </div>
           </div>
-
-      
-        
         </div>
       </div >
 

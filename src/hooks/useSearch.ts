@@ -55,17 +55,32 @@ export const useSearch = (
   // Function to handle filter selection
   const handleSelect = (e: JSX.TargetedMouseEvent<HTMLButtonElement>) => {
     const { id, value } = e.target as HTMLSelectElement;
-    const newFiltersSelected = { ...filtersSelected };
-    const newFilter = selects[id].find((item) => item.value === value);
-    if (newFilter) {
-      newFiltersSelected[id] = newFilter;
+    if (id === 'in_tpr') {
+      const newFiltersSelected = { ...filtersSelected };
+      if (filtersSelected['in_tpr'] && filtersSelected['in_tpr'].value === 'COUNTRY') {
+        // Si ya está seleccionado como 'COUNTRY', lo eliminamos
+        delete newFiltersSelected['in_tpr'];
+      } else {
+        // De lo contrario, lo marcamos como 'COUNTRY'
+        const newFilter = selects[id].find((item) => item.value === 'COUNTRY');
+        if (newFilter) {
+          newFiltersSelected[id] = newFilter;
+        }
+      }
+      setFiltersSelected(newFiltersSelected);
+      addFilterValue({ [id]: newFiltersSelected[id] });
     } else {
-      delete newFiltersSelected[id];
+      const newFiltersSelected = { ...filtersSelected };
+      const newFilter = selects[id].find((item) => item.value === value);
+      if (newFilter) {
+        newFiltersSelected[id] = newFilter;
+      } else {
+        delete newFiltersSelected[id];
+      }
+      setFiltersSelected(newFiltersSelected);
+      addFilterValue({ [id]: newFiltersSelected[id] });
     }
-    setFiltersSelected(newFiltersSelected);
-    addFilterValue({ [id]: newFiltersSelected[id] });
   };
-
   // Function to handle checkbox change
   const handleCheckboxChange = (id: string, value: string) => {
     setFiltersSelected((prevFilters) => ({
