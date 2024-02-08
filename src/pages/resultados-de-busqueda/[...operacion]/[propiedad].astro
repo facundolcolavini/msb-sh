@@ -1,6 +1,8 @@
 ---
 import BreadCrumb from "@components/BreadCrumb.astro";
 import Gallery from "@components/Gallery.astro";
+import SpinnerLayout from "@components/SpinnerLayout.astro";
+import Spinner from "@components/preact/Spinner";
 import Link from "@components/ui/Link.astro";
 import type { Result } from "@interfaces/results.records.interfaces";
 import Layout from "@layouts/Layout.astro";
@@ -14,19 +16,22 @@ import { getDetailsProperties } from "@services/get-details-properties";
     id: propiedad ,
  });
  }
-
- 
- 
 ---
 
 <Layout title="Detalle de Propieda" description="Detalle de Propiedad">
   <section class="bg-[#FFFBF4] h-full py-2">
   <article class=" container mx-auto px-3 md:px-0 lg:px-0">
+
     <header class="lg:flex justify-between items-center">
       <BreadCrumb url={propiedad} transition:persist />
       <Link class="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide ">Consultar</Link>
     </header>
-    <Gallery  qImages={propiedadData?.img?.flat()?.length} imagesGallery={propiedadData?.img?.flat()}/>
+    <SpinnerLayout>
+      <div  slot="loading-indicator">
+        <Spinner  />
+      </div>
+    <Gallery slot="main-content" qImages={propiedadData?.img?.flat()?.length} imagesGallery={propiedadData?.img?.flat()}/>
+    </SpinnerLayout>
     <h1>Detalle de Propiedad</h1>
     <p>Esta es la página de detalle de propiedad</p>
   </article>

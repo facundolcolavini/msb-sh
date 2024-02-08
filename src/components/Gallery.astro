@@ -9,7 +9,7 @@ interface Props {
 const { imagesGallery, qImages } = Astro.props as Props;
 ---
 
-<div class="grid grid-cols relative py-10 lg:grid-cols-2 gap-4" id="gallery">
+<div class="grid grid-cols relative py-10 lg:grid-cols-2 gap-4" id="gallery" transition:animate="fade">
   {
     imagesGallery[0] && (
       <div class="col-span-1 h-100">
