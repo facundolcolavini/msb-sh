@@ -2,7 +2,7 @@ import type { APIResponsePropertyDetail, ResultPropertyDetails } from "@interfac
 import type { FunctionComponent } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import type { PropsWithChildren } from "react";
-import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
+import { resetTabMenu, tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
 import BreadCrumbSkeleton from "../Skeletons/BreadCrumbSkeleton";
 import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
@@ -18,21 +18,20 @@ interface Props {
 const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [results, setResults] = useState<ResultPropertyDetails | null>()
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [tabMenuProperty, setTabMenuProperty] = useState(tabMenuPropertyStore.get()); // Estado local para el valor del almacén
+    const [tabMenuProperty, setTabMenuProperty] = useState( 
+        tabMenuPropertyStore.get() // Estado local para el valor del almacén
+    ); // Estado local para el valor del almacén
     console.log(tabMenuProperty)
     useEffect(() => {
-        const unsubscribe = tabMenuPropertyStore.subscribe(() => {
-            // Cuando el valor del almacén cambia, actualizamos el estado local para reflejar los cambios
-            setTabMenuProperty(tabMenuPropertyStore.get());
-        });
-
-        // Realiza las tareas de inicialización aquí, como la obtención de datos
+        // Suscribirse a cambios en el almacén y actualizar el estado local
+        const unsubscribe = tabMenuPropertyStore.subscribe(setTabMenuProperty);
         fetchResults();
+        // Limpiar la suscripción al desmontar
+        return () => unsubscribe();
+        // Realiza las tareas de inicialización aquí, como la obtención de datos
+      
 
-        // Devuelve una función de limpieza que cancela la suscripción cuando el componente se desmonta
-        return () => {
-            unsubscribe();
-        };
+
     }, []);
 
     const fetchResults = async () => {
@@ -45,7 +44,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                 setResults(null);
                 setIsLoading(false);
                 throw data;
-            } else if (response.ok) {
+            } else if (response?.ok) {
                 setIsLoading(false);
                 setResults(data.resultado);
             }
@@ -70,12 +69,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     : <div className={'grid'}>
                         {/* video */}
                         <div class="h-full bg-gray-300 rounded-xl aspect-square"></div>
-                     {/*    { !results?.videos[0]?.video_url?.split('be/')[1] ? <div class="h-full bg-gray-300 rounded-xl aspect-square"></div>: <iframe
-                            className={'w-full h-96'}
-                            src={`https://www.youtube.com/embed/${results?.videos[0]?.video_url?.split('be/')[1]}`}
-                            title="YouTube video player"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        ></iframe> } */}
+       
                        
 
                     </div>

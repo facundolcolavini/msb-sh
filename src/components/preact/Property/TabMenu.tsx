@@ -1,5 +1,5 @@
-import { useState } from 'preact/hooks';
-import { setTabMenu, tabMenuPropertyStore } from '../../../store/tabMenuPropertyStore';
+import { useEffect, useState } from 'preact/hooks';
+import { resetTabMenu, setTabMenu, tabMenuPropertyStore } from '../../../store/tabMenuPropertyStore';
 
 import TabVideoIcon from "../Icons/TabVideoIcon";
 import Button from "../ui/Buttons/Button";
@@ -11,6 +11,10 @@ const TabMenu: FunctionComponent = () => {
         tabMenuPropertyStore.get()
     );
 
+    useEffect(() => {
+        resetTabMenu();
+    },[])
+    
     const handlerTab = (e: JSX.TargetedMouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         e.preventDefault();
