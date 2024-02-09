@@ -68,13 +68,8 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     (<GalleryProperty addStyles="grid grid-cols  lg:grid-cols-2 gap-5 animate-fadeIn transition " galleryID={`gallery-property-${results?.datos?.codigo_ficha}`} images={results?.img || []} />)
                     : <div className={'grid'}>
                         {/* video */}
-                        {results?.videos[0].video_url.split('be/')[1] ? <div class="h-full bg-gray-300 rounded-xl aspect-square"></div> :
-                            <iframe
-                                className={'w-full h-96'}
-                                src={`https://www.youtube.com/embed/${results?.videos[0].video_url.split('be/')[1]}`}
-                                title="YouTube video player"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            ></iframe>}
+                       <div class="h-full bg-gray-300 rounded-xl aspect-square"></div>
+                         
 
 
                     </div>
