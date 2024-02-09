@@ -51,7 +51,7 @@ const breadcrumbWithHome = [
  // Eliminar el último elemento del breadcrumb 
  
 ---
-<nav class="flex py-5 lg:px-0 md:px-0" aria-label="Breadcrumb">
+<nav class="flex p-5 lg:px-0 md:px-0" aria-label="Breadcrumb">
   <ol class="flex flex-wrap items-center">
     {breadcrumbWithHome?.map((item: BreadcrumbItem, index: number) => {
       return (
@@ -70,7 +70,7 @@ const breadcrumbWithHome = [
                 )}
               </Link>
             ) : (
-              <p class="px-1 text-primary-text-msb font-semibold capitalize">{item.name}</p>
+              <p class="px-1 text-sm  text-primary-text-msb font-semibold capitalize">{item.name}</p>
             )}
             {index !== breadcrumbWithHome.length - 1 && (
               <span class="text-primary-text-msb font-light">/</span>

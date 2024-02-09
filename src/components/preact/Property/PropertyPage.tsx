@@ -1,29 +1,39 @@
-import { useEffect, useState } from "preact/hooks";
-
 import type { APIResponsePropertyDetail, ResultPropertyDetails } from "@interfaces/detail.properties.interface";
 import type { FunctionComponent } from "preact";
+import { useEffect, useState } from "preact/hooks";
 import type { PropsWithChildren } from "react";
+import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
-import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
-import Spinner from "../Spinner";
-import Button from "../ui/Buttons/Button";
 import BreadCrumbSkeleton from "../Skeletons/BreadCrumbSkeleton";
+import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
+import Button from "../ui/Buttons/Button";
+import TabMenu from "./TabMenu";
+
 interface Props {
     branchCode: string;
     propertyCode: string;
     breadCrumbChild?: string;
-
 }
 
 const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [results, setResults] = useState<ResultPropertyDetails | null>()
-
     const [isLoading, setIsLoading] = useState<boolean>(true)
-
+    const [tabMenuProperty, setTabMenuProperty] = useState(tabMenuPropertyStore.get()); // Estado local para el valor del almacén
+    console.log(tabMenuProperty)
     useEffect(() => {
+        const unsubscribe = tabMenuPropertyStore.subscribe(() => {
+            // Cuando el valor del almacén cambia, actualizamos el estado local para reflejar los cambios
+            setTabMenuProperty(tabMenuPropertyStore.get());
+        });
+
+        // Realiza las tareas de inicialización aquí, como la obtención de datos
         fetchResults();
 
-    }, [])
+        // Devuelve una función de limpieza que cancela la suscripción cuando el componente se desmonta
+        return () => {
+            unsubscribe();
+        };
+    }, []);
 
     const fetchResults = async () => {
         try {
@@ -38,32 +48,39 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             } else if (response.ok) {
                 setIsLoading(false);
                 setResults(data.resultado);
-
             }
         } catch (error) {
             console.log(error);
         }
     };
 
-
     return (
         <>
             <header class="lg:flex justify-between items-center">
-         
                 {isLoading ? <BreadCrumbSkeleton /> : props.breadCrumbChild}
-                <a href={"https://api.whatsapp.com/send/?phone=5491133927629&text=%C2%A1Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+https%3A%2F%2Fmatiasszpira.com.ar%2Fcasa-en-alquiler-en-terravista-ficha-ms36639&type=phone_number&app_absent=0"} class="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide">Consultar</a>
+                <a target={'_blank'} href={"https://api.whatsapp.com/send/?phone=5491133927629&text=%C2%A1Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+https%3A%2F%2Fmatiasszpira.com.ar%2Fcasa-en-alquiler-en-terravista-ficha-ms36639&type=phone_number&app_absent=0"} class="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide">Consultar</a>
             </header>
             <div class="pt-5 flex justify-between">
-                <div class="">
-                    Menu
-                </div>
+                <TabMenu />
                 <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>
             </div>
-            {isLoading ? <GalleryPropertySkeleton /> : <GalleryProperty addStyles="grid grid-cols  lg:grid-cols-2 gap-5 animate-fadeIn " galleryID={`gallery-property-${results?.datos?.codigo_ficha}`} images={results!?.img || []} />}
-            <h1>Detalle de Propiedad</h1>
-            <p>Esta es la página de detalle de propiedad</p>
+            {isLoading ? <GalleryPropertySkeleton /> :
+                tabMenuProperty.gallery === true && !tabMenuProperty.video ?
+                    (<GalleryProperty addStyles="grid grid-cols  lg:grid-cols-2 gap-5 animate-fadeIn transition " galleryID={`gallery-property-${results?.datos?.codigo_ficha}`} images={results?.img || []} />)
+                    : <div className={'grid'}>
+                        {/* video */}
+
+                        <iframe
+                            className={'w-full h-96'}
+                            src={`https://www.youtube.com/embed/${results?.videos[0].video_url.split('be/')[1]}`}
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        ></iframe>
+
+                    </div>
+            }
         </>
     )
 }
 
-export default PropertyPage
+export default PropertyPage;

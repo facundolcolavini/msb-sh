@@ -4,10 +4,12 @@ import type { FunctionComponent, JSX } from 'preact';
 import { useCallback, useState } from 'preact/hooks';
 import { twMerge } from 'tailwind-merge';
 
-interface Props extends JSX.HTMLAttributes<HTMLButtonElement> {
+interface Props extends Omit<JSX.HTMLAttributes<HTMLButtonElement>, 'icon'> {
   variant?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'disabled';
   isFavorite?: boolean;
   addStyles?: string;
+  icon?: JSX.Element;
+  onClick?: (event: JSX.TargetedMouseEvent<HTMLButtonElement>) => void
 }
 
 const Button: FunctionComponent<Props> = ({
@@ -15,6 +17,7 @@ const Button: FunctionComponent<Props> = ({
   isFavorite,
   children,
   addStyles,
+  icon,
   onClick,
   ...buttonProps
 }) => {
@@ -35,30 +38,31 @@ const Button: FunctionComponent<Props> = ({
   const styles = twMerge(clsx(baseStyles, variantStyles, addStyles));
 
   // Handler para el botón de favorito
-  const handleButtonClick = () => {
+  const handleButtonClick = (e:JSX.TargetedMouseEvent<HTMLButtonElement>) => {
     // Cambiar el estado de favorito al hacer clic
-    setFavorited(!favorited);
+    isFavorite && setFavorited(!favorited);
     // Ejecutar la función onClick si está definida
-    if (onClick) onClick;
+    if (onClick) onClick(e);
   };
   
   return (
     <button
       {...buttonProps}
       className={styles}
+      id={buttonProps.id}
       disabled={variant === 'disabled'}
       onClick={onClick}
       value={buttonProps.value}
     >
     
       {/* Renderizar el icono con el color adecuado */}
-      
+      {icon && icon}
       {children}
       {
         isFavorite && (
-          <span onClick={handleButtonClick} className={ isFavorite && favorited ? " fill-black-400" : "hover:fill-black"}>
-        <HeartIcon className={isFavorite && favorited ? "relative z-10" : "fill-primary-text-msb"}  />
-      </span>
+          <span onClick={handleButtonClick} className={ isFavorite && favorited ? " fill-black-400" : "hover:fill-black-300"}>
+            <HeartIcon className={isFavorite && favorited ? "relative z-10" : "fill-primary-text-msb"}  />
+          </span>
         )
       }
     </button>
