@@ -1,0 +1,33 @@
+---
+import MapGoogle from "@components/MapGoogle.astro";
+import Layout from "@layouts/Layout.astro";
+import { getEntrepreneurshipById } from "@services/get-all-entrepreneurship";
+
+const googleApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY;
+const { emprendimiento } = Astro.params;
+
+const data = await getEntrepreneurshipById(emprendimiento ?? "");
+const center = {
+  lat:
+    Number(
+      Array.isArray(data.emprendimiento) &&
+        data.emprendimiento[0]?.ed_coo.split(",")[0],
+    ) || 0,
+  lng:
+    Number(
+      Array.isArray(data.emprendimiento) &&
+        data.emprendimiento[0]?.ed_coo.split(",")[1],
+    ) || 0,
+};
+const dir =
+  (Array.isArray(data.emprendimiento) && data.emprendimiento[0]?.ed_nom) ||
+  "No hay dirección";
+---
+
+<Layout title={"Detalle"} description="detalles">
+  <MapGoogle center={center} label={dir} />
+</Layout>
+<script
+  is:inline
+  src=`https://maps.googleapis.com/maps/api/js?key=${googleApiKey}&libraries=places&callback=initMap`
+></script>

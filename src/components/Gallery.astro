@@ -9,13 +9,13 @@ interface Props {
 const { imagesGallery, qImages } = Astro.props as Props;
 ---
 
-<div class="grid grid-cols relative py-10 lg:grid-cols-2 gap-4" id="gallery" transition:animate="fade">
+<div class="grid grid-cols  lg:grid-cols-2 gap-5" id="gallery" transition:animate="fade">
   {
-    imagesGallery[0] && (
+    imagesGallery[0]  &&  (
       <div class="col-span-1 h-100">
         <a
           class="group rounded-xl hover:scale-105 transition-all relative aspect-squeare"
-          href={imagesGallery[0]}
+          href={imagesGallery[0] && imagesGallery[0]}
           target="_blank"
           data-cropped="true"
           data-pswp-width="2000"
@@ -35,14 +35,18 @@ const { imagesGallery, qImages } = Astro.props as Props;
             src={imagesGallery[0] && imagesGallery[0]}
             alt="Imagen 1"
             loading="lazy"
-            class="blur-lg absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 rounded object-cover"
+            class=" rounded-xl aspect-square object-cover absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 "
           />
         </a>
       </div>
-    )
+    ) /* : (
+      <div class="col-span-1 h-100">
+        <div class="h-full bg-gray-200 rounded-xl aspect-square"></div>
+      </div>
+    ) */
   }
 
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-2 gap-5">
     {
       imagesGallery[1] && (
         <div class="col-span-1">

@@ -369,7 +369,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
                     <CardProperty
                       cardData={result}
                       key={`${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`} // Aquí estás utilizando result.id como clave
-                      href={`resultados-de-busqueda/${result.operacion}/${result.in_loc}/${result.direccion_completa}/${result.in_suc}/${result.in_num}`}
+                      href={`resultados-de-busqueda/${result.operacion}/${result.in_loc}/${result.direccion_completa}/${result.in_suc}-${result.in_num}`}
                     />
                   ))}
                 </>

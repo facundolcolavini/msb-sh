@@ -1,8 +1,12 @@
-export interface APIPropertyDetail {
-    resultado: Resultado;
+export interface APIResponsePropertyDetail  {
+    resultado: ResultPropertyDetails;
 }
 
-export interface Resultado {
+export interface ApiError {
+    error: string;
+}
+
+export interface ResultPropertyDetails {
     datos:                                    Datos;
     videos:                                   Video[];
     provincia:                                string;

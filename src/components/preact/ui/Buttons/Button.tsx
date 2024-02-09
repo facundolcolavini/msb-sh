@@ -1,6 +1,7 @@
 import HeartIcon from '@components/preact/Icons/HeartIcon';
 import clsx from 'clsx';
 import type { FunctionComponent, JSX } from 'preact';
+import { useCallback, useState } from 'preact/hooks';
 import { twMerge } from 'tailwind-merge';
 
 interface Props extends JSX.HTMLAttributes<HTMLButtonElement> {
@@ -18,7 +19,8 @@ const Button: FunctionComponent<Props> = ({
   ...buttonProps
 }) => {
   const baseStyles = 'px-4 py-2 rounded font-semibold text-sm transition-all';
-
+  const [favorited, setFavorited] = useState(isFavorite || false); // Estado para controlar si se marca como favorito
+ 
   // Definimos las clases condicionales según el valor de variant
   const variantStyles = clsx({
     'bg-primary-msb text-white border-primary-msb hover:bg-primary-hover-msb': variant === 'primary',
@@ -32,7 +34,15 @@ const Button: FunctionComponent<Props> = ({
   // Combinamos las clases base y las condicionales
   const styles = twMerge(clsx(baseStyles, variantStyles, addStyles));
 
-  return (  
+  // Handler para el botón de favorito
+  const handleButtonClick = () => {
+    // Cambiar el estado de favorito al hacer clic
+    setFavorited(!favorited);
+    // Ejecutar la función onClick si está definida
+    if (onClick) onClick;
+  };
+  
+  return (
     <button
       {...buttonProps}
       className={styles}
@@ -40,10 +50,20 @@ const Button: FunctionComponent<Props> = ({
       onClick={onClick}
       value={buttonProps.value}
     >
-      {isFavorite && <span className=""><HeartIcon/> </span>}
+    
+      {/* Renderizar el icono con el color adecuado */}
+      
       {children}
+      {
+        isFavorite && (
+          <span onClick={handleButtonClick} className={ isFavorite && favorited ? " fill-black-400" : "hover:fill-black"}>
+        <HeartIcon className={isFavorite && favorited ? "relative z-10" : "fill-primary-text-msb"}  />
+      </span>
+        )
+      }
     </button>
   );
-};
+
+}
 
 export default Button;

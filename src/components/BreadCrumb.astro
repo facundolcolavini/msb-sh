@@ -52,34 +52,32 @@ const breadcrumbWithHome = [
  
 ---
 <nav class="flex p-5 lg:px-0 md:px-0" aria-label="Breadcrumb">
-  <ol
-    class="flex flex-wrap items-center"
-  >
-    {
-      breadcrumbWithHome?.map((item: BreadcrumbItem, index: number) => {
-        return (
-          <li class="inline-flex items-center">
-            <div class="flex items-center">
+  <ol class="flex flex-wrap items-center">
+    {breadcrumbWithHome?.map((item: BreadcrumbItem, index: number) => {
+      return (
+        <li class="inline-flex items-center">
+          <div class="flex items-center">
+            {index === 0 || item.name === "resultados de busqueda" ? (
+            
               <Link
-                
                 href={item.url}
                 class={` ${item.url === `${origin}${pathname}` ? "text-primary-msb font-semibold tracking-wide" : "ms-1 text-sm font-semibold text-primary-text-msb capitalize hover:text-tertiary-bg-msb tracking-wide underline"}`}
               >
-                   
-              {item.name === "Home" ? (
-              <p class="pr-1"><Icon  name="home-2" size={20} /></p>
-              ) : (
-                <p class="px-1">{item.name}</p>
-              )}
+                {item.name === "Home" ? (
+                  <p class="pr-1"><Icon  name="home-2" size={20} /></p>
+                ) : (
+                  <p class="px-1">{item.name}</p>
+                )}
               </Link>
-              {index !== breadcrumbWithHome.length - 1 && (
-             
-               <span class="text-primary-text-msb font-light">/</span>
-              )}
-            </div>
-          </li>
-        );
-      })
-    }
+            ) : (
+              <p class="px-1 text-primary-text-msb font-semibold capitalize">{item.name}</p>
+            )}
+            {index !== breadcrumbWithHome.length - 1 && (
+              <span class="text-primary-text-msb font-light">/</span>
+            )}
+          </div>
+        </li>
+      );
+    })}
   </ol>
 </nav>
