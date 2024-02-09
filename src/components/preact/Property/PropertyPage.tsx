@@ -2,7 +2,7 @@ import type { APIResponsePropertyDetail, ResultPropertyDetails } from "@interfac
 import type { FunctionComponent } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import type { PropsWithChildren } from "react";
-import { resetTabMenu, tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
+import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
 import BreadCrumbSkeleton from "../Skeletons/BreadCrumbSkeleton";
 import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
@@ -18,7 +18,7 @@ interface Props {
 const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [results, setResults] = useState<ResultPropertyDetails | null>()
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [tabMenuProperty, setTabMenuProperty] = useState( 
+    const [tabMenuProperty, setTabMenuProperty] = useState(
         tabMenuPropertyStore.get() // Estado local para el valor del almacén
     ); // Estado local para el valor del almacén
     console.log(tabMenuProperty)
@@ -29,7 +29,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         // Limpiar la suscripción al desmontar
         return () => unsubscribe();
         // Realiza las tareas de inicialización aquí, como la obtención de datos
-      
+
 
 
     }, []);
@@ -68,9 +68,14 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     (<GalleryProperty addStyles="grid grid-cols  lg:grid-cols-2 gap-5 animate-fadeIn transition " galleryID={`gallery-property-${results?.datos?.codigo_ficha}`} images={results?.img || []} />)
                     : <div className={'grid'}>
                         {/* video */}
-                        <div class="h-full bg-gray-300 rounded-xl aspect-square"></div>
-       
-                       
+                        {results?.videos[0].video_url.split('be/')[1] ? <div class="h-full bg-gray-300 rounded-xl aspect-square"></div> :
+                            <iframe
+                                className={'w-full h-96'}
+                                src={`https://www.youtube.com/embed/${results?.videos[0].video_url.split('be/')[1]}`}
+                                title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            ></iframe>}
+
 
                     </div>
             }
