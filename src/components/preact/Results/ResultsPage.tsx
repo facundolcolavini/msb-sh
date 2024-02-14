@@ -181,7 +181,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
   };
 
   return (
-    <article className=" py-10">
+    <article className="py-10">
       {/* Buscador */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-4 md:px-0 px-3 ">
         <div className="lg:col-start-1 lg:col-end-3 flex gap-4">

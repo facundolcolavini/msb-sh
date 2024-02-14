@@ -16,7 +16,7 @@ let id = prop?.split("-")[1] ?? "";
 
 <Layout title="Detalle de Propieda" description="Detalle de Propiedad">
   <section class="bg-[#FFFBF4] h-full py-2">
-    <article class="container mx-auto px-3 md:px-0 lg:px-0">
+
       <PropertyPage
         client:load
         propertyCode={id}
@@ -24,7 +24,8 @@ let id = prop?.split("-")[1] ?? "";
         breadCrumbChild=""
       >
         <BreadCrumb slot="breadCrumbChild" url={propiedad} transition:persist />
+   
       </PropertyPage>
-    </article>
+   
   </section>
 </Layout>
