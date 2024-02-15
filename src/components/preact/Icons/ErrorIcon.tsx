@@ -6,13 +6,13 @@ interface Props {
     w ?: string;
     h ?: string; 
   }
-const HomeLocation = ({addStyles, w = "16", h = "16"}:Props) => {
+const ErrorIcon = ({addStyles, w = "24", h = "24"}:Props) => {
     const styles = twMerge(clsx("h-100 w-100 object-contain", addStyles));
   return (
     <>
-      <img id="home-location" className={styles} alt="home location icon" src="/images/home-location.png" width={w} height={h} />
+      <img id="error" className={styles} alt="error icon" src="/images/x.png" width={w} height={h} />
     </>
   )
 }
 
-export default HomeLocation
+export default ErrorIcon

@@ -10,6 +10,7 @@ import BreadCrumbSkeleton from "../Skeletons/BreadCrumbSkeleton";
 import DetailsPropertySkeleton from "../Skeletons/DetailsPropertySkeleton";
 import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
 import Button from "../ui/Buttons/Button";
+import ContactForm from "./ContactForm";
 import TabMenu from "./TabMenu";
 
 interface Props {
@@ -63,7 +64,6 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         }
     };
 
-    console.log(he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc} ${results?.ficha[0]?.in_pai}`))
     return (
         <article className=" px-3 md:px-0 lg:px-0">
             <section className="h-full">
@@ -136,12 +136,12 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                 {isLoading || !results?.ficha[0]?.direccion ? <div className="h-[350px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100 animate-pulse"><span className="flex justify-center items-center h-full font-bold"></span></div> : (<div className="h-[400px] w-full md:col-span-1 lg:col-span-1">
                     {/* Agregar el titulo de la direcion en alado del market  */}
 
-                    <iframe className="w-full h-full" src={`https://www.google.com/maps/embed/v1/place?q=${he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}, ${results?.ficha[0]?.in_pai}`)}&key=${import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY}
+                    <iframe className="w-full h-full" src={`https://www.google.com/maps/embed/v1/place?q=${`${results?.ficha[0]?.latitud}, ${results?.ficha[0]?.longitud}`}&key=${import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY}
                     
                     `} allowFullScreen aria-placeholder={'asd'}></iframe>
                 </div>)}
                 <div className={'bg-[#D9D9D9]'}>
-
+                    <ContactForm id={results?.datos?.codigo_ficha ?? ''} codsuc={results?.ficha[0]?.codsuc ?? ''} />
                 </div>
             </section>
         </article>
