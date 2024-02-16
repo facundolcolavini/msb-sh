@@ -14,6 +14,7 @@ import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
 import Button from "../ui/Buttons/Button";
 import ContactForm from "./ContactForm";
 import TabMenu from "./TabMenu";
+import { navigate } from "astro/dist/transitions/router";
 
 interface Props {
     branchCode: string;
@@ -36,6 +37,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
             // Reemplazar la URL actual en el historial sin el parámetro fbclid
             window.history.replaceState({}, document.title, urlWithoutFbclid);
+            window.location.reload();
             window.scrollTo(0, 0);
         }
 
