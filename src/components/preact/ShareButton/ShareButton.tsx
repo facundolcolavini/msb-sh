@@ -27,7 +27,7 @@ const ShareButton = () => {
       // Redirigir a la nueva URL sin el parámetro fbclid
       window.location.replace(urlWithoutFbclid);
     }
-  }, []);
+  }, [window.location.search]);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
