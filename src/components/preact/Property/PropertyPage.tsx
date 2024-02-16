@@ -12,6 +12,8 @@ import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
 import Button from "../ui/Buttons/Button";
 import ContactForm from "./ContactForm";
 import TabMenu from "./TabMenu";
+import ShareButton from "../ShareButton/ShareButton";
+import PrintIcon from "../Icons/PrintIcon";
 
 interface Props {
     branchCode: string;
@@ -46,7 +48,10 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         }
         fetchResults();
     }, [window.location.search]); // Sin dependencias para que se ejecute solo una vez al cargar la página
-
+        // Función para imprimir la página
+        const handlePrint = () => {
+            window.print();
+        };
     const fetchResults = async () => {
         try {
             setIsLoading(true);
@@ -131,13 +136,22 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     </div>
                 }
             </section>
-            <section className="container mx-auto flex gap-2 pt-16 pb-5">
+            <section className="container mx-auto flex justify-between gap-2 pt-16 pb-5">
+
                 {isLoading ? (<div className="container mx-auto pb-16"><BreadCrumbSkeleton /> </div>) : (
-                    <>
+                    <div className="flex items-end gap-1">
                         <img src="/images/map.png" alt="marker map" className="object-contain" />
                         <span className="text-sm md:text-md lg:text-lg text-primary-text-msb font-semibold">{he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`)}</span>
-                    </>)
+                    </div>)
                 }
+                <div className={'flex gap-5'} >
+                    <ShareButton />
+                    <button onClick={handlePrint} className="flex gap-1 cursor-pointer">
+                        <span className={'font-semibold flex gap-1'}>
+                            Imprimir <PrintIcon />
+                        </span>
+                    </button>
+                </div>
             </section>
             <section className="container mx-auto grid grid-cols md:grid-cols lg:grid-cols-2 gap-36">
                 {/* Google map iframe */}
