@@ -48,6 +48,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         }
         fetchResults();
     }, [window.location.search]); // Sin dependencias para que se ejecute solo una vez al cargar la página
+    
         // Función para imprimir la página
         const handlePrint = () => {
             window.print();
