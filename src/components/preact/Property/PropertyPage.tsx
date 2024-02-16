@@ -31,13 +31,10 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
     useEffect(() => {
            // Limpiar la suscripción al desmontar
-          // Verificar si la página se cargó desde Facebook y si tiene el parámetro fbclid
+          // Verificar si la página se cargó desde Facebook y si tiene el parámetro ?fbclid=IwAR1TYlgIHl4uMjVOE0Z-63WlmJs4YPN1Mkyn2hLqF2_WWAUORqrTYAsFeZ4 eliminar todo el search de la url
           if (window.location.href.includes('facebook.com') && window.location.search.includes('fbclid')) {
-            // Obtener la URL actual sin el parámetro fbclid
-            const urlWithoutFbclid = window.location.href.split('?')[0];
-
-            // Redirigir a la nueva URL sin el parámetro fbclid
-            window.location.replace(urlWithoutFbclid);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            
         }
         // Suscribirse a cambios en el almacén y actualizar el estado local
         const unsubscribe = tabMenuPropertyStore.subscribe(setTabMenuProperty);
