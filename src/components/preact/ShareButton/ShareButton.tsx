@@ -19,8 +19,14 @@ const ShareButton = () => {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-    // Eliminar fbclid=IwAR3AkCWOW3AV-zwIYKEgejKoF1n6jNRFA87vEZuVe2vP2W7eNXmhpwUkQe4 de mi url 
-    window.history.replaceState({}, document.title, window.location.href.replace(/&?fbclid=[^&]*/g, ''));
+    // Verificar si la página se cargó desde Facebook y si tiene el parámetro fbclid
+    if (window.location.href.includes('facebook.com') && window.location.search.includes('fbclid')) {
+      // Obtener la URL actual sin el parámetro fbclid
+      const urlWithoutFbclid = window.location.href.split('?')[0];
+
+      // Redirigir a la nueva URL sin el parámetro fbclid
+      window.location.replace(urlWithoutFbclid);
+    }
   }, []);
 
   const handleClickOutside = (event: MouseEvent) => {
