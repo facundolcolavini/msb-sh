@@ -8,8 +8,6 @@ export const POST: APIRoute  = async ({ request }) => {
         throw new Error('Se requieren las claves INM y APIK en el archivo .env');
       }
 
-
-
     try {
         const response = await fetch (`https://xintel.com.ar/api?json=consultas&inm=${INM}&apiK=${APIK}`, { 
             method: 'POST',

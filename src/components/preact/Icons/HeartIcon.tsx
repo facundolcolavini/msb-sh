@@ -1,6 +1,6 @@
 import type { FunctionComponent } from "preact";
 
-const HeartIcon: FunctionComponent<{className:string}> = (props) => {
+const HeartIcon: FunctionComponent<{className?:string}> = (props) => {
 
   return (
     <svg

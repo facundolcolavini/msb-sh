@@ -18,7 +18,7 @@ let id = prop?.split("-")[1] ?? "";
   <section class="bg-[#FFFBF4] h-full py-2">
 
       <PropertyPage
-        client:load
+        client:only
         propertyCode={id}
         branchCode={suc}
         breadCrumbChild=""

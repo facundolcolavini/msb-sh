@@ -1,7 +1,7 @@
 
 import BathIcon from "@components/preact/Icons/BathIcon";
 import DoorOpen from "@components/preact/Icons/DoorOpen";
-import HeartIcon from "@components/preact/Icons/HeartIcon";
+ 
 import RuleIcon from "@components/preact/Icons/RuleIcon";
 import type { File } from "@interfaces/results.records.interfaces";
 import type { HTMLAttributes } from "astro/types";
@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import type { FunctionComponent } from "preact/compat";
 import { twMerge } from 'tailwind-merge';
 import SquareMeterIcon from '../../Icons/SquareMeterIcon';
+import HeartIcon from "@components/preact/Icons/HeartIcon";
 
 interface Props extends HTMLAttributes<"a"> {
     cardData: File
@@ -43,7 +44,7 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles,href, key 
                     </button>
 
                     <button>
-                        <HeartIcon />
+                        <HeartIcon/>
                     </button>
                 </div>
             </div>
