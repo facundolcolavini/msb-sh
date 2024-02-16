@@ -70,7 +70,7 @@ const ShareButton = () => {
         </a>
         <a
           target="_blank"
-          href={`https://www.facebook.com/sharer.php?u=${he.decode(window.location.href)}`}
+          href={`https://www.facebook.com/sharer.php?url=${he.decode(window.location.href)}`}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir en Facebook"
         >
