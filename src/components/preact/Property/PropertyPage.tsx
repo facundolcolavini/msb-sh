@@ -48,6 +48,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             // Reemplazar la URL actual en el historial sin el parámetro fbclid
             window.history.replaceState({}, document.title, urlWithoutFbclid);
         }
+        fetchResults();
     }, [window.location.search]); // Sin dependencias para que se ejecute solo una vez al cargar la página
 
     const fetchResults = async () => {
