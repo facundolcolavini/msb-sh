@@ -30,21 +30,23 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [videoUrl, setVideoUrl] = useState<string | null>(null); // Estado local para la URL del video
 
     useEffect(() => {
-        // Suscribirse a cambios en el almacén y actualizar el estado local
-        const unsubscribe = tabMenuPropertyStore.subscribe(setTabMenuProperty);
-        fetchResults();
-        // Limpiar la suscripción al desmontar
-        return () => unsubscribe();
-        // Realiza las tareas de inicialización aquí, como la obtención de datos
-
-        // Verificar si la página se cargó desde Facebook y si tiene el parámetro fbclid
-        if (window.location.href.includes('facebook.com') && window.location.search.includes('fbclid')) {
+           // Limpiar la suscripción al desmontar
+          // Verificar si la página se cargó desde Facebook y si tiene el parámetro fbclid
+          if (window.location.href.includes('facebook.com') && window.location.search.includes('fbclid')) {
             // Obtener la URL actual sin el parámetro fbclid
             const urlWithoutFbclid = window.location.href.split('?')[0];
 
             // Redirigir a la nueva URL sin el parámetro fbclid
             window.location.replace(urlWithoutFbclid);
         }
+        // Suscribirse a cambios en el almacén y actualizar el estado local
+        const unsubscribe = tabMenuPropertyStore.subscribe(setTabMenuProperty);
+        fetchResults();
+     
+        return () => unsubscribe();
+        // Realiza las tareas de inicialización aquí, como la obtención de datos
+
+      
 
     }, []);
 

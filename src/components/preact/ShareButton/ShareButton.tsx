@@ -79,7 +79,7 @@ const ShareButton = () => {
         </a>
         <a
           target="_blank"
-          href={`mailto:?subject=Te comparto este articulo&body=Hola, te comparto este articulo que me parecio interesante ${he.decode(window.location.href)}`}
+          href={`mailto:?subject=Te comparto este articulo&body=Hola, te comparto este articulo que me parecio interesante ${encodeURIComponent(window.location.href)}`}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir por Email"
         >
