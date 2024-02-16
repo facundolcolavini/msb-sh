@@ -35,7 +35,14 @@ const ShareButton = () => {
   const toggleIcons = () => {
     setShowIcons(!showIcons);
   };
-
+  const shareOnFacebook = () => {
+    // Codifica la URL actual usando encodeURIComponent para que sea seguro para la URL
+    const encodedUrl = encodeURIComponent(window.location.href);
+    // Crea la URL completa para compartir en Facebook
+    const facebookShareUrl = `https://www.facebook.com/sharer.php?u=${encodedUrl}`;
+    // Abre la ventana emergente para compartir en Facebook
+    window.open(facebookShareUrl, '_blank');
+};
   return (
     <div className="relative inline-block">
       <div
@@ -68,14 +75,12 @@ const ShareButton = () => {
         >
           <LinkedInIcon />
         </a>
-        <a
-          target="_blank"
-          href={`https://www.facebook.com/sharer.php?url=${he.decode(window.location.href)}`}
+        <button
+          onClick={shareOnFacebook}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
-          title="Compartir en Facebook"
         >
           <FacebookIcon />
-        </a>
+        </button>
         <a
           target="_blank"
           href={`mailto:?subject=Te comparto este articulo&body=Hola, te comparto este articulo que me parecio interesante ${he.decode(window.location.href)}`}
