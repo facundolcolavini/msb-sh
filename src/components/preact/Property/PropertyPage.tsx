@@ -40,13 +40,9 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     }, []);
 
     useEffect(() => {
-        // Verificar si la página se cargó desde Facebook y si tiene el parámetro fbclid
-        if (window.location.search.includes('fbclid')) {
-            // Obtener la URL actual sin el parámetro fbclid
-            const urlWithoutFbclid = window.location.href.split('?')[0];
-    
-            // Reemplazar la URL actual en el historial sin el parámetro fbclid
-            window.history.replaceState({}, document.title, urlWithoutFbclid);
+        // Verificar si hay search params y eliminarlos de la url 
+        if (window.location.search) {
+            window.history.replaceState({}, document.title, window.location.pathname);
         }
         fetchResults();
     }, [window.location.search]); // Sin dependencias para que se ejecute solo una vez al cargar la página
