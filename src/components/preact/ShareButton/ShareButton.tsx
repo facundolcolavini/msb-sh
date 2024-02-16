@@ -63,7 +63,7 @@ const ShareButton = () => {
         </a>
         <a
           target="_blank"
-          href={`https://www.linkedin.com/sharing/share-offsite/?url=${he.decode(window.location.href)}`}
+          href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir en LinkedIn"
         >
