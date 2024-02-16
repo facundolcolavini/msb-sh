@@ -37,7 +37,14 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         return () => unsubscribe();
         // Realiza las tareas de inicialización aquí, como la obtención de datos
 
+        // Verificar si la página se cargó desde Facebook y si tiene el parámetro fbclid
+        if (window.location.href.includes('facebook.com') && window.location.search.includes('fbclid')) {
+            // Obtener la URL actual sin el parámetro fbclid
+            const urlWithoutFbclid = window.location.href.split('?')[0];
 
+            // Redirigir a la nueva URL sin el parámetro fbclid
+            window.location.replace(urlWithoutFbclid);
+        }
 
     }, []);
 
@@ -65,10 +72,10 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             console.log(error);
         }
     };
-        // Función para imprimir la página
-        const handlePrint = () => {
-            window.print();
-        };
+    // Función para imprimir la página
+    const handlePrint = () => {
+        window.print();
+    };
 
     return (
         <article className=" px-3 md:px-0 lg:px-0">

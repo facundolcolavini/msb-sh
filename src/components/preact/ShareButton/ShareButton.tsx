@@ -19,15 +19,8 @@ const ShareButton = () => {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-    // Verificar si la página se cargó desde Facebook y si tiene el parámetro fbclid
-    if (window.location.href.includes('facebook.com') && window.location.search.includes('fbclid')) {
-      // Obtener la URL actual sin el parámetro fbclid
-      const urlWithoutFbclid = window.location.href.split('?')[0];
 
-      // Redirigir a la nueva URL sin el parámetro fbclid
-      window.location.replace(urlWithoutFbclid);
-    }
-  }, [window.location.search]);
+  }, []);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -70,7 +63,7 @@ const ShareButton = () => {
         </a>
         <a
           target="_blank"
-          href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
+          href={`https://www.linkedin.com/sharing/share-offsite/?url=${he.decode(window.location.href)}`}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir en LinkedIn"
         >
