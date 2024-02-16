@@ -54,7 +54,7 @@ const ShareButton = () => {
       >
         <a
           target="_blank"
-          href={`https://api.whatsapp.com/send?phone=&text=${he.decode(window.location.href)}`}
+          href={`https://api.whatsapp.com/send?phone=&text=Hola%2C%20te%20comparto%20esta%20ficha%3A%20${encodeURIComponent(window.location.href)}`}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir en WhatsApp"
         >
@@ -70,7 +70,7 @@ const ShareButton = () => {
         </a>
         <a
           target="_blank"
-          href={`https://www.facebook.com/sharer.php?u=${he.decode(window.location.href)}&source=&data=&fbclid=IwAR`}
+          href={`https://www.facebook.com/sharer.php?u=${he.decode(window.location.href)}`}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir en Facebook"
         >
