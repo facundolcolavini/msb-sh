@@ -14,7 +14,7 @@ import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
 import Button from "../ui/Buttons/Button";
 import ContactForm from "./ContactForm";
 import TabMenu from "./TabMenu";
-import { navigate } from "astro/dist/transitions/router";
+
 
 interface Props {
     branchCode: string;
