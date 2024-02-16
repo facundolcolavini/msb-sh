@@ -6,14 +6,14 @@ import { useEffect, useState } from "preact/hooks";
 import he from "he";
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
+import PrintIcon from "../Icons/PrintIcon";
+import ShareButton from "../ShareButton/ShareButton";
 import BreadCrumbSkeleton from "../Skeletons/BreadCrumbSkeleton";
 import DetailsPropertySkeleton from "../Skeletons/DetailsPropertySkeleton";
 import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
 import Button from "../ui/Buttons/Button";
 import ContactForm from "./ContactForm";
 import TabMenu from "./TabMenu";
-import ShareButton from "../ShareButton/ShareButton";
-import PrintIcon from "../Icons/PrintIcon";
 
 interface Props {
     branchCode: string;
@@ -30,8 +30,18 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [videoUrl, setVideoUrl] = useState<string | null>(null); // Estado local para la URL del video
 
     useEffect(() => {
+        if (window.location.search.includes('fbclid')) {
+            // Obtener la URL actual sin el parámetro fbclid
+            const urlWithoutFbclid = window.location.href.split('?')[0];
+
+            // Reemplazar la URL actual en el historial sin el parámetro fbclid
+            window.history.replaceState({}, document.title, urlWithoutFbclid);
+            window.scrollTo(0, 0);
+        }
+
         // Suscribirse a cambios en el almacén y actualizar el estado local
         const unsubscribe = tabMenuPropertyStore.subscribe(setTabMenuProperty);
+
         fetchResults();
         // Limpiar la suscripción al desmontar
         return () => unsubscribe();
@@ -41,18 +51,11 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
     }, []);
 
-    useEffect(() => {
-        // Verificar si hay search params y eliminarlos de la url 
-        if (window.location.search) {
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-        fetchResults();
-    }, []); // Sin dependencias para que se ejecute solo una vez al cargar la página
 
-        // Función para imprimir la página
-        const handlePrint = () => {
-            window.print();
-        };
+    // Función para imprimir la página
+    const handlePrint = () => {
+        window.print();
+    };
     const fetchResults = async () => {
         try {
             setIsLoading(true);
