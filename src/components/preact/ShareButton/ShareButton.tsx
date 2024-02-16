@@ -19,6 +19,8 @@ const ShareButton = () => {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
+    // Eliminar fbclid=IwAR3AkCWOW3AV-zwIYKEgejKoF1n6jNRFA87vEZuVe2vP2W7eNXmhpwUkQe4 de mi url 
+    window.history.replaceState({}, document.title, window.location.href.replace(/&?fbclid=[^&]*/g, ''));
   }, []);
 
   const handleClickOutside = (event: MouseEvent) => {
