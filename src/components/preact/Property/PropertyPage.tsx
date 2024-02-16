@@ -6,8 +6,6 @@ import { useEffect, useState } from "preact/hooks";
 import he from "he";
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
-import PrintIcon from "../Icons/PrintIcon";
-import ShareButton from "../ShareButton/ShareButton";
 import BreadCrumbSkeleton from "../Skeletons/BreadCrumbSkeleton";
 import DetailsPropertySkeleton from "../Skeletons/DetailsPropertySkeleton";
 import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
@@ -30,23 +28,28 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [videoUrl, setVideoUrl] = useState<string | null>(null); // Estado local para la URL del video
 
     useEffect(() => {
-           // Limpiar la suscripción al desmontar
-          // Verificar si la página se cargó desde Facebook y si tiene el parámetro ?fbclid=IwAR1TYlgIHl4uMjVOE0Z-63WlmJs4YPN1Mkyn2hLqF2_WWAUORqrTYAsFeZ4 eliminar todo el search de la url
-          if (window.location.href.includes('facebook.com') && window.location.search.includes('fbclid')) {
-            window.history.replaceState({}, document.title, window.location.pathname);
-            
-        }
         // Suscribirse a cambios en el almacén y actualizar el estado local
         const unsubscribe = tabMenuPropertyStore.subscribe(setTabMenuProperty);
         fetchResults();
-     
+        // Limpiar la suscripción al desmontar
         return () => unsubscribe();
         // Realiza las tareas de inicialización aquí, como la obtención de datos
 
-      
+
 
     }, []);
 
+    useEffect(() => {
+        // Verificar si la página se cargó desde Facebook y si tiene el parámetro fbclid
+        if (window.location.search.includes('fbclid')) {
+            // Obtener la URL actual sin el parámetro fbclid
+            const urlWithoutFbclid = window.location.href.split('?')[0];
+    
+            // Reemplazar la URL actual en el historial sin el parámetro fbclid
+            window.history.replaceState({}, document.title, urlWithoutFbclid);
+        }
+    }, []); // Sin dependencias para que se ejecute solo una vez al cargar la página
+    
     const fetchResults = async () => {
         try {
             setIsLoading(true);
@@ -70,10 +73,6 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         } catch (error) {
             console.log(error);
         }
-    };
-    // Función para imprimir la página
-    const handlePrint = () => {
-        window.print();
     };
 
     return (
@@ -135,22 +134,13 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     </div>
                 }
             </section>
-            <section className="container mx-auto flex justify-between gap-2 pt-16 pb-5">
-
+            <section className="container mx-auto flex gap-2 pt-16 pb-5">
                 {isLoading ? (<div className="container mx-auto pb-16"><BreadCrumbSkeleton /> </div>) : (
-                    <div className="flex items-end gap-1">
+                    <>
                         <img src="/images/map.png" alt="marker map" className="object-contain" />
                         <span className="text-sm md:text-md lg:text-lg text-primary-text-msb font-semibold">{he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`)}</span>
-                    </div>)
+                    </>)
                 }
-                <div className={'flex gap-5'} >
-                    <ShareButton />
-                    <button onClick={handlePrint} className="flex gap-1 cursor-pointer">
-                        <span className={'font-semibold flex gap-1'}>
-                            Imprimir <PrintIcon />
-                        </span>
-                    </button>
-                </div>
             </section>
             <section className="container mx-auto grid grid-cols md:grid-cols lg:grid-cols-2 gap-36">
                 {/* Google map iframe */}
