@@ -45,10 +45,9 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         // Verificar si hay search params y eliminarlos de la url 
         if (window.location.search) {
             window.history.replaceState({}, document.title, window.location.pathname);
-            fetchResults();
         }
         fetchResults();
-    }, [window.location.search]); // Sin dependencias para que se ejecute solo una vez al cargar la página
+    }, []); // Sin dependencias para que se ejecute solo una vez al cargar la página
 
         // Función para imprimir la página
         const handlePrint = () => {
