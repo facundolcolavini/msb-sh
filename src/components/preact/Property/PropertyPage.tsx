@@ -40,7 +40,6 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             window.location.reload();
             window.scrollTo(0, 0);
         }
-
         // Suscribirse a cambios en el almacén y actualizar el estado local
         const unsubscribe = tabMenuPropertyStore.subscribe(setTabMenuProperty);
 
@@ -76,6 +75,8 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     const videoUrl = data.resultado?.ficha[0]?.in_vid;
                     const videoId = new URL(videoUrl).searchParams.get("v");
                     setVideoUrl(videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1` : null);
+                }else{
+                    setVideoUrl(null)
                 }
             }
         } catch (error) {
@@ -91,7 +92,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     <a target={'_blank'} href={`https://api.whatsapp.com/send/?phone=5491133927629&text=%C2%A1Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${he.decode(`https://msb-sh.vercel.app/resultados-de-busqueda/${results?.ficha[0]?.operacion}/${results?.ficha[0]?.in_loc}/${results?.ficha[0]?.direccion}/${results?.ficha[0]?.in_suc}-${results?.ficha[0]?.in_num}`)}&type=phone_number&app_absent=0`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide">Consultar</a>
                 </header>
                 <div className="container mx-auto pt-5 flex justify-between">
-                    <TabMenu />
+                    <TabMenu videoUrl={videoUrl} />
                     <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16"><GalleryPropertySkeleton /></div> :
@@ -110,47 +111,56 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             <section className="bg-[#939B41] py-10 text-white  md:px-0 lg:px-0 ">
                 {isLoading ? <DetailsPropertySkeleton />
                     :
-                    <div className="grid lg:grid-cols-4 md:grid-cols-4 gird-cols justify-center w-fit  items-center place-content-center mx-auto h-full">
+                    <div className="container flex flex-col md:flex-col lg:flex-row justify-center w-3/4 lg:w-fit  items-center place-content-center mx-auto h-full">
                         {/* Caracteristicas */}
-                        <div className="border-b-2 lg:border-l-2 lg:border-b-0 md:border-l-0 md:border-b-0  text-center h-full w-full flex justify-center items-center flex-col  p-5">
-                            <span className="text-2xl md:text-2xl lg:text-3xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center">Valor</span>
-                            <span className="text-xl md:text-xl lg:text-2xl font-semibold tracking-wide ">{results?.ficha[0]?.precio}</span>
-                        </div>
-                        <div className="border-b-2 lg:border-l-2 lg:border-b-0 md:border-l-2 md:border-b-0 flex justify-center flex-col  text-center  w-full p-5">
-                            <div className="flex items-center justify-center ">
-                                <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/superficie.png'} alt="superficie" />
-                            </div>
-                            <span className="text-2xl md:text-2xl lg:text-3xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center justify-center">Sup.Total</span>
-                            <span className={"text-xl md:text-xl lg:text-2xl font-semibold tracking-wide "}>{results?.ficha[0]?.in_sut}m²</span>
-                        </div>
-                        <div className="border-b-2  lg:border-l-2 lg:border-b-0 md:border-l-2 md:border-b-0 flex justify-center flex-col  text-center  w-full p-5">
-                            <div className="flex items-center justify-center">
+                        {
+                            results?.ficha[0]?.in_amb?.split('A')[0].length !== 0 && results?.ficha[0]?.moneda ? (<div className="border-b-2 border-t-2 lg:border-l-2 lg:border-t-0 lg:border-b-0 md:border-b-2 md:border-t-2  text-center h-[184px] w-full flex justify-center items-center flex-col px-10 md:px-20 lg:px-20 p-5">
+                                <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant font-semibold tracking-wider flex  items-center h-fit">Valor</span>
+                                <p className="text-xl md:text-xl lg:text-3xl font-bold tracking-wider flex gap-2"><span>{results?.ficha[0]?.moneda}</span>{results?.ficha[0]?.precio.replace('U$S', '')}</p>
+                            </div>) : null}
+                        {
+                            results?.ficha[0]?.in_sut ? (<div className="border-b-2 lg:border-l-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5 ">
+                                <div className="flex items-center justify-center ">
+                                    <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/superficie.png'} alt="superficie" />
+                                </div>
+                                <span className="text-2xl md:text-2xl lg:text-4xl  h-[56px] font-cormorant font-semibold tracking-wider flex items-center justify-center">Sup.Total</span>
+                                <span className={"text-xl md:text-xl lg:text-3xl font-bold tracking-wide "}>{results?.ficha[0]?.in_sut}m²</span>
+                            </div>) : null
 
-                                <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/puerta.png'} alt="superficie" />
-                            </div>
-                            <span className="text-2xl md:text-2xl lg:text-3xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center justify-center">Ambientes</span>
-                            <span className={"text-xl md:text-xl lg:text-2xl font-semibold tracking-wide "}>{results?.ficha[0]?.in_amb?.split('A')[0]}</span> {/* Eliminar 7A => 7 */}
-                        </div>
-                        <div className="border-b-0 lg:border-l-2 lg:border-r-2 md:border-r-0  lg:border-b-0 md:border-l-2 md:border-b-0 flex justify-center flex-col  text-center  w-full p-5">
-                            <div className="flex items-center justify-center">
+                        }
+                        {
+                            results?.ficha[0]?.in_amb?.split('A')[0].length !== 0 ? (<div className="border-b-2  lg:border-r-2  lg:border-l-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5">
+                                <div className="flex items-center justify-center">
 
-                                <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/ducha.png'} alt="superficie" />
-                            </div>
-                            <span className="text-2xl md:text-2xl lg:text-3xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center justify-center">Baños</span>
-                            <span className={"text-xl md:text-xl lg:text-2xl font-semibold tracking-wide "}>{results?.ficha[0]?.in_bao}</span>
-                        </div>
+                                    <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/puerta.png'} alt="superficie" />
+                                </div>
+                                <span className="text-2xl md:text-2xl lg:text-4xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center justify-center">Ambientes</span>
+                                <span className={"text-xl md:text-xl lg:text-3xl font-bold tracking-wide "}>{results?.ficha[0]?.in_amb?.split('A')[0]}</span>
+                            </div>) : null
+                        }
+                        {
+                            results?.ficha[0]?.in_bao ? (<div className="border-b-0 lg:border-l-2 md:border-r-0 lg:border-r-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5">
+                                <div className="flex items-center justify-center">
+
+                                    <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/ducha.png'} alt="superficie" />
+                                </div>
+                                <span className="text-2xl md:text-2xl lg:text-4xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center justify-center">Baños</span>
+                                <span className={"text-xl md:text-xl lg:text-3xl font-bold tracking-wide "}>{results?.ficha[0]?.in_bao}</span>
+                            </div>) : null
+                        }
+
                     </div>
                 }
             </section>
             <section className="container mx-auto flex justify-between gap-2 pt-16 pb-5">
 
                 {isLoading ? (<div className="container mx-auto pb-16"><BreadCrumbSkeleton /> </div>) : (
-                    <div className="flex items-end gap-1">
-                        <img src="/images/map.png" alt="marker map" className="object-contain" />
-                        <span className="text-sm md:text-md lg:text-lg text-primary-text-msb font-semibold">{he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`)}</span>
+                    <div className="flex items-end gap-1 w-fit">
+                        <img src="/images/map.png" alt="marker map" className="object-contain  flex items-center" />
+                        <span className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold">{he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`)}</span>
                     </div>)
                 }
-                <div className={'flex gap-5'} >
+                <div className={'flex flex-col md:flex-row lg:flex-row  md:justify-center lg:justify-center gap-5'} >
                     <ShareButton />
                     <button onClick={handlePrint} className="flex gap-1 cursor-pointer">
                         <span className={'font-semibold flex gap-1'}>
