@@ -30,7 +30,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [tabMenuProperty, setTabMenuProperty] = useState(
         tabMenuPropertyStore.get() // Estado local para el valor del almacén
     ); // Estado local para el valor del almacén
-    const [videoUrl, setVideoUrl] = useState<string | null>(null); // Estado local para la URL del video
+    const [videoUrl, setVideoUrl] = useState<string | null>(props?.currentUrl); // Estado local para la URL del video
     const [formatUrl , setFormatUrl] = useState<string>('');
     useEffect(() => {
 
@@ -43,18 +43,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         // Realiza las tareas de inicialización aquí, como la obtención de datos
     }, []);
 
-    useEffect(() =>{
-        if (props.currentUrl.includes('fbclid')) {
-            // Obtener la URL actual sin el parámetro fbclid
-           /*  const urlWithoutFbclid = window.location.href.split('?')[0]; */
-            // Sacar  todos los search params de props.currentUrl que es un string  fbclid?=valor y dejar todo el resto de la url original
-            setFormatUrl(props?.currentUrl.split('?')[0]);
-            // Reemplazar la URL actual en el historial sin el parámetro fbclid
-/*             window.history.replaceState({}, document.title, urlWithoutFbclid);
-            window.location.reload();
-            window.scrollTo(0, 0); */
-        }
-    },[])
+   
     // Función para imprimir la página
     const handlePrint = () => {
        /*  window.print(); */
