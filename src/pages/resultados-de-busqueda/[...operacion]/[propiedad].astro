@@ -3,7 +3,7 @@ import BreadCrumb from "@components/BreadCrumb.astro";
 import PropertyPage from "@components/preact/Property/PropertyPage";
 
 import Layout from "@layouts/Layout.astro";
-export const prerender = false;
+
 const { propiedad } = Astro.params;
 const url = await Astro.url.toString().split('?')[0]
 console.log(url,'url')
