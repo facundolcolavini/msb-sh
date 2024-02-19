@@ -5,8 +5,8 @@ import PropertyPage from "@components/preact/Property/PropertyPage";
 import Layout from "@layouts/Layout.astro";
 
 const { propiedad } = Astro.params;
-const url = await Astro.request.url.toString().split('?')[0] 
-console.log(url,'url')
+const url = Astro.url;
+
 // Extraemos el ultimo segmento de la url
 let prop = url.toString().split("/").pop();
 
@@ -18,8 +18,7 @@ let id = prop?.split("-")[1] ?? "";
   <section class="bg-[#FFFBF4] h-full py-2">
 
       <PropertyPage
-        client:load
-        currentUrl={url}
+        client:only
         propertyCode={id}
         branchCode={suc}
         breadCrumbChild=""
@@ -30,6 +29,3 @@ let id = prop?.split("-")[1] ?? "";
    
   </section>
 </Layout>
-
-
-<script define:vars={{}}></script>

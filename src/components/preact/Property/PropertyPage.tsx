@@ -21,7 +21,6 @@ interface Props {
     branchCode: string;
     propertyCode: string;
     breadCrumbChild?: string;
-    currentUrl: string;
 }
 
 const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
@@ -30,10 +29,18 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [tabMenuProperty, setTabMenuProperty] = useState(
         tabMenuPropertyStore.get() // Estado local para el valor del almacén
     ); // Estado local para el valor del almacén
-    const [videoUrl, setVideoUrl] = useState<string | null>(props?.currentUrl); // Estado local para la URL del video
-    const [formatUrl , setFormatUrl] = useState<string>('');
-    useEffect(() => {
+    const [videoUrl, setVideoUrl] = useState<string | null>(null); // Estado local para la URL del video
 
+    useEffect(() => {
+        if (window.location.search.includes('fbclid')) {
+            // Obtener la URL actual sin el parámetro fbclid
+            const urlWithoutFbclid = window.location.href.split('?')[0];
+
+            // Reemplazar la URL actual en el historial sin el parámetro fbclid
+            window.history.replaceState({}, document.title, urlWithoutFbclid);
+            window.location.reload();
+            window.scrollTo(0, 0);
+        }
         // Suscribirse a cambios en el almacén y actualizar el estado local
         const unsubscribe = tabMenuPropertyStore.subscribe(setTabMenuProperty);
 
@@ -43,15 +50,15 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         // Realiza las tareas de inicialización aquí, como la obtención de datos
     }, []);
 
-   
+
     // Función para imprimir la página
     const handlePrint = () => {
-       /*  window.print(); */
+        window.print();
     };
     const fetchResults = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch(`/api/property.json?suc=${props.branchCode}&id=${props?.propertyCode}`);
+            const response = await fetch(`/api/property.json?suc=${props.branchCode}&id=${props.propertyCode}`);
             const data: APIResponsePropertyDetail = await response.json();
 
             if (data?.hasOwnProperty("error")) {
@@ -153,7 +160,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     </div>)
                 }
                 <div className={'flex flex-col md:flex-row lg:flex-row  md:justify-center lg:justify-center gap-5'} >
-                    <ShareButton  currentUrl={formatUrl && formatUrl}/>
+                    <ShareButton />
                     <button onClick={handlePrint} className="flex gap-1 cursor-pointer">
                         <span className={'font-semibold flex gap-1'}>
                             Imprimir <PrintIcon />
