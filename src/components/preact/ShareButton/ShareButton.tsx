@@ -21,6 +21,8 @@ const ShareButton = ({currentUrl}:Props) => {
     };
 
   }, []);
+  console.log(currentUrl, 'currentUrl')
+  console.log(encodeURIComponent(currentUrl), 'encodeURIComponent(currentUrl)')
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -55,7 +57,7 @@ const ShareButton = ({currentUrl}:Props) => {
       >
         <a
           target="_blank"
-          href={`https://api.whatsapp.com/send?phone=&text=Hola%2C%20te%20comparto%20esta%20ficha%3A%20${encodeURIComponent(currentUrl)}&source=&data=`}
+          href={`https://api.whatsapp.com/send?phone=&text=Hola%2C%20te%20comparto%20esta%20ficha%3A%20${encodeURIComponent(currentUrl)}`}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir en WhatsApp"
         >
