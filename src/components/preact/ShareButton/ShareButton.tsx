@@ -73,7 +73,7 @@ const ShareButton = ({currentUrl}:Props) => {
         </a>
         <a
           target="_blank"
-          href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}&source=&data=&fbclid=`}
+          href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir en Facebook"
         >
