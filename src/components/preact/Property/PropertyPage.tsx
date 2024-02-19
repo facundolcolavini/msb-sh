@@ -54,7 +54,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             window.location.reload();
             window.scrollTo(0, 0); */
         }
-    },[props.currentUrl])
+    },[])
     // Función para imprimir la página
     const handlePrint = () => {
        /*  window.print(); */
