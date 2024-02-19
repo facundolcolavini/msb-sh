@@ -31,18 +31,9 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         tabMenuPropertyStore.get() // Estado local para el valor del almacén
     ); // Estado local para el valor del almacén
     const [videoUrl, setVideoUrl] = useState<string | null>(null); // Estado local para la URL del video
-    const [formatUrl , setFormatUrl] = useState<string>(props?.currentUrl );
+    const [formatUrl , setFormatUrl] = useState<string>('');
     useEffect(() => {
-        if (props.currentUrl.includes('fbclid')) {
-            // Obtener la URL actual sin el parámetro fbclid
-           /*  const urlWithoutFbclid = window.location.href.split('?')[0]; */
-            // Sacar fbclid?=valor del string props.currentUrl
-            setFormatUrl(props?.currentUrl.split('?')[0]);
-            // Reemplazar la URL actual en el historial sin el parámetro fbclid
-/*             window.history.replaceState({}, document.title, urlWithoutFbclid);
-            window.location.reload();
-            window.scrollTo(0, 0); */
-        }
+
         // Suscribirse a cambios en el almacén y actualizar el estado local
         const unsubscribe = tabMenuPropertyStore.subscribe(setTabMenuProperty);
 
@@ -52,7 +43,18 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         // Realiza las tareas de inicialización aquí, como la obtención de datos
     }, []);
 
-
+    useEffect(() =>{
+        if (props.currentUrl.includes('fbclid')) {
+            // Obtener la URL actual sin el parámetro fbclid
+           /*  const urlWithoutFbclid = window.location.href.split('?')[0]; */
+            // Sacar  todos los search params de props.currentUrl que es un string  fbclid?=valor y dejar todo el resto de la url original
+            setFormatUrl(props?.currentUrl.split('?')[0]);
+            // Reemplazar la URL actual en el historial sin el parámetro fbclid
+/*             window.history.replaceState({}, document.title, urlWithoutFbclid);
+            window.location.reload();
+            window.scrollTo(0, 0); */
+        }
+    },[props.currentUrl])
     // Función para imprimir la página
     const handlePrint = () => {
        /*  window.print(); */
