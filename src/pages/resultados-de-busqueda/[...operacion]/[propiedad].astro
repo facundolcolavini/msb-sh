@@ -5,7 +5,7 @@ import PropertyPage from "@components/preact/Property/PropertyPage";
 import Layout from "@layouts/Layout.astro";
 
 const { propiedad } = Astro.params;
-const url = await Astro.url.toString().split('?')[0] ?? await Astro.url.toString()
+const url = await Astro.url.toString().split('?')[0] 
 console.log(url,'url')
 // Extraemos el ultimo segmento de la url
 let prop = url.toString().split("/").pop();
