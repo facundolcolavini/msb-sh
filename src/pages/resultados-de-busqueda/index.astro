@@ -13,7 +13,7 @@ const locations = (await getLocations()) as ResultLocation;
 
 <Layout title="Resultados de Busqueda" description="Buscar propiedades">
   <article class="bg-secondary-bg-msb h-full">
-    <div class="container mx-auto">
+    <div class="container mx-auto font-gotham">
       <ResultsPage selects={selects} locations={locations} client:only />
     </div>
   </article>

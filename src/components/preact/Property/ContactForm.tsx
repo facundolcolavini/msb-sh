@@ -13,8 +13,9 @@ interface ContactFormProps {
     id: string;
     codsuc: string;
     tipo?: string;
+    contact_prop: string;
 }
-const ContactForm = ({ id, codsuc, tipo = '' }: ContactFormProps) => {
+const ContactForm = ({ id, codsuc, tipo = '', contact_prop }: ContactFormProps) => {
     const [formSubmitted, setFormSubmitted] = useState(false);
     const {
         isFormValid,
@@ -80,7 +81,7 @@ const ContactForm = ({ id, codsuc, tipo = '' }: ContactFormProps) => {
 
     return (
         <>
-            <div className={'p-10 md:px-14 lg:px-16 h-full'}>
+            <div className={'p-10 md:px-14 lg:px-16 h-fit'}>
                 <header>
                     <h1 className={'font-bold text-center tracking-normal pb-5 text-base md:text-md lg:text-lg'}>CONTACTANOS</h1>
                     <p className={'text-center font-thin pb-5 text-secondary-text-msb'}>Envianos tu consulta y te responderemos a la brevedad</p>
@@ -95,10 +96,8 @@ const ContactForm = ({ id, codsuc, tipo = '' }: ContactFormProps) => {
                     <InputField value={contactMessage} onChange={onInputChange} icon={contactMessageValid === null ? <OkIcon/> : <></>} addStyles="place-content-start h-full" name="contactMessage" id="contactMessage" type="textarea" placeholder="Me gustaría que me contacten por esta propiedad. Gracias..." />
                     {(formSubmitted && contactMessageValid) && <label htmlFor="contactMessage" className="text-xs px-3 font-thin text-red-500">{contactMessageValid}</label>}
                     <Button variant={`${isFormValid ? "primary" : "disabled"}`} addStyles={`text-white transition-all h-14 text-sm md:text-md lg:text-lg border-gray-50 flex justify-center items-center gap-3`} type="submit">Enviar Consulta {formSubmitted && isFormValid && <Spinner/>}</Button>
+                    <a target={'_blank'} href={contact_prop} className="bg-primary-msb transition hover:bg-primary-bg-hover-msb py-3 cursor-pointer h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide text-center">Consultar</a>
                 </form>
-                <footer className={'pt-10'}>
-                    <h2 className="font-bold text-center tracking-normal pb-5 text-base md:text-md lg:text-lg uppercase">OTRAS VÍAS DE CONTACTO</h2>
-                </footer>
             </div>
             {isFormValid && <Toast message="Gracias por tu consulta, te responderemos a la brevedad" isVisible={formSubmitted} icon={<WarningAlertIcon />} customStyles="flex gap-2 border-2 border-primary-border-msb bg-[#EFF0F2]" duration={3000} />}
 

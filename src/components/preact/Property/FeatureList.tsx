@@ -44,7 +44,7 @@ const FeatureList = ({
         antiquity
     })
     return (
-        <div className={'flex flex-wrap w-full gap-10 p-5 items-center'}>
+        <div className={'flex flex-wrap justify-evenly lg:justify-start  w-full gap-10 p-5 items-start'}>
 
             {sup_cubierta !== '0.00m2' ? (<div className={'flex justify-center flex-col text-center'}>
                 <RuleIcon addStyles="mx-auto" h={"24"} w={"24"} />
@@ -67,7 +67,7 @@ const FeatureList = ({
             {location !== "" ? (<div className={'flex justify-center flex-col text-center'}>
                 <CurtainsIcon addStyles="mx-auto" h={"24"} w={"24"} />
                 <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center capitalize"}>{location}</p>
-            </div>): null}
+            </div>) : null}
             {light !== "" ? (
                 <div className={'flex justify-center flex-col text-center'}>
                     <SunIcon addStyles="mx-auto" h={"24"} w={"24"} />
@@ -88,7 +88,7 @@ const FeatureList = ({
             {furnished !== "" ? (<div className={'flex justify-center flex-col text-center'}>
                 <FurnitureIcon addStyles="mx-auto" h={"24"} w={"24"} />
                 <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center"}>{furnished}</p>
-            </div>): null}
+            </div>) : null}
         </div>
     )
 }

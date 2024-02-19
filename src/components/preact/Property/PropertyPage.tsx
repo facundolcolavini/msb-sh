@@ -1,9 +1,10 @@
 import type { APIResponsePropertyDetail, ResultPropertyDetails } from "@interfaces/detail.properties.interface";
+import he from 'he';
 import type { FunctionComponent } from "preact";
 import type { PropsWithChildren } from "preact/compat";
 import { useEffect, useState } from "preact/hooks";
 
-import he from "he";
+
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
 import PrintIcon from "../Icons/PrintIcon";
@@ -15,6 +16,8 @@ import Button from "../ui/Buttons/Button";
 import ContactForm from "./ContactForm";
 import FeatureList from "./FeatureList";
 import TabMenu from "./TabMenu";
+import Description from "./Description";
+import DetailsList from "./DetailsList";
 
 
 interface Props {
@@ -83,11 +86,11 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     };
 
     return (
-        <article className=" px-3 md:px-0 lg:px-0">
+        <article className=" px-3 md:px-0 lg:px-0 font-gotham">
             <section className="h-full">
                 <header className="container mx-auto lg:flex justify-between items-center px-0 transition-all">
                     {isLoading ? <BreadCrumbSkeleton /> : props.breadCrumbChild}
-                    <a target={'_blank'} href={`https://api.whatsapp.com/send/?phone=5491133927629&text=%C2%A1Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${he.decode(`https://msb-sh.vercel.app/resultados-de-busqueda/${results?.ficha[0]?.operacion}/${results?.ficha[0]?.in_loc}/${results?.ficha[0]?.direccion}/${results?.ficha[0]?.in_suc}-${results?.ficha[0]?.in_num}`)}&type=phone_number&app_absent=0`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide">Consultar</a>
+                    <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=&text=Hola%2C%20te%20comparto%20esta%20ficha%3A%20${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide">Consultar</a>
                 </header>
                 <div className="container mx-auto pt-5 flex justify-between">
                     <TabMenu videoUrl={videoUrl} />
@@ -197,10 +200,44 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                                 location={results?.ficha[0]?.ubicacion.toLocaleLowerCase()}
                                 pet_accepted={Boolean(results?.ficha[0]?.acepta_mascota?.toLocaleLowerCase()) ?? false}
                             />
+
+                            <hr className={'border-secondary-text-msb '} />
+                            <div className={'flex flex-col gap-5 py-5'}>
+                                <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl text-center md:text-start lg:text-start  font-bold text-primary-text-msb'}>Descripción</h2>
+
+                                <Description  htmlText={results?.ficha[0]?.in_obs }/> 
+                            </div>
+                            <hr className={'border-secondary-text-msb py-5'} />
+                            <DetailsList  
+                            operation={results?.ficha[0]?.operacion ?? ''}
+                            locationLoc={results?.ficha[0]?.in_loc ?? ''}
+                            locationUbi={results?.ficha[0]?.ubicacion ?? ''}
+                            neighborhood={results?.ficha[0]?.in_bar ?? ''}
+                            address={results?.ficha[0]?.direccion ?? ''}
+                            environments={results?.ficha[0]?.in_amb ?? ''}
+                            antiquity={results?.ficha[0]?.in_ant ?? ''}
+                            year={results?.ficha[0]?.in_ant ?? ''}
+                            expenses={results?.ficha[0]?.gastos ?? ''}
+                            houseType={results?.ficha[0]?.tipo ?? ''}
+                            dependence={results?.ficha[0]?.dep ?? ''}
+                            floors={results?.ficha[0]?.pisos ?? ''}
+                            hotWater={results?.ficha[0]?.agua ?? ''}
+                            gas={results?.ficha[0]?.gas ?? ''}
+                            heating={results?.ficha[0]?.calef ?? ''}
+                            bathrooms={results?.ficha[0]?.in_bao ?? ''}
+                            state={results?.ficha[0]?.estado ?? ''}
+                            garage_parking={results?.ficha[0]?.cochera ?? ''}
+                            garage={results?.ficha[0]?.cochera ?? ''}
+                            parking={results?.ficha[0]?.cochera ?? ''}
+                            pavement={results?.ficha[0]?.pavimento ?? ''}
+                            sewer={results?.ficha[0]?.cloacas ?? ''}
+                            telephoneLine={results?.ficha[0]?.telefono ?? ''}
+
+                            />
                         </div>
                     )}
-                <div className={'bg-[#D9D9D9]'}>
-                    <ContactForm id={results?.datos?.codigo_ficha ?? ''} codsuc={results?.ficha[0]?.codsuc ?? ''} />
+                <div className={'bg-[#D9D9D9] relative h-fit'}>
+                    <ContactForm id={results?.datos?.codigo_ficha ?? ''} codsuc={results?.ficha[0]?.codsuc ?? ''} contact_prop={`https://api.whatsapp.com/send?phone=&text=Hola%2C%20te%20comparto%20esta%20ficha%3A%20${encodeURIComponent(window.location.href)}&source=&data=`} />
                 </div>
             </section>
 

@@ -38,7 +38,7 @@ const { title, description } = Astro.props;
       <header class="[grid-area:header]">
         <Navbar user={user} />
       </header>
-      <main class="[grid-area:main]">
+      <main class="[grid-area:main] font-gotham">
         <!-- <ContainerLayout> -->
         <slot />
         <!--   </ContainerLayout> -->
@@ -47,7 +47,7 @@ const { title, description } = Astro.props;
         <Footer />
       </footer>
     </div>
-    <style is:global>
+<!--     <style is:global>
       @font-face {
         font-family: "Gotham";
         font-style: normal;
@@ -90,6 +90,6 @@ const { title, description } = Astro.props;
           "footer";
         grid-template-rows: auto 1fr auto;
       }
-    </style>
+    </style> -->
   </body>
 </html>
