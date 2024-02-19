@@ -1,5 +1,3 @@
-
-import he from "he";
 import { useEffect, useRef, useState } from 'preact/hooks';
 import EmailIcon from '../Icons/EmailIcon';
 import FacebookIcon from '../Icons/FacebookIcon';
@@ -7,9 +5,11 @@ import LinkedInIcon from '../Icons/LinkedInIcon';
 import ShareIcon from '../Icons/SharaIcon';
 import { WhatsAppIcon } from '../Icons/WhatsAppIcon';
 
-interface Props { }
+interface Props {
+  currentUrl: string;
+ }
 
-const ShareButton = () => {
+const ShareButton = ({currentUrl}:Props) => {
   const [showIcons, setShowIcons] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -55,7 +55,7 @@ const ShareButton = () => {
       >
         <a
           target="_blank"
-          href={`https://api.whatsapp.com/send?phone=&text=Hola%2C%20te%20comparto%20esta%20ficha%3A%20${encodeURIComponent(window.location.href)}&source=&data=`}
+          href={`https://api.whatsapp.com/send?phone=&text=Hola%2C%20te%20comparto%20esta%20ficha%3A%20${encodeURIComponent(currentUrl)}&source=&data=`}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir en WhatsApp"
         >
@@ -63,7 +63,7 @@ const ShareButton = () => {
         </a>
         <a
           target="_blank"
-          href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
+          href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir en LinkedIn"
         >
@@ -71,7 +71,7 @@ const ShareButton = () => {
         </a>
         <a
           target="_blank"
-          href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&source=&data=&fbclid=`}
+          href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}&source=&data=&fbclid=`}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir en Facebook"
         >
@@ -79,7 +79,7 @@ const ShareButton = () => {
         </a>
         <a
           target="_blank"
-          href={`mailto:?subject=Te comparto este articulo&body=Hola, te comparto este articulo que me parecio interesante ${encodeURIComponent(window.location.href)}`}
+          href={`mailto:?subject=Te comparto este articulo&body=Hola, te comparto este articulo que me parecio interesante ${encodeURIComponent(currentUrl)}`}
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir por Email"
         >
