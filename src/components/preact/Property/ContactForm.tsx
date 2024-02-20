@@ -96,7 +96,7 @@ const ContactForm = ({ id, codsuc, tipo = '', contact_prop }: ContactFormProps) 
                     <InputField value={contactMessage} onChange={onInputChange} icon={contactMessageValid === null ? <OkIcon/> : <></>} addStyles="place-content-start h-full" name="contactMessage" id="contactMessage" type="textarea" placeholder="Me gustaría que me contacten por esta propiedad. Gracias..." />
                     {(formSubmitted && contactMessageValid) && <label htmlFor="contactMessage" className="text-xs px-3 font-thin text-red-500">{contactMessageValid}</label>}
                     <Button variant={`${isFormValid ? "primary" : "disabled"}`} addStyles={`text-white transition-all h-14 text-sm md:text-md lg:text-lg border-gray-50 flex justify-center items-center gap-3`} type="submit">Enviar Consulta {formSubmitted && isFormValid && <Spinner/>}</Button>
-                    <a target={'_blank'} href={contact_prop} className="bg-primary-msb transition hover:bg-primary-bg-hover-msb py-3 cursor-pointer h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide text-center">Consultar</a>
+                    <a target={'_blank'} href={contact_prop} className="bg-primary-msb transition cursor-pointer hover:bg-primary-bg-hover-msb py-3  h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide text-center">Consultar</a>
                 </form>
             </div>
             {isFormValid && <Toast message="Gracias por tu consulta, te responderemos a la brevedad" isVisible={formSubmitted} icon={<WarningAlertIcon />} customStyles="flex gap-2 border-2 border-primary-border-msb bg-[#EFF0F2]" duration={3000} />}

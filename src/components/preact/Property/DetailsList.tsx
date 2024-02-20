@@ -1,4 +1,5 @@
 import he from 'he';
+import { capitalize } from '../../../utils/formats';
 interface Props {
   operation: string;
   locationLoc: string;
@@ -49,96 +50,118 @@ const DetailsList = ({
   sewer,
   telephoneLine
 }: Props) => {
+
   return (
     <>
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-        <div className="property-details__item">
-          <span className="property-details__item__label">Operación: </span>
-          <span className="property-details__item__value">{he.decode(operation)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Ubicación: </span>
-          <span className="property-details__item__value">{he.decode(locationLoc)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Barrio: </span>
-          <span className="property-details__item__value">{he.decode(neighborhood)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Dirección: </span>
-          <span className="property-details__item__value">{he.decode(address)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Ambientes: </span>
-          <span className="property-details__item__value">{he.decode(environments)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Antigüedad:</span>
-          <span className="property-details__item__value">{he.decode(antiquity)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Expensas:</span>
-          <span className="property-details__item__value">{he.decode(expenses)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Tipo de casa:</span>
-          <span className="property-details__item__value">{he.decode(houseType)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Dependencia:</span>
-          <span className="property-details__item__value">{he.decode(dependence)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Pisos:</span>
-          <span className="property-details__item__value">{he.decode(floors)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Agua caliente:</span>
-          <span className="property-details__item__value">{he.decode(hotWater)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Gas:</span>
-          <span className="property-details__item__value">{he.decode(gas)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Calefacción:</span>
-          <span className="property-details__item__value">{he.decode(heating)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Baños:</span>
-          <span className="property-details__item__value">{he.decode(bathrooms)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Estado:</span>
-          <span className="property-details__item__value">{he.decode(state)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Cochera:</span>
-          <span className="property-details__item__value">{he.decode(garage_parking)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Garage:</span>
-          <span className="property-details__item__value">{he.decode(garage)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Estacionamiento:</span>
-          <span className="property-details__item__value">{he.decode(parking)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Pavimento:</span>
-          <span className="property-details__item__value">{he.decode(pavement)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Cloacas:</span>
-          <span className="property-details__item__value">{he.decode(sewer)}</span>
-        </div>
-        <div className="property-details__item">
-          <span className="property-details__item__label">Línea telefónica:</span>
-          <span className="property-details__item__value">{he.decode(telephoneLine)}</span>
-        </div>
-      </div>
+      <ul className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-10 gap-y-3">
+
+        {operation !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Operación: </span>
+          <p className="text-sm md:text-md lg:text-lg">{he.decode(operation)}</p>
+        </li>) : null}
+        {locationLoc !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Localidad: </span>
+          <span className="text-sm md:text-md lg:text-lg">{he.decode(locationLoc)}</span>
+        </li>) : null}
+        {locationLoc !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Barrio: </span>
+          <span className="text-sm md:text-md lg:text-lg">{he.decode(neighborhood)}</span>
+        </li>) : null}
+        {address !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Dirección: </span>
+          <span className="text-sm md:text-md lg:text-lg text-balance">{capitalize(he.decode(address))}</span>
+        </li>) : null}
+        {environments !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Ambientes: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(environments))}</span>
+        </li>) : null}
+        {(antiquity !== "" && antiquity !== "0") ? (
+          <li className="flex gap-2">
+            <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Antigüedad: </span>
+            <span className="text-sm md:text-md lg:text-lg">{he.decode(antiquity)} años</span>
+          </li>) : null}
+        {(year !== "" && year !== "0") ? (
+          <li className="flex gap-2">
+            <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Antigüedad: </span>
+            <span className="text-sm md:text-md lg:text-lg">{he.decode(year)}</span>
+          </li>) : null}
+        {(expenses !== "") ? (
+          <li className="flex gap-2">
+            <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Expensas: </span>
+            <span className="text-sm md:text-md lg:text-lg">{he.decode(expenses).includes('P') ?  
+             // REEMPLAZAR POR $ PRECIO 
+              he.decode(expenses).replace('P', '$') :  he.decode(expenses).replace('P', 'U$S') 
+          }</span>
+          </li>
+        ) : null}
+        {(locationUbi !== "") ? (
+          <li className="flex gap-2">
+            <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Ubicación: </span>
+            <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(locationUbi))}</span>
+          </li>
+        ) : null}
+        {houseType !== "" ? (
+          <li className="flex gap-2">
+            <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Tipo de casa: </span>
+            <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(houseType))}</span>
+          </li>) : null}
+
+        {dependence !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Dependencia: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(dependence)) === "S" ? "Si" : "No"}</span>
+        </li>) : null}
+        {floors !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Pisos: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(floors))}</span>
+        </li>) : null}
+        {hotWater !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Agua caliente: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(hotWater))}</span>
+        </li>) : null}
+        {gas !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Gas: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(gas))}</span>
+        </li>) : null}
+        {heating !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Calefacción: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(heating))}</span>
+        </li>) : null}
+        {bathrooms !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Baños: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(bathrooms))}</span>
+        </li>) : null}
+        {state !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Estado: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(state))}</span>
+        </li>) : null}
+        {garage_parking !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Cochera: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(garage_parking))}</span>
+        </li>) : null}
+        {(garage !== "" && garage !== "0") ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Garage: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(garage))}</span>
+        </li>) : null}
+        {parking !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Estacionamiento: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(parking))}</span>
+        </li>) : null}
+        {pavement !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Pavimento: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(pavement)) === "S" ? "Si" : "No"}</span>
+        </li>) : null}
+        {sewer !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Cloacas: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(sewer)) === "S" ? "Si" : "No"}</span>
+        </li>) : null}
+        {telephoneLine !== "" ? (<li className="flex gap-2">
+          <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Línea telefónica: </span>
+          <span className="text-sm md:text-md lg:text-lg">{capitalize(he.decode(telephoneLine)) === "S" ? "Si" : "No"} </span>
+        </li>) : null}
+
+      </ul>
     </>
-    
+
   )
 }
 

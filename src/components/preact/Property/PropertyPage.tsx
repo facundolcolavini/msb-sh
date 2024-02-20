@@ -10,14 +10,16 @@ import GalleryProperty from "../Gallery/GalleryProperty";
 import PrintIcon from "../Icons/PrintIcon";
 import ShareButton from "../ShareButton/ShareButton";
 import BreadCrumbSkeleton from "../Skeletons/BreadCrumbSkeleton";
+import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
 import DetailsPropertySkeleton from "../Skeletons/DetailsPropertySkeleton";
 import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
 import Button from "../ui/Buttons/Button";
 import ContactForm from "./ContactForm";
-import FeatureList from "./FeatureList";
-import TabMenu from "./TabMenu";
 import Description from "./Description";
 import DetailsList from "./DetailsList";
+import FeatureList from "./FeatureList";
+import TabMenu from "./TabMenu";
+import ServiceList from "./ServiceList";
 
 
 interface Props {
@@ -90,7 +92,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             <section className="h-full">
                 <header className="container mx-auto lg:flex justify-between items-center px-0 transition-all">
                     {isLoading ? <BreadCrumbSkeleton /> : props.breadCrumbChild}
-                    <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=&text=Hola%2C%20te%20comparto%20esta%20ficha%3A%20${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide">Consultar</a>
+                    <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</a>
                 </header>
                 <div className="container mx-auto pt-5 flex justify-between">
                     <TabMenu videoUrl={videoUrl} />
@@ -203,42 +205,71 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
                             <hr className={'border-secondary-text-msb '} />
                             <div className={'flex flex-col gap-5 py-5'}>
-                                <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl text-center md:text-start lg:text-start  font-bold text-primary-text-msb'}>Descripción</h2>
+                                <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb'}>Descripción</h2>
 
-                                <Description  htmlText={results?.ficha[0]?.in_obs }/> 
+                                <Description htmlText={results?.ficha[0]?.in_obs} />
                             </div>
-                            <hr className={'border-secondary-text-msb py-5'} />
-                            <DetailsList  
-                            operation={results?.ficha[0]?.operacion ?? ''}
-                            locationLoc={results?.ficha[0]?.in_loc ?? ''}
-                            locationUbi={results?.ficha[0]?.ubicacion ?? ''}
-                            neighborhood={results?.ficha[0]?.in_bar ?? ''}
-                            address={results?.ficha[0]?.direccion ?? ''}
-                            environments={results?.ficha[0]?.in_amb ?? ''}
-                            antiquity={results?.ficha[0]?.in_ant ?? ''}
-                            year={results?.ficha[0]?.in_ant ?? ''}
-                            expenses={results?.ficha[0]?.gastos ?? ''}
-                            houseType={results?.ficha[0]?.tipo ?? ''}
-                            dependence={results?.ficha[0]?.dep ?? ''}
-                            floors={results?.ficha[0]?.pisos ?? ''}
-                            hotWater={results?.ficha[0]?.agua ?? ''}
-                            gas={results?.ficha[0]?.gas ?? ''}
-                            heating={results?.ficha[0]?.calef ?? ''}
-                            bathrooms={results?.ficha[0]?.in_bao ?? ''}
-                            state={results?.ficha[0]?.estado ?? ''}
-                            garage_parking={results?.ficha[0]?.cochera ?? ''}
-                            garage={results?.ficha[0]?.cochera ?? ''}
-                            parking={results?.ficha[0]?.cochera ?? ''}
-                            pavement={results?.ficha[0]?.pavimento ?? ''}
-                            sewer={results?.ficha[0]?.cloacas ?? ''}
-                            telephoneLine={results?.ficha[0]?.telefono ?? ''}
-
+                            <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle de la propiedad</h2>
+                            <hr className={'border-secondary-text-msb my-3'} />
+                            <DetailsList
+                                operation={results?.ficha[0]?.operacion ?? ''}
+                                locationLoc={results?.ficha[0]?.in_loc ?? ''}
+                                locationUbi={results?.ficha[0]?.ubicacion ?? ''}
+                                neighborhood={results?.ficha[0]?.in_bar ?? ''}
+                                address={results?.ficha[0]?.direccion ?? ''}
+                                environments={results?.ficha[0]?.ambientes ?? ''}
+                                antiquity={results?.ficha[0]?.in_ant ?? ''}
+                                year={results?.ficha[0]?.in_anio ?? ''}
+                                expenses={`${results?.ficha[0]?.in_exp !== "" ? `${results?.ficha[0]?.moneda_impuesto} ${results?.ficha[0]?.in_exp}` : ''}`}
+                                houseType={results?.ficha[0]?.in_tpr ?? ''}
+                                dependence={results?.ficha[0]?.in_dep ?? ''}
+                                floors={results?.ficha[0]?.in_npi ?? ''}
+                                hotWater={results?.ficha[0]?.agua ?? ''}
+                                gas={results?.ficha[0]?.in_gas ?? ''}
+                                heating={results?.ficha[0]?.in_agu ?? ''}
+                                bathrooms={results?.ficha[0]?.in_bao ?? ''}
+                                state={results?.ficha[0]?.in_esa ?? ''}
+                                garage_parking={results?.ficha[0]?.in_coc ?? ''}
+                                garage={results?.ficha[0]?.garage ?? ''}
+                                parking={results?.ficha[0]?.in_parking ?? ''}
+                                pavement={results?.ficha[0]?.in_pav ?? ''}
+                                sewer={results?.ficha[0]?.in_clo ?? ''}
+                                telephoneLine={results?.ficha[0]?.in_lin ?? ''}
                             />
+                            <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Medidas</h2>
+                            <hr className={'border-secondary-text-msb my-3'} />
+                            <ul className="mb-5">
+                                {results?.superficie?.dato[3] !== "" ? (<li className="flex gap-2 pb-3">
+                                    <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Sup.total: </span>
+                                    <p className="text-sm md:text-md lg:text-lg">{he.decode(results?.superficie?.dato[3])}</p>
+                                </li>) : null}
+                                {results?.superficie?.dato[0] !== "" ? (<li className="flex gap-2">
+                                    <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Sup. cubierta: </span>
+                                    <span className="text-sm md:text-md lg:text-lg">{he.decode(results?.superficie?.dato[0])}</span>
+                                </li>) : null}
+                            </ul>
+                            <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Servicios:</h2>
+                            <hr className={'border-secondary-text-msb my-3'} />
+                            <ServiceList characteristics={results?.caracteristicas_generales_personalizadas} />
+
                         </div>
                     )}
                 <div className={'bg-[#D9D9D9] relative h-fit'}>
-                    <ContactForm id={results?.datos?.codigo_ficha ?? ''} codsuc={results?.ficha[0]?.codsuc ?? ''} contact_prop={`https://api.whatsapp.com/send?phone=&text=Hola%2C%20te%20comparto%20esta%20ficha%3A%20${encodeURIComponent(window.location.href)}&source=&data=`} />
+                    <ContactForm id={results?.datos?.codigo_ficha ?? ''} codsuc={results?.ficha[0]?.codsuc ?? ''} contact_prop={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} />
                 </div>
+            </section>
+            <section className={'container mx-auto  my-30'}>
+
+                <BreadCrumbSkeleton />
+                <BreadCrumbSkeleton />
+                <div className={'grid grid-cols-4  gap-5  my-10 w-100'}>
+                    <CardResultSkeleton />
+                    <CardResultSkeleton />
+                    <CardResultSkeleton />
+                    <CardResultSkeleton />
+                </div>
+
+
             </section>
 
         </article>
