@@ -32,17 +32,7 @@ const FeatureList = ({
     antiquity
 }: Props
 ) => {
-    console.log({
-        sup_total,
-        sup_cubierta,
-        environments,
-        baths,
-        location,
-        furnished,
-        light,
-        pet_accepted,
-        antiquity
-    })
+
     return (
         <div className={'flex flex-wrap justify-evenly lg:justify-start  w-full gap-10 p-5 items-start'}>
 

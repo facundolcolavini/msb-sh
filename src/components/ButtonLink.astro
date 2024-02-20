@@ -12,4 +12,4 @@ const handleClick = () => {
 const styles = twMerge( clsx("w-100 h-100", className));
 ---
 
-<a class={styles} href={href}> <slot /></a>
+<a class={styles} href={href ?? ''}> <slot /></a>

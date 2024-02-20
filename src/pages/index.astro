@@ -7,7 +7,7 @@ import TitleSections from "@components/TitleSections.astro";
 import BannerSlider from "@components/preact/BannerSlider";
 import HomeLocation from "@components/preact/Icons/HomeLocation";
 import HomeMortgageIcon from "@components/preact/Icons/HomeMortgageIcon";
-import PaperTipsIcon from "@components/preact/Icons/PaperTipsIcon";
+import UserIcon from "@components/preact/Icons/UserIcon";
 import SearchHome from "@components/preact/Search/SearchHome";
 
 import Button from "@components/preact/ui/Buttons/Button";
@@ -43,6 +43,7 @@ const titlePage = "Home";
 const description =
   "Propiedades en alquiler y venta - Matías Szpira Bienes Raíces";
 
+const bgUsaImage = "/images/panorama-noche-chicago.webp";
 const selects = (await getAllSelects()) as Results;
 const locations = (await getLocations()) as ResultLocation;
 ---
@@ -63,24 +64,27 @@ const locations = (await getLocations()) as ResultLocation;
     </div>
   </HeroContainer>
   <!-- <div class="fixed right-0 z-50"> -->
-    <Chat/>
- <!--  </div> -->
-  <section class="bg-secondary-bg-msb  py-10">
+  <Chat />
+  <!--  </div> -->
+  <section class="bg-secondary-bg-msb py-10">
     <div class="container mx-auto px-3 md:px-0 lg:px-0">
       <TitleSections
-      class="text-primary-text-msb text-6xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
-    >
-    Buena Gente. Buenas Raíces. Buenos Negocios
-    </TitleSections>
-      <div class="grid md:grid-cols-2 lg:grid-cols-2 ms:px-3 gap-10 py-20 md:px-5">
-        <ButtonLink href="/sumate" class="flex justify-center  lg:justify-end w-100">
+        class="text-primary-text-msb text-4xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
+      >
+        Buena Gente. Buenas Raíces. Buenos Negocios
+      </TitleSections>
+      <div
+        class="grid md:grid-cols-2 lg:grid-cols-2 ms:px-3 gap-10 py-20 md:px-5"
+      >
+        <ButtonLink
+          href="/sumate"
+          class="flex justify-center lg:justify-end w-100"
+        >
           <Button
             variant="outline"
             addStyles="rounded-lg shadow-lg  w-[300px] md:w-[450px] lg:w-[450px]"
           >
-            <div
-            class="flex  items-center  gap-5 py-5"
-            >
+            <div class="flex items-center gap-5 py-5">
               <div class="rounded-full p-3 bg-[#D9D9D9]">
                 <HomeMortgageIcon
                   addStyles="object-contain bg-gradient-primary-msb "
@@ -90,25 +94,28 @@ const locations = (await getLocations()) as ResultLocation;
               </div>
               <div class="flex flex-col gap-2 w-100">
                 <h1
-                class="text-base md:text-md lg:text-xl font-semibold text-primary-text-msb text-left text-balance"
+                  class="text-base md:text-md lg:text-xl font-semibold text-primary-text-msb text-left text-balance"
                 >
-                ¿Qué necesito para vender?
+                  ¿Qué necesito para vender?
                 </h1>
-                <p class="lg:text-lg text-primary-text-msb text-left font-normal">
+                <p
+                  class="lg:text-lg text-primary-text-msb text-left font-normal"
+                >
                   Conocé los requisitos para vender una propiedad
                 </p>
               </div>
             </div>
           </Button>
         </ButtonLink>
-        <ButtonLink href="/sumate" class="flex justify-center  lg:justify-start w-100">
+        <ButtonLink
+          href="/sumate"
+          class="flex justify-center lg:justify-start w-100"
+        >
           <Button
             variant="outline"
             addStyles="rounded-lg w-[300px] md:w-[450px] lg:w-[450px] shadow-lg "
           >
-            <div
-              class="flex  items-center  gap-5 py-5"
-            >
+            <div class="flex items-center gap-5 py-5">
               <div class="rounded-full p-3 bg-[#D9D9D9]">
                 <HomeLocation
                   addStyles="object-contain bg-gradient-primary-msb "
@@ -118,11 +125,13 @@ const locations = (await getLocations()) as ResultLocation;
               </div>
               <div class="flex flex-col gap-0 w-100">
                 <h1
-                class="text-base md:text-md lg:text-xl font-semibold text-primary-text-msb text-left text-balance"
+                  class="text-base md:text-md lg:text-xl font-semibold text-primary-text-msb text-left text-balance"
                 >
                   Guía de Barrios
                 </h1>
-                <p class="lg:text-lg text-primary-text-msb text-left font-normal">
+                <p
+                  class="lg:text-lg text-primary-text-msb text-left font-normal"
+                >
                   Conocé los barrios y elegí tu zona ideal
                 </p>
               </div>
@@ -135,12 +144,12 @@ const locations = (await getLocations()) as ResultLocation;
   <section class="bg-primary-msb">
     <div class="container mx-auto px-3 md:px-0 lg:px-0 py-20">
       <TitleSections
-        class="text-white  text-6xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
+        class="text-white text-4xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
       >
         Propiedades Destacadas
       </TitleSections>
       <p
-        class="text-white text-center text-md md:text-lg lg:text-2xl font-extralight p-10"
+        class="text-white text-center text-md md:text-lg lg:text-2xl font-extralight p-10 pt-4 pb-16"
       >
         La mejor selección de inmuebles en las zonas que estás buscando.
       </p>
@@ -160,40 +169,29 @@ const locations = (await getLocations()) as ResultLocation;
     </div>
   </section>
   <section class="bg-secondary-bg-msb px-3 md:px-0 lg:px-0 py-20">
-    <div
-      class="container mx-auto grid grid-col lg:grid-cols-2 justify-center place-content-center rounded-md border-primary-border-msb border-2 h-100 py-20"
-    >
-      <div class="flex justify-end gap-10 flex-col self-center lg:px-20 p-6">
+    <div class="container mx-auto">
+      <div
+        class="flex justify-end gap-10 gap-y-4 flex-col self-center lg:px-20 p-6"
+      >
         <TitleSections
-          class="text-center md:text-centter lg:text-start text-secondary-text-msb text-4xl md:text-7xl lg:text-6xl font-base font-medium font-cormorant text-pretty"
+          class="text-secondary-text-msb text-4xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
         >
           Nuestros Emprendimientos
         </TitleSections>
         <p
-          class="font-extralight text-secondary-text-msb text-center md:text-center lg:text-start text-lg"
+          class="font-extralight text-secondary-text-msb text-center text-md md:text-lg lg:text-2xl"
         >
           Invertí en bienes raíces, nosotros te asesoramos
         </p>
-        <ButtonLink
-          href="/emprendimientos"
-          class="flex justify-center md:justify-center w-100 p-0 lg:w-fit lg:justify-start text-pretty"
-        >
-          <Button
-            variant="outline"
-            addStyles="bg-secondary-bg-msb px-0 md:px-0 lg:px-20 text-lg rounded-lg shadow-lg text-nowrap  w-full h-full"
-          >
-            Me interesa
-          </Button>
-        </ButtonLink>
       </div>
-      <div class="grid space-y-4">
+      <div class="">
         <div
-          class="grid grid-cols-1 w-full md:grid-cols-3 lg:grid-cols-3 justify-between gap-4 p-6 lg:px-2 md:px-6"
+          class="flex md:flex-row lg:flex-row flex-col justify-center w-100 gap-4 p-6 lg:px-2 md:px-6"
         >
           <ButtonLink href="/emprendimientos/pozo">
             <Button
               variant="primary"
-              addStyles="rounded-md  shadow-lg w-full h-full py-3 active:bg-primary-bg-msb text-pretty"
+              addStyles="rounded-md  shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
             >
               En Pozo
             </Button>
@@ -201,7 +199,7 @@ const locations = (await getLocations()) as ResultLocation;
           <ButtonLink href="/emprendimientos/construcción">
             <Button
               variant="primary"
-              addStyles="rounded-md shadow-lg  w-full h-full text-pretty"
+              addStyles="rounded-md  shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
             >
               En Construcción
             </Button>
@@ -209,14 +207,14 @@ const locations = (await getLocations()) as ResultLocation;
           <ButtonLink href="/emprendimientos/terminado">
             <Button
               variant="primary"
-              addStyles="rounded-md shadow-lg w-full h-full  "
+              addStyles="rounded-md  shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
             >
               Terminado
             </Button>
           </ButtonLink>
         </div>
         <!-- Slider de emprendimientos -->
-        <SliderA colsNr={2} height={10} width={10} classSlide="slider2">
+        <SliderA colsNr={3} height={10} width={10} classSlide="slider2">
           {
             entrepreneurship.map(
               ({
@@ -228,7 +226,7 @@ const locations = (await getLocations()) as ResultLocation;
               }: EntrePreneurShip) => (
                 <CardEntrepreneurship
                   href={`/emprendimientos/${ed_idl}`}
-                  addStyles={"card"}
+                  addStyles={"card my-3"}
                   cardData={{
                     ed_nom,
                     ed_pos,
@@ -243,30 +241,60 @@ const locations = (await getLocations()) as ResultLocation;
       </div>
     </div>
   </section>
-  <section class="bg-[#8D8777] py-10" transition:animate={"fade"}>
+  <section class="" transition:animate={"fade"}>
     <BannerSlider slides={img[3]} sliderTime={8000} client:visible>
       <div
-        class="grid align-end h-full items-center justify-center lg:justify-end self-end place-content-center text-center lg:text-start container mx-auto relative z-1"
+        class="grid h-full items-center justify-center lg:justify-center self-end place-content-center text-center lg:text-center container mx-auto relative"
       >
         <TitleSections
-          class="text-white text-6xl md:text-7xl lg:text-8xl font-base font-medium font-cormorant text-pretty md:text-center lg:text-start"
+          class="text-white text-6xl md:text-7xl lg:text-8xl font-base font-medium font-cormorant text-pretty md:text-center lg:text-center"
         >
           Tasaciones
         </TitleSections>
         <p
-          class="text-white text-lg md:text-xl lg:text-2xl font-normal font-open-sans self-start"
+          class="text-white text-lg md:text-xl lg:text-2xl font-normal font-open-sans self-center"
         >
-        Tasá con nosotros, no dudes en consultarnos.
+          Tasá con nosotros, no dudes en consultarnos.
         </p>
         <ButtonLink
-          href="/tasaciones"
-          class="flex justify-center lg:items-end p-0 mt-4 lg:w-fit lg:self-start"
+        href="/tasaciones"
+        class="mx-auto flex justify-center px-3 my-10 w-fit md:w-fit lg:w-fit"
+      >
+        <Button
+          variant="outline"
+          addStyles="bg-secondary-bg-msb px-32 py-4 text-lg  md:text-xl md:py-3 md:px-32 lg:text-2xl lg:py-4 lg:px-32  rounded-lg shadow-lg text-nowrap  w-full h-full text-bold-green-text-msb border-bold-green-text-msb"
+        >
+         Tasar
+        </Button>
+      </ButtonLink>
+      </div>
+    </BannerSlider>
+  </section>
+  <section class="" transition:animate={"fade"}>
+    <BannerSlider slides={[bgUsaImage]} sliderTime={8000} client:visible>
+      <div
+        class="grid h-full items-center justify-center lg:justify-center self-end place-content-center text-center lg:text-center container mx-auto relative"
+      >
+        <TitleSections
+          class="text-white text-6xl md:text-7xl lg:text-8xl font-base font-medium font-cormorant text-balance md:text-center lg:text-center"
+        >
+          Invierta en USA
+        </TitleSections>
+        <p
+          class="text-white text-pretty text-lg md:text-xl lg:text-2xl font-normal font-open-sans self-center"
+        >
+          Amplia gama de oportunidades de inversión del mercado inmobiliario en
+          Estados Unidos
+        </p>
+        <ButtonLink
+          href="/invierta-en-usa"
+          class="mx-auto flex justify-center px-3 my-10 w-fit md:w-fit lg:w-fit"
         >
           <Button
             variant="outline"
-            addStyles="bg-secondary-bg-msb px-0 md:px-0 lg:px-20 text-lg rounded-lg shadow-lg text-nowrap  w-full h-full"
+            addStyles="bg-secondary-bg-msb px-32 py-4 text-lg  md:text-xl md:py-3 md:px-32 lg:text-2xl lg:py-4 lg:px-20  rounded-lg shadow-lg text-nowrap  w-full h-full text-bold-green-text-msb border-bold-green-text-msb"
           >
-            Tasar
+            Visitar ahora
           </Button>
         </ButtonLink>
       </div>
@@ -328,6 +356,139 @@ const locations = (await getLocations()) as ResultLocation;
         suc_phone="4627-8034 / 7548-6846"
         addStyles={"border-[#A4A4A4]  border-2 hover:border-primary-border-msb hover:border-2 h-100 transition duration-500 ease-in-out  transform hover:-translate-y-1"}
       />
+    </div>
+  </section>
+  <section class="bg-tertiary-bg-hover-msb px-3 md:px-0 lg:px-0 py-20">
+    <div class="container mx-auto">
+      <TitleSections
+        class="text-white text-4xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
+      >
+        Experiencias de nuestros clientes Propiedades Destacadas
+      </TitleSections>
+      <p
+        class="text-white text-center text-md md:text-lg lg:text-2xl font-extralight p-10 pt-4 pb-16"
+      >
+        Comentarios y opiniones de nuestros usuarios
+      </p>
+      <div class="grid md:grid-cols lg:grid-cols-3 ms:px-3 gap-10 md:px-5">
+        <ButtonLink
+          href=""
+          class="flex justify-center lg:justify-start w-100"
+        >
+          <Button
+            variant="outline"
+            addStyles="rounded-lg w-[300px] md:w-[450px] lg:w-[450px] shadow-lg "
+          >
+            <div class="flex items-center gap-5 py-5">
+              <div class="rounded-full p-3 bg-[#D9D9D9]">
+                <UserIcon
+                addStyles="object-cover w-full aspect-square bg-gradient-primary-msb"
+                w="40"
+                h="40"
+              />
+              </div>
+              <div class="flex flex-col gap-0 w-100">
+                <h1
+                  class="text-base md:text-md lg:text-xl font-semibold text-primary-text-msb text-left"
+                >
+                Nombre de usuario
+                </h1>
+                <p
+                  class="lg:text-lg text-primary-text-msb text-left font-normal font-italic  text-ellipsis overflow-hidden"
+                >
+                “Muy buena atención y gran apoyo post venta.”
+                </p>
+              </div>
+            </div>
+          </Button>
+        </ButtonLink>
+        <ButtonLink
+          href=""
+          class="flex justify-center lg:justify-start w-100"
+        >
+          <Button
+            variant="outline"
+            addStyles="rounded-lg w-[300px] md:w-[450px] lg:w-[450px] shadow-lg "
+          >
+            <div class="flex items-center gap-5 py-5">
+              <div class="rounded-full p-3 bg-[#D9D9D9]">
+                <UserIcon
+                addStyles="object-cover  w-full aspect-square bg-gradient-primary-msb"
+                w="40"
+                h="40"
+              />
+              </div>
+              <div class="flex flex-col gap-0 w-100">
+                <h1
+                  class="text-base md:text-md lg:text-xl font-semibold text-primary-text-msb text-left "
+                >
+                Nombre de usuario
+                </h1>
+                <p
+                class="lg:text-lg text-primary-text-msb text-left font-normal font-italic  text-ellipsis overflow-hidden"
+                >
+                “Una inmobiliaria todo servicio, profesionales siempre dispuestos a hacer posible la operación.”
+                </p>
+              </div>
+            </div>
+          </Button>
+        </ButtonLink>
+        <ButtonLink
+        href=""
+          class="flex justify-center lg:justify-start w-100"
+        >
+          <Button
+            variant="outline"
+            addStyles="rounded-lg w-[300px] md:w-[450px] lg:w-[450px] shadow-lg "
+          >
+            <div class="flex items-center gap-5 py-5">
+              <div class="rounded-full p-3 bg-[#D9D9D9]">
+                <UserIcon
+                addStyles="object-cover w-full aspect-square bg-gradient-primary-msb "
+                w="40"
+                h="40"
+              />
+              </div>
+              <div class="flex flex-col gap-0 w-100">
+                <h1
+                  class="text-base md:text-md lg:text-xl font-semibold text-primary-text-msb text-left"
+                >
+                Nombre de usuario
+                </h1>
+                <p
+                class="lg:text-lg text-primary-text-msb text-left font-normal font-italic  text-ellipsis overflow-hidden"
+                >
+                “Un gran trabajo, muy contentos por toda la atención, gracias.”
+                </p>
+              </div>
+            </div>
+          </Button>
+        </ButtonLink>
+      </div>
+      <div class="flex justify-center p-0 flex-col md:flex-row lg:flex-row ">
+        <ButtonLink
+          href="/invierta-en-usa"
+          class="flex justify-center px-3 w-fit md:py-16 lg:py-16 md:place-content-center mx-auto  md:mx-0 lg:mx-0 py-8"
+        >
+          <Button
+            variant="primary"
+            addStyles=" px-10 py-4 text-lg w-[193px] lg:px-10 md:text-xl md:py-3 md:px-10 lg:text-2xl lg:py-3 rounded-lg shadow-lg text-nowrap  w-full h-full"
+          >
+          Dejanos tu comentario
+          </Button>
+        </ButtonLink>
+        <ButtonLink
+          href="/invierta-en-usa"
+          class="flex justify-center px-3 w-fit  md:py-16 lg:py-16 mx-auto md:place-content-center  md:mx-0 lg:mx-0  py-8"
+        >
+          <Button
+            variant="outline"
+            addStyles=" px-10 py-4 text-lg  w-[193px] lg:px-10 md:text-xl md:py-3 md:px-10 lg:text-2xl lg:py-3 rounded-lg shadow-lg text-nowrap  w-full h-full "
+          >
+          Ver más experiencias
+          </Button>
+        </ButtonLink>
+      </div>
     </div>
   </section>
 </Layout>
