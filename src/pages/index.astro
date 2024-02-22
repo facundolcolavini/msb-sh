@@ -1,6 +1,7 @@
 ---
 import ButtonLink from "@components/ButtonLink.astro";
 import Chat from "@components/Chat.astro";
+import he from 'he';
 import HeroContainer from "@components/HeroContainer.astro";
 import SliderA from "@components/SliderA.astro";
 import TitleSections from "@components/TitleSections.astro";
@@ -198,12 +199,15 @@ const locations = (await getLocations()) as ResultLocation;
               ({
                 ed_nom,
                 ed_pos,
+                ed_loc,
                 img_princ,
                 ed_est,
                 ed_idl,
+                codsuc,
+                ed_dir
               }: EntrePreneurShip) => (
                 <CardEntrepreneurship
-                  href={`/emprendimientos/${ed_idl}`}
+                href={`emprendimientos/${ed_est}/${he.decode(ed_loc)}/${he.decode(ed_nom)}/${codsuc}-${ed_idl}`}
                   addStyles={"card my-3"}
                   cardData={{
                     ed_nom,

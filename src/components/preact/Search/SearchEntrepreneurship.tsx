@@ -51,7 +51,7 @@ const SearchEntrepreneurship = ({ selects, locations }: Props) => {
 
     navigate(`/emprendimientos${searchPStore.length > 0 ? `?${searchPStore}` : ''}`);
   }
-
+  
   return (
     <>
 
