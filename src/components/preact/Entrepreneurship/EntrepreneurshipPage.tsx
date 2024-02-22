@@ -26,7 +26,7 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
   const searchPStore = searchParamsStore.get()
 
   const defaultOptions = {
-    ed_est: { value: '', label: 'Estado' }, // En pozo , En construccion , Terminado
+    ed_est: { value: 'En Pozo', label: 'Estado' }, // En pozo , En construccion , Terminado
     /*  tipo:{ label: 'tipo', isLocation: false, isDefault: false }, */
     ed_tip: { value: '', label: 'Tipo' },
     ed_amb: { value: 'All', label: 'Cantidad de Ambientes' },
