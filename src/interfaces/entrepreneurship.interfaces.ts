@@ -1,5 +1,5 @@
 export interface APIResponseEntrepreneurship {
-    resultado: Results | hasErrorResult ;
+    resultado: Results
 }
 
 export interface hasErrorResult {
