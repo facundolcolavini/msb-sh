@@ -1,7 +1,10 @@
 ---
 import BannerSlider from "@components/preact/BannerSlider";
 import EntrepreneurshipPage from "@components/preact/Entrepreneurship/EntrepreneurshipPage";
-import type { APIResponseEntrepreneurship,Results as ResultEntrepreneurship } from "@interfaces/entrepreneurship.interfaces";
+import type {
+  APIResponseEntrepreneurship,
+  Results as ResultEntrepreneurship,
+} from "@interfaces/entrepreneurship.interfaces";
 import type {
   ResultLocation,
   Results,
@@ -9,21 +12,26 @@ import type {
 import Layout from "@layouts/Layout.astro";
 import { getAllSelects, getLocations } from "@services/get-selects-form";
 import { fetchData } from "@utils/fetch-data";
-const title = "Invertir en USA  |  Inversiones en Estados Unidos";
-const description =
-  "Invertir en USA es una excelente opción para diversificar tu portafolio de inversiones. Conoce las mejores opciones para invertir en Estados Unidos.";
+const title = "Emprendimientos |  Matías Szpira Bienes Raíces ";
+const description = "Emprendimientos - Matías Szpira Bienes Raíces";
 const { resultado: resEmprendimientos } = (await fetchData(
   "resultados.emprendimientos",
 )) as APIResponseEntrepreneurship;
-const { emprendimiento: entrepreneurship, img } = resEmprendimientos as ResultEntrepreneurship;
+const { emprendimiento: entrepreneurship, img } =
+  resEmprendimientos as ResultEntrepreneurship;
 
 /* Fetch selects */
 const selects = (await getAllSelects()) as Results;
-const locations = (await getLocations({ed_int: "True"})) as ResultLocation;
+const locations = (await getLocations({ ed_int: "True" })) as ResultLocation;
 ---
 
 <Layout title={title} description={description}>
-  <BannerSlider slides={img[2]} sliderTime={8000} client:visible transition:animate="fade">
+  <BannerSlider
+    slides={img[2]}
+    sliderTime={8000}
+    client:visible
+    transition:animate="fade"
+  >
     <div
       class="drop-shadow-md container mx-auto w-full h-full grid grid-cols-1 lg:grid-cols gap-14 place-content-center place-items-center md:place-items-center lg:place-items-start text-white text-start md:text-center lg:text-start text-pretty self-center lg:self-start font-gotham"
     >
@@ -33,9 +41,9 @@ const locations = (await getLocations({ed_int: "True"})) as ResultLocation;
         Nuestros Emprendimientos
       </h1>
       <p
-        class="text-white text-center lg:text-start text-pretty self-center text-2xl md:text-3xl lg:text-4xl  w-full font-gotham "
+        class="text-white text-center lg:text-start text-pretty self-center text-2xl md:text-3xl lg:text-4xl w-full font-gotham"
       >
-      Invertí en bienes raíces, nosotros te asesoramos
+        Invertí en bienes raíces, nosotros te asesoramos
       </p>
     </div>
   </BannerSlider>
