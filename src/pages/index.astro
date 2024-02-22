@@ -8,6 +8,7 @@ import BannerSlider from "@components/preact/BannerSlider";
 import HomeLocation from "@components/preact/Icons/HomeLocation";
 import HomeMortgageIcon from "@components/preact/Icons/HomeMortgageIcon";
 import UserIcon from "@components/preact/Icons/UserIcon";
+import SearchEntrepreneurship from "@components/preact/Search/SearchEntrepreneurship";
 import SearchHome from "@components/preact/Search/SearchHome";
 
 import Button from "@components/preact/ui/Buttons/Button";
@@ -17,6 +18,7 @@ import CardProperty from "@components/preact/ui/Cards/CardProperty";
 import type {
   APIResponseEntrepreneurship,
   EntrePreneurShip,
+  Results as ResultEntrepreureShip
 } from "@interfaces/entrepreneurship.interfaces";
 import type {
   APIResponseResultsRecords,
@@ -36,10 +38,11 @@ const { resultado } = (await fetchData(
 const { resultado: resEmprendimientos } = (await fetchData(
   "resultados.emprendimientos",
 )) as APIResponseEntrepreneurship;
-const { emprendimiento: entrepreneurship, img } = resEmprendimientos;
+const { emprendimiento: entrepreneurship, img } = resEmprendimientos as ResultEntrepreureShip;
 const { fichas } = resultado;
+const imgSliderEntrepreneurship = img
 const cardData: File[] = fichas as File[]; // Update the type of cardData
-const titlePage = "Home";
+const titlePage = "Inicio - Matías Szpira Bienes Raíces";
 const description =
   "Propiedades en alquiler y venta - Matías Szpira Bienes Raíces";
 
@@ -48,7 +51,7 @@ const selects = (await getAllSelects()) as Results;
 const locations = (await getLocations()) as ResultLocation;
 ---
 
-<Layout title={titlePage} , description={description}>
+<Layout title={titlePage}  description={description}>
   <HeroContainer img="/images/background-hero-2.webp">
     <div
       class="absolute inset-0 flex flex-col pb-20 justify-end items-center w-100 mx-auto container"
@@ -58,7 +61,6 @@ const locations = (await getLocations()) as ResultLocation;
           client:load
           selects={selects}
           locations={locations}
-          client:load
         />
       </div>
     </div>
@@ -185,34 +187,10 @@ const locations = (await getLocations()) as ResultLocation;
         </p>
       </div>
       <div class="">
-        <div
-          class="flex md:flex-row lg:flex-row flex-col justify-center w-100 gap-4 p-6 lg:px-2 md:px-6"
-        >
-          <ButtonLink href="/emprendimientos/pozo">
-            <Button
-              variant="primary"
-              addStyles="rounded-md  shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
-            >
-              En Pozo
-            </Button>
-          </ButtonLink>
-          <ButtonLink href="/emprendimientos/construcción">
-            <Button
-              variant="primary"
-              addStyles="rounded-md  shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
-            >
-              En Construcción
-            </Button>
-          </ButtonLink>
-          <ButtonLink href="/emprendimientos/terminado">
-            <Button
-              variant="primary"
-              addStyles="rounded-md  shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
-            >
-              Terminado
-            </Button>
-          </ButtonLink>
-        </div>
+        <SearchEntrepreneurship       
+        client:load
+        selects={selects}
+        locations={locations} />
         <!-- Slider de emprendimientos -->
         <SliderA colsNr={3} height={10} width={10} classSlide="slider2">
           {

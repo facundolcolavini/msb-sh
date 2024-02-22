@@ -4,10 +4,10 @@ import { fetchData } from "../utils/fetch-data";
 
 
 
-export const getAllSelects = async (): Promise<Results> => {
+export const getAllSelects = async (queryParams?:Record<string, string>): Promise<Results> => {
     const endpoint = 'datos.select.buscador';
     try{
-        const res = await fetchData(endpoint) as APIResponseSelects;
+        const res = await fetchData(endpoint,queryParams) as APIResponseSelects;
         return res.resultado;
     } catch (error) {
         console.error('Error fetching selects data:', error);
@@ -15,10 +15,10 @@ export const getAllSelects = async (): Promise<Results> => {
     }
 }
 
-export const getLocations = async (): Promise<ResultLocation> => {
+export const getLocations = async (queryParams?:Record<string, string>): Promise<ResultLocation> => {
     const endpoint = 'fichas.ubicaciones';
     try{
-        const res = await fetchData(endpoint) as APIResponseLocations;
+        const res = await fetchData(endpoint,queryParams) as APIResponseLocations;
         return res.resultado;
     } catch (error) {
         console.error('Error fetching selects data:', error);

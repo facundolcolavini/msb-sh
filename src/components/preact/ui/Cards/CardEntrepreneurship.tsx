@@ -41,7 +41,10 @@ const CardEntrepreneurship: FunctionComponent<Props> = ({ cardData, addStyles, h
     return (
 
         <a href={href} className={styles} >
-            <img className="w-full h-[248px]  text-balance object-cover" width={408} height={248} src={cardData.img_princ} alt="Imagen del interior de la vivienda" />
+            <img className="w-full h-[248px]  text-balance object-cover" width={380} height={248} src={cardData.img_princ} style={{
+                aspectRatio: "380/192",
+                objectFit: "cover",
+            }} alt="Imagen del interior de la vivienda" />
             <div class="bg-secondary-msb  min-h-fit   p-6 ">
                 <div className="">
                     <div className="text-xl mb-2 font-medium text-nowrap capitalize"><span className="font-extrabold capitalize">{cardData.ed_nom}</span></div>
@@ -50,6 +53,7 @@ const CardEntrepreneurship: FunctionComponent<Props> = ({ cardData, addStyles, h
                         {cardData.ed_pos || "No disponible"}
                     </p>
                 </div>
+                
                 <div className="flex justify-between self-end pt-2">
                     <button className={`${colorEst} rounded-full px-3 py-2  hover:bg-bg-1-msb text-white font-bold  text-sm uppercase`}>
                         {cardData?.ed_est.replace("&oacute;", "ó")}

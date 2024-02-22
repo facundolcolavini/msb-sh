@@ -1,22 +1,19 @@
-import { useSearch } from "@hooks/useSearch"
-import type { APIResponseResultsRecords, Datos, File, Result } from "@interfaces/results.records.interfaces"
-import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@interfaces/selects.form.interfaces"
-import { type OutputOption } from "@utils/formats"
-import he from "he"
-import { useEffect, useState } from "preact/hooks"
-import { filterItems, resetFilter, searchParamsStore } from "src/store/filterStore"
-import { ArrowSortIcon } from "../Icons/ArrowSortIcon"
-import SearchIcon from "../Icons/SearchIcon"
-import CardResultSkeleton from "../Skeletons/CardResultSkeleton"
-import Button from "../ui/Buttons/Button"
-import CardProperty from "../ui/Cards/CardProperty"
-
-import Pagination from "@components/preact/Pagination"
-import { defaultsFilters, filterResultToFill, labelMappingResultForQuerys } from "@utils/filter-default"
-import { formatAndUseSearch } from "@utils/formatAndUseSearch"
-import SearchDebounce from "../Search/SearchDebounce"
-import SelectField from "../ui/Selects/SelectField"
-
+import { useSearch } from "@hooks/useSearch";
+import type { APIResponseEntrepreneurship, Datos, EntrePreneurShip, Results as ResultEntrepreneurship } from "@interfaces/entrepreneurship.interfaces";
+import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@interfaces/selects.form.interfaces";
+import { defaultsFilters, filterEntrePreneurshipToFillDefault, filterResultToFill, labelMappingEntrePreneurshipForQuerys } from "@utils/filter-default";
+import { formatAndUseSearch } from "@utils/formatAndUseSearch";
+import { type OutputOption } from "@utils/formats";
+import he from "he";
+import { useEffect, useState } from "preact/compat";
+import { filterItems, resetFilter, searchParamsStore } from "src/store/filterStore";
+import SearchIcon from "../Icons/SearchIcon";
+import SearchDebounce from "../Search/SearchDebounce";
+import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
+import Button from "../ui/Buttons/Button";
+import CardEntrepreneurship from "../ui/Cards/CardEntrepreneurship";
+import SelectField from "../ui/Selects/SelectField";
+import { ArrowSortIcon } from "../Icons/ArrowSortIcon";
 
 
 interface Props {
@@ -24,39 +21,37 @@ interface Props {
   locations: ResultLocation
 }
 
-const ResultsPage = ({ selects, locations }: Props) => {
+const EntrepreneurshipPage = ({ selects, locations }: Props) => {
   const filterStore = filterItems.get();
   const searchPStore = searchParamsStore.get()
+
+  const defaultOptions = {
+    ed_est: { value: '', label: 'Estado' }, // En pozo , En construccion , Terminado
+    /*  tipo:{ label: 'tipo', isLocation: false, isDefault: false }, */
+    ed_tip: { value: '', label: 'Tipo' },
+    ed_amb: { value: 'All', label: 'Cantidad de Ambientes' },
+    ed_loc: { value: 'All', label: 'Localidad' },
+    ed_iub: { value: '', label: '' },
+    moneda: { value: 'D', label: 'U$D' },
+    valor_desde: { value: 'All', label: 'Desde' },
+    valor_hasta: { value: 'All', label: 'Hasta' },
+  /*   rppagina: { value: '15', label: '15' }, */
+  }
+
+  const [results, setResults] = useState<ResultEntrepreneurship | null>()
+  const [resetPagination, setResetPagination] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+  const [monedaSeleccionada, setMonedaSeleccionada] = useState<OutputOption>(defaultOptions?.moneda);
+
   const filters: FilterSelects = {
     selects,
     locations,
     default: defaultsFilters,
   };
 
-  const filterToFill: FilterDefault[] = filterResultToFill;
-  const filtersformatted = formatAndUseSearch(filters, filterToFill,labelMappingResultForQuerys)
-
-
-  const defaultOptions = {
-    tipo_operacion: { value: '', label: '' },
-    tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
-    Ambientes: { value: 'All', label: 'Cantidad de Ambientes' },
-    calles: { value: 'All', label: 'Calle' },
-    sellocalidades: { value: 'All', label: 'Localidad' },
-    barrios1: { value: 'All', label: 'Barrio' },
-    moneda: { value: 'D', label: 'U$D' },
-    valor_minimo: { value: 'All', label: 'Desde' },
-    valor_maximo: { value: 'All', label: 'Hasta' },
-    rppagina: { value: '15', label: '15' },
-    in_iub: { value: '', label: '' },
-    in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
-  }
-
-  const [results, setResults] = useState<Result | null>()
-  const [resetPagination, setResetPagination] = useState<boolean>(false)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
-  const [monedaSeleccionada, setMonedaSeleccionada] = useState<OutputOption>(defaultOptions?.moneda);
+  const filterToFill: FilterDefault[] = filterEntrePreneurshipToFillDefault;
+  const filtersformatted = formatAndUseSearch(filters, filterToFill,labelMappingEntrePreneurshipForQuerys)
 
   const { handleSelect, resetSelect, handleCheckboxChange, filtersSelected } = useSearch(filtersformatted, {
     ...defaultOptions, moneda:
@@ -73,42 +68,22 @@ const ResultsPage = ({ selects, locations }: Props) => {
   const fetchResults = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/results.json?${searchParamsStore.get()}`);
-      const data: APIResponseResultsRecords = await response.json();
+      const response = await fetch(`/api/emprendimientos.json?${searchParamsStore.get()}`);
+      const data: APIResponseEntrepreneurship = await response.json();
 
-      if (data.resultado.fichas?.hasOwnProperty("error")) {
+      if (data?.hasOwnProperty("error")) {
         setResults(null);
         setIsLoading(false);
         setIsSubmitting(false);
       } else if (response.ok) {
         setIsLoading(false);
-        setResults(data.resultado);
+        setResults(data.resultado as ResultEntrepreneurship);
         setIsSubmitting(false);
-
       }
     } catch (error) {
       console.log(error);
     }
   };
-
-  const orderAscDesc = () => {
-    // Al darle click lo ordena de menor a mayor si se da otro click lo ordena de mayor a menor y asi sucesivamente
-    if (Array.isArray(results?.fichas)) {
-      results?.fichas.map((result) => {
-        const precio = result.precio.replace(/[$.]/g, '')
-        return {
-          ...result,
-          precio: Number(precio)
-        }
-      })
-        .sort((a, b) => a.precio - b.precio)
-      // Actualizar el estado de los resultados con el ordenamiento 
-      setResults({
-        ...results,
-        fichas: results?.fichas.reverse()
-      })
-    }
-  }
 
   const handleCheckbox = (id: string, value: string) => {
     const updatedMonedaSeleccionada: OutputOption = {
@@ -131,7 +106,24 @@ const ResultsPage = ({ selects, locations }: Props) => {
     await fetchResults();
     setResetPagination(false)
   };
-
+  const orderAscDesc = () => {
+    // Al darle click lo ordena de menor a mayor si se da otro click lo ordena de mayor a menor y asi sucesivamente
+    if (Array.isArray(results?.emprendimiento)) {
+      results?.emprendimiento.map((result) => {
+        const precio = result.valor_desde.replace(/[$.]/g, '')
+        return {
+          ...result,
+          precio: Number(precio)
+        }
+      })
+        .sort((a, b) => a.precio - b.precio)
+      // Actualizar el estado de los resultados con el ordenamiento 
+      setResults({
+        ...results,
+        emprendimiento: results?.emprendimiento.reverse()
+      })
+    }
+  }
   // Obtenemos los searchParams para mandarlo en el fetch y actualizar la url de busqueda.
   const onSubmit = async (e: MouseEvent) => {
     e.preventDefault();
@@ -145,71 +137,51 @@ const ResultsPage = ({ selects, locations }: Props) => {
   };
 
   return (
-    <article className="py-10">
+    <>
       {/* Buscador */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-4 md:px-0 px-3 ">
-        <div className="lg:col-start-1 lg:col-end-3 flex gap-4">
+      <div className="grid  grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-4 md:px-0 px-3 ">
+        <div className="md:col-start-1 md:col-end-3 lg:col-start-1 lg:col-end-3 flex gap-4">
           <Button
             variant="outline"
             onClick={handleSelect}
-            value={'V'}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
-            id="tipo_operacion"
+            value={'En Pozo'}
+            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${he.decode(filtersSelected?.ed_est?.value) === 'En Pozo' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+            id="ed_est"
           >
-            Venta
+            En Pozo
           </Button>
         </div>
-        <div className="lg:col-start-3 lg:col-end-5   flex gap-4">
+        <div className="md:col-start-3 md:col-end-6 lg:col-start-3 lg:col-end-5   flex gap-4">
           <Button
             variant="outline"
             onClick={handleSelect}
-            value={'A'}
-            addStyles={` sm:text-sm md:text-md lg:text-lg w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
-            id="tipo_operacion"
+            value={'En Construccion'}
+            addStyles={` sm:text-sm md:text-md lg:text-lg w-full ${he.decode(filtersSelected?.ed_est?.value) === 'En Construccion' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+            id="ed_est"
           >
-            Alquiler
+            En Construcción
           </Button>
         </div>
-        <div className="lg:col-start-5 lg:col-end-9 flex gap-4">
+        <div className="md:col-start-6 md:col-end-13 lg:col-start-5 lg:col-end-7 flex gap-4">
           <Button
             variant="outline"
             onClick={handleSelect}
-            value={'T'}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
-            id="tipo_operacion"
+            value={'Terminado'}
+            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${he.decode(filtersSelected?.ed_est?.value) === 'Terminado' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+            id="ed_est"
           >
-            Alquiler Temporiario
+            Terminado
           </Button>
+        </div>
+        <div className="md:col-start-1 md:col-end-10 lg:col-start-7 lg:col-end-12 flex  gap-4">
+          <SearchDebounce filterOptsLocations={filtersformatted.ed_iub} />
+        </div>
+        {/*         <div className="lg:col-start-1 lg:col-end-3">
+          <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filterStore.ed_tip} opts={filtersformatted.ed_tip} />
+        </div> */}
 
-        </div>
-        <div className="lg:col-start-9 lg:col-end-13 flex  gap-4">
-          <Button
-            variant="outline"
-            onClick={handleSelect} // Llama a handleSelect cuando se hace clic en el botón
-            value={filtersSelected?.in_tpr?.value}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
-            id="in_tpr"
-          >
-            Barrios Cerrados y Countries
-          </Button>
-        </div>
-        <div className="lg:col-start-1 lg:col-end-3">
-          <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filterStore.tipo_propiedad} opts={filtersformatted.tipo_propiedad} />
-        </div>
-        <div className="md:col-1 lg:col-start-3  lg:col-end-13 md:col-start-1 md:col-end-4 flex gap-4  w-full flex-grow ">
-          <SearchDebounce filterOptsLocations={filtersformatted.in_iub} />
-          <div className="hidden md:flex lg:hidden gap-4">
-            <Button
-              variant="primary"
-              onClick={onSubmit}
-              className="lg:w-auto text-base lg:text-lg xl:text-xl p-3 bg-red-500 text-white"
-              addStyles="sm:text-sm md:text-md lg:text-lg border-2 border-gray-300 rounded-md  flex w-full justify-center items-center"
-            >
-              BUSCAR
-            </Button>
-          </div>
 
-          <div className=" md:hidden lg:flex lg:col-start-11  lg:col-end-13 flex lg:justify-between">
+          <div className="lg:flex  md:col-start-10  md:col-end-13  lg:col-start-12  lg:col-end-13 flex lg:justify-between">
             <Button
               variant="primary"
               onClick={onSubmit}
@@ -219,19 +191,19 @@ const ResultsPage = ({ selects, locations }: Props) => {
             >
               <div><SearchIcon /></div>
 
-              BUSCAR
+     
             </Button>
 
           </div>
-        </div>
+        
       </div>
       <div className="py-20">
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 md:px-0 px-3">
-          <div class="lg:col-start-4 lg:col-end-13  flex items-end justify-between w-full">
-            {/* Manejar el caso donde no se encuentran resultados */}
+            <div class="lg:col-start-4 lg:col-end-13  flex items-end justify-between w-full">
+          
 
-            <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.fichas.length : 0}</span> resultados con tu búsqueda</p>
+            <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.emprendimiento) ? results?.emprendimiento.length : 0}</span> resultados con tu búsqueda</p>
             <Button onClick={orderAscDesc} addStyles="bg-transparent hover:bg-transparent p-0 m-0">
               <div className="flex items-center text-primary-text-msb text-sm md:text-md lg:text-lg font-bold  gap-1"> Ordenar <ArrowSortIcon /></div>
             </Button>
@@ -239,20 +211,22 @@ const ResultsPage = ({ selects, locations }: Props) => {
           {/* Aside para filtros */}
           <aside className="md:col-12 lg:col-start-1 lg:col-end-4">
             <div className="flex flex-col">
+           {/*    <div className="flex mb-4">
+                <SelectField id="ed_est" onChange={handleSelect} defaultOption={filterStore.ed_est} opts={filtersformatted.ed_est} />
+              </div> */}
+              <div className="flex mb-4">
+                <SelectField id="ed_tip" onChange={handleSelect} defaultOption={filterStore.ed_tip} opts={filtersformatted.ed_tip} />
+              </div>
 
-
               <div className="flex mb-4">
-                <SelectField id="Ambientes" onChange={handleSelect} defaultOption={filterStore.Ambientes} opts={filtersformatted.Ambientes} />
+                <SelectField id="ed_loc" onChange={handleSelect} defaultOption={filterStore.ed_loc} opts={filtersformatted.ed_loc} />
               </div>
               <div className="flex mb-4">
-                <SelectField id="calles" onChange={handleSelect} defaultOption={filterStore.calles} opts={filtersformatted.calles} />
+                <SelectField id="ed_amb" onChange={handleSelect} defaultOption={filterStore.ed_amb} opts={filtersformatted.ed_amb} />
               </div>
-              <div className="flex mb-4">
-                <SelectField id="sellocalidades" onChange={handleSelect} defaultOption={filterStore.sellocalidades} opts={filtersformatted.sellocalidades} />
-              </div>
-              <div className="flex">
+              {/*    <div className="flex">
                 <SelectField id="barrios1" onChange={handleSelect} defaultOption={filterStore.barrios1} opts={filtersformatted.barrios1} />
-              </div>
+              </div> */}
               {/* Radio buttons Pesos / USD */}
               <div className="mt-4">
                 <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Moneda</p>
@@ -292,8 +266,8 @@ const ResultsPage = ({ selects, locations }: Props) => {
               <div className="mt-4">
                 <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Valores</p>
                 <div className="flex gap-4">
-                  <SelectField id="valor_minimo" onChange={handleSelect} defaultOption={filterStore.valor_minimo} opts={filtersformatted.valor_minimo} />
-                  <SelectField id="valor_maximo" onChange={handleSelect} defaultOption={filterStore.valor_maximo} opts={filtersformatted.valor_maximo} />
+                  <SelectField id="valor_desde" onChange={handleSelect} defaultOption={filterStore.valor_desde} opts={filtersformatted.valor_desde} />
+                  <SelectField id="valor_hasta" onChange={handleSelect} defaultOption={filterStore.valor_hasta} opts={filtersformatted.valor_hasta} />
                 </div>
               </div>
               <div className="mt-4">
@@ -314,7 +288,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
           {/* Grilla de Resultados */}
           <div className="lg:col-start-4 lg:col-end-13">
             {/* Mostrar indicador de carga si los datos están cargando */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 z-1 gap-4 animate-fade">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 z-1 gap-4 animate-fade">
               {isLoading ? (
 
                 <>
@@ -329,35 +303,40 @@ const ResultsPage = ({ selects, locations }: Props) => {
 
               ) : (
                 <>
-                  {Array.isArray(results?.fichas) && results.fichas.map((result: File,) => (
-                    <CardProperty
-                      cardData={result}
-                      key={`${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`} // Aquí estás utilizando result.id como clave
-                      href={`resultados-de-busqueda/${result.operacion}/${result.in_loc}/${result.direccion_completa}/${result.in_suc}-${result.in_num}`}
+                  {results?.emprendimiento?.map((result: EntrePreneurShip) => (
+                    <CardEntrepreneurship
+                      cardData={
+                        {
+                          ed_nom: result.ed_nom,
+                          img_princ: result.img_princ,
+                          ed_est: result.ed_est,
+                          ed_pos: result.ed_pos
+                        }
+                      }
+                      key={`${result.codemp}${result.codsuc}-${result.ed_nro}-${result.ed_dir}`} // Aquí estás utilizando result.id como clave
+                      href={`emprendimientos/${result.ed_est}/${result.ed_loc}/${result.ed_bar}/${result.codsuc}-${result.ed_idl}`}
                     />
                   ))}
                 </>
               )}
             </div>
             {/* Paginacion */}
-            <div className={'mt-20'}>
+            {/* <div className={'mt-20'}>
               {results?.datos === undefined ? <></> : (
                 <Pagination
-                  paginationData={results?.datos as Datos}
+                  paginationData={results?.emprendimiento as any}
                   setData={setResults}
                   setLoading={setIsLoading}
                   resetPagination={resetPagination}
                   isSubmitting={isSubmitting}
                 />
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div >
-
-
-    </article >
+    </>
   )
 }
 
-export default ResultsPage
+export default EntrepreneurshipPage

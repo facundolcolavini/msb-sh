@@ -8,7 +8,7 @@ interface Props extends HTMLAttributes<"h1">	 {
 }
 
 const { class:className} = Astro.props as Props;
-const styles = twMerge(clsx("text-white text-4xl md:text-5xl lg:text-6xl font-base font-semibold font-cormorant text-pretty lg:drop-shadow-2xl text-center", className));
+const styles = twMerge(clsx("text-white text-4xl md:text-5xl lg:text-6xl font-base font-semibold font-cormorant text-pretty lg:drop-shadow-lg text-center", className));
 ---
 
 <h1 class:list={[ styles ]}>

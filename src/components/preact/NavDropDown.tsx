@@ -1,7 +1,5 @@
 import type { PropsWithChildren } from 'preact/compat';
 import { useState } from 'preact/hooks';
-import Button from './ui/Buttons/Button';
-
 
 type Props = {
   label?: string,

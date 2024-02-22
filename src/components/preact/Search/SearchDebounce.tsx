@@ -5,7 +5,7 @@ import { addFilterValue, filterItems, searchParamsStore } from '../../../store/f
 import "../ui/Selects/selectsField.css";
 
 interface Props {
-    filterOptsLocations: { [key: string]: OutputOption[] };
+    filterOptsLocations:  OutputOption[] 
 }
 
 const SearchDebounce = ({ filterOptsLocations }: Props) => {
@@ -27,7 +27,7 @@ const SearchDebounce = ({ filterOptsLocations }: Props) => {
 
     // Lógica de búsqueda con debounce
     const handleSearchWithDebounce = debounce((value: string) => {
-        const filteredOpts = filterOptsLocations.in_iub.filter(location =>
+        const filteredOpts = filterOptsLocations.filter(location =>
             location.label.toLowerCase().includes(value.toLowerCase())
         );
         setOpts(filteredOpts);

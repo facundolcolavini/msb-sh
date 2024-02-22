@@ -1,7 +1,10 @@
 export interface APIResponseEntrepreneurship {
-    resultado: Results;
+    resultado: Results | hasErrorResult ;
 }
 
+export interface hasErrorResult {
+    error: string
+}
 export interface EntrePreneurShip {
     ed_nom: string;
     ed_idl: string;
@@ -72,7 +75,7 @@ export interface EntrePreneurShip {
 }
 export interface Results {
     datos: Datos;
-    emprendimiento: EntrePreneurShip[];
+    emprendimiento: EntrePreneurShip[] ;
     img: Array<string[]>;
     query: null;
 }

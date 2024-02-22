@@ -1,3 +1,5 @@
+import type { OutputOption } from "@utils/formats";
+
 export interface APIResponseSelects {
     resultado: Results;
 }
@@ -19,6 +21,7 @@ export interface Results {
     provincia:    Option[];
     valor:        ValueRange;
     codsuc:       Option[];
+    [key: string]: string | Option[] | ValueRange | Neighborhood[];
 }
 
 
@@ -57,4 +60,20 @@ export interface Location {
     idU:         string;
     descripcion: string;
 }
+/* Para la logica de los filtros */
+export type Default = Record<string, OutputOption[]>;
+export interface FilterSelects {
+    selects: Results;
+    locations:  ResultLocation;
+    default: Default;
+  }
 
+  export type FilterDefault = {
+    label: string;
+    isLocation?: boolean;
+    isDefault?: boolean;
+  };
+
+  export type OutPutValuesFilter = {
+    [key: string]: OutputOption[];
+  };

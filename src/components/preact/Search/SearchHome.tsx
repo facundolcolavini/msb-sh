@@ -41,17 +41,17 @@ const SearchHome = ({ selects, locations }: Props) => {
   useEffect(() => {
     // REINICIA EL ESTADO DE LOS FILTROS CUANDO SE CARGA LA PÁGINA HOME
 
-      searchParamsStore.set('')
-      resetFilter({})
-      resetSelect( {
-        tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
-        tipo_operacion: { value: '', label: '' }, 
-        in_iub: { value: '', label: '' },
-        in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
-      })
+    searchParamsStore.set('')
+    resetFilter({})
+    resetSelect({
+      tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
+      tipo_operacion: { value: '', label: '' },
+      in_iub: { value: '', label: '' },
+      in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
+    })
 
 
-    
+
   }, [])
 
   const send = async (e: MouseEvent) => {
@@ -96,26 +96,26 @@ const SearchHome = ({ selects, locations }: Props) => {
               addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
               id="tipo_operacion"
             >
-            Alquiler Temporiario
+              Alquiler Temporiario
             </Button>
           </div>
           <div className="lg:col-start-9 lg:col-end-13 flex   md:grid-col-start-2 md:grid-col-end-4 gap-4">
-          <Button
-            variant="outline"
-            onClick={handleSelect} // Llama a handleSelect cuando se hace clic en el botón
-            value={filtersSelected?.in_tpr?.value}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
-            id="in_tpr"
-          >
-            Barrios Cerrados y Countries
-          </Button>
+            <Button
+              variant="outline"
+              onClick={handleSelect} // Llama a handleSelect cuando se hace clic en el botón
+              value={filtersSelected?.in_tpr?.value}
+              addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
+              id="in_tpr"
+            >
+              Barrios Cerrados y Countries
+            </Button>
           </div>
           {/* Selector e input de la fila inferior */}
           <div className="lg:col-start-1  lg:col-end-3 flex  h-full  ">
-            <SelectField  id="tipo_propiedad" onChange={handleSelect} defaultOption={filtersSelected?.tipo_propiedad} opts={tipo_propiedad} />
+            <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filtersSelected?.tipo_propiedad} opts={tipo_propiedad} />
           </div>
           <div className="md:col-1 lg:col-start-3  lg:col-end-11 md:col-start-2 md:col-end-5 flex gap-4  w-full flex-grow ">
-            <SearchDebounce filterOptsLocations={{ in_iub }} />
+            <SearchDebounce filterOptsLocations={in_iub} />
             <div className="hidden md:flex lg:hidden gap-4">
               <Button
                 variant="primary"
