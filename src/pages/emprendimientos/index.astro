@@ -9,9 +9,10 @@ import type {
 import Layout from "@layouts/Layout.astro";
 import { getAllSelects, getLocations } from "@services/get-selects-form";
 import { fetchData } from "@utils/fetch-data";
-const title = "Invertir en USA  |  Inversiones en Estados Unidos";
+const title = "Emprendimientos  | Matías Szpira Bienes Raíces";
 const description =
-  "Invertir en USA es una excelente opción para diversificar tu portafolio de inversiones. Conoce las mejores opciones para invertir en Estados Unidos.";
+"Emprendimientos Invertí en bienes raíces, nosotros te asesoramos.";
+
 const { resultado: resEmprendimientos } = (await fetchData(
   "resultados.emprendimientos",
 )) as APIResponseEntrepreneurship;
