@@ -32,7 +32,7 @@ import type {
 import Layout from "@layouts/Layout.astro";
 import { getAllSelects, getAllSelectsEntrepreneurship, getLocations } from "@services/get-selects-form";
 import { fetchData } from "@utils/fetch-data";
-
+export const prerender = true
 const { resultado } = (await fetchData(
   "fichas.destacadas",
 )) as APIResponseResultsRecords;
