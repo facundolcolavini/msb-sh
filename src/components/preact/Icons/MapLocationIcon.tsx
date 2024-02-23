@@ -5,12 +5,13 @@ interface Props {
   addStyles?: string;
   w?: string;
   h?: string;
+  imgUrl?:string;
 }
-const MapLocationIcon = ({ addStyles, w = "56", h = "56" }: Props) => {
+const MapLocationIcon = ({ addStyles, w = "56", h = "56", imgUrl="map" }: Props) => {
   const styles = twMerge(clsx("object-contain", addStyles));
   return (
     <>
-      <img id="map-location" className={styles} alt="map location icon" src="/images/map.png" width={w} height={h} />
+          <img id={imgUrl} className={styles} alt={`${imgUrl} icon`} src={`/images/${imgUrl}.png`} width={w} height={h} />
     </>
 
   )

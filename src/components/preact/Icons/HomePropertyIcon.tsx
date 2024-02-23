@@ -5,12 +5,13 @@ interface Props {
   addStyles?: string;
   w?: string;
   h?: string;
+  imgUrl?:string;
 }
-const HomeProperty = ({ addStyles, w = "56", h = "56" }: Props) => {
+const HomeProperty = ({ addStyles, w = "56", h = "56", imgUrl= 'home-property' }: Props) => {
   const styles = twMerge(clsx("object-contain", addStyles));
   return (
     <>
-      <img id="home-property" className={styles} alt="home property icon" src="/images/home-property.png" width={w} height={h} />
+      <img id={imgUrl} className={styles} alt={`${imgUrl} icon`} src={`/images/${imgUrl}.png`} width={w} height={h} />
     </>
 
   )

@@ -17,9 +17,7 @@ import Button from "../ui/Buttons/Button";
 import TabMenu from '../Property/TabMenu';
 import Description from '../Property/Description';
 import ContactForm from '../Property/ContactForm';
-
-
-
+import EntrepreneurshipFeatureList from './EntrepreneurshipFeatureList';
 
 interface Props {
     branchCode: string;
@@ -117,17 +115,17 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     <div className="container flex flex-col md:flex-col lg:flex-row justify-center w-3/4 lg:w-fit  items-center place-content-center mx-auto h-full">
 
                         {
-                            results?.emprendimiento[0]?.valor_desde  !== ""? (<div className="border-b-2 border-t-2 lg:border-l-2 lg:border-t-0 lg:border-b-0 md:border-b-2 md:border-t-2  text-center h-[184px] w-full flex justify-center items-center flex-col px-10 md:px-20 lg:px-20 p-5">
-                                <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant font-semibold tracking-wider flex  items-center h-fit">Valor desde</span>
-                                <p className="text-xl md:text-xl lg:text-3xl font-bold tracking-wider flex gap-2">{results?.emprendimiento[0]?.valor_desde}</p>
+                            results?.emprendimiento[0]?.valor_desde  !== ""? (<div className="border-b-2 border-t-2 lg:border-l-2 lg:border-t-0 lg:border-b-0 md:border-b-2 md:border-t-2  text-center h-[184px] w-full flex justify-center items-center flex-col md:px-20 lg:px-20 p-5">
+                                <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant flex flex-col font-semibold">Valor desde</span>
+                                <p className="text-xl md:text-xl lg:text-3xl self-center font-bold tracking-wider block gap-2">{results?.emprendimiento[0]?.valor_desde}</p>
                             </div>) : null}
                         {
                             results?.emprendimiento[0]?.tipo !== '' ? (<div className="border-b-2 lg:border-l-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5 ">
                                 <div className="flex items-center justify-center ">
                                     <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/home-property.png'} alt="home property" />
                                 </div>
-                                <span className="text-2xl md:text-2xl lg:text-4xl  h-[56px] font-cormorant font-semibold tracking-wider flex items-center justify-center">Sup.Total</span>
-                                <span className={"text-xl md:text-xl lg:text-3xl font-bold tracking-wide "}>{results?.emprendimiento[0]?.tipo}</span>
+                                <span className="text-2xl md:text-2xl lg:text-4xl  h-[56px] font-cormorant font-semibold tracking-wider flex items-center justify-center">Tipo</span>
+                                <span className={"text-xl md:text-xl lg:text-3xl self-center font-bold tracking-wide "}>{results?.emprendimiento[0]?.tipo}</span>
                             </div>) : null
 
                         }
@@ -138,16 +136,16 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                     <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/puerta.png'} alt="superficie" />
                                 </div>
                                 <span className="text-2xl md:text-2xl lg:text-4xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center justify-center">Ambientes</span>
-                                <span className={"text-xl md:text-xl lg:text-3xl font-bold tracking-wide "}>{results?.emprendimiento[0]?.ed_amb?.split('A')[0]}</span>
+                                <span className={"text-xl md:text-xl place-content-center self-center lg:text-3xl font-bold tracking-wide "}>{results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente": results?.emprendimiento[0]?.ed_amb?.split('A')[0] }</span>
                             </div>) : null
                         }
                         {
-                            results?.emprendimiento[0]?.ed_bar !== "" ? (<div className="border-b-0 lg:border-l-2 md:border-r-0 lg:border-r-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5">
-                                <div className="flex items-center justify-center">
-
-                                    <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/ducha.png'} alt="superficie" />
+                            results?.emprendimiento[0]?.ed_bar !== "" ? (<div className={`border-b-0 ${results?.emprendimiento[0]?.ed_bar !== "" ? "lg:border-l-2" : "lg:border-l-0"} md:border-r-0 lg:border-r-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5`}>
+                                <div className="flex items-center justify-center pb-4">
+                               
+                                    <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/map-mark.png'} alt="map-mark" />
                                 </div>
-                                <span className="text-2xl md:text-2xl lg:text-4xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center justify-center">Baños</span>
+
                                 <span className={"text-xl md:text-xl lg:text-3xl font-bold tracking-wide "}>{ results?.emprendimiento[0]?.ed_bar}</span>
                             </div>) : null
                         }
@@ -188,27 +186,14 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                     allowFullScreen>
                                 </iframe>
                             </div>
-                   {/*          <FeatureList
-                                sup_cubierta={results?.superficie?.dato[0]}
-                                sup_total={results?.superficie?.dato[3]}
-                                antiquity={results?.ficha[0]?.in_ant}
-                                baths={results?.ficha[0]?.in_bao}
-                                environments={results?.ficha[0]?.in_amb?.split('A')[0]}
-                                furnished={results?.caracteristicas_generales_personalizadas?.find(
-                                    (caracteristica) => caracteristica === 'Amoblado') ?? ''}
-                                light={results?.caracteristicas_generales_personalizadas?.find(
-                                    (caracteristica) => caracteristica === 'Luz') ?? ''}
-                                location={results?.ficha[0]?.ubicacion.toLocaleLowerCase()}
-                                pet_accepted={Boolean(results?.ficha[0]?.acepta_mascota?.toLocaleLowerCase()) ?? false}
-                            /> */}
-
+                            <EntrepreneurshipFeatureList building={results?.emprendimiento[0]?.tipo} enviroments={results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente": results?.emprendimiento[0]?.ed_amb?.split('A')[0] } location={he.decode(results?.emprendimiento[0]?.ed_loc)} />
                             <hr className={'border-secondary-text-msb '} />
                             <div className={'flex flex-col gap-5 py-5'}>
                                 <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb'}>Descripción</h2>
 
                                 <Description htmlText={results?.emprendimiento[0]?.ed_pre} />
                             </div>
-                            <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle de la propiedad</h2>
+                            <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle del Edificio | Emprendimiento en Pozo</h2>
                             <hr className={'border-secondary-text-msb my-3'} />
                            {/*  <DetailsList
                                 operation={results?.ficha[0]?.operacion ?? ''}
@@ -243,17 +228,14 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 </div>
             </section>
             <section className={'container mx-auto  my-30'}>
-
                 <BreadCrumbSkeleton />
                 <BreadCrumbSkeleton />
-                <div className={'grid grid-cols-4  gap-5  my-10 w-100'}>
+                <div className={'grid grid-cols md:grid-cols-2 lg:grid-cols-4 gap-5 my-10 w-100'}>
                     <CardResultSkeleton />
                     <CardResultSkeleton />
                     <CardResultSkeleton />
                     <CardResultSkeleton />
                 </div>
-
-
             </section>
 
         </article>

@@ -4,7 +4,7 @@ import EntrepreneurshipDetail from "@components/preact/Entrepreneurship/Entrepre
 import PropertyPage from "@components/preact/Property/PropertyPage";
 
 import Layout from "@layouts/Layout.astro";
-
+export const prerender = false;
 const { propiedad } = Astro.params;
 const url = Astro.url;
 
@@ -15,7 +15,7 @@ let suc = prop?.split("-")[0] ?? "";
 let id = prop?.split("-")[1] ?? "";
 ---
 
-<Layout title="Detalle de Propieda" description="Detalle de Propiedad">
+<Layout title="Detalle de Propiedad" description="Detalle de Propiedad">
   <section class="bg-[#FFFBF4] h-full py-2">
 
       <EntrepreneurshipDetail

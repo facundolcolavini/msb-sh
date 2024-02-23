@@ -88,10 +88,10 @@ const DetailsList = ({
         {(expenses !== "") ? (
           <li className="flex gap-2">
             <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Expensas: </span>
-            <span className="text-sm md:text-md lg:text-lg">{he.decode(expenses).includes('P') ?  
-             // REEMPLAZAR POR $ PRECIO 
-              he.decode(expenses).replace('P', '$') :  he.decode(expenses).replace('P', 'U$S') 
-          }</span>
+            <span className="text-sm md:text-md lg:text-lg">{he.decode(expenses).includes('P') ?
+              // REEMPLAZAR POR $ PRECIO 
+              he.decode(expenses).replace('P', '$') : he.decode(expenses).replace('P', 'U$S')
+            }</span>
           </li>
         ) : null}
         {(locationUbi !== "") ? (
