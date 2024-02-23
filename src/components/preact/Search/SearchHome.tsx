@@ -115,7 +115,7 @@ const SearchHome = ({ selects, locations }: Props) => {
             <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filtersSelected?.tipo_propiedad} opts={tipo_propiedad} />
           </div>
           <div className="md:col-1 lg:col-start-3  lg:col-end-11 md:col-start-2 md:col-end-5 flex gap-4  w-full flex-grow ">
-            <SearchDebounce filterOptsLocations={in_iub} />
+            <SearchDebounce filterOptsLocations={in_iub} propIdRef={"in_iub"} />
             <div className="hidden md:flex lg:hidden gap-4">
               <Button
                 variant="primary"
