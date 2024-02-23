@@ -6,7 +6,7 @@ import PropertyPage from "@components/preact/Property/PropertyPage";
 import Layout from "@layouts/Layout.astro";
 const { propiedad } = Astro.params;
 const url = Astro.url;
-export const prerender = false;
+export const prerender = true;
 
 // Extraemos el ultimo segmento de la url
 let prop = url.toString().split("/").pop();
