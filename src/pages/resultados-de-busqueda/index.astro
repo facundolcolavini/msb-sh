@@ -7,9 +7,10 @@ import type {
 import Layout from "@layouts/Layout.astro";
 import { getAllSelects, getLocations } from "@services/get-selects-form";
 /* Fetch selects */
-
+export const prerender = false;
 const selects = (await getAllSelects()) as Results;
 const locations = (await getLocations()) as ResultLocation;
+
 ---
 
 <Layout title="Resultados de Busqueda" description="Buscar propiedades">

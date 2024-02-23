@@ -21,6 +21,10 @@ export interface Results {
     provincia:    Option[];
     valor:        ValueRange;
     codsuc:       Option[];
+    ambientes2:   Option[];
+    ambientes3:   Option[];
+    ambientes4:   Option[];
+    ambientes5:   Option[];
     [key: string]: string | Option[] | ValueRange | Neighborhood[];
 }
 

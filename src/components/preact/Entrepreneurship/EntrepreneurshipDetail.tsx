@@ -18,6 +18,7 @@ import TabMenu from '../Property/TabMenu';
 import Description from '../Property/Description';
 import ContactForm from '../Property/ContactForm';
 import EntrepreneurshipFeatureList from './EntrepreneurshipFeatureList';
+import EntrepreneurshipDetailList from './EntrepreneurshipDetailList';
 
 interface Props {
     branchCode: string;
@@ -60,7 +61,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
     const fetchResults = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch(`/api/emprendimientos.json?ed_idl=${props.propertyCode}`);
+            const response = await fetch(`/api/emprendimientos.json?id=${props.propertyCode}`);
             const data: APIResponseEntrepreneurship = await response.json();
 
             if (data?.hasOwnProperty("error")) {
@@ -115,7 +116,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     <div className="container flex flex-col md:flex-col lg:flex-row justify-center w-3/4 lg:w-fit  items-center place-content-center mx-auto h-full">
 
                         {
-                            results?.emprendimiento[0]?.valor_desde  !== ""? (<div className="border-b-2 border-t-2 lg:border-l-2 lg:border-t-0 lg:border-b-0 md:border-b-2 md:border-t-2  text-center h-[184px] w-full flex justify-center items-center flex-col md:px-20 lg:px-20 p-5">
+                            (results?.emprendimiento[0]?.valor_desde  !== "0" && results?.emprendimiento[0]?.valor_desde  !== "")? (<div className="border-b-2 border-t-2 lg:border-l-2 lg:border-t-0 lg:border-b-0 md:border-b-2 md:border-t-2  text-center h-[184px] w-full flex justify-center items-center flex-col md:px-20 lg:px-20 p-5">
                                 <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant flex flex-col font-semibold">Valor desde</span>
                                 <p className="text-xl md:text-xl lg:text-3xl self-center font-bold tracking-wider block gap-2">{results?.emprendimiento[0]?.valor_desde}</p>
                             </div>) : null}
@@ -146,7 +147,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                     <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/map-mark.png'} alt="map-mark" />
                                 </div>
 
-                                <span className={"text-xl md:text-xl lg:text-3xl font-bold tracking-wide "}>{ results?.emprendimiento[0]?.ed_bar}</span>
+                                <span className={"text-xl md:text-xl lg:text-3xl self-center  font-bold tracking-wide "}>{ he.decode(results?.emprendimiento[0]?.ed_bar || '')}</span>
                             </div>) : null
                         }
 
@@ -192,34 +193,22 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                 <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb'}>Descripción</h2>
 
                                 <Description htmlText={results?.emprendimiento[0]?.ed_pre} />
+                                <Description htmlText={results?.emprendimiento[0]?.ed_cue} />
                             </div>
                             <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle del Edificio | Emprendimiento en Pozo</h2>
                             <hr className={'border-secondary-text-msb my-3'} />
-                           {/*  <DetailsList
-                                operation={results?.ficha[0]?.operacion ?? ''}
-                                locationLoc={results?.ficha[0]?.in_loc ?? ''}
-                                locationUbi={results?.ficha[0]?.ubicacion ?? ''}
-                                neighborhood={results?.ficha[0]?.in_bar ?? ''}
-                                address={results?.ficha[0]?.direccion ?? ''}
-                                environments={results?.ficha[0]?.ambientes ?? ''}
-                                antiquity={results?.ficha[0]?.in_ant ?? ''}
-                                year={results?.ficha[0]?.in_anio ?? ''}
-                                expenses={`${results?.ficha[0]?.in_exp !== "" ? `${results?.ficha[0]?.moneda_impuesto} ${results?.ficha[0]?.in_exp}` : ''}`}
-                                houseType={results?.ficha[0]?.in_tpr ?? ''}
-                                dependence={results?.ficha[0]?.in_dep ?? ''}
-                                floors={results?.ficha[0]?.in_npi ?? ''}
-                                hotWater={results?.ficha[0]?.agua ?? ''}
-                                gas={results?.ficha[0]?.in_gas ?? ''}
-                                heating={results?.ficha[0]?.in_agu ?? ''}
-                                bathrooms={results?.ficha[0]?.in_bao ?? ''}
-                                state={results?.ficha[0]?.in_esa ?? ''}
-                                garage_parking={results?.ficha[0]?.in_coc ?? ''}
-                                garage={results?.ficha[0]?.garage ?? ''}
-                                parking={results?.ficha[0]?.in_parking ?? ''}
-                                pavement={results?.ficha[0]?.in_pav ?? ''}
-                                sewer={results?.ficha[0]?.in_clo ?? ''}
-                                telephoneLine={results?.ficha[0]?.in_lin ?? ''}
-                            /> */}
+                            <EntrepreneurshipDetailList 
+                                name={he.decode(results?.emprendimiento[0]?.ed_nom)} 
+                                buildingType={he.decode(results?.emprendimiento[0]?.tipo)} 
+                                location={he.decode(results?.emprendimiento[0]?.ed_loc)} 
+                                neighborhood={he.decode(results?.emprendimiento[0]?.ed_bar)} 
+                                address={he.decode(results?.emprendimiento[0]?.ed_dir)} 
+                                category={he.decode(results?.emprendimiento[0]?.ed_cat)} 
+                                state={he.decode(results?.emprendimiento[0]?.ed_est)} 
+                                possessionAndDelivery={`${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[0])}/${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[1])}`} 
+                                architect={he.decode(results?.emprendimiento[0]?.ed_arq)} 
+                                enviroments={he.decode(results?.emprendimiento[0]?.ed_amb)}
+                            />
 
                         </div>
                     )}

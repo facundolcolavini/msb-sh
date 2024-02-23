@@ -19,7 +19,7 @@ const SearchEntrepreneurship = ({ selects, locations }: Props) => {
 
   const defaultOptions = {
     ed_est: { value: '', label: 'Estado' },
-    ed_iub: { value: '', label: '' },
+  /*   ed_iub: { value: '', label: '' }, */
   }
 
   const filters: FilterSelects = {
@@ -77,7 +77,7 @@ const SearchEntrepreneurship = ({ selects, locations }: Props) => {
             navigateToPage
 
           }
-          value={'En Construccion'}
+          value={'En Construccion'}  
           addStyles="rounded-md  shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
         >
           En Construcción

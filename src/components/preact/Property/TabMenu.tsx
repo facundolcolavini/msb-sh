@@ -6,7 +6,9 @@ import Button from "../ui/Buttons/Button";
 import type { FunctionComponent, JSX } from 'preact';
 import TabGalleryIcon from '../Icons/TabGalleryIcon';
 interface Props {
-    videoUrl: string | null
+    videoUrl: string | null;
+    blueprint?: string | null;
+    pdf?: string | null;
 }
 const TabMenu: FunctionComponent<Props> = ({ videoUrl }: Props) => {
     const [tabMenuProperty, setTabMenuProperty] = useState(
@@ -22,7 +24,6 @@ const TabMenu: FunctionComponent<Props> = ({ videoUrl }: Props) => {
         e.preventDefault();
         // El que está en true no se puede volver a clickear
         if (e.currentTarget.id === 'tabGallery') {
-            console.log()
             setTabMenuProperty(prev => ({
                 ...prev,
                 video: false,

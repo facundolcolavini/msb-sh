@@ -120,7 +120,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                         {
                             results?.ficha[0]?.in_amb?.split('A')[0].length !== 0 && results?.ficha[0]?.moneda ? (<div className="border-b-2 border-t-2 lg:border-l-2 lg:border-t-0 lg:border-b-0 md:border-b-2 md:border-t-2  text-center h-[184px] w-full flex justify-center items-center flex-col px-10 md:px-20 lg:px-20 p-5">
                                 <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant font-semibold tracking-wider flex  items-center h-fit">Valor</span>
-                                <p className="text-xl md:text-xl lg:text-3xl font-bold tracking-wider flex gap-2"><span>{results?.ficha[0]?.precio !== '' && results?.ficha[0]?.precio !== 'Consultar' && results?.ficha[0]?.moneda}</span>{results?.ficha[0]?.precio.replace('U$S', '')}</p>
+                                <p className="text-xl md:text-xl lg:text-3xl self-center font-bold tracking-wider flex gap-2"><span>{results?.ficha[0]?.precio !== '' && results?.ficha[0]?.precio !== 'Consultar' && results?.ficha[0]?.moneda}</span>{results?.ficha[0]?.precio.replace('U$S', '')}</p>
                             </div>) : null}
                         {
                             results?.superficie.dato[3] !== '0.00m2' ? (<div className="border-b-2 lg:border-l-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5 ">
@@ -128,7 +128,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                                     <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/superficie.png'} alt="superficie" />
                                 </div>
                                 <span className="text-2xl md:text-2xl lg:text-4xl  h-[56px] font-cormorant font-semibold tracking-wider flex items-center justify-center">Sup.Total</span>
-                                <span className={"text-xl md:text-xl lg:text-3xl font-bold tracking-wide "}>{results?.superficie.dato[3]}</span>
+                                <span className={"text-xl md:text-xl self-center lg:text-3xl font-bold tracking-wide "}>{results?.superficie.dato[3]}</span>
                             </div>) : null
 
                         }
@@ -139,7 +139,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                                     <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/puerta.png'} alt="superficie" />
                                 </div>
                                 <span className="text-2xl md:text-2xl lg:text-4xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center justify-center">Ambientes</span>
-                                <span className={"text-xl md:text-xl lg:text-3xl font-bold tracking-wide "}>{results?.ficha[0]?.in_amb?.split('A')[0]}</span>
+                                <span className={"text-xl md:text-xl place-content-center self-center lg:text-3xl font-bold tracking-wide "}>{results?.ficha[0]?.in_amb?.split('A')[0] === "0" ? "Monoambiente": results?.ficha[0]?.in_amb?.split('A')[0] }</span>
                             </div>) : null
                         }
                         {

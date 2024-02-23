@@ -197,7 +197,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
           <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filterStore.tipo_propiedad} opts={filtersformatted.tipo_propiedad} />
         </div>
         <div className="md:col-1 lg:col-start-3  lg:col-end-13 md:col-start-1 md:col-end-4 flex gap-4  w-full flex-grow ">
-          <SearchDebounce filterOptsLocations={filtersformatted.in_iub} />
+          <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />
           <div className="hidden md:flex lg:hidden gap-4">
             <Button
               variant="primary"

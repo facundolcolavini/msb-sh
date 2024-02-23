@@ -16,7 +16,7 @@ export type OutputOption = { label: string, value: string };
 
 export function formatOptions(options: InputOption[]): OutputOption[] {
   return options
-    .filter(option => {
+    ?.filter(option => {
       const description = 'description' in option ? option.description : option?.descripcion;
       const value = 'value' in option ? option.value : ('val' in option ? option.val : '');
       return !(description === "INDISTINTO" && value === "All" || description === "INDISTINTO" && ('val' in option) && option.val === "" || description === "TODAS" && value === "All");

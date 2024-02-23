@@ -6,7 +6,7 @@ import { formatAndUseSearch } from "@utils/formatAndUseSearch";
 import { type OutputOption } from "@utils/formats";
 import he from "he";
 import { useEffect, useState } from "preact/compat";
-import { filterItems, resetFilter, searchParamsStore } from "src/store/filterStore";
+import { addFilterValue, filterItems, resetFilter, searchParamsStore } from "src/store/filterStore";
 import SearchIcon from "../Icons/SearchIcon";
 import SearchDebounce from "../Search/SearchDebounce";
 import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
@@ -136,6 +136,7 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
     setResetPagination(false)
   };
 
+
   return (
     <>
       {/* Buscador */}
@@ -155,8 +156,8 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
           <Button
             variant="outline"
             onClick={handleSelect}
-            value={'En Construccion'}
-            addStyles={` sm:text-sm md:text-md lg:text-lg w-full ${he.decode(filtersSelected?.ed_est?.value) === 'En Construccion' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+            value={'En Construccion'}      
+            addStyles={` sm:text-sm md:text-md lg:text-lg w-full ${filtersSelected?.ed_est.value === 'En Construccion' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
             id="ed_est"
           >
             En Construcción
@@ -174,7 +175,7 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
           </Button>
         </div>
         <div className="md:col-start-1 md:col-end-10 lg:col-start-7 lg:col-end-12 flex  gap-4">
-          <SearchDebounce filterOptsLocations={filtersformatted.ed_iub} />
+          <SearchDebounce filterOptsLocations={filtersformatted.ed_iub} propIdRef={"ed_iub"} />
         </div>
         {/*         <div className="lg:col-start-1 lg:col-end-3">
           <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filterStore.ed_tip} opts={filtersformatted.ed_tip} />

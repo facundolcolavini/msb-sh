@@ -6,12 +6,13 @@ import "../ui/Selects/selectsField.css";
 
 interface Props {
     filterOptsLocations:  OutputOption[] 
+    propIdRef :string;
 }
-
-const SearchDebounce = ({ filterOptsLocations }: Props) => {
+/* AJUSTA LOS PARAMETROS DE BUSCA Y LA LISTA DE OPCIONES  */
+const SearchDebounce = ({ filterOptsLocations,propIdRef }: Props) => {
     const filters = filterItems.get();
     const params = searchParamsStore.get();
-    const [searchTerm, setSearchTerm] = useState<OutputOption>(filters.in_iub);
+    const [searchTerm, setSearchTerm] = useState<OutputOption>(filters[propIdRef]);
     const [listOpts, setOpts] = useState<OutputOption[]>([]);
     const [showResults, setShowResults] = useState<boolean>(false);
     const listContainerRef = useRef<HTMLUListElement>(null);
@@ -57,8 +58,9 @@ const SearchDebounce = ({ filterOptsLocations }: Props) => {
 
     // Actualizar la url con los filtros del buscador 
     useEffect(() => {
-        if (filters.in_iub?.value === '' && filters.in_iub?.label === '') {
-            setSearchTerm({ label: filters?.in_iub?.label, value: filters?.in_iub?.value });
+ 
+        if (filters[propIdRef]?.value === '' && filters[propIdRef]?.label === '') {
+            setSearchTerm({ label: filters[propIdRef]?.label, value: filters[propIdRef]?.value });
         }
         const currentUrl = window.location.pathname;
         const newUrl = `${currentUrl}${params.length > 0 ? `?${params}` : ''}`;
@@ -68,7 +70,7 @@ const SearchDebounce = ({ filterOptsLocations }: Props) => {
     }, [params]);
 
     const handleOptionSelect = (option: OutputOption) => {
-        addFilterValue({ in_iub: { value: option.value, label: option.label } });
+        addFilterValue({ [propIdRef]: { value: option.value, label: option.label } });
         setSearchTerm(option);
         setShowResults(false); // Ocultar el listado después de seleccionar una opción
     };
@@ -76,7 +78,7 @@ const SearchDebounce = ({ filterOptsLocations }: Props) => {
     return (
         <div className={`relative top-0  w-full`}>
             <InputField
-                id="in_iub"
+                id={propIdRef}
                 type='search'
                 value={searchTerm?.label} // Usar el valor del estado como valor del input
                 className='border-2 border-primary-msb focus:border-b-1 rounded-md px-4 flex w-full h-full py-2 focus:outline-none focus:ring-0 sticky z-0'

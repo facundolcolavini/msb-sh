@@ -26,3 +26,13 @@ export const getLocations = async (queryParams?:Record<string, string>): Promise
     }
 }
 
+export const getAllSelectsEntrepreneurship = async (queryParams?:Record<string, string>): Promise<any> => {
+    const endpoint = 'datos.select.buscador.emprendimientos';
+    try{
+        const res = await fetchData(endpoint,queryParams) as any;
+        return res.resultado;
+    } catch (error) {
+        console.error('Error fetching selects data:', error);
+        throw error;
+    }
+}

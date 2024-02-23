@@ -14,42 +14,23 @@ export const defaultsFilters: Default = {
       label: "Barrios Cerrados y Countries",
     },
   ],
-  ed_tip: [
-    {
-      value: "E",
-      label: "Edificio"
-    },
-    {
-      value: "P",
-      label: "Parque Industrial"
-    },
-    {
-      value: "L",
-      label: "Loteo"
-    },
-    {
-      value: "B",
-      label: "Barrio Cerrado"
-    },
-    {
-      value: "T",
-      label: "Country"
-    }
-  ],
   ed_est: [
     {
-      value: "En Pozo",
-      label: "En Pozo",
+      label: 'En Construccion',
+      value: 'En Construccion'
     },
     {
-      value: "En Construccion",
-      label: "En Construcción",
+      label: 'Terminado',
+      value: 'Terminado'
     },
     {
-      value: "Terminado",
-      label: "Terminado",
+      label: 'En Pozo',
+      value: 'En Pozo'
     },
-
+    {
+      label: 'A Estrenar',
+      value: 'A Estrenar'
+    }
   ],
   moneda: [
     {
@@ -62,7 +43,6 @@ export const defaultsFilters: Default = {
     },
   ],
   rppagina: [{ value: '15', label: '15' }]
-
 }
 
 export const filterResultToFill = [
@@ -90,11 +70,12 @@ export const labelMappingResultForQuerys = {
 // Nombre de los selects 
 export const filterEntrePreneurshipToFillDefault = [
 /*   { label: 'tipo', isLocation: false, isDefault: false }, */
-  { label: 'ed_est', isLocation: false, isDefault: true },
-  { label: 'ed_tip', isLocation: false, isDefault: true },
+{ label: 'ed_est' , isLocation: false, isDefault: true},
+/*   { label: 'estado', isLocation: false, isDefault: true }, */
+  { label: 'tipo', isLocation: false, isDefault: false },
   { label: 'ambientes', isLocation: false, isDefault: false },
-  { label: 'localidades', isLocation: false, isDefault: false },
-  { label: 'ubicaciones', isLocation: true, isDefault: false },
+  { label: 'localidad', isLocation: false, isDefault: false },
+/*   { label: 'ubicaciones', isLocation: true, isDefault: false }, */
   { label: 'ed_iub', isLocation: true, isDefault: false },
   { label: 'valor', isLocation: false, isDefault: false },
   { label: 'moneda', isLocation: false, isDefault: true },
@@ -103,8 +84,9 @@ export const filterEntrePreneurshipToFillDefault = [
 ]
 // Se usa para renombrar propiedades
 export const labelMappingEntrePreneurshipForQuerys = {
+  'tipo': 'ed_tip',
   'ambientes': 'ed_amb',
-  'localidades': 'ed_loc',
+  'localidad': 'ed_loc',
   'operacion': 'tipo_operacion',
   'ubicaciones': 'ed_iub', // Este se actualizará más adelante
   'valor_maximo': 'valor_hasta',
