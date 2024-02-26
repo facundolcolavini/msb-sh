@@ -77,9 +77,9 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
           <ul
             class="w-100 text-center md:text-start lg:text-start grid gap-y-4"
           >
-            <li class="mb-1"><a href="#" class="text-sm">Comprar</a></li>
-            <li class="mb-1"><a href="#" class="text-sm">Alquilar</a></li>
-            <li><a href="#" class="text-sm">Alquiler Temporario</a></li>
+          <li class="mb-1"><a href="/resultados-de-busqueda?tipo_operacion=V" class="text-sm">Venta</a></li>
+          <li><a href="/resultados-de-busqueda?tipo_operacion=A" class="text-sm">Alquiler</a></li>
+            <li class="mb-1"><a href="/resultados-de-busqueda?tipo_operacion=T" class="text-sm">Alquiler Temporario</a></li>
           </ul>
         </div>
         <div class="mb-6 sm:mb-0">
@@ -91,11 +91,11 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
           <ul
             class="w-100 text-center md:text-start lg:text-start grid gap-y-4"
           >
-            <li class="mb-1"><a href="#" class="text-sm">En Pozo</a></li>
+            <li class="mb-1"><a href={'/emprendimientos?&ed_est=En+Pozo'} class="text-sm">En Pozo</a></li>
             <li class="mb-1">
-              <a href="#" class="text-sm">En Construcción</a>
+              <a href="/emprendimientos?&ed_est=En+Construccion" class="text-sm">En Construcción</a>
             </li>
-            <li><a href="#" class="text-sm">Terminado</a></li>
+            <li><a href="/emprendimientos?&ed_est=Terminado" class="text-sm">Terminado</a></li>
           </ul>
         </div>
         <div class="mb-6 sm:mb-0">

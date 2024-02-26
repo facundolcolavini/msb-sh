@@ -8,17 +8,17 @@ import type { APIResponseEntrepreneurship, Results } from "@interfaces/entrepren
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
 import PrintIcon from "../Icons/PrintIcon";
+import ContactForm from '../Property/ContactForm';
+import Description from '../Property/Description';
+import TabMenu from '../Property/TabMenu';
 import ShareButton from "../ShareButton/ShareButton";
 import BreadCrumbSkeleton from "../Skeletons/BreadCrumbSkeleton";
 import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
 import DetailsPropertySkeleton from "../Skeletons/DetailsPropertySkeleton";
 import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
 import Button from "../ui/Buttons/Button";
-import TabMenu from '../Property/TabMenu';
-import Description from '../Property/Description';
-import ContactForm from '../Property/ContactForm';
-import EntrepreneurshipFeatureList from './EntrepreneurshipFeatureList';
 import EntrepreneurshipDetailList from './EntrepreneurshipDetailList';
+import EntrepreneurshipFeatureList from './EntrepreneurshipFeatureList';
 
 interface Props {
     branchCode: string;
@@ -90,23 +90,28 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
             <section className="h-full">
                 <header className="container mx-auto lg:flex justify-between items-center px-0 transition-all">
                     {isLoading ? <BreadCrumbSkeleton /> : props.breadCrumbChild}
-          {/*           <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.emprendimiento [0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</a> */}
+                    {/*           <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.emprendimiento [0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</a> */}
                 </header>
                 <div className="container mx-auto pt-5 flex justify-between">
-                    <TabMenu videoUrl={videoUrl} />
+                    <TabMenu videoUrl={videoUrl} pdf={''} blueprint={''} />
                     <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>
                 </div>
-                {isLoading ? <div className="container mx-auto pb-16"><GalleryPropertySkeleton /></div> :
-                    tabMenuProperty.gallery === true && !tabMenuProperty.video ?
-                        (<GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fadeIn transition " galleryID={`gallery-property-${results?.emprendimiento[0]?.codsuc}`} images={ results?.img[0]?.flat() || []} />)
-                        : <div className={'grid pb-16'}>
-                            {/*  videoframe  */}
-                            {/*   <div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square"></div> */}
-                            {!videoUrl ?
-                                (<div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100"><span className="flex justify-center items-center h-full font-bold">No disponible</span></div>)
-                                : (<iframe className=" container mx-auto" width="100%" height="700" src={videoUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>)}
+                {isLoading ? <div className="container mx-auto pb-16"><GalleryPropertySkeleton /></div> : (
 
-                        </div>
+
+                    <div className={'grid pb-16 container mx-auto'}>
+                        {tabMenuProperty.gallery &&
+                            (<GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fadeIn transition " galleryID={`gallery-property-${results?.emprendimiento[0]?.codsuc}`} images={results?.img[0]?.flat() || []} />)
+
+
+                        }
+                        {tabMenuProperty.pdf && (<div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100"><span className="flex justify-center items-center h-full font-bold">No disponible</span></div>)}
+                        {tabMenuProperty.blueprint && (
+                            (<div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100"><span className="flex justify-center items-center h-full font-bold">No disponible</span></div>))}
+                          
+
+                    </div>
+                )
                 }
             </section>
             {/* Caracteristicas */}
@@ -116,7 +121,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     <div className="container flex flex-col md:flex-col lg:flex-row justify-center w-3/4 lg:w-fit  items-center place-content-center mx-auto h-full">
 
                         {
-                            (results?.emprendimiento[0]?.valor_desde  !== "0" && results?.emprendimiento[0]?.valor_desde  !== "")? (<div className="border-b-2 border-t-2 lg:border-l-2 lg:border-t-0 lg:border-b-0 md:border-b-2 md:border-t-2  text-center h-[184px] w-full flex justify-center items-center flex-col md:px-20 lg:px-20 p-5">
+                            (results?.emprendimiento[0]?.valor_desde !== "0" && results?.emprendimiento[0]?.valor_desde !== "") ? (<div className="border-b-2 border-t-2 lg:border-l-2 lg:border-t-0 lg:border-b-0 md:border-b-2 md:border-t-2  text-center h-[184px] w-full flex justify-center items-center flex-col md:px-20 lg:px-20 p-5">
                                 <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant flex flex-col font-semibold">Valor desde</span>
                                 <p className="text-xl md:text-xl lg:text-3xl self-center font-bold tracking-wider block gap-2">{results?.emprendimiento[0]?.valor_desde}</p>
                             </div>) : null}
@@ -137,17 +142,17 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                     <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/puerta.png'} alt="superficie" />
                                 </div>
                                 <span className="text-2xl md:text-2xl lg:text-4xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center justify-center">Ambientes</span>
-                                <span className={"text-xl md:text-xl place-content-center self-center lg:text-3xl font-bold tracking-wide "}>{results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente": results?.emprendimiento[0]?.ed_amb?.split('A')[0] }</span>
+                                <span className={"text-xl md:text-xl place-content-center self-center lg:text-3xl font-bold tracking-wide "}>{results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : results?.emprendimiento[0]?.ed_amb?.split('A')[0]}</span>
                             </div>) : null
                         }
                         {
                             results?.emprendimiento[0]?.ed_bar !== "" ? (<div className={`border-b-0 ${results?.emprendimiento[0]?.ed_bar !== "" ? "lg:border-l-2" : "lg:border-l-0"} md:border-r-0 lg:border-r-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5`}>
                                 <div className="flex items-center justify-center pb-4">
-                               
+
                                     <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/map-mark.png'} alt="map-mark" />
                                 </div>
 
-                                <span className={"text-xl md:text-xl lg:text-3xl self-center  font-bold tracking-wide "}>{ he.decode(results?.emprendimiento[0]?.ed_bar || '')}</span>
+                                <span className={"text-xl md:text-xl lg:text-3xl self-center  font-bold tracking-wide "}>{he.decode(results?.emprendimiento[0]?.ed_bar || '')}</span>
                             </div>) : null
                         }
 
@@ -187,7 +192,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                     allowFullScreen>
                                 </iframe>
                             </div>
-                            <EntrepreneurshipFeatureList building={results?.emprendimiento[0]?.tipo} enviroments={results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente": results?.emprendimiento[0]?.ed_amb?.split('A')[0] } location={he.decode(results?.emprendimiento[0]?.ed_loc)} />
+                            <EntrepreneurshipFeatureList building={results?.emprendimiento[0]?.tipo} enviroments={results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : results?.emprendimiento[0]?.ed_amb?.split('A')[0]} location={he.decode(results?.emprendimiento[0]?.ed_loc)} />
                             <hr className={'border-secondary-text-msb '} />
                             <div className={'flex flex-col gap-5 py-5'}>
                                 <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb'}>Descripción</h2>
@@ -197,16 +202,16 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                             </div>
                             <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle del Edificio | Emprendimiento en Pozo</h2>
                             <hr className={'border-secondary-text-msb my-3'} />
-                            <EntrepreneurshipDetailList 
-                                name={he.decode(results?.emprendimiento[0]?.ed_nom)} 
-                                buildingType={he.decode(results?.emprendimiento[0]?.tipo)} 
-                                location={he.decode(results?.emprendimiento[0]?.ed_loc)} 
-                                neighborhood={he.decode(results?.emprendimiento[0]?.ed_bar)} 
-                                address={he.decode(results?.emprendimiento[0]?.ed_dir)} 
-                                category={he.decode(results?.emprendimiento[0]?.ed_cat)} 
-                                state={he.decode(results?.emprendimiento[0]?.ed_est)} 
-                                possessionAndDelivery={`${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[0])}/${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[1])}`} 
-                                architect={he.decode(results?.emprendimiento[0]?.ed_arq)} 
+                            <EntrepreneurshipDetailList
+                                name={he.decode(results?.emprendimiento[0]?.ed_nom)}
+                                buildingType={he.decode(results?.emprendimiento[0]?.tipo)}
+                                location={he.decode(results?.emprendimiento[0]?.ed_loc)}
+                                neighborhood={he.decode(results?.emprendimiento[0]?.ed_bar)}
+                                address={he.decode(results?.emprendimiento[0]?.ed_dir)}
+                                category={he.decode(results?.emprendimiento[0]?.ed_cat)}
+                                state={he.decode(results?.emprendimiento[0]?.ed_est)}
+                                possessionAndDelivery={`${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[0])}/${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[1])}`}
+                                architect={he.decode(results?.emprendimiento[0]?.ed_arq)}
                                 enviroments={he.decode(results?.emprendimiento[0]?.ed_amb)}
                             />
 

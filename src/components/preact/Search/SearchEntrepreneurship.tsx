@@ -19,7 +19,7 @@ const SearchEntrepreneurship = ({ selects, locations }: Props) => {
 
   const defaultOptions = {
     ed_est: { value: '', label: 'Estado' },
-  /*   ed_iub: { value: '', label: '' }, */
+    /*   ed_iub: { value: '', label: '' }, */
   }
 
   const filters: FilterSelects = {
@@ -33,25 +33,33 @@ const SearchEntrepreneurship = ({ selects, locations }: Props) => {
 
   useEffect(() => {
     // REINICIA EL ESTADO DE LOS FILTROS CUANDO SE CARGA LA PÁGINA HOME
-
     searchParamsStore.set('')
     resetFilter({})
     resetSelect(defaultOptions)
-
-
-
   }, [])
   const navigateToPage = (e: JSXInternal.TargetedMouseEvent<HTMLButtonElement>) => {
     handleSelect(e)
     navigate(`/emprendimientos${searchPStore.length > 0 ? `?${searchPStore}` : ''}`);
   }
-  const send = async (e: MouseEvent) => {
+  const toPozo = async (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    navigate(`/emprendimientos${searchPStore.length > 0 ? `?${searchPStore}` : ''}`);
+    navigate(`/emprendimientos?ed_est=En Pozo`);
   }
-  
+
+  const toConstruccion = async (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    navigate(`/emprendimientos?ed_est=En Construccion`);
+  }
+  const toTerminado = async (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    navigate(`/emprendimientos?ed_est=Terminado`);
+  }
   return (
     <>
 
@@ -61,7 +69,7 @@ const SearchEntrepreneurship = ({ selects, locations }: Props) => {
 
         <Button
           variant="primary"
-          onClick={navigateToPage}
+          onClick={toPozo}
           id="ed_est"
           value={'En Pozo'}
           addStyles="rounded-md  shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
@@ -74,10 +82,10 @@ const SearchEntrepreneurship = ({ selects, locations }: Props) => {
           variant="primary"
           id="ed_est"
           onClick={
-            navigateToPage
+            toConstruccion
 
           }
-          value={'En Construccion'}  
+          value={'En Construccion'}
           addStyles="rounded-md  shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
         >
           En Construcción
@@ -87,7 +95,7 @@ const SearchEntrepreneurship = ({ selects, locations }: Props) => {
         <Button
           variant="primary"
           id="ed_est"
-          onClick={navigateToPage}
+          onClick={toTerminado}
           value={'Terminado'}
           addStyles="rounded-md  shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
         >

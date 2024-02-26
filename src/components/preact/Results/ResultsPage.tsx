@@ -61,7 +61,12 @@ const ResultsPage = ({ selects, locations }: Props) => {
   const { handleSelect, resetSelect, handleCheckboxChange, filtersSelected } = useSearch(filtersformatted, {
     ...defaultOptions, moneda:
       monedaSeleccionada
-    , ...filterStore
+    , ...filterStore,
+    
+      tipo_operacion:  { value: window.location.search?.includes('V') ? 'V' : window.location.search?.includes('A') ? 'A' : window.location.search?.includes('T') ? 'T' : '',
+      label: ""
+    }
+    
   })
 
   useEffect(() => {

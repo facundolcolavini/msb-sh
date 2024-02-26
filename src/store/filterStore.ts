@@ -21,7 +21,7 @@ export type Filters = {
 }
 */
 /* Store de filtros */
-export const filterItems = map<Filters>({});
+export const filterItems = map<Filters>();
 export const searchParamsStore = atom<string>('');
 
 /* Agrega los valores de los filtros seleccionados */

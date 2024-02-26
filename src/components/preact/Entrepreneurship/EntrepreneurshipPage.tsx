@@ -1,19 +1,19 @@
 import { useSearch } from "@hooks/useSearch";
-import type { APIResponseEntrepreneurship, Datos, EntrePreneurShip, Results as ResultEntrepreneurship } from "@interfaces/entrepreneurship.interfaces";
+import type { APIResponseEntrepreneurship, EntrePreneurShip, Results as ResultEntrepreneurship } from "@interfaces/entrepreneurship.interfaces";
 import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@interfaces/selects.form.interfaces";
-import { defaultsFilters, filterEntrePreneurshipToFillDefault, filterResultToFill, labelMappingEntrePreneurshipForQuerys } from "@utils/filter-default";
+import { defaultsFilters, filterEntrePreneurshipToFillDefault, labelMappingEntrePreneurshipForQuerys } from "@utils/filter-default";
 import { formatAndUseSearch } from "@utils/formatAndUseSearch";
 import { type OutputOption } from "@utils/formats";
 import he from "he";
 import { useEffect, useState } from "preact/compat";
-import { addFilterValue, filterItems, resetFilter, searchParamsStore } from "src/store/filterStore";
+import { filterItems, resetFilter, searchParamsStore } from "src/store/filterStore";
+import { ArrowSortIcon } from "../Icons/ArrowSortIcon";
 import SearchIcon from "../Icons/SearchIcon";
 import SearchDebounce from "../Search/SearchDebounce";
 import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
 import Button from "../ui/Buttons/Button";
 import CardEntrepreneurship from "../ui/Cards/CardEntrepreneurship";
 import SelectField from "../ui/Selects/SelectField";
-import { ArrowSortIcon } from "../Icons/ArrowSortIcon";
 
 
 interface Props {
@@ -24,9 +24,11 @@ interface Props {
 const EntrepreneurshipPage = ({ selects, locations }: Props) => {
   const filterStore = filterItems.get();
   const searchPStore = searchParamsStore.get()
-
   const defaultOptions = {
-    ed_est: { value: 'En Pozo', label: 'Estado' }, // En pozo , En construccion , Terminado
+    ed_est: {
+      value: window.location.search?.includes('Pozo') ? 'En Pozo' : window.location.search?.includes('Construccion') ? 'En Construccion' : window.location.search?.includes('Terminado') ? 'Terminado' : 'Pozo'
+      , label: 'Estado'
+    }, // En pozo , En construccion , Terminado
     /*  tipo:{ label: 'tipo', isLocation: false, isDefault: false }, */
     ed_tip: { value: '', label: 'Tipo' },
     ed_amb: { value: 'All', label: 'Cantidad de Ambientes' },
@@ -35,7 +37,7 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
     moneda: { value: 'D', label: 'U$D' },
     valor_desde: { value: 'All', label: 'Desde' },
     valor_hasta: { value: 'All', label: 'Hasta' },
-  /*   rppagina: { value: '15', label: '15' }, */
+    /*   rppagina: { value: '15', label: '15' }, */
   }
 
   const [results, setResults] = useState<ResultEntrepreneurship | null>()
@@ -51,12 +53,17 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
   };
 
   const filterToFill: FilterDefault[] = filterEntrePreneurshipToFillDefault;
-  const filtersformatted = formatAndUseSearch(filters, filterToFill,labelMappingEntrePreneurshipForQuerys)
+  const filtersformatted = formatAndUseSearch(filters, filterToFill, labelMappingEntrePreneurshipForQuerys)
 
   const { handleSelect, resetSelect, handleCheckboxChange, filtersSelected } = useSearch(filtersformatted, {
     ...defaultOptions, moneda:
       monedaSeleccionada
-    , ...filterStore
+    ,
+    ...filterStore,
+    ed_est: {
+      value: window.location.search?.includes('Pozo') ? 'En Pozo' : window.location.search?.includes('Construccion') ? 'En Construccion' : window.location.search?.includes('Terminado') ? 'Terminado' : 'En Pozo',
+      label: "Estado"
+    }
   })
 
   useEffect(() => {
@@ -156,7 +163,7 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
           <Button
             variant="outline"
             onClick={handleSelect}
-            value={'En Construccion'}      
+            value={'En Construccion'}
             addStyles={` sm:text-sm md:text-md lg:text-lg w-full ${filtersSelected?.ed_est.value === 'En Construccion' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
             id="ed_est"
           >
@@ -182,27 +189,27 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
         </div> */}
 
 
-          <div className="lg:flex  md:col-start-10  md:col-end-13  lg:col-start-12  lg:col-end-13 flex lg:justify-between">
-            <Button
-              variant="primary"
-              onClick={onSubmit}
-              type="submit"
-              className="lg:w-auto text-base lg:text-lg xl:text-xl p-3 bg-red-500 text-white"
-              addStyles='w-full sm:text-sm md:text-md lg:text-lg flex lg:flex-grow justify-center items-center gap-x-8'
-            >
-              <div><SearchIcon /></div>
+        <div className="lg:flex  md:col-start-10  md:col-end-13  lg:col-start-12  lg:col-end-13 flex lg:justify-between">
+          <Button
+            variant="primary"
+            onClick={onSubmit}
+            type="submit"
+            className="lg:w-auto text-base lg:text-lg xl:text-xl p-3 bg-red-500 text-white"
+            addStyles='w-full sm:text-sm md:text-md lg:text-lg flex lg:flex-grow justify-center items-center gap-x-8'
+          >
+            <div><SearchIcon /></div>
 
-     
-            </Button>
 
-          </div>
-        
+          </Button>
+
+        </div>
+
       </div>
       <div className="py-20">
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 md:px-0 px-3">
-            <div class="lg:col-start-4 lg:col-end-13  flex items-end justify-between w-full">
-          
+          <div class="lg:col-start-4 lg:col-end-13  flex items-end justify-between w-full">
+
 
             <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.emprendimiento) ? results?.emprendimiento.length : 0}</span> resultados con tu búsqueda</p>
             <Button onClick={orderAscDesc} addStyles="bg-transparent hover:bg-transparent p-0 m-0">
@@ -212,9 +219,6 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
           {/* Aside para filtros */}
           <aside className="md:col-12 lg:col-start-1 lg:col-end-4">
             <div className="flex flex-col">
-           {/*    <div className="flex mb-4">
-                <SelectField id="ed_est" onChange={handleSelect} defaultOption={filterStore.ed_est} opts={filtersformatted.ed_est} />
-              </div> */}
               <div className="flex mb-4">
                 <SelectField id="ed_tip" onChange={handleSelect} defaultOption={filterStore.ed_tip} opts={filtersformatted.ed_tip} />
               </div>

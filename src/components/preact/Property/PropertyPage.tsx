@@ -95,18 +95,18 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</a>
                 </header>
                 <div className="container mx-auto pt-5 flex justify-between">
-                    <TabMenu videoUrl={videoUrl} />
+                    <TabMenu videoUrl={videoUrl} pdf={null} blueprint={null} />
                     <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16"><GalleryPropertySkeleton /></div> :
-                    tabMenuProperty.gallery === true && !tabMenuProperty.video ?
+                    tabMenuProperty.gallery  ?
                         (<GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fadeIn transition " galleryID={`gallery-property-${results?.datos?.codigo_ficha}`} images={results?.img || []} />)
                         : <div className={'grid pb-16'}>
                             {/*  videoframe  */}
                             {/*   <div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square"></div> */}
-                            {!videoUrl ?
+                            {(!videoUrl &&  tabMenuProperty.video)  ?
                                 (<div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100"><span className="flex justify-center items-center h-full font-bold">No disponible</span></div>)
-                                : (<iframe className=" container mx-auto" width="100%" height="700" src={videoUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>)}
+                                : (<iframe className=" container mx-auto" width="100%" height="700" src={videoUrl ?? ''} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>)}
 
                         </div>
                 }
