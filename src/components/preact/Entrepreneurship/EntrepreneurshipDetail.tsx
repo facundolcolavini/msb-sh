@@ -20,6 +20,7 @@ import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
 import Button from "../ui/Buttons/Button";
 import EntrepreneurshipDetailList from './EntrepreneurshipDetailList';
 import EntrepreneurshipFeatureList from './EntrepreneurshipFeatureList';
+import { capitalize } from '@utils/formats';
 
 
 
@@ -210,7 +211,8 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                 <iframe
                                     className="w-full h-full"
                                     src={`https://www.google.com/maps/embed/v1/place?q=${`${results?.emprendimiento[0]?.ed_coo.split(',')[0]}, ${results?.emprendimiento[0]?.ed_coo.split(',')[1]}`}&key=${import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY}`}
-                                    allowFullScreen>
+                                    allowFullScreen>import { capitalize } from './../../../utils/formats';
+
                                 </iframe>
                             </div>
                             <EntrepreneurshipFeatureList building={results?.emprendimiento[0]?.tipo} enviroments={results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : `${results?.emprendimiento[0]?.ed_amb?.split('A')[0]}`} location={he.decode(results?.emprendimiento[0]?.ed_loc)} />
@@ -221,7 +223,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                 <Description htmlText={results?.emprendimiento[0]?.ed_pre} />
                                 <Description htmlText={results?.emprendimiento[0]?.ed_cue} />
                             </div>
-                            <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle del Edificio | Emprendimiento en Pozo</h2>
+                            <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle del Edificio | Emprendimiento {results?.emprendimiento[0]?.tipo !== '' ? `${results?.emprendimiento[0]?.tipo.includes('En') ? `en ${capitalize(results?.emprendimiento[0]?.tipo)}` : capitalize(results?.emprendimiento[0]?.tipo)}` : ''}</h2>
                             <hr className={'border-secondary-text-msb my-3'} />
                             <EntrepreneurshipDetailList
                                 name={he.decode(results?.emprendimiento[0]?.ed_nom)}
