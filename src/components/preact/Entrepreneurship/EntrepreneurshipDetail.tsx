@@ -4,10 +4,11 @@ import type { PropsWithChildren } from "preact/compat";
 import { useEffect, useState } from "preact/hooks";
 
 
-import type { APIResponseEntrepreneurship, Results } from "@interfaces/entrepreneurship.interfaces";
+import type { APIResponseDetailEntrepreneurShip, APIResponseEntrepreneurShipUnit, DetailEntrepreneurship, ResultEntrePreneurShipUnit } from "@interfaces/entrepreneurship.interfaces";
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
 import PrintIcon from "../Icons/PrintIcon";
+import PDFViewer from '../PDFViewer';
 import ContactForm from '../Property/ContactForm';
 import Description from '../Property/Description';
 import TabMenu from '../Property/TabMenu';
@@ -20,6 +21,9 @@ import Button from "../ui/Buttons/Button";
 import EntrepreneurshipDetailList from './EntrepreneurshipDetailList';
 import EntrepreneurshipFeatureList from './EntrepreneurshipFeatureList';
 
+
+
+
 interface Props {
     branchCode: string;
     propertyCode: string;
@@ -27,12 +31,15 @@ interface Props {
 }
 
 const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (props) => {
-    const [results, setResults] = useState<Results | null>()
+    const [results, setResults] = useState<DetailEntrepreneurship | null>()
+    const [resultsUnit, setResultsUnit] = useState<ResultEntrePreneurShipUnit | null>()
+    const closeModal = () => {
+        setTabMenuProperty(prevState => ({ ...prevState, pdf: false }));
+    };
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [tabMenuProperty, setTabMenuProperty] = useState(
         tabMenuPropertyStore.get() // Estado local para el valor del almacén
-    ); // Estado local para el valor del almacén
-    const [videoUrl, setVideoUrl] = useState<string | null>(null); // Estado local para la URL del video
+    );
 
     useEffect(() => {
         if (window.location.search.includes('fbclid')) {
@@ -47,22 +54,28 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
         // Suscribirse a cambios en el almacén y actualizar el estado local
         const unsubscribe = tabMenuPropertyStore.subscribe(setTabMenuProperty);
 
-        fetchResults();
+        Promise.all([fetchResults(), fetchUnits()])
+            .then(() => {
+                /* console.log('Load  completed'); */
+            })
+            .catch((error) => {
+                console.error('Error in fetches: ', error);
+            });
         // Limpiar la suscripción al desmontar
         return () => unsubscribe();
         // Realiza las tareas de inicialización aquí, como la obtención de datos
     }, []);
 
 
-    // Función para imprimir la página
     const handlePrint = () => {
         window.print();
     };
+
     const fetchResults = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch(`/api/emprendimientos.json?id=${props.propertyCode}`);
-            const data: APIResponseEntrepreneurship = await response.json();
+            const response = await fetch(`/api/emprendimientosById.json?id=${props.propertyCode}`);
+            const data: APIResponseDetailEntrepreneurShip = await response.json();
 
             if (data?.hasOwnProperty("error")) {
                 setResults(null);
@@ -71,14 +84,24 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
             } else if (response?.ok) {
                 setIsLoading(false);
                 setResults(data?.resultado);
-                if (data.resultado?.emprendimiento[0]?.ed_vid) {
-                    // Obtener el valor del parámetro 'v' de la URL del video
-                    const videoUrl = data.resultado?.emprendimiento[0]?.ed_vid;
-                    const videoId = new URL(videoUrl).searchParams.get("v");
-                    setVideoUrl(videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1` : null);
-                } else {
-                    setVideoUrl(null)
-                }
+            }
+        } catch (error) {
+            console.log(error, 'ERROR');
+        }
+    };
+
+    const fetchUnits = async () => {
+        try {
+            setIsLoading(true);
+            const response = await fetch(`/api/emprendimientosUnidades.json?id_empre=${props.propertyCode}`);
+            const data: APIResponseEntrepreneurShipUnit = await response.json();
+            if (data?.hasOwnProperty("error")) {
+                setResultsUnit(null);
+                setIsLoading(false);
+                throw data;
+            } else if (response?.ok) {
+                setIsLoading(false);
+                setResultsUnit(data?.resultado);
             }
         } catch (error) {
             console.log(error);
@@ -87,29 +110,27 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
 
     return (
         <article className=" px-3 md:px-0 lg:px-0 font-gotham">
+
             <section className="h-full">
                 <header className="container mx-auto lg:flex justify-between items-center px-0 transition-all">
                     {isLoading ? <BreadCrumbSkeleton /> : props.breadCrumbChild}
-                    {/*           <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.emprendimiento [0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</a> */}
+                    {results?.emprendimiento[0]?.celular && <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.emprendimiento[0]?.celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</a>}
                 </header>
                 <div className="container mx-auto pt-5 flex justify-between">
-                    <TabMenu videoUrl={videoUrl} pdf={''} blueprint={''} />
-                    <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>
+                    {isLoading ? <BreadCrumbSkeleton /> : <TabMenu videoUrl={null} unitList={true} pdf={(results?.pdf?.length ?? 0) > 0} blueprint={(resultsUnit?.unidadesDisponibles?.map(emp => emp.img_princ) ?? []).length > 0 && !isLoading} />}
+                    {isLoading ? <BreadCrumbSkeleton /> : <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>}
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16"><GalleryPropertySkeleton /></div> : (
-
-
                     <div className={'grid pb-16 container mx-auto'}>
-                        {tabMenuProperty.gallery &&
-                            (<GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fadeIn transition " galleryID={`gallery-property-${results?.emprendimiento[0]?.codsuc}`} images={results?.img[0]?.flat() || []} />)
+                        {tabMenuProperty.gallery ?
+                            (<GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fadeIn transition" galleryID={`gallery-property-${results?.emprendimiento[0]?.codsuc}`} images={results?.img[0]?.flat() || []} />) :
 
-
+                            tabMenuProperty.blueprint ? <GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fade animate-duration-500  transition-all" galleryID={`gallery-blueprint-${resultsUnit?.datos?.codemp}-${resultsUnit?.datos?.nombre_emprendimiento}`} images={resultsUnit?.unidadesDisponibles.map(emp => emp.img_princ) || []} />
+                                : tabMenuProperty.pdf && (results?.pdf?.length ?? 0) > 0 ? (
+                                    <PDFViewer file={`${results?.pdf[0]?.pdf_name}`} />
+                                ) : tabMenuProperty.unitList && resultsUnit?.unidadesDisponibles ? (<></>) : (
+                                    <div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100"><span className="flex justify-center items-center h-full font-bold">No disponible</span></div>)
                         }
-                        {tabMenuProperty.pdf && (<div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100"><span className="flex justify-center items-center h-full font-bold">No disponible</span></div>)}
-                        {tabMenuProperty.blueprint && (
-                            (<div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100"><span className="flex justify-center items-center h-full font-bold">No disponible</span></div>))}
-                          
-
                     </div>
                 )
                 }
@@ -192,7 +213,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                     allowFullScreen>
                                 </iframe>
                             </div>
-                            <EntrepreneurshipFeatureList building={results?.emprendimiento[0]?.tipo} enviroments={results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : results?.emprendimiento[0]?.ed_amb?.split('A')[0]} location={he.decode(results?.emprendimiento[0]?.ed_loc)} />
+                            <EntrepreneurshipFeatureList building={results?.emprendimiento[0]?.tipo} enviroments={results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : `${results?.emprendimiento[0]?.ed_amb?.split('A')[0]}`} location={he.decode(results?.emprendimiento[0]?.ed_loc)} />
                             <hr className={'border-secondary-text-msb '} />
                             <div className={'flex flex-col gap-5 py-5'}>
                                 <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb'}>Descripción</h2>
@@ -210,7 +231,11 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                 address={he.decode(results?.emprendimiento[0]?.ed_dir)}
                                 category={he.decode(results?.emprendimiento[0]?.ed_cat)}
                                 state={he.decode(results?.emprendimiento[0]?.ed_est)}
-                                possessionAndDelivery={`${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[0])}/${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[1])}`}
+                                possessionAndDelivery={
+                                    results?.emprendimiento[0]?.ed_po1
+                                        ? `${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[0])}/${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[1])}`
+                                        : `${new Date(results?.emprendimiento[0]?.fechaac).getMonth() + 1}/${new Date(results?.emprendimiento[0]?.fechaac).getFullYear()}`
+                                }
                                 architect={he.decode(results?.emprendimiento[0]?.ed_arq)}
                                 enviroments={he.decode(results?.emprendimiento[0]?.ed_amb)}
                             />
@@ -218,7 +243,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                         </div>
                     )}
                 <div className={'bg-[#D9D9D9] relative h-fit'}>
-                    <ContactForm id={results?.emprendimiento[0]?.ed_idl ?? ''} codsuc={results?.datos?.codemp ?? ''} contact_prop={`https://api.whatsapp.com/send?phone=${123}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} />
+                    <ContactForm id={results?.emprendimiento[0]?.ed_idl ?? ''} tipo={results?.emprendimiento[0].tipo} codsuc={results?.datos?.codemp ?? ''} contact_prop={results?.emprendimiento[0]?.celular ? `https://api.whatsapp.com/send?phone=${123}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=` : ''} />
                 </div>
             </section>
             <section className={'container mx-auto  my-30'}>

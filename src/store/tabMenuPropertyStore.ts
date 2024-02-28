@@ -5,13 +5,15 @@ export type TabMenuPropertyStore = {
     gallery:boolean;
     pdf:boolean;
     blueprint:boolean;
+    unitList:boolean;
 }
 
 export const tabMenuPropertyStore = map<TabMenuPropertyStore>({
     video: false,
     gallery: true,
     pdf: false,
-    blueprint: false
+    blueprint: false,
+    unitList: false
 
 })
 
@@ -25,6 +27,7 @@ export const resetTabMenu = () => {
         video: false,
         gallery: true,
         pdf: false,
-        blueprint: false
+        blueprint: false,
+        unitList: false
     });
 }

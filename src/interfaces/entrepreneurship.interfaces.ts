@@ -79,9 +79,61 @@ export interface Results {
     img: Array<string[]>;
     query: null;
 }
-
 export interface Datos {
     codemp: string;
     consulta: string;
     cantidad: number;
+}
+
+
+/* Detalle de emprendimiento */
+
+
+export interface APIResponseDetailEntrepreneurShip extends hasErrorResult {
+    resultado: DetailEntrepreneurship;
+}
+
+export interface DetailEntrepreneurship {
+    datos:                          Datos;
+    pdf:                            PDF[];
+    emprendimiento:                 { [key: string]: string }[];
+    caracteristicas_personalizadas: string;
+    caracteristicas:                string;
+    img:                            Array<string[]>;
+    imgP:                           Array<string[]>;
+}
+
+export interface Datos {
+    codemp:   string;
+    idl:      string;
+    cantidad: number;
+    codsuc:   string;
+}
+
+export interface PDF {
+    id:                string;
+    emprendimiento_id: string;
+    pdf_name:          string;
+    orden:             string;
+    created:           Date;
+    modified:          string;
+    codsuc:            string;
+    codemp:            string;
+}
+
+/* Emprendimientos Unidades (Planos) */
+export interface APIResponseEntrepreneurShipUnit extends hasErrorResult {
+    resultado: ResultEntrePreneurShipUnit;
+}
+
+export interface ResultEntrePreneurShipUnit {
+    datos:               DataUnit;
+    unidadesDisponibles: { [key: string]: string }[];
+    img:                 null[];
+}
+
+export interface DataUnit {
+    codemp:                string;
+    cantidad:              number;
+    nombre_emprendimiento: string;
 }

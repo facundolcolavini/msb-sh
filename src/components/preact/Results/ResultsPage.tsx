@@ -2,7 +2,6 @@ import { useSearch } from "@hooks/useSearch"
 import type { APIResponseResultsRecords, Datos, File, Result } from "@interfaces/results.records.interfaces"
 import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@interfaces/selects.form.interfaces"
 import { type OutputOption } from "@utils/formats"
-import he from "he"
 import { useEffect, useState } from "preact/hooks"
 import { filterItems, resetFilter, searchParamsStore } from "src/store/filterStore"
 import { ArrowSortIcon } from "../Icons/ArrowSortIcon"
@@ -34,7 +33,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
   };
 
   const filterToFill: FilterDefault[] = filterResultToFill;
-  const filtersformatted = formatAndUseSearch(filters, filterToFill,labelMappingResultForQuerys)
+  const filtersformatted = formatAndUseSearch(filters, filterToFill, labelMappingResultForQuerys)
 
 
   const defaultOptions = {
@@ -62,11 +61,12 @@ const ResultsPage = ({ selects, locations }: Props) => {
     ...defaultOptions, moneda:
       monedaSeleccionada
     , ...filterStore,
-    
-      tipo_operacion:  { value: window.location.search?.includes('V') ? 'V' : window.location.search?.includes('A') ? 'A' : window.location.search?.includes('T') ? 'T' : '',
+
+    tipo_operacion: {
+      value: window.location.search?.includes('V') ? 'V' : window.location.search?.includes('A') ? 'A' : window.location.search?.includes('T') ? 'T' : '',
       label: ""
     }
-    
+
   })
 
   useEffect(() => {

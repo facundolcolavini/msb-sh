@@ -1,5 +1,6 @@
 
 
+import type { APIResponseDetailEntrepreneurShip, APIResponseEntrepreneurShipUnit } from '@interfaces/entrepreneurship.interfaces';
 import { fetchData } from '@utils/fetch-data';
 import type { APIRoute } from 'astro';
 
@@ -15,13 +16,12 @@ export const GET: APIRoute = async ({ url }) => {
     });
 
     try {
-        const data = await fetchData('resultados.emprendimientos', queryParams);
+        const data = await fetchData<APIResponseEntrepreneurShipUnit>('ficha.emprendimientos.unidades', queryParams);
         return new Response(JSON.stringify(data)
             , {
                 status: 200,
                 headers: {
                     'Content-Type': 'application/json'
-
                 }
             }
         );

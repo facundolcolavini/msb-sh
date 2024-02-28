@@ -41,9 +41,7 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
   }
 
   const [results, setResults] = useState<ResultEntrepreneurship | null>()
-  const [resetPagination, setResetPagination] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [monedaSeleccionada, setMonedaSeleccionada] = useState<OutputOption>(defaultOptions?.moneda);
 
   const filters: FilterSelects = {
@@ -68,8 +66,6 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
 
   useEffect(() => {
     fetchResults()
-    setResetPagination(false)
-    setIsSubmitting(false)
   }, [])
 
   const fetchResults = async () => {
@@ -81,11 +77,9 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
       if (data?.hasOwnProperty("error")) {
         setResults(null);
         setIsLoading(false);
-        setIsSubmitting(false);
       } else if (response.ok) {
         setIsLoading(false);
         setResults(data.resultado as ResultEntrepreneurship);
-        setIsSubmitting(false);
       }
     } catch (error) {
       console.log(error);
@@ -107,11 +101,9 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
     // Establecer los filtros en los valores predeterminados
     resetSelect(defaultOptions);
     setMonedaSeleccionada(defaultOptions.moneda);
-    setResetPagination(true)
     // Reinicia el estado de los filtros y realiza el fetch con los filtros predeterminados
     resetFilter(defaultOptions);
     await fetchResults();
-    setResetPagination(false)
   };
   const orderAscDesc = () => {
     // Al darle click lo ordena de menor a mayor si se da otro click lo ordena de mayor a menor y asi sucesivamente
@@ -138,9 +130,7 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
     const currentUrl = window.location.pathname;
     const newUrl = `${currentUrl}${searchPStore.length > 0 ? `?${searchPStore}` : ''}`;
     window.history.pushState({}, '', newUrl);
-    setIsSubmitting(true)
     await fetchResults()
-    setResetPagination(false)
   };
 
 
@@ -325,18 +315,6 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
                 </>
               )}
             </div>
-            {/* Paginacion */}
-            {/* <div className={'mt-20'}>
-              {results?.datos === undefined ? <></> : (
-                <Pagination
-                  paginationData={results?.emprendimiento as any}
-                  setData={setResults}
-                  setLoading={setIsLoading}
-                  resetPagination={resetPagination}
-                  isSubmitting={isSubmitting}
-                />
-              )}
-            </div> */}
           </div>
         </div>
       </div >

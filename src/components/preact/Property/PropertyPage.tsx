@@ -63,7 +63,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const fetchResults = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch(`/api/property.json?suc=${props.branchCode}&id=${props.propertyCode}`);
+            const response = await fetch(`/api/property.json?suc=${props.branchCode}&id=${props.propertyCode}&amaira=false`);
             const data: APIResponsePropertyDetail = await response.json();
 
             if (data?.hasOwnProperty("error")) {
@@ -76,8 +76,14 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                 if (data.resultado?.ficha[0]?.in_vid) {
                     // Obtener el valor del parámetro 'v' de la URL del video
                     const videoUrl = data.resultado?.ficha[0]?.in_vid;
-                    const videoId = new URL(videoUrl).searchParams.get("v");
-                    setVideoUrl(videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1` : null);
+                    // a veces viene asi https://youtu.be/sA7_jQQ5c84 
+                    const videoId = new URL(videoUrl).searchParams.get("v") || videoUrl.split('/').pop(); 
+                    console.log(videoId, 'VIDEO URL')
+                    if (videoId) {
+                        setVideoUrl(videoId);
+                    } else {
+                        setVideoUrl(null)
+                    }
                 } else {
                     setVideoUrl(null)
                 }
@@ -86,7 +92,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             console.log(error);
         }
     };
-
+   
     return (
         <article className=" px-3 md:px-0 lg:px-0 font-gotham">
             <section className="h-full">
@@ -95,7 +101,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</a>
                 </header>
                 <div className="container mx-auto pt-5 flex justify-between">
-                    <TabMenu videoUrl={videoUrl} pdf={null} blueprint={null} />
+                    <TabMenu videoUrl={videoUrl} unitList={false} pdf={false} blueprint={false} />
                     <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16"><GalleryPropertySkeleton /></div> :
@@ -106,7 +112,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                             {/*   <div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square"></div> */}
                             {(!videoUrl &&  tabMenuProperty.video)  ?
                                 (<div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100"><span className="flex justify-center items-center h-full font-bold">No disponible</span></div>)
-                                : (<iframe className=" container mx-auto" width="100%" height="700" src={videoUrl ?? ''} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>)}
+                                : (<iframe className=" container mx-auto" width="100%" height="700" src={`https://www.youtube.com/embed/${videoUrl}?autoplay=1&mute=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>)}
 
                         </div>
                 }
@@ -117,11 +123,22 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     :
                     <div className="container flex flex-col md:flex-col lg:flex-row justify-center w-3/4 lg:w-fit  items-center place-content-center mx-auto h-full">
 
-                        {
-                            results?.ficha[0]?.in_amb?.split('A')[0].length !== 0 && results?.ficha[0]?.moneda ? (<div className="border-b-2 border-t-2 lg:border-l-2 lg:border-t-0 lg:border-b-0 md:border-b-2 md:border-t-2  text-center h-[184px] w-full flex justify-center items-center flex-col px-10 md:px-20 lg:px-20 p-5">
-                                <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant font-semibold tracking-wider flex  items-center h-fit">Valor</span>
-                                <p className="text-xl md:text-xl lg:text-3xl self-center font-bold tracking-wider flex gap-2"><span>{results?.ficha[0]?.precio !== '' && results?.ficha[0]?.precio !== 'Consultar' && results?.ficha[0]?.moneda}</span>{results?.ficha[0]?.precio.replace('U$S', '')}</p>
-                            </div>) : null}
+{   
+    results?.ficha[0]?.in_amb?.split('A')[0].length !== 0 && results?.ficha[0]?.moneda ? (
+        <div className="border-b-2 border-t-2 lg:border-l-2 lg:border-t-0 lg:border-b-0 md:border-b-2 md:border-t-2  text-center h-[184px] w-full flex justify-center items-center flex-col px-10 md:px-20 lg:px-20 p-5">
+            <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant font-semibold tracking-wider flex  items-center h-fit">Valor</span>
+            <p className="text-xl md:text-xl lg:text-3xl self-center font-bold tracking-wider flex gap-2">
+                {results?.ficha[0]?.precio !== '' && results?.ficha[0]?.precio !== 'Consultar' && (
+                    results?.ficha[0]?.moneda === 'U$S' ? `U$S ${results?.ficha[0]?.precio.replace('U$S','')}` :
+                    results?.ficha[0]?.moneda === '$' ? `$ ${results?.ficha[0]?.precio.replace('$','')}` :
+                    results?.ficha[0]?.moneda === 'Consultar' ? 'Consultar' :
+                    ''
+                )}
+            </p> 
+        </div>
+    ) : null 
+}
+                
                         {
                             results?.superficie.dato[3] !== '0.00m2' ? (<div className="border-b-2 lg:border-l-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5 ">
                                 <div className="flex items-center justify-center ">
@@ -255,7 +272,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                         </div>
                     )}
                 <div className={'bg-[#D9D9D9] relative h-fit'}>
-                    <ContactForm id={results?.datos?.codigo_ficha ?? ''} codsuc={results?.ficha[0]?.codsuc ?? ''} contact_prop={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} />
+                    <ContactForm id={results?.datos?.codigo_ficha ?? ''}  tipo={results?.ficha[0]?.tipo} codsuc={results?.ficha[0]?.codsuc ?? ''} contact_prop={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} />
                 </div>
             </section>
             <section className={'container mx-auto  my-30'}>
