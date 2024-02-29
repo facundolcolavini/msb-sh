@@ -9,7 +9,7 @@ const Description = ({ htmlText }: Props) => {
   const decodedText = he.decode(htmlText);
 
   // Crear un componente div con el texto HTML decodificado
-  return <div className={'text-balance'} dangerouslySetInnerHTML={{ __html: decodedText }} />;
+  return <p className={'text-base'} dangerouslySetInnerHTML={{ __html: decodedText }} />;
 };
 
 export default Description;

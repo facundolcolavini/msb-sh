@@ -50,7 +50,7 @@ const SelectField = ({ opts, id, onChange, defaultOption }: SelectFieldProps): J
   }, [defaultOption, selectedOption]);
 
   return (
-    <div ref={dropdownRef} className="relative w-full h-full transition-all ">
+    <div ref={dropdownRef} className="relative w-full h-[56px] transition-all ">
       <button
         id={String(id)}
         onClick={toggleDropdown}

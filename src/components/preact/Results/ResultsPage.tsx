@@ -158,18 +158,18 @@ const ResultsPage = ({ selects, locations }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'V'}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full h-[50px]  ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[50px] '}`}
             id="tipo_operacion"
           >
             Venta
           </Button>
         </div>
-        <div className="lg:col-start-3 lg:col-end-5   flex gap-4">
+        <div className="lg:col-start-3 lg:col-end-5  flex gap-4">
           <Button
             variant="outline"
             onClick={handleSelect}
             value={'A'}
-            addStyles={` sm:text-sm md:text-md lg:text-lg w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+            addStyles={` sm:text-sm md:text-md lg:text-lg h-[50px] w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  h-[50px]'}`}
             id="tipo_operacion"
           >
             Alquiler
@@ -180,19 +180,19 @@ const ResultsPage = ({ selects, locations }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'T'}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+            addStyles={`sm:text-sm md:text-md lg:text-lg h-[50px] w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && ' h-[50px] text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
             id="tipo_operacion"
           >
             Alquiler Temporiario
           </Button>
 
         </div>
-        <div className="lg:col-start-9 lg:col-end-13 flex  gap-4">
+        <div className="lg:col-start-9 lg:col-end-13 flex h-[50px] gap-4">
           <Button
             variant="outline"
             onClick={handleSelect} // Llama a handleSelect cuando se hace clic en el botón
             value={filtersSelected?.in_tpr?.value}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
+            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'h-[50px] text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
             id="in_tpr"
           >
             Barrios Cerrados y Countries

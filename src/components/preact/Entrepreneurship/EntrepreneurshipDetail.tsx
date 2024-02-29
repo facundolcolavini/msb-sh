@@ -126,7 +126,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                         {tabMenuProperty.gallery ?
                             (<GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fadeIn transition" galleryID={`gallery-property-${results?.emprendimiento[0]?.codsuc}`} images={results?.img[0]?.flat() || []} />) :
 
-                            tabMenuProperty.blueprint ? <GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fade animate-duration-500  transition-all" galleryID={`gallery-blueprint-${resultsUnit?.datos?.codemp}-${resultsUnit?.datos?.nombre_emprendimiento}`} images={resultsUnit?.unidadesDisponibles.map(emp => emp.img_princ) || []} />
+                            tabMenuProperty.blueprint ? <GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fade animate-duration-500  transition-all" galleryID={`gallery-blueprint-${results?.datos?.codemp}-${results?.datos?.codsuc}`} images={results?.imgP.flat() || []} />
                                 : tabMenuProperty.pdf && (results?.pdf?.length ?? 0) > 0 ? (
                                     <PDFViewer file={`${results?.pdf[0]?.pdf_name}`} />
                                 ) : tabMenuProperty.unitList && resultsUnit?.unidadesDisponibles ? (<></>) : (
@@ -198,32 +198,33 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     </button>
                 </div>
             </section>
-            <section className="container mx-auto grid grid-cols md:grid-cols lg:grid-cols-2 gap-36">
+            <section className="container mx-auto grid grid-cols md:gap-5 lg:gap-7">
                 {/* Google map iframe */}
+                <div className={'col-start-1 cold-end-7'}>
                 {isLoading || !results?.emprendimiento[0]?.ed_coo
-                    ? <div className="h-[350px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100 animate-pulse">
+                    ? <div className="h-[208px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100 animate-pulse">
                         <span className="flex justify-center items-center h-full font-bold"></span>
                     </div>
                     : (
                         <div>
-                            <div className="h-[400px] w-full md:col-span-1 lg:col-span-1">
+                            <div className="h-[208px] w-full md:col-span-1 lg:col-span-1">
                                 {/* Agregar el titulo de la direcion en alado del market  */}
                                 <iframe
                                     className="w-full h-full"
                                     src={`https://www.google.com/maps/embed/v1/place?q=${`${results?.emprendimiento[0]?.ed_coo.split(',')[0]}, ${results?.emprendimiento[0]?.ed_coo.split(',')[1]}`}&key=${import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY}`}
-                                    allowFullScreen>import { capitalize } from './../../../utils/formats';
+                                    allowFullScreen>
 
                                 </iframe>
                             </div>
                             <EntrepreneurshipFeatureList building={results?.emprendimiento[0]?.tipo} enviroments={results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : `${results?.emprendimiento[0]?.ed_amb?.split('A')[0]}`} location={he.decode(results?.emprendimiento[0]?.ed_loc)} />
                             <hr className={'border-secondary-text-msb '} />
                             <div className={'flex flex-col gap-5 py-5'}>
-                                <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb'}>Descripción</h2>
+                                <h2 className={'font-gotham text-base text-start  font-bold text-primary-text-msb'}>Descripción</h2>
 
                                 <Description htmlText={results?.emprendimiento[0]?.ed_pre} />
                                 <Description htmlText={results?.emprendimiento[0]?.ed_cue} />
                             </div>
-                            <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle del Edificio | Emprendimiento {results?.emprendimiento[0]?.tipo !== '' ? `${results?.emprendimiento[0]?.tipo.includes('En') ? `en ${capitalize(results?.emprendimiento[0]?.tipo)}` : capitalize(results?.emprendimiento[0]?.tipo)}` : ''}</h2>
+                            <h2 className={'font-gotham text-base   md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle del Edificio | Emprendimiento {results?.emprendimiento[0]?.ed_est !== '' ? `${results?.emprendimiento[0]?.ed_est.includes('En') ? `${capitalize(he.decode(results?.emprendimiento[0]?.ed_est)).replace('En','en')}` : ` ${capitalize(results?.emprendimiento[0]?.ed_est)}`}` : ''}</h2>
                             <hr className={'border-secondary-text-msb my-3'} />
                             <EntrepreneurshipDetailList
                                 name={he.decode(results?.emprendimiento[0]?.ed_nom)}
@@ -244,7 +245,8 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
 
                         </div>
                     )}
-                <div className={'bg-[#D9D9D9] relative h-fit'}>
+                    </div>
+                <div className={'bg-[#D9D9D9] relative h-fit w-100  lg:col-start-7 lg-col-end-12'}>
                     <ContactForm id={results?.emprendimiento[0]?.ed_idl ?? ''} tipo={results?.emprendimiento[0].tipo} codsuc={results?.datos?.codemp ?? ''} contact_prop={results?.emprendimiento[0]?.celular ? `https://api.whatsapp.com/send?phone=${123}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=` : ''} />
                 </div>
             </section>
