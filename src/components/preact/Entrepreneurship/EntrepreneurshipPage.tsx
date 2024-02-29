@@ -126,7 +126,6 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
     }
   }
 
-  console.log(searchPStore, 'searchPStore')
   // Obtenemos los searchParams para mandarlo en el fetch y actualizar la url de busqueda.
   const onSubmit = async (e: MouseEvent) => {
     e.preventDefault();
@@ -179,9 +178,7 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
       <div className="py-20">
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 md:px-0 px-3">
-          <div class="lg:col-start-4 lg:col-end-13 md:hidden sm:hidden lg:flex flex items-end justify-between w-full">
-
-
+        <div class="lg:col-start-4 lg:col-end-13 md:hidden hidden lg:flex items-end justify-between w-full">
             <p className="font-bold text-primary-text-msb text-base">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.emprendimiento) ? results?.emprendimiento.length : 0}</span> resultados con tu búsqueda</p>
             <Button onClick={orderAscDesc} addStyles="bg-transparent hover:bg-transparent p-0 m-0">
               <div className="flex items-center text-primary-text-msb text-sm md:text-md lg:text-lg font-bold  gap-1"> Ordenar <ArrowSortIcon /></div>
@@ -200,52 +197,6 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
               <div className="flex mb-4">
                 <SelectField id="ed_amb" onChange={handleSelect} defaultOption={filterStore.ed_amb} opts={filtersformatted.ed_amb} />
               </div>
-              {/*    <div className="flex">
-                <SelectField id="barrios1" onChange={handleSelect} defaultOption={filterStore.barrios1} opts={filtersformatted.barrios1} />
-              </div> */}
-              {/* Radio buttons Pesos / USD */}
-              {/*        <div className="mt-4">
-                <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Moneda</p>
-                <div className="flex items-center gap-4">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      className="hidden"
-                      id="moneda"
-                      value="P"
-                      checked={monedaSeleccionada.value === 'P'}
-                      onChange={() => handleCheckbox("moneda", "P")}
-                    />
-                    <div className={`rounded-full border bg-tertiary-bg-msb w-5 h-5 flex items-center justify-center ${monedaSeleccionada.value === 'P' ? 'bg-tertiary-bg-msb' : 'bg-white border-5 border-separate'}`}>
-                      {monedaSeleccionada.value === 'P' && <div className="w-4 h-4 border-2 rounded-full"></div>}
-                    </div>
-                    <span className={"text-secondary-text-msb font-base  text-sm md:text-md lg:text-lg"}>Pesos</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      className="hidden"
-                      id="moneda"
-                      value="D"
-                      checked={monedaSeleccionada.value === 'D'}
-                      onChange={() => handleCheckbox("moneda", "D")}
-                    />
-                    <div className={`rounded-full border bg-tertiary-bg-msb w-5 h-5 flex items-center justify-center ${monedaSeleccionada.value === 'D' ? 'bg-tertiary-bg-msb' : 'bg-white border-5 border-separate'}`}>
-                      {monedaSeleccionada.value === 'D' && <div className="w-4 h-4 border-2 rounded-full"></div>}
-                    </div>
-                    <span className={"text-secondary-text-msb font-base  text-sm md:text-md lg:text-lg"}>U$D</span>
-                  </label>
-                </div>
-              </div> */}
-
-              {/* Desde - Hasta Inputs */}
-              {/*    <div className="mt-4">
-                <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Valores</p>
-                <div className="flex gap-4">
-                  <SelectField id="valor_desde" onChange={handleSelect} defaultOption={filterStore.valor_desde} opts={filtersformatted.valor_desde} />
-                  <SelectField id="valor_hasta" onChange={handleSelect} defaultOption={filterStore.valor_hasta} opts={filtersformatted.valor_hasta} />
-                </div>
-              </div> */}
               <div className="mt-4">
                 <Button
                   type="button"

@@ -158,7 +158,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'V'}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full h-[50px]  ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[50px] '}`}
+            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full   ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  '}`}
             id="tipo_operacion"
           >
             Venta
@@ -169,7 +169,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'A'}
-            addStyles={` sm:text-sm md:text-md lg:text-lg h-[50px] w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  h-[50px]'}`}
+            addStyles={` sm:text-sm md:text-md lg:text-lg  w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  '}`}
             id="tipo_operacion"
           >
             Alquiler
@@ -180,19 +180,19 @@ const ResultsPage = ({ selects, locations }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'T'}
-            addStyles={`sm:text-sm md:text-md lg:text-lg h-[50px] w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && ' h-[50px] text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && '  text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
             id="tipo_operacion"
           >
             Alquiler Temporiario
           </Button>
 
         </div>
-        <div className="lg:col-start-9 lg:col-end-13 flex h-[50px] gap-4">
+        <div className="lg:col-start-9 lg:col-end-13 flex  gap-4">
           <Button
             variant="outline"
             onClick={handleSelect} // Llama a handleSelect cuando se hace clic en el botón
             value={filtersSelected?.in_tpr?.value}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'h-[50px] text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
+            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? ' text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
             id="in_tpr"
           >
             Barrios Cerrados y Countries
@@ -233,9 +233,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
       <div className="py-20">
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 md:px-0 px-3">
-          <div class="lg:col-start-4 lg:col-end-13  flex items-end justify-between w-full">
-            {/* Manejar el caso donde no se encuentran resultados */}
-
+        <div class="lg:col-start-4 lg:col-end-13 md:hidden sm:hidden lg:flex flex items-end justify-between w-full">
             <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.fichas.length : 0}</span> resultados con tu búsqueda</p>
             <Button onClick={orderAscDesc} addStyles="bg-transparent hover:bg-transparent p-0 m-0">
               <div className="flex items-center text-primary-text-msb text-sm md:text-md lg:text-lg font-bold  gap-1"> Ordenar <ArrowSortIcon /></div>
@@ -311,6 +309,12 @@ const ResultsPage = ({ selects, locations }: Props) => {
                   addStyles="w-full text-md border-2 border-gray-300 rounded-md flex justify-center items-center"
                 >
                   Limpiar Filtros
+                </Button>
+              </div>
+              <div class="lg:col-start-4 lg:col-end-13 lg:hidden flex items-end justify-between w-full mt-4">
+                <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.fichas.length : 0}</span> resultados con tu búsqueda</p>
+                <Button onClick={orderAscDesc} addStyles="bg-transparent hover:bg-transparent p-0 m-0">
+                  <div className="flex items-center text-primary-text-msb text-sm md:text-md lg:text-lg font-bold  gap-1"> Ordenar <ArrowSortIcon /></div>
                 </Button>
               </div>
             </div>
