@@ -7,9 +7,9 @@ interface Props {
 }
 
 const ListIcon = ({ addStyles, w = "16", h = "16" }: Props) => {
-    const styles = twMerge(clsx("h-100 w-100 icon icon-tabler icon-tabler-list", addStyles));
+    const styles = twMerge(clsx("icon-tabler icon-tabler-list", addStyles));
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" className={styles} width={w} height={h} viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill={styles} ><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l11 0" /><path d="M9 12l11 0" /><path d="M9 18l11 0" /><path d="M5 6l0 .01" /><path d="M5 12l0 .01" /><path d="M5 18l0 .01" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width={w} height={w} fill={styles} className={styles}><path fill={styles} d="M21.274 5.333H18.91V8h2.364V5.333ZM21.274 10.667H18.91v2.666h2.364v-2.666ZM21.274 16H18.91v2.667h2.364V16ZM0 10.667V24h7.09v-6.667h2.365V24h7.09V10.667L8.274 4 0 10.667Zm14.182 10.666h-2.364v-6.666h-7.09v6.666H2.363V12l5.909-4.667L14.182 12v9.333Z"/><path fill={styles} d="M10.637 0v2.627L13 4.533V2.667h10.637v18.666h-4.728V24H26V0H10.637Z"/></svg>
     )
 }
 

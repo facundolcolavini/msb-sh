@@ -1,3 +1,5 @@
+import type { UnitAvailable } from "./entrepreneurship.interfaces";
+
 export interface APIResponsePropertyDetail  {
     resultado: ResultPropertyDetails;
 }
@@ -8,11 +10,12 @@ export interface ApiError {
 
 export interface ResultPropertyDetails {
     datos:                                    Datos;
+    emprendimiento:                         UnitAvailable, // This is a dictionary
     videos:                                   Video[];
     provincia:                                string;
     ficha:                                    { [key: string]: string }[];
     caracteristicas:                          Caracteristicas;
-    plano:                                    null;
+    plano:                                    string;
     img:                                      string[];
     valores_temporarios:                      Caracteristicas;
     caracteristicas_generales:                string[];

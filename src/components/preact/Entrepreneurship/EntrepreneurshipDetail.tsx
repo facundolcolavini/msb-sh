@@ -21,6 +21,7 @@ import Button from "../ui/Buttons/Button";
 import EntrepreneurshipDetailList from './EntrepreneurshipDetailList';
 import EntrepreneurshipFeatureList from './EntrepreneurshipFeatureList';
 import { capitalize } from '@utils/formats';
+import UnitAvailableTable from './UnitAvailableTable';
 
 
 
@@ -34,9 +35,6 @@ interface Props {
 const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [results, setResults] = useState<DetailEntrepreneurship | null>()
     const [resultsUnit, setResultsUnit] = useState<ResultEntrePreneurShipUnit | null>()
-    const closeModal = () => {
-        setTabMenuProperty(prevState => ({ ...prevState, pdf: false }));
-    };
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [tabMenuProperty, setTabMenuProperty] = useState(
         tabMenuPropertyStore.get() // Estado local para el valor del almacén
@@ -102,13 +100,13 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 throw data;
             } else if (response?.ok) {
                 setIsLoading(false);
-                setResultsUnit(data?.resultado);
+                setResultsUnit(data?.resultado as ResultEntrePreneurShipUnit);
             }
         } catch (error) {
             console.log(error);
         }
     };
-
+   
     return (
         <article className=" px-3 md:px-0 lg:px-0 font-gotham">
 
@@ -118,7 +116,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     {results?.emprendimiento[0]?.celular && <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.emprendimiento[0]?.celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</a>}
                 </header>
                 <div className="container mx-auto pt-5 flex justify-between">
-                    {isLoading ? <BreadCrumbSkeleton /> : <TabMenu videoUrl={null} unitList={true} pdf={(results?.pdf?.length ?? 0) > 0} blueprint={(resultsUnit?.unidadesDisponibles?.map(emp => emp.img_princ) ?? []).length > 0 && !isLoading} />}
+                    {isLoading ? <BreadCrumbSkeleton /> : <TabMenu videoUrl={null} unitData={resultsUnit?.unidadesDisponibles.length} unitList={!resultsUnit?.hasOwnProperty("error")} pdf={(results?.pdf?.length ?? 0) > 0} blueprint={(resultsUnit?.unidadesDisponibles?.map(emp => emp.img_princ) ?? []).length > 0 && !isLoading} />}
                     {isLoading ? <BreadCrumbSkeleton /> : <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>}
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16"><GalleryPropertySkeleton /></div> : (
@@ -129,7 +127,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                             tabMenuProperty.blueprint ? <GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fade animate-duration-500  transition-all" galleryID={`gallery-blueprint-${results?.datos?.codemp}-${results?.datos?.codsuc}`} images={results?.imgP.flat() || []} />
                                 : tabMenuProperty.pdf && (results?.pdf?.length ?? 0) > 0 ? (
                                     <PDFViewer file={`${results?.pdf[0]?.pdf_name}`} />
-                                ) : tabMenuProperty.unitList && resultsUnit?.unidadesDisponibles ? (<></>) : (
+                                ) : tabMenuProperty.unitList && resultsUnit?.unidadesDisponibles ? (<UnitAvailableTable unitAvailable={resultsUnit}/>) : (
                                     <div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100"><span className="flex justify-center items-center h-full font-bold">No disponible</span></div>)
                         }
                     </div>

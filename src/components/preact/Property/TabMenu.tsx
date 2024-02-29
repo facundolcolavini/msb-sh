@@ -13,8 +13,9 @@ interface Props {
     blueprint?: boolean;
     pdf?: boolean;
     unitList?: boolean;
+    unitData?: number;
 }
-const TabMenu: FunctionComponent<Props> = ({ videoUrl, pdf, blueprint, unitList }: Props) => {
+const TabMenu: FunctionComponent<Props> = ({ videoUrl, pdf, blueprint, unitList,unitData }: Props) => {
 
     const $tabmenu = tabMenuPropertyStore.get()
 
@@ -79,7 +80,7 @@ const TabMenu: FunctionComponent<Props> = ({ videoUrl, pdf, blueprint, unitList 
     };
 
     return (
-        <div className={'flex justify-center place-content-center  align-middle items-end self-end gap-1 pb-1 '}>
+        <div className={'flex justify-center place-content-center  align-middle items-end self-end space-x-2 pb-1 '}>
 
             <Button
                 id="tabGallery"
@@ -89,51 +90,74 @@ const TabMenu: FunctionComponent<Props> = ({ videoUrl, pdf, blueprint, unitList 
                 onClick={handlerTab}
                 value={$tabmenu.gallery === true ? 'true' : 'false'}
                 addStyles="h-full flex items-center self-center bg-transparent hover:bg-transparent  p-0 m-0"
-            />
+            >
+                <span className={$tabmenu.gallery ? ` px-1 text-primary-msb text-xs font-medium  hidden md:flex lg:flex` : ` hidden md:flex lg:flex text-xs font-medium text-secondary-text-msb transition-all px-1`}>Fotos</span>
+
+            </Button>
 
 
-            {videoUrl === null ? null : <Button
-                type="button"
-                disabled={$tabmenu.video}
-                icon={<TabVideoIcon h={"30"} w={"30"} addStyles={$tabmenu?.video ? 'flex self-center items-center animate-fill-forwards animate  transition-all animation-duration-400 hover:fill-primary-msb  fill-primary-msb self-center' : 'fill-secondary-text-msb flex justify-center items-center'} />}
-                id="tabVideo"
-                onClick={handlerTab}
-                value={$tabmenu.video === true ? 'true' : 'false'}
-                addStyles="flex items-center self-center bg-transparent justify-center hover:bg-transparent  p-0 m-0"
-            />
+            {videoUrl === null ? null : (
+
+                <Button
+                    type="button"
+                    disabled={$tabmenu.video}
+                    icon={<TabVideoIcon h={"24"} w={"30"} addStyles={$tabmenu?.video ? 'flex self-center items-center animate-fill-forwards animate  transition-all animation-duration-400 hover:fill-primary-msb  fill-primary-msb self-center' : 'fill-secondary-text-msb flex justify-center items-center'} />}
+                    id="tabVideo"
+                    onClick={handlerTab}
+                    value={$tabmenu.video === true ? 'true' : 'false'}
+                    addStyles="flex items-center self-center bg-transparent justify-center hover:bg-transparent  p-0 m-0"
+                >
+                    <span className={$tabmenu.video ? ` px-1 text-primary-msb text-xs font-medium  hidden md:flex lg:flex` : ` hidden md:flex lg:flex text-xs font-medium text-secondary-text-msb transition-all px-1`}>Video</span>
+                </Button>
+            )
+            }
+            
+            {
+                blueprint && (
+                    <Button id="tabBlueprint"
+                        type="button"
+                        onClick={handlerTab}
+                        value={$tabmenu.blueprint === true ? 'true' : 'false'}
+                        addStyles="flex items-center self-center bg-transparent justify-center hover:bg-transparent p-0 m-0"
+                        icon={<BluePrintIcon h={"24"}  w={"23"} addStyles={$tabmenu?.blueprint ? 'flex justify-center self-center place-content-center align-middle content-center items-center animate-fill-forwards animate  transition-all animation-duration-400 hover:fill-primary-msb  fill-primary-msb self-center pb-1' : 'fill-secondary-text-msb flex justify-center items-center self-center place-content-center align-middle content-center pb-1'} />
+                        }
+                    >
+                        <span className={$tabmenu.blueprint ? ` px-1 text-primary-msb text-xs font-medium  hidden md:flex lg:flex` : ` hidden md:flex lg:flex text-xs font-medium text-secondary-text-msb transition-all px-1`}>Planos</span>
+                    </Button>
+                )
+            }
+            {
+                pdf && (
+
+                    <Button id="tabPdf"
+                        type="button"
+                        onClick={handlerTab}
+                        value={$tabmenu.pdf === true ? 'true' : 'false'}
+                        addStyles="flex items-center self-center bg-transparent justify-center hover:bg-transparent h-full w-100 p-0 m-0"
+                        icon={<DocumentPdfIcon h={"22"} w={"22"} addStyles={$tabmenu?.pdf ? 'flex justify-center self-center place-content-center align-middle content-center items-center animate-fill-forwards animate  transition-all animation-duration-400 hover:fill-primary-msb  fill-primary-msb self-center' : 'fill-secondary-text-msb flex justify-center items-center self-center place-content-center align-middle content-center'} />
+
+                        }
+                    >
+                        <span className={$tabmenu.pdf ? ` px-1 text-primary-msb text-xs font-medium  hidden md:flex lg:flex` : ` hidden md:flex lg:flex text-xs font-medium text-secondary-text-msb transition-all px-1`}>PDF</span>
+                    </Button>
+                )
             }
 
-            {
-                pdf && <Button id="tabPdf"
-                    type="button"
-                    onClick={handlerTab}
-                    value={$tabmenu.pdf === true ? 'true' : 'false'}
-                    addStyles="flex items-center self-center bg-transparent justify-center hover:bg-transparent h-full w-100 p-0 m-0"
-                    icon={<DocumentPdfIcon h={"20"} w={"21"} addStyles={$tabmenu?.pdf ? 'flex justify-center self-center place-content-center align-middle content-center items-center animate-fill-forwards animate  transition-all animation-duration-400 hover:fill-primary-msb  fill-primary-msb self-center' : 'fill-secondary-text-msb flex justify-center items-center self-center place-content-center align-middle content-center'} />
-
-                    }
-                />
-            }
 
             {
-                blueprint && <Button id="tabBlueprint"
-                    type="button"
-                    onClick={handlerTab}
-                    value={$tabmenu.pdf === true ? 'true' : 'false'}
-                    addStyles="flex items-center self-center bg-transparent justify-center hover:bg-transparent p-0 m-0"
-                    icon={<BluePrintIcon h={"24"} addStyles={$tabmenu?.blueprint ? 'flex justify-center self-center place-content-center align-middle content-center items-center animate-fill-forwards animate  transition-all animation-duration-400 hover:fill-primary-msb  fill-primary-msb self-center pb-1' : 'fill-secondary-text-msb flex justify-center items-center self-center place-content-center align-middle content-center pb-1'} />
-                    }
-                />
-            }
-            {
-                unitList && <Button id="tabUnitList"
-                    type="button"
-                    onClick={handlerTab}
-                    value={$tabmenu.unitList === true ? 'true' : 'false'}
-                    addStyles="flex items-center self-center bg-transparent justify-center hover:bg-transparent h-full w-100 p-0 m-0"
-                    icon={<ListIcon h={"24"} w={"24"} addStyles={$tabmenu?.unitList ? 'flex justify-center self-center place-content-center align-middle content-center items-center animate-fill-forwards animate  transition-all animation-duration-400 hover:fill-primary-msb  fill-primary-msb self-center pb-1' : 'fill-secondary-text-msb flex justify-center items-center self-center place-content-center align-middle content-center pb-1'} />
-                    }
-                />
+                unitList && (
+
+                    <Button id="tabUnitList"
+                        type="button"
+                        onClick={handlerTab}
+                        value={$tabmenu.unitList === true ? 'true' : 'false'}
+                        addStyles="flex items-center self-center bg-transparent justify-center hover:bg-transparent h-full w-100 p-0 m-0"
+                        icon={<ListIcon h={"24"} w={"26"} addStyles={$tabmenu?.unitList ? 'flex justify-center self-center place-content-center align-middle content-center items-center animate-fill-forwards animate  transition-all animation-duration-400 hover:fill-primary-msb  fill-primary-msb self-center pb-1' : 'fill-secondary-text-msb flex justify-center items-center self-center place-content-center align-middle content-center pb-1'} />
+                        }
+                    >
+                        <span className={$tabmenu.unitList ? ` px-1 text-primary-msb text-xs font-medium  hidden md:flex lg:flex` : ` hidden md:flex lg:flex text-xs font-medium text-secondary-text-msb transition-all px-1`}>{ unitData} Unidades disponibles</span>
+                    </Button>
+                )
             }
 
 
