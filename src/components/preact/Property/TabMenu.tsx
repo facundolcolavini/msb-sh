@@ -7,7 +7,7 @@ import DocumentPdfIcon from '../Icons/DocumentPdfIcon';
 import TabGalleryIcon from '../Icons/TabGalleryIcon';
 import TabVideoIcon from "../Icons/TabVideoIcon";
 import Button from "../ui/Buttons/Button";
-import ListIcon from '../Icons/ListIcon';
+import PropertyBuildIcon from '../Icons/PropertyBuildIcon';
 interface Props {
     videoUrl: string | null;
     blueprint?: boolean;
@@ -152,7 +152,7 @@ const TabMenu: FunctionComponent<Props> = ({ videoUrl, pdf, blueprint, unitList,
                         onClick={handlerTab}
                         value={$tabmenu.unitList === true ? 'true' : 'false'}
                         addStyles="flex items-center self-center bg-transparent justify-center hover:bg-transparent h-full w-100 p-0 m-0"
-                        icon={<ListIcon h={"24"} w={"26"} addStyles={$tabmenu?.unitList ? 'flex justify-center self-center place-content-center align-middle content-center items-center animate-fill-forwards animate  transition-all animation-duration-400 hover:fill-primary-msb  fill-primary-msb self-center pb-1' : 'fill-secondary-text-msb flex justify-center items-center self-center place-content-center align-middle content-center pb-1'} />
+                        icon={<PropertyBuildIcon h={"24"} w={"26"} addStyles={$tabmenu?.unitList ? 'flex justify-center self-center place-content-center align-middle content-center items-center animate-fill-forwards animate  transition-all animation-duration-400 hover:fill-primary-msb  fill-primary-msb self-center pb-1' : 'fill-secondary-text-msb flex justify-center items-center self-center place-content-center align-middle content-center pb-1'} />
                         }
                     >
                         <span className={$tabmenu.unitList ? ` px-1 text-primary-msb text-xs font-medium  hidden md:flex lg:flex` : ` hidden md:flex lg:flex text-xs font-medium text-secondary-text-msb transition-all px-1`}>{ unitData} Unidades disponibles</span>

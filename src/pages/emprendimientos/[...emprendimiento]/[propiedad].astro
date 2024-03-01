@@ -4,17 +4,22 @@ import EntrepreneurshipDetail from "@components/preact/Entrepreneurship/Entrepre
 import PropertyPage from "@components/preact/Property/PropertyPage";
 
 import Layout from "@layouts/Layout.astro";
+import { getEntrepreneurshipById } from "@services/get-all-entrepreneurship";
+import { capitalize } from "@utils/formats";
 const { propiedad } = Astro.params;
 const url = Astro.url;
-
+console.log(propiedad);
 // Extraemos el ultimo segmento de la url
 let prop = url.toString().split("/").pop();
-
 let suc = prop?.split("-")[0] ?? "";
 let id = prop?.split("-")[1] ?? "";
+const data = await getEntrepreneurshipById(id)
+const amig = capitalize(data.emprendimiento[0].amigable.replaceAll("-" , " "))
+console.log(amig)
+/* console.log(data) */
 ---
 
-<Layout title="Detalle de Propiedad" description="Detalle de Propiedad">
+<Layout title={data?.emprendimiento[0]?.titulo} description={amig}>
   <section class="bg-[#FFFBF4] h-full py-2">
 
       <EntrepreneurshipDetail

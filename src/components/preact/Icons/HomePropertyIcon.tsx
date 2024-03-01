@@ -7,7 +7,7 @@ interface Props {
   h?: string;
   imgUrl?:string;
 }
-const HomeProperty = ({ addStyles, w = "56", h = "56", imgUrl= 'home-property' }: Props) => {
+const HomePropertyIcon = ({ addStyles, w = "56", h = "56", imgUrl= 'home-property' }: Props) => {
   const styles = twMerge(clsx("object-contain", addStyles));
   return (
     <>
@@ -17,4 +17,4 @@ const HomeProperty = ({ addStyles, w = "56", h = "56", imgUrl= 'home-property' }
   )
 }
 
-export default HomeProperty
+export default HomePropertyIcon

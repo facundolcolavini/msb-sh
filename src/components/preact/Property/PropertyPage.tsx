@@ -1,13 +1,15 @@
-import type { APIResponsePropertyDetail, ResultPropertyDetails } from "@interfaces/detail.properties.interface";
+import type { ResultPropertyDetails } from "@interfaces/detail.properties.interface";
 import he from 'he';
 import type { FunctionComponent } from "preact";
 import type { PropsWithChildren } from "preact/compat";
 import { useEffect, useState } from "preact/hooks";
 
 
+import { navigate } from "astro:transitions/client";
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
 import PrintIcon from "../Icons/PrintIcon";
+import PDFViewer from "../PDFViewer";
 import ShareButton from "../ShareButton/ShareButton";
 import BreadCrumbSkeleton from "../Skeletons/BreadCrumbSkeleton";
 import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
@@ -20,9 +22,6 @@ import DetailsList from "./DetailsList";
 import FeatureList from "./FeatureList";
 import ServiceList from "./ServiceList";
 import TabMenu from "./TabMenu";
-import PDFViewer from "../PDFViewer";
-import UnitAvailableTable from "../Entrepreneurship/UnitAvailableTable";
-import { navigate } from "astro:transitions/client";
 
 
 interface Props {
@@ -66,7 +65,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const fetchResults = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch(`/api/property.json?suc=${props.branchCode}&id=${props.propertyCode}&amaira=false${window.location.pathname.includes('emprendimiento') ? '&emprendimiento=True' :'' }`);
+            const response = await fetch(`/api/property.json?suc=${props.branchCode}&id=${props.propertyCode}&amaira=false${window.location.pathname.includes('emprendimiento') ? '&emprendimiento=True' : ''}`);
             const data = await response.json();
             console.log(data);
             if (data?.hasOwnProperty("error")) {
@@ -95,7 +94,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             console.log(error);
         }
     };
-        console.log(results?.emprendimiento?.ed_pdf)
+
     return (
         <article className=" px-3 md:px-0 lg:px-0 font-gotham">
             <section className="h-full">
@@ -104,7 +103,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</a>
                 </header>
                 <div className="container mx-auto pt-5 flex justify-between">
-                    <TabMenu videoUrl={videoUrl} unitList={results!?.emprendimiento ? true : false} pdf={results?.emprendimiento && results?.emprendimiento?.ed_pdf !== "" &&  results?.emprendimiento?.ed_pdf !== null ? true :false} blueprint={results?.plano !== null && results?.plano !==""? true : false} />
+                    <TabMenu videoUrl={videoUrl} unitList={results!?.emprendimiento ? true : false} pdf={results?.emprendimiento && results?.emprendimiento?.ed_pdf !== "" && results?.emprendimiento?.ed_pdf !== null ? true : false} blueprint={results!?.plano !== null && !isLoading} />
                     <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16"><GalleryPropertySkeleton /></div> :
@@ -114,16 +113,16 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                             {/*  videoframe  */}
                             {/*   <div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square"></div> */}
                             {(videoUrl && tabMenuProperty.video) ?
-                               
-                             (<iframe className=" container mx-auto" width="100%" height="700" src={`https://www.youtube.com/embed/${videoUrl ?? ''}?autoplay=1&mute=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>) : 
-                             tabMenuProperty.blueprint ? <GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fade animate-duration-500  transition-all" galleryID={`gallery-blueprint-${results?.datos?.codemp}-${results?.datos?.codigo_ficha}`} images={  results!?.plano !== "" &&  results!?.plano !== "null" ? [results!?.plano ] : []} />
-                             : tabMenuProperty.pdf && (results?.emprendimiento?.ed_pdf !== "null" && results?.emprendimiento?.ed_pdf !== "") ? (
-                                 <PDFViewer file={`${results?.emprendimiento?.ed_pdf}`} />
-                             ) : tabMenuProperty.unitList && results!?.emprendimiento? (navigate(`/emprendimientos/${results?.emprendimiento?.ed_est}/${he.decode(results?.emprendimiento!?.ed_loc)}/${he.decode(results?.emprendimiento!?.ed_nom)}/${results?.emprendimiento?.codsuc}-${results?.emprendimiento?.ed_idl}`)) : (
-                                 <div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100"><span className="flex justify-center items-center h-full font-bold">No disponible</span></div>)
-                                
 
-                                }
+                                (<iframe className=" container mx-auto" width="100%" height="700" src={`https://www.youtube.com/embed/${videoUrl ?? ''}?autoplay=1&mute=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>) :
+                                tabMenuProperty.blueprint ? <GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fade animate-duration-500  transition-all" galleryID={`gallery-blueprint-${results?.datos?.codemp}-${results?.datos?.codigo_ficha}`} images={results!?.plano !== "" && results!?.plano !== "null" ? [results!?.plano] : []} />
+                                    : tabMenuProperty.pdf && (results?.emprendimiento?.ed_pdf !== "null" && results?.emprendimiento?.ed_pdf !== "") ? (
+                                        <PDFViewer file={`${results?.emprendimiento?.ed_pdf}`} />
+                                    ) : tabMenuProperty.unitList && results!?.emprendimiento ? (navigate(`/emprendimientos/${results?.emprendimiento?.ed_est}/${he.decode(results?.emprendimiento!?.ed_loc)}/${he.decode(results?.emprendimiento!?.ed_nom)}/${results?.emprendimiento?.codsuc}-${results?.emprendimiento?.ed_idl}`)) : (
+                                        <div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100"><span className="flex justify-center items-center h-full font-bold">No disponible</span></div>)
+
+
+                            }
                         </div>
                 }
             </section>
@@ -203,90 +202,92 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             <section className="container mx-auto grid grid-cols md:gap-5 lg:gap-7">
                 {/* Google map iframe */}
                 <div className={'col-start-1 cold-end-7'}>
-                {isLoading || !results?.ficha[0]?.direccion
-                    ? <div className="h-[350px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100 animate-pulse">
-                        <span className="flex justify-center items-center h-full font-bold"></span>
-                    </div>
-                    : (
-                        <div>
-                            <div className="h-[400px] w-full md:col-span-1 lg:col-span-1">
-                                {/* Agregar el titulo de la direcion en alado del market  */}
-                                <iframe
-                                    className="w-full h-full"
-                                    src={`https://www.google.com/maps/embed/v1/place?q=${`${results?.ficha[0]?.latitud}, ${results?.ficha[0]?.longitud}`}&key=${import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY}`}
-                                    allowFullScreen>
-                                </iframe>
-                            </div>
-                            <FeatureList
-                                sup_cubierta={results?.superficie?.dato[0]}
-                                sup_total={results?.superficie?.dato[3]}
-                                antiquity={results?.ficha[0]?.in_ant}
-                                baths={results?.ficha[0]?.in_bao}
-                                environments={results?.ficha[0]?.in_amb?.split('A')[0]}
-                                furnished={results?.caracteristicas_generales_personalizadas?.find(
-                                    (caracteristica) => caracteristica === 'Amoblado') ?? ''}
-                                light={results?.caracteristicas_generales_personalizadas?.find(
-                                    (caracteristica) => caracteristica === 'Luz') ?? ''}
-                                location={results?.ficha[0]?.ubicacion.toLocaleLowerCase()}
-                                pet_accepted={Boolean(results?.ficha[0]?.acepta_mascota?.toLocaleLowerCase()) ?? false}
-                            />
-
-                            <hr className={'border-secondary-text-msb '} />
-                            <div className={'flex flex-col gap-5 py-5'}>
-                                <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb'}>Descripción</h2>
-
-                                <Description htmlText={results?.ficha[0]?.in_obs} />
-                            </div>
-                            <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle de la propiedad</h2>
-                            <hr className={'border-secondary-text-msb my-3'} />
-                            <DetailsList
-                                operation={results?.ficha[0]?.operacion ?? ''}
-                                locationLoc={results?.ficha[0]?.in_loc ?? ''}
-                                locationUbi={results?.ficha[0]?.ubicacion ?? ''}
-                                neighborhood={results?.ficha[0]?.in_bar ?? ''}
-                                address={results?.ficha[0]?.direccion ?? ''}
-                                environments={results?.ficha[0]?.ambientes ?? ''}
-                                antiquity={results?.ficha[0]?.in_ant ?? ''}
-                                year={results?.ficha[0]?.in_anio ?? ''}
-                                expenses={`${results?.ficha[0]?.in_exp !== "" ? `${results?.ficha[0]?.moneda_impuesto} ${results?.ficha[0]?.in_exp}` : ''}`}
-                                houseType={results?.ficha[0]?.in_tpr ?? ''}
-                                dependence={results?.ficha[0]?.in_dep ?? ''}
-                                floors={results?.ficha[0]?.in_npi ?? ''}
-                                hotWater={results?.ficha[0]?.agua ?? ''}
-                                gas={results?.ficha[0]?.in_gas ?? ''}
-                                heating={results?.ficha[0]?.in_agu ?? ''}
-                                bathrooms={results?.ficha[0]?.in_bao ?? ''}
-                                state={results?.ficha[0]?.in_esa ?? ''}
-                                garage_parking={results?.ficha[0]?.in_coc ?? ''}
-                                garage={results?.ficha[0]?.garage ?? ''}
-                                parking={results?.ficha[0]?.in_parking ?? ''}
-                                pavement={results?.ficha[0]?.in_pav ?? ''}
-                                sewer={results?.ficha[0]?.in_clo ?? ''}
-                                telephoneLine={results?.ficha[0]?.in_lin ?? ''}
-                            />
-                            <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Medidas</h2>
-                            <hr className={'border-secondary-text-msb my-3'} />
-                            <ul className="mb-5">
-                                {results?.superficie?.dato[3] !== "" ? (<li className="flex gap-2 pb-3">
-                                    <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Sup.total: </span>
-                                    <p className="text-sm md:text-md lg:text-lg">{he.decode(results?.superficie?.dato[3])}</p>
-                                </li>) : null}
-                                {results?.superficie?.dato[0] !== "" ? (<li className="flex gap-2">
-                                    <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Sup. cubierta: </span>
-                                    <span className="text-sm md:text-md lg:text-lg">{he.decode(results?.superficie?.dato[0])}</span>
-                                </li>) : null}
-                            </ul>
-                            <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Servicios:</h2>
-                            <hr className={'border-secondary-text-msb my-3'} />
-                            <ServiceList characteristics={results?.caracteristicas_generales_personalizadas} />
-
+                    {isLoading || !results?.ficha[0]?.direccion
+                        ? <div className="h-[350px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100 animate-pulse">
+                            <span className="flex justify-center items-center h-full font-bold"></span>
                         </div>
-                    )}
+                        : (
+                            <div>
+                                <div className="h-[400px] w-full md:col-span-1 lg:col-span-1">
+                                    {/* Agregar el titulo de la direcion en alado del market  */}
+                                    <iframe
+                                        className="w-full h-full"
+                                        src={`https://www.google.com/maps/embed/v1/place?q=${`${results?.ficha[0]?.latitud}, ${results?.ficha[0]?.longitud}`}&key=${import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY}`}
+                                        allowFullScreen>
+                                    </iframe>
+                                </div>
+                                <FeatureList
+                                    sup_cubierta={results?.superficie?.dato[0]}
+                                    sup_total={results?.superficie?.dato[3]}
+                                    antiquity={results?.ficha[0]?.in_ant}
+                                    baths={results?.ficha[0]?.in_bao}
+                                    environments={results?.ficha[0]?.in_amb?.split('A')[0]}
+                                    furnished={results?.caracteristicas_generales_personalizadas?.find(
+                                        (caracteristica) => caracteristica === 'Amoblado') ?? ''}
+                                    light={results?.caracteristicas_generales_personalizadas?.find(
+                                        (caracteristica) => caracteristica === 'Luz') ?? ''}
+                                    location={results?.ficha[0]?.ubicacion.toLocaleLowerCase()}
+                                    pet_accepted={Boolean(results?.ficha[0]?.acepta_mascota?.toLocaleLowerCase()) ?? false}
+                                />
+
+                                <hr className={'border-secondary-text-msb '} />
+                                <div className={'flex flex-col gap-5 py-5'}>
+                                    <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb'}>Descripción</h2>
+
+                                    <Description htmlText={results?.ficha[0]?.in_obs} />
+                                </div>
+                                <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle de la propiedad</h2>
+                                <hr className={'border-secondary-text-msb my-3'} />
+                                <DetailsList
+                                    operation={results?.ficha[0]?.operacion ?? ''}
+                                    locationLoc={results?.ficha[0]?.in_loc ?? ''}
+                                    locationUbi={results?.ficha[0]?.ubicacion ?? ''}
+                                    neighborhood={results?.ficha[0]?.in_bar ?? ''}
+                                    address={results?.ficha[0]?.direccion ?? ''}
+                                    environments={results?.ficha[0]?.ambientes ?? ''}
+                                    antiquity={results?.ficha[0]?.in_ant ?? ''}
+                                    year={results?.ficha[0]?.in_anio ?? ''}
+                                    expenses={`${results?.ficha[0]?.in_exp !== "" ? `${results?.ficha[0]?.moneda_impuesto} ${results?.ficha[0]?.in_exp}` : ''}`}
+                                    houseType={results?.ficha[0]?.in_tpr ?? ''}
+                                    dependence={results?.ficha[0]?.in_dep ?? ''}
+                                    floors={results?.ficha[0]?.in_npi ?? ''}
+                                    hotWater={results?.ficha[0]?.agua ?? ''}
+                                    gas={results?.ficha[0]?.in_gas ?? ''}
+                                    heating={results?.ficha[0]?.in_agu ?? ''}
+                                    bathrooms={results?.ficha[0]?.in_bao ?? ''}
+                                    state={results?.ficha[0]?.in_esa ?? ''}
+                                    garage_parking={results?.ficha[0]?.in_coc ?? ''}
+                                    garage={results?.ficha[0]?.garage ?? ''}
+                                    parking={results?.ficha[0]?.in_parking ?? ''}
+                                    pavement={results?.ficha[0]?.in_pav ?? ''}
+                                    sewer={results?.ficha[0]?.in_clo ?? ''}
+                                    telephoneLine={results?.ficha[0]?.in_lin ?? ''}
+                                />
+                                <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Medidas</h2>
+                                <hr className={'border-secondary-text-msb my-3'} />
+                                <ul className="mb-5">
+                                    {results?.superficie?.dato[3] !== "" ? (<li className="flex gap-2 pb-3">
+                                        <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Sup.total: </span>
+                                        <p className="text-sm md:text-md lg:text-lg">{he.decode(results?.superficie?.dato[3])}</p>
+                                    </li>) : null}
+                                    {results?.superficie?.dato[0] !== "" ? (<li className="flex gap-2">
+                                        <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Sup. cubierta: </span>
+                                        <span className="text-sm md:text-md lg:text-lg">{he.decode(results?.superficie?.dato[0])}</span>
+                                    </li>) : null}
+                                </ul>
+                                {results?.caracteristicas_generales_personalizadas && (
+                                    <>
+                                        <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Servicios:</h2>
+                                        <hr className={'border-secondary-text-msb my-3'} />
+                                        <ServiceList characteristics={results?.caracteristicas_generales_personalizadas} />
+                                    </>)}
+                            </div>
+                        )}
                 </div>
                 <div className={'bg-[#D9D9D9] relative h-fit w-100  lg:col-start-7 lg-col-end-12'}>
                     <ContactForm id={results?.datos?.codigo_ficha ?? ''} tipo={results?.ficha[0]?.tipo} codsuc={results?.ficha[0]?.codsuc ?? ''} contact_prop={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} />
                 </div>
-                
+
             </section>
             <section className={'container mx-auto  my-30'}>
 
