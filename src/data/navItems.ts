@@ -1,7 +1,6 @@
 import type { NavI } from "@interfaces/navbar.interfaces";
 
 export const buyNavItems: NavI[] = [
-
   {
     label: 'Comprar',
     href: '#',
@@ -35,7 +34,6 @@ export const buyNavItems: NavI[] = [
       { label: 'Guía de Barrios', category: 'buy-help', href: '/comprar/guia-de-barrios' },
     ],
   },
-
 ]
 
 export const rentNavItems: NavI[] = [
@@ -144,9 +142,11 @@ export const joinUsNavItems: NavI[] = [
   }
 ]
 
+
+
 export const navItems: NavI[] = [
-  ...joinUsNavItems,
   ...contactUsNavItems,
+  ...joinUsNavItems,
   ...ourServicesNavItems,
   /*  ...gatedCommunities, */
 ];

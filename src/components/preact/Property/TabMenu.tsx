@@ -14,8 +14,9 @@ interface Props {
     pdf?: boolean;
     unitList?: boolean;
     unitData?: number;
+    unitRedirect?:string;
 }
-const TabMenu: FunctionComponent<Props> = ({ videoUrl, pdf, blueprint, unitList,unitData }: Props) => {
+const TabMenu: FunctionComponent<Props> = ({ videoUrl, pdf, blueprint, unitList,unitData, unitRedirect="Unidades disponibles" }: Props) => {
 
     const $tabmenu = tabMenuPropertyStore.get()
 
@@ -155,7 +156,7 @@ const TabMenu: FunctionComponent<Props> = ({ videoUrl, pdf, blueprint, unitList,
                         icon={<PropertyBuildIcon h={"24"} w={"26"} addStyles={$tabmenu?.unitList ? 'flex justify-center self-center place-content-center align-middle content-center items-center animate-fill-forwards animate  transition-all animation-duration-400 hover:fill-primary-msb  fill-primary-msb self-center pb-1' : 'fill-secondary-text-msb flex justify-center items-center self-center place-content-center align-middle content-center pb-1'} />
                         }
                     >
-                        <span className={$tabmenu.unitList ? ` px-1 text-primary-msb text-xs font-medium  hidden md:flex lg:flex` : ` hidden md:flex lg:flex text-xs font-medium text-secondary-text-msb transition-all px-1`}>{ unitData} Unidades disponibles</span>
+                        <span className={$tabmenu.unitList ? ` px-1 text-primary-msb text-xs font-medium  hidden md:flex lg:flex` : ` hidden md:flex lg:flex text-xs font-medium text-secondary-text-msb transition-all px-1`}>{unitData} {unitRedirect}</span>
                     </Button>
                 )
             }

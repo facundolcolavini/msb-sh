@@ -67,7 +67,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             setIsLoading(true);
             const response = await fetch(`/api/property.json?suc=${props.branchCode}&id=${props.propertyCode}&amaira=false${window.location.pathname.includes('emprendimiento') ? '&emprendimiento=True' : ''}`);
             const data = await response.json();
-            console.log(data);
+           
             if (data?.hasOwnProperty("error")) {
                 setResults(null);
                 setIsLoading(false);
@@ -80,7 +80,6 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     const videoUrl = data.resultado?.ficha[0]?.in_vid;
                     // a veces viene asi https://youtu.be/sA7_jQQ5c84 
                     const videoId = new URL(videoUrl).searchParams.get("v") || videoUrl.split('/').pop();
-                    console.log(videoId, 'VIDEO URL')
                     if (videoId) {
                         setVideoUrl(videoId);
                     } else {
@@ -103,7 +102,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</a>
                 </header>
                 <div className="container mx-auto pt-5 flex justify-between">
-                    <TabMenu videoUrl={videoUrl} unitList={results!?.emprendimiento ? true : false} pdf={results?.emprendimiento && results?.emprendimiento?.ed_pdf !== "" && results?.emprendimiento?.ed_pdf !== null ? true : false} blueprint={results!?.plano !== null && !isLoading} />
+                    <TabMenu videoUrl={videoUrl} unitRedirect={window.location.pathname.includes('unidad-disponible') ? 'Edificio' : 'Unidades disponibles'} unitList={results!?.emprendimiento ? true : false} pdf={results?.emprendimiento && results?.emprendimiento?.ed_pdf !== "" && results?.emprendimiento?.ed_pdf !== null ? true : false} blueprint={results!?.plano !== null && !isLoading} />
                     <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16"><GalleryPropertySkeleton /></div> :

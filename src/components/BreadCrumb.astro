@@ -1,8 +1,6 @@
 ---
-import he from "he";
 import { formatearString } from "@utils/formats";
-import { parseQueryString } from "@utils/querys-format";
-import HomeIcon from "./preact/Icons/HomeIcon";
+import he from "he";
 import Icon from "node_modules/astro-icon/components/Icon.astro";
 import Link from "./ui/Link.astro";
 
@@ -35,50 +33,63 @@ const breadcrumbItems = pathParts.map((part, index) => {
 // Agregar el enlace "Home" al principio de breadcrumbItems
 const breadcrumbWithHome = [
   {
-    name: "Home" ,
-     // Nombre del enlace "Home"
+    name: "Home",
+    // Nombre del enlace "Home"
     url: `${origin}`, // URL de la página principal
   },
   /* /pathname/id */
-  ...breadcrumbItems?.map((item,index)=>{
-     // Formatea el nombre del elemento del breadcrumb cuando son parámetros de consulta 
-    const name = item.name.includes('?') ? formatearString(he.decode(item.name)) : formatearString(he.decode(item.name));
+  ...breadcrumbItems?.map((item, index) => {
+    // Formatea el nombre del elemento del breadcrumb cuando son parámetros de consulta
+    const name = item.name.includes("?")
+      ? formatearString(he.decode(item.name))
+      : formatearString(he.decode(item.name));
     return {
       ...item,
-      name:he.decode(name),
-    }
-  })
- ]
- // Eliminar el último elemento del breadcrumb 
- 
+      name: he.decode(name),
+    };
+  }),
+];
+// Eliminar el último elemento del breadcrumb
 ---
+
 <nav class="flex p-5 lg:px-0 md:px-0" aria-label="Breadcrumb">
   <ol class="flex flex-wrap items-center">
-    {breadcrumbWithHome?.map((item: BreadcrumbItem, index: number) => {
-      return (
-        <li class="inline-flex items-center">
-          <div class="flex items-center">
-            {index === 0 || item.name === "resultados de busqueda" || item.name === "emprendimientos" ? (
-            
-              <Link
-                href={item.url}
-                class={` ${item.url === `${origin}${pathname}` ? "text-primary-msb font-semibold tracking-wide" : "ms-1 text-sm font-semibold text-primary-text-msb capitalize hover:text-tertiary-bg-msb tracking-wide underline"}`}
-              >
-                {item.name === "Home" ? (
-                  <p class="pr-1"><Icon  name="home-2" size={20} /></p>
-                ) : (
-                  <p class="px-1">{he.decode(item.name)}</p>
-                )}
-              </Link>
-            ) : (
-              <p class="px-1 text-sm  text-primary-text-msb font-semibold capitalize">{he.decode(item.name)}</p>
-            )}
-            {index !== breadcrumbWithHome.length - 1 && (
-              <span class="text-primary-text-msb font-light">/</span>
-            )}
-          </div>
-        </li>
-      );
-    })}
+    {
+      breadcrumbWithHome?.map((item: BreadcrumbItem, index: number) => {
+        return (
+          <li class="inline-flex items-center">
+            <div class="flex items-center">
+              {index === 0 ||
+              item.name === "resultados de busqueda" ||
+              item.name === "emprendimientos" ? (
+                <Link
+                  href={item.url}
+                  class={` ${
+                    item.url === `${origin}${pathname}`
+                      ? "text-primary-msb font-semibold tracking-wide"
+                      : "ms-1 text-sm font-semibold text-primary-text-msb capitalize hover:text-tertiary-bg-msb tracking-wide underline"
+                  }`}
+                >
+                  {item.name === "Home" ? (
+                    <p class="pr-1">
+                      <Icon name="home-2" size={20} />
+                    </p>
+                  ) : (
+                    <p class="px-1">{he.decode(item.name)}</p>
+                  )}
+                </Link>
+              ) : (
+                <p class="px-1 text-sm  text-primary-text-msb font-semibold capitalize">
+                  {he.decode(item.name)}
+                </p>
+              )}
+              {index !== breadcrumbWithHome.length - 1 && (
+                <span class="text-primary-text-msb font-light">/</span>
+              )}
+            </div>
+          </li>
+        );
+      })
+    }
   </ol>
 </nav>

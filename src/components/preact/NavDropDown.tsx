@@ -11,14 +11,14 @@ const NavDropDown = (props: PropsWithChildren<Props>) => {
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   return (
-    <div class="relative z-10 ">
+    <div class="relative z-10 transition-all">
       <button onClick={toggleDropdown} class="flex flex-row items-center" >
         <span>{props.label}</span>
       </button>
       {isOpen && (
-        <>
+        <div className=" animate-fade-down animate-duration-300">
           {props.childrenDrop}
-        </>
+        </div>
       )}
     </div>
   );

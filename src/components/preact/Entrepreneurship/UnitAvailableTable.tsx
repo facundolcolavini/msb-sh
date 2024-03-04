@@ -17,14 +17,14 @@ const UnitAvailableTable = ({ unitAvailable }: Props) => {
     scrollbarWidth: 'thin',
     scrollbarBorder: '100%'
 }}>
-        <table className="w-full h-full text-center">
+        <table className="w-full h-fit text-center">
             <tbody>
                 {
                     unitAvailable.unidadesDisponibles.map((unit, index) => {
                         return (
-                            <tr className="shadow-lg" key={index}>
+                            <tr className="shadow-lg h-[109px]" key={index}>
                                 <td className="p-2 whitespace-nowrap">
-                                <a className="grid w-full grid-cols-9 grid-flow-col items-center  align-middle" style={{minWidth: '1000px'}} href={`/resultados-de-busqueda/emprendimiento/${unit?.operacion}/${unit.ed_loc}/${unit.in_esa}/${unit.in_suc}-${unit.in_num}`}>
+                                <a className="grid w-full grid-cols-9 grid-flow-col items-center  align-middle" style={{minWidth: '1000px'}} href={`/emprendimientos/unidad-disponible/${unit?.operacion}/${unit.ed_loc}/${unit.in_esa}/${unit.in_suc}-${unit.in_num}`}>
                       
                                 <img className={'w-fit h-[109px] object-cover aspect-square'} src={unit?.img_princ} alt={unit?.ed_nom} />
                                 <div className={'w-fit'}>
