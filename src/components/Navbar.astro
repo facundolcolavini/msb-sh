@@ -3,6 +3,8 @@
 import { navItems } from "@data/navItems";
 import { Image } from "astro:assets";
 import Icon from "node_modules/astro-icon/components/Icon.astro";
+import HeartIcon from "./preact/Icons/HeartIcon";
+import LogOutIcon from "./preact/Icons/LogOutIcon";
 import NavDropDown from "./preact/NavDropDown";
 import Link from "./ui/Link.astro";
 const { pathname } = Astro.url;
@@ -30,23 +32,23 @@ let session = true;
           navItems.map((item) => {
             return (
               <li class="flex items-center ">
-                <Link class="flex justify-between mt-1 items-start gap-5">
+                <Link class="flex justify-between mt-1 items-start gap-5 ">
                   {item.dropdown ? (
-                    <Link class=" rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb  ">
+                    <Link class="rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb ">
                       <NavDropDown client:load>
                         <span
                           slot="label"
                           class={`${
                             item?.dropdown?.some((h) => h.href === pathname)
-                              ? "text-primary-msb font-primary-font-msb font-semibold text-xs border-b-4 border-b-primary-msb hover:text-primary-msb uppercase"
-                              : "font-primary-font-msb font-semibold text-xs  hover:text-primary-msb uppercase text-gray-600"
+                              ? "rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb   border-b-4 border-b-primary-msb border-primary-msb transition-all font-primary-font-msb uppercase font-gotham hover:text-primary-msb text-primary-msb "
+                              : "rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb uppercase font-gotham hover:text-primary-msb  "
                           }`}
                         >
                           {item.label}
                         </span>
                         <div slot="childrenDrop">
                           <div
-                            class={`absolute right-0  mt-2 px-1 lg:top-5 left-0 py-2 w-max rounded-md bg-secondary-msb shadow-lg z-20 animate-fadeIn`}
+                            class={`absolute right-0  mt-2 px-1 lg:top-4 left-0 py-2 w-max rounded-md bg-secondary-msb shadow-lg z-20 animate-fadeIn `}
                           >
                             {item.dropdown &&
                               item.dropdown?.map((item) =>
@@ -60,7 +62,7 @@ let session = true;
                                     </span>
                                   </Link>
                                 ) : (
-                                  <span class="block px-3 py-2  font-semibold  text-sm font-primary-font-msb  text-primary-msb  ">
+                                  <span class="block px-3 py-2  font-semibold text-xs font-primary-font-msb  text-primary-msb   ">
                                     {item.label}
                                   </span>
                                 ),
@@ -78,18 +80,24 @@ let session = true;
                     <Link
                       checkActive={false}
                       href={item.dropdown ? "" : item.href}
-                      class="flex flex-row items-center rounded-none hover:border-b-4 px-0 "
+                      class="flex flex-row items-center rounded-none hover:border-b-4 px-0"
                     >
-                      <span class="flex items-center justify-end h-10  border-2 border-tertiary-msb px-2 bg-white text-gray-600 uppercase font-bold hover:bg-tertiary-bg-msb hover:text-white cursor-pointer rounded-md hover:border-tertiary-msb transition hover:transition-all tracking-wide">
+                      <span class=" flex items-center justify-end h-10  text-xs border border-tertiary-msb px-2 bg-white text-gray-600 uppercase font-bold hover:bg-tertiary-bg-msb hover:text-white cursor-pointer rounded-md hover:border-tertiary-msb transition hover:transition-all tracking-wide">
                         {item.label}
                       </span>
                     </Link>
                   ) : (
                     <Link
+                      checkActive={item.href === pathname}
                       href={item.dropdown ? "" : item.href}
-                      class="flex flex-row items-center rounded-none hover:border-b-4 px-0 "
+                      class="rounded-none hover:border-b-4 uppercase font-semibold text-sm hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb transition-all"
                     >
-                      <span class="font-primary-font-msb font-semibold text-xs hover:text-primary-msb uppercase hover:border-b-primary-msb hover:border-primary-msb hover:transition-all">
+                      <span
+                        class={`${
+                          item.href !== pathname &&
+                          "rounded-none font-gotham  hover:text-primary-msb uppercase hover:border-b-primary-msb hover:border-primary-msb hover:border-b-4 hover:transition-all"
+                        }`}
+                      >
                         {item.label}
                       </span>
                     </Link>
@@ -109,20 +117,14 @@ let session = true;
               id="ButtonFav"
               href={"/favoritos"}
               checkActive={false}
-              class="flex items-center justify-end h-10 px-4 border rounded bg-tertiary-msb    hover:bg-[#696863] cursor-pointer font-medium font-primary-font-msb border-text-primary-msb transition"
+              class="flex items-center justify-center h-10 px-4 border rounded bg-tertiary-msb hover:bg-[#696863] cursor-pointer font-medium font-primary-font-msb border-text-primary-msb transition"
             >
-              <Icon
-                slot="before"
-                color={"white"}
-                size={20}
-                class=""
-                name="heart-default"
-              />
+              <HeartIcon className="stroke-white hover:fill-white animate-duration-500 animate-fill-forwards transition-all" />
             </Link>
             <NavDropDown client:load>
               <div
                 slot="label"
-                class="flex items-center py-2 justify-end h-10 gap-1 border-2 border-bg-2-msb px-2 bg-white text-bg-2-msb font-bold  cursor-pointer rounded-md  transition hover:transition-all tracking-wide"
+                class="flex items-center py-2 justify-end h-10 gap-1 border-bg-2-msb px-2 bg-white text-bg-2-msb font-bold cursor-pointer rounded-md transition tracking-wide border"
               >
                 <Icon size={20} class="fill  fill-black" name="userDefault" />
                 José Armando
@@ -130,11 +132,11 @@ let session = true;
               </div>
               <div slot="childrenDrop" class="flex w-full">
                 <div
-                  class={`absolute  h-fit w-full top-0 left-0  rounded-md bg-white shadow-lg z-20 animate-fadeIn`}
+                  class={`absolute h-fit w-full top-0 left-0 bg-white shadow-lg z-20 animate-fadeIn rounded-b-md rounded-br-md rounded-bl-md`}
                 >
                   <Link
-                    class="p-3 text-base gap-2 hover:bg-gray-200 cursor-pointer  transition-all transition-duration-400 "
-                    href=""
+                    class="p-3 text-base gap-2 hover:bg-gray-200 cursor-pointer transition-all transition-duration-400"
+                    href="/"
                   >
                     <Icon
                       size={20}
@@ -145,8 +147,9 @@ let session = true;
                   </Link>
                   <hr class="divide divide-x-2" />
                   <Link
-                    class="p-3 text-base gap-2 hover:bg-gray-200 cursor-pointer transition-all transition-duration-400 "
-                    href="/cerrar-sesion"
+                    checkActive={false}
+                    class="p-3 text-base gap-2 hover:bg-gray-200 cursor-pointer transition-all transition-duration-400"
+                    href="/"
                   >
                     <Icon size={20} class="fill fill-black" name="logout" />
                     Cerrar sesión
@@ -217,30 +220,34 @@ let session = true;
             </div>
             <div slot="childrenDrop">
               <div
-                  class={`absolute  h-fit w-full top-0 left-0  rounded-md bg-white shadow-lg z-20 animate-fadeIn`}
-                >
+                class={`absolute  h-fit w-full top-0 left-0  rounded-md bg-white shadow-lg z-20 animate-fadeIn`}
+              >
                 <Link
                   class="py-3  px-6  text-base gap-2 hover:bg-gray-200 hover:rouded-lg cursor-pointer transition-all transition-duration-400 "
                   href="/favoritos"
                 >
-                  <Icon size={28} class="fill fill-black" name="heart-default" />
+                  <Icon
+                    size={28}
+                    class="fill fill-black"
+                    name="heart-default"
+                  />
                   Favoritos
                 </Link>
                 <Link
                   class="py-3  px-6  text-base gap-2 hover:bg-gray-200 hover:rouded-lg cursor-pointer transition-all transition-duration-400 "
-                  href="/servicios"
+                  href="#"
                 >
                   <Icon size={28} class="fill fill-black" name="userDefault" />
                   Mi cuenta
                 </Link>
                 <hr class="divide divide-x-2" />
                 <Link
-                    class="py-3  px-6 text-base gap-2 hover:bg-gray-200  cursor-pointer transition-all transition-duration-400 "
-                    href="/cerrar-sesion"
-                  >
-                    <Icon size={28} class="fill fill-black" name="logout" />
-                    Cerrar sesión
-                  </Link>
+                  class="py-3  px-6 text-base gap-2 hover:bg-gray-200  cursor-pointer transition-all transition-duration-400 "
+                  href="/"
+                >
+                  <LogOutIcon addStyles="fill-[#494949] stroke-[#494949]" />
+                  Cerrar sesión
+                </Link>
                 <hr class="divide divide-x-2 border-b-2 shadow-current" />
               </div>
             </div>
