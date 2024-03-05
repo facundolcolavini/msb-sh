@@ -16,6 +16,7 @@ import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
 import DetailsPropertySkeleton from "../Skeletons/DetailsPropertySkeleton";
 import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
 import Button from "../ui/Buttons/Button";
+import { Modal } from "../ui/Modals/Modal";
 import ContactForm from "./ContactForm";
 import Description from "./Description";
 import DetailsList from "./DetailsList";
@@ -37,6 +38,11 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         tabMenuPropertyStore.get() // Estado local para el valor del almacén
     ); // Estado local para el valor del almacén
     const [videoUrl, setVideoUrl] = useState<string | null>(null); // Estado local para la URL del video
+    const [modalState, setModalState] = useState({ isOpen: false });
+
+    const toggleModal = () => {
+        setModalState((prevState) => ({ isOpen: !prevState.isOpen }));
+    };
 
     useEffect(() => {
         if (window.location.search.includes('fbclid')) {
@@ -67,7 +73,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             setIsLoading(true);
             const response = await fetch(`/api/property.json?suc=${props.branchCode}&id=${props.propertyCode}&amaira=false${window.location.pathname.includes('emprendimiento') ? '&emprendimiento=True' : ''}`);
             const data = await response.json();
-           
+
             if (data?.hasOwnProperty("error")) {
                 setResults(null);
                 setIsLoading(false);
@@ -99,8 +105,21 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             <section className="h-full">
                 <header className="container mx-auto lg:flex justify-between items-center px-0 transition-all">
                     {isLoading ? <BreadCrumbSkeleton /> : props.breadCrumbChild}
-                    <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</a>
+                    <Button onClick={toggleModal} addStyles="bg-primary-bg-hover-msb py-3 w-100 rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</Button>
                 </header>
+                {modalState.isOpen && (
+                    <Modal
+                        header=""
+                        footer=""
+                        onHeaderCloseClick={toggleModal}
+                        onBackdropClick={toggleModal}
+                    >
+                        <div className={'bg-[#D9D9D9] h-full w-full relative'}>
+                            <ContactForm toggleModal={toggleModal} id={results?.datos?.codigo_ficha ?? ''} tipo={results?.ficha[0]?.tipo} codsuc={results?.ficha[0]?.codsuc ?? ''} contact_prop={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} />
+                        </div>
+                    </Modal>
+                )}
+
                 <div className="container mx-auto pt-5 flex justify-between">
                     <TabMenu videoUrl={videoUrl} unitRedirect={window.location.pathname.includes('unidad-disponible') ? 'Edificio' : 'Unidades disponibles'} unitList={results!?.emprendimiento ? true : false} pdf={results?.emprendimiento && results?.emprendimiento?.ed_pdf !== "" && results?.emprendimiento?.ed_pdf !== null ? true : false} blueprint={results!?.plano !== null && !isLoading} />
                     <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>
@@ -283,7 +302,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                             </div>
                         )}
                 </div>
-                <div className={'bg-[#D9D9D9] relative h-fit w-100  lg:col-start-7 lg-col-end-12'}>
+                <div className={'bg-[#D9D9D9]  h-fit w-100  lg:col-start-7 lg-col-end-12 relative lg:sticky lg:inset-0'}>
                     <ContactForm id={results?.datos?.codigo_ficha ?? ''} tipo={results?.ficha[0]?.tipo} codsuc={results?.ficha[0]?.codsuc ?? ''} contact_prop={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} />
                 </div>
 

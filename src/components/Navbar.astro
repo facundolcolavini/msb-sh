@@ -119,12 +119,12 @@ let session = true;
               checkActive={false}
               class="flex items-center justify-center h-10 px-4 border rounded bg-tertiary-msb hover:bg-[#696863] cursor-pointer font-medium font-primary-font-msb border-text-primary-msb transition"
             >
-              <HeartIcon className="stroke-white hover:fill-white animate-duration-500 animate-fill-forwards transition-all" />
+              <HeartIcon addStyles="stroke-white hover:fill-white animate-duration-500 animate-fill-forwards transition-all" />
             </Link>
             <NavDropDown client:load>
               <div
                 slot="label"
-                class="flex items-center py-2 justify-end h-10 gap-1 border-bg-2-msb px-2 bg-white text-bg-2-msb font-bold cursor-pointer rounded-md transition tracking-wide border"
+                class="flex items-center py-2 justify-end h-10 gap-1 border-bg-2-msb px-2 bg-white text-bg-2-msb font-bold cursor-pointer rounded-md transition tracking-wide border "
               >
                 <Icon size={20} class="fill  fill-black" name="userDefault" />
                 José Armando
@@ -220,7 +220,7 @@ let session = true;
             </div>
             <div slot="childrenDrop">
               <div
-                class={`absolute  h-fit w-full top-0 left-0  rounded-md bg-white shadow-lg z-20 animate-fadeIn`}
+                class={`absolute  h-fit w-full top-0 left-0  rounded-md bg-white shadow-lg z-9 animate-fadeIn`}
               >
                 <Link
                   class="py-3  px-6  text-base gap-2 hover:bg-gray-200 hover:rouded-lg cursor-pointer transition-all transition-duration-400 "
@@ -285,7 +285,7 @@ let session = true;
                       </span>
                       <div slot="childrenDrop">
                         <div
-                          class={`relative w-100 right-0  mt-2 px-1 lg:top-8 left-0 py-2 w-max rounded-md bg-secondary-msb  z-10 animate-fadeIn`}
+                          class={`relative w-100 right-0  mt-2 px-1 lg:top-8 left-0 py-2 w-max rounded-md bg-secondary-msb  animate-fadeIn`}
                         >
                           {item.dropdown &&
                             item.dropdown?.map((item) =>

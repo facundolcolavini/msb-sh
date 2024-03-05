@@ -35,10 +35,13 @@ const CardBranch: FunctionComponent<Props> = ({ href, suc_name, suc_loc, suc_img
                         </div>
 
                         <div class="flex items-center justify-center gap-1 ">
-                            <a href={href} target="_blank"><PaperLocationIcon /></a>
-                            <a href={`https://api.whatsapp.com/send?phone=${whatsAppPhone}`} target="_blank"><WhatsAppIcon /></a>
-                        </div>
-
+    <a href={href} target="_blank"><PaperLocationIcon /></a>
+    <a href={`https://api.whatsapp.com/send?phone=${whatsAppPhone}`} className={' '} target="_blank">
+        <div style={{ minWidth: '24px', minHeight: '24px', overflow: 'visible' }}>
+            <WhatsAppIcon  />
+        </div>
+    </a>
+</div>
                     </div>
 
                 </div>

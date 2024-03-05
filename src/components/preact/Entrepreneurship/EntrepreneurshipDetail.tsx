@@ -5,6 +5,7 @@ import { useEffect, useState } from "preact/hooks";
 
 
 import type { APIResponseDetailEntrepreneurShip, APIResponseEntrepreneurShipUnit, DetailEntrepreneurship, ResultEntrePreneurShipUnit } from "@interfaces/entrepreneurship.interfaces";
+import { capitalize } from '@utils/formats';
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
 import PrintIcon from "../Icons/PrintIcon";
@@ -18,9 +19,9 @@ import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
 import DetailsPropertySkeleton from "../Skeletons/DetailsPropertySkeleton";
 import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
 import Button from "../ui/Buttons/Button";
+import { Modal } from '../ui/Modals/Modal';
 import EntrepreneurshipDetailList from './EntrepreneurshipDetailList';
 import EntrepreneurshipFeatureList from './EntrepreneurshipFeatureList';
-import { capitalize } from '@utils/formats';
 import UnitAvailableTable from './UnitAvailableTable';
 
 
@@ -39,6 +40,11 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
     const [tabMenuProperty, setTabMenuProperty] = useState(
         tabMenuPropertyStore.get() // Estado local para el valor del almacén
     );
+    const [modalState, setModalState] = useState({ isOpen: false });
+
+    const toggleModal = () => {
+        setModalState((prevState) => ({ isOpen: !prevState.isOpen }));
+    };
 
     useEffect(() => {
         if (window.location.search.includes('fbclid')) {
@@ -113,10 +119,22 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
             <section className="h-full">
                 <header className="container mx-auto lg:flex justify-between items-center px-0 transition-all">
                     {isLoading ? <BreadCrumbSkeleton /> : props.breadCrumbChild}
-                    {results?.emprendimiento[0]?.celular && <a target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.emprendimiento[0]?.celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} className="bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</a>}
+                    <Button onClick={toggleModal} /* target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} */ addStyles="flex justify-end  items-end relative inset-0 bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</Button>
+                    {modalState.isOpen && (
+                        <Modal
+                            header=""
+                            footer=""
+                            onHeaderCloseClick={toggleModal}
+                            onBackdropClick={toggleModal}
+                        >
+                            <div className={'bg-[#D9D9D9]  h-fit w-100  lg:col-start-7 lg-col-end-12 sticky inset-0 transition-all '}>
+                                <ContactForm id={results?.emprendimiento[0]?.ed_idl ?? ''} tipo={results?.emprendimiento[0].tipo} codsuc={results?.datos?.codemp ?? ''} contact_prop={results?.emprendimiento[0]?.celular ? `https://api.whatsapp.com/send?phone=${123}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=` : ''} />
+                            </div>
+                        </Modal>
+                    )}
                 </header>
                 <div className="container mx-auto pt-5 flex justify-between">
-                    {isLoading ? <BreadCrumbSkeleton /> : <TabMenu videoUrl={null} unitData={resultsUnit?.unidadesDisponibles.length} unitList={resultsUnit?.unidadesDisponibles ? true : false} pdf={(results?.pdf?.length  ?? 0) > 0  && !isLoading} blueprint={(resultsUnit?.unidadesDisponibles?.map(emp => emp.img_princ) ?? []).length > 0 && !isLoading} />}
+                    {isLoading ? <BreadCrumbSkeleton /> : <TabMenu videoUrl={null} unitData={resultsUnit?.unidadesDisponibles.length} unitList={resultsUnit?.unidadesDisponibles ? true : false} pdf={(results?.pdf?.length ?? 0) > 0 && !isLoading} blueprint={(resultsUnit?.unidadesDisponibles?.map(emp => emp.img_princ) ?? []).length > 0 && !isLoading} />}
                     {isLoading ? <BreadCrumbSkeleton /> : <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>}
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16"><GalleryPropertySkeleton /></div> : (
@@ -127,7 +145,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                             tabMenuProperty.blueprint ? <GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fade animate-duration-500  transition-all" galleryID={`gallery-blueprint-${results?.datos?.codemp}-${results?.datos?.codsuc}`} images={results?.imgP.flat() || []} />
                                 : tabMenuProperty.pdf && (results?.pdf?.length ?? 0) > 0 ? (
                                     <PDFViewer file={`${results?.pdf[0]?.pdf_name}`} />
-                                ) : tabMenuProperty.unitList && resultsUnit?.unidadesDisponibles ? (<div className="h-fit w-full bg-gray-300 container"><span className="flex justify-start items-start overflow-hidden h-fit font-bold"><UnitAvailableTable unitAvailable={resultsUnit}/></span></div>) : (
+                                ) : tabMenuProperty.unitList && resultsUnit?.unidadesDisponibles ? (<div className="h-fit w-full bg-gray-300 container"><span className="flex justify-start items-start overflow-hidden h-fit font-bold"><UnitAvailableTable unitAvailable={resultsUnit} /></span></div>) : (
                                     <div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100"><span className="flex justify-center items-center h-full font-bold">No disponible</span></div>)
                         }
                     </div>
@@ -179,7 +197,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     </div>
                 }
             </section>
-            <section className="container mx-auto flex justify-between gap-2 pt-16 pb-5">
+            <section className="container mx-auto flex justify-between gap-2 pt-16 pb-5 relative">
 
                 {isLoading ? (<div className="container mx-auto pb-16"><BreadCrumbSkeleton /> </div>) : (
                     <div className="flex items-end gap-1 w-fit">
@@ -199,52 +217,52 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
             <section className="container mx-auto grid grid-cols md:gap-5 lg:gap-7">
                 {/* Google map iframe */}
                 <div className={'col-start-1 cold-end-7'}>
-                {isLoading || !results?.emprendimiento[0]?.ed_coo
-                    ? <div className="h-[208px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100 animate-pulse">
-                        <span className="flex justify-center items-center h-full font-bold"></span>
-                    </div>
-                    : (
-                        <div>
-                            <div className="h-[208px] w-full md:col-span-1 lg:col-span-1">
-                                {/* Agregar el titulo de la direcion en alado del market  */}
-                                <iframe
-                                    className="w-full h-full"
-                                    src={`https://www.google.com/maps/embed/v1/place?q=${`${results?.emprendimiento[0]?.ed_coo.split(',')[0]}, ${results?.emprendimiento[0]?.ed_coo.split(',')[1]}`}&key=${import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY}`}
-                                    allowFullScreen>
-
-                                </iframe>
-                            </div>
-                            <EntrepreneurshipFeatureList building={results?.emprendimiento[0]?.tipo} enviroments={results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : `${results?.emprendimiento[0]?.ed_amb?.split('A')[0]}`} location={he.decode(results?.emprendimiento[0]?.ed_loc)} />
-                            <hr className={'border-secondary-text-msb '} />
-                            <div className={'flex flex-col gap-5 py-5'}>
-                                <h2 className={'font-gotham text-base text-start  font-bold text-primary-text-msb'}>Descripción</h2>
-
-                                <Description htmlText={results?.emprendimiento[0]?.ed_pre} />
-                                <Description htmlText={results?.emprendimiento[0]?.ed_cue} />
-                            </div>
-                            <h2 className={'font-gotham text-base   md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle del Edificio | Emprendimiento {results?.emprendimiento[0]?.ed_est !== '' ? `${results?.emprendimiento[0]?.ed_est.includes('En') ? `${capitalize(he.decode(results?.emprendimiento[0]?.ed_est)).replace('En','en')}` : ` ${capitalize(results?.emprendimiento[0]?.ed_est)}`}` : ''}</h2>
-                            <hr className={'border-secondary-text-msb my-3'} />
-                            <EntrepreneurshipDetailList
-                                name={he.decode(results?.emprendimiento[0]?.ed_nom)}
-                                buildingType={he.decode(results?.emprendimiento[0]?.tipo)}
-                                location={he.decode(results?.emprendimiento[0]?.ed_loc)}
-                                neighborhood={he.decode(results?.emprendimiento[0]?.ed_bar)}
-                                address={he.decode(results?.emprendimiento[0]?.ed_dir)}
-                                category={he.decode(results?.emprendimiento[0]?.ed_cat)}
-                                state={he.decode(results?.emprendimiento[0]?.ed_est)}
-                                possessionAndDelivery={
-                                    results?.emprendimiento[0]?.ed_po1
-                                        ? `${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[0])}/${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[1])}`
-                                        : `${new Date(results?.emprendimiento[0]?.fechaac).getMonth() + 1}/${new Date(results?.emprendimiento[0]?.fechaac).getFullYear()}`
-                                }
-                                architect={he.decode(results?.emprendimiento[0]?.ed_arq)}
-                                enviroments={he.decode(results?.emprendimiento[0]?.ed_amb)}
-                            />
-
+                    {isLoading || !results?.emprendimiento[0]?.ed_coo
+                        ? <div className="h-[208px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100 animate-pulse">
+                            <span className="flex justify-center items-center h-full font-bold"></span>
                         </div>
-                    )}
-                    </div>
-                <div className={'bg-[#D9D9D9] relative h-fit w-100  lg:col-start-7 lg-col-end-12'}>
+                        : (
+                            <div>
+                                <div className="h-[208px] w-full md:col-span-1 lg:col-span-1">
+                                    {/* Agregar el titulo de la direcion en alado del market  */}
+                                    <iframe
+                                        className="w-full h-full"
+                                        src={`https://www.google.com/maps/embed/v1/place?q=${`${results?.emprendimiento[0]?.ed_coo.split(',')[0]}, ${results?.emprendimiento[0]?.ed_coo.split(',')[1]}`}&key=${import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY}`}
+                                        allowFullScreen>
+
+                                    </iframe>
+                                </div>
+                                <EntrepreneurshipFeatureList building={results?.emprendimiento[0]?.tipo} enviroments={results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : `${results?.emprendimiento[0]?.ed_amb?.split('A')[0]}`} location={he.decode(results?.emprendimiento[0]?.ed_loc)} />
+                                <hr className={'border-secondary-text-msb '} />
+                                <div className={'flex flex-col gap-5 py-5'}>
+                                    <h2 className={'font-gotham text-base text-start  font-bold text-primary-text-msb'}>Descripción</h2>
+
+                                    <Description htmlText={results?.emprendimiento[0]?.ed_pre} />
+                                    <Description htmlText={results?.emprendimiento[0]?.ed_cue} />
+                                </div>
+                                <h2 className={'font-gotham text-base   md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle del Edificio | Emprendimiento {results?.emprendimiento[0]?.ed_est !== '' ? `${results?.emprendimiento[0]?.ed_est.includes('En') ? `${capitalize(he.decode(results?.emprendimiento[0]?.ed_est)).replace('En', 'en')}` : ` ${capitalize(results?.emprendimiento[0]?.ed_est)}`}` : ''}</h2>
+                                <hr className={'border-secondary-text-msb my-3'} />
+                                <EntrepreneurshipDetailList
+                                    name={he.decode(results?.emprendimiento[0]?.ed_nom)}
+                                    buildingType={he.decode(results?.emprendimiento[0]?.tipo)}
+                                    location={he.decode(results?.emprendimiento[0]?.ed_loc)}
+                                    neighborhood={he.decode(results?.emprendimiento[0]?.ed_bar)}
+                                    address={he.decode(results?.emprendimiento[0]?.ed_dir)}
+                                    category={he.decode(results?.emprendimiento[0]?.ed_cat)}
+                                    state={he.decode(results?.emprendimiento[0]?.ed_est)}
+                                    possessionAndDelivery={
+                                        results?.emprendimiento[0]?.ed_po1
+                                            ? `${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[0])}/${he.decode(results?.emprendimiento[0]?.ed_po1.split("/")[1])}`
+                                            : `${new Date(results?.emprendimiento[0]?.fechaac).getMonth() + 1}/${new Date(results?.emprendimiento[0]?.fechaac).getFullYear()}`
+                                    }
+                                    architect={he.decode(results?.emprendimiento[0]?.ed_arq)}
+                                    enviroments={he.decode(results?.emprendimiento[0]?.ed_amb)}
+                                />
+
+                            </div>
+                        )}
+                </div>
+                <div className={'bg-[#D9D9D9]  h-fit w-100  lg:col-start-7 lg-col-end-12 sticky inset-0 transition-all '}>
                     <ContactForm id={results?.emprendimiento[0]?.ed_idl ?? ''} tipo={results?.emprendimiento[0].tipo} codsuc={results?.datos?.codemp ?? ''} contact_prop={results?.emprendimiento[0]?.celular ? `https://api.whatsapp.com/send?phone=${123}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=` : ''} />
                 </div>
             </section>

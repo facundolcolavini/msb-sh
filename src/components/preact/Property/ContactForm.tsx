@@ -9,6 +9,7 @@ import Spinner from "../Spinner";
 import Button from "../ui/Buttons/Button";
 import InputField from "../ui/Inputs/InputField";
 import { Toast } from "../ui/Toast/Toast";
+import { WhatsAppIcon } from "../Icons/WhatsAppIcon";
 
 interface ContactFormProps {
     id: string;
@@ -16,8 +17,9 @@ interface ContactFormProps {
     tipo?: string;
     contact_prop: string;
     desde?: string;
+    toggleModal?: () => void;
 }
-const ContactForm = ({ id, codsuc, tipo = '', contact_prop, desde = 'pagweb' }: ContactFormProps) => {
+const ContactForm = ({ id, codsuc, tipo = '', contact_prop, desde = 'pagweb' , toggleModal }: ContactFormProps) => {
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [formError, setFormError] = useState(false);
     const [erroMsg, setErroMsg] = useState('');
@@ -57,6 +59,7 @@ const ContactForm = ({ id, codsuc, tipo = '', contact_prop, desde = 'pagweb' }: 
             } else {
                 setFormSubmitted(false);
                 onResetForm();
+                toggleModal && toggleModal();
             }
 
         } catch (e) {
@@ -82,7 +85,11 @@ const ContactForm = ({ id, codsuc, tipo = '', contact_prop, desde = 'pagweb' }: 
                     <InputField value={contactMessage} onChange={onInputChange} icon={contactMessageValid === null ? <OkIcon /> : <></>} addStyles="place-content-start h-full" name="contactMessage" id="contactMessage" type="textarea" placeholder="Me gustaría que me contacten por esta propiedad. Gracias..." />
                     {(formSubmitted && contactMessageValid) && <label htmlFor="contactMessage" className="text-xs px-3 font-thin text-red-500">{contactMessageValid}</label>}
                     <Button variant={`${isFormValid ? "primary" : "disabled"}`} addStyles={`text-white transition-all h-14 text-sm md:text-md lg:text-lg border-gray-50 flex justify-center items-center gap-3`} type="submit">Enviar Consulta {formSubmitted && isFormValid && <Spinner />}</Button>
-                    {contact_prop !== "" && <a target={'_blank'} href={contact_prop} className="bg-primary-msb transition cursor-pointer hover:bg-primary-bg-hover-msb py-3  h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide text-center">Consultar</a>}
+                    <h2 className={'font-bold text-center tracking-normal pb-1 text-base md:text-md lg:text-lg'}>OTRA VÍA DE CONTACTO</h2>
+                    {contact_prop !== "" && <a target={'_blank'} href={contact_prop} className={'mx-auto '}>
+                  <WhatsAppIcon  addStyles="" h="30" w="30"/>
+                    </a>}
+                    <span className={'text-sm font-medium text-center'}>ESCRIBINOS POR WHATSAPP</span>
                 </form>
             </div>
 

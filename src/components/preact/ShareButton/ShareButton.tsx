@@ -58,7 +58,7 @@ const ShareButton = () => {
           className="block p-1 rounded-full hover:bg-gray-200 transition-colors duration-300"
           title="Compartir en WhatsApp"
         >
-          <WhatsAppIcon />
+          <WhatsAppIcon  h="24" w="24"/>
         </a>
         <a
           target="_blank"

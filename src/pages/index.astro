@@ -75,7 +75,7 @@ const locations = (await getLocations()) as ResultLocation;
   <section class="bg-secondary-bg-msb py-10">
     <div class="container mx-auto px-3 md:px-0 lg:px-0">
       <TitleSections
-        class="text-primary-text-msb text-4xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant  text-center"
+        class="text-primary-text-msb  font-medium font-cormorant  text-center"
       >
         Buena Gente. Buenas Raíces. Buenos Negocios
       </TitleSections>
@@ -150,7 +150,7 @@ const locations = (await getLocations()) as ResultLocation;
   <section class="bg-primary-msb">
     <div class="container mx-auto px-3 md:px-0 lg:px-0 py-20">
       <TitleSections
-        class="drop-shadow-2xl text-white text-4xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
+        class="drop-shadow-2xl text-white font-base font-medium font-cormorant text-pretty text-center"
       >
         Propiedades Destacadas
       </TitleSections>
@@ -181,7 +181,7 @@ const locations = (await getLocations()) as ResultLocation;
         class="flex justify-end gap-10 gap-y-4 flex-col self-center lg:px-20 p-6"
       >
         <TitleSections
-          class="text-secondary-text-msb drop-shadow-sm text-4xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
+          class="text-secondary-text-msb drop-shadow-sm font-base font-medium font-cormorant text-pretty text-center"
         >
           Nuestros Emprendimientos
         </TitleSections>
@@ -197,7 +197,7 @@ const locations = (await getLocations()) as ResultLocation;
         selects={selectEntrepreneurship}
         locations={locations} />
         <!-- Slider de emprendimientos -->
-        <SliderA colsNr={3} height={10} width={10} classSlide="slider2">
+        <SliderA colsNr={3} height={10} width={0} classSlide="slider2">
           {
             entrepreneurship.map(
               ({
@@ -213,7 +213,7 @@ const locations = (await getLocations()) as ResultLocation;
                 <CardEntrepreneurship
                 client:load
                 href={`emprendimientos/${ed_est}/${he.decode(ed_loc)}/${he.decode(ed_nom)}/${codsuc}-${ed_idl}`}
-                  addStyles={"card my-3"}
+                  addStyles={"card my-20"}
                   cardData={{
                     ed_nom,
                     ed_pos,
@@ -234,7 +234,7 @@ const locations = (await getLocations()) as ResultLocation;
         class="grid h-full items-center justify-center lg:justify-center self-end place-content-center text-center lg:text-center container mx-auto relative"
       >
         <TitleSections
-          class="text-white text-6xl md:text-7xl lg:text-8xl font-base font-medium font-cormorant text-pretty md:text-center lg:text-center"
+          class="text-white font-base font-medium font-cormorant text-pretty md:text-center lg:text-center"
         >
           Tasaciones
         </TitleSections>
@@ -263,7 +263,7 @@ const locations = (await getLocations()) as ResultLocation;
         class="grid h-full items-center justify-center lg:justify-center self-end place-content-center text-center lg:text-center container mx-auto relative"
       >
         <TitleSections
-          class="text-white text-6xl md:text-7xl lg:text-8xl font-base font-medium font-cormorant text-balance md:text-center lg:text-center"
+          class="text-white font-medium font-cormorant text-balance md:text-center lg:text-center"
         >
           Invierta en USA
         </TitleSections>
@@ -290,7 +290,7 @@ const locations = (await getLocations()) as ResultLocation;
   <section class="bg-secondary-bg-msb py-20" transition:animate="fade">
     <div>
       <TitleSections
-        class="text-primary-text-msb text-6xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
+        class="text-primary-text-msb font-medium font-cormorant text-pretty text-center"
       >
         Nuestras Sucursales
       </TitleSections>
@@ -348,9 +348,9 @@ const locations = (await getLocations()) as ResultLocation;
   <section class="bg-tertiary-bg-hover-msb px-3 md:px-0 lg:px-0 py-20">
     <div class="container mx-auto">
       <TitleSections
-        class="text-white text-4xl md:text-7xl lg:text-7xl font-base font-medium font-cormorant text-pretty text-center"
+        class="text-white  font-base font-medium font-cormorant text-pretty text-center"
       >
-        Experiencias de nuestros clientes Propiedades Destacadas
+      Experiencias de nuestros clientes
       </TitleSections>
       <p
         class="text-white text-center text-md md:text-lg lg:text-2xl font-extralight p-10 pt-4 pb-16"
