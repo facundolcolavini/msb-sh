@@ -8,6 +8,7 @@ import { useEffect, useState } from "preact/hooks";
 import { navigate } from "astro:transitions/client";
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
+import BathIcon from "../Icons/BathIcon";
 import PrintIcon from "../Icons/PrintIcon";
 import PDFViewer from "../PDFViewer";
 import ShareButton from "../ShareButton/ShareButton";
@@ -23,6 +24,8 @@ import DetailsList from "./DetailsList";
 import FeatureList from "./FeatureList";
 import ServiceList from "./ServiceList";
 import TabMenu from "./TabMenu";
+import MapLocationIcon from "../Icons/MapLocationIcon";
+import { capitalize } from '../../../utils/formats';
 
 
 interface Props {
@@ -145,16 +148,16 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                 }
             </section>
             {/* Caracteristicas */}
-            <section className="bg-[#939B41] py-10 text-white  md:px-0 lg:px-0 ">
+            <section className="bg-[#939B41] py-10 text-white md:px-0 lg:px-0 ">
                 {isLoading ? <DetailsPropertySkeleton />
                     :
-                    <div className="container flex flex-col md:flex-col lg:flex-row justify-center w-3/4 lg:w-fit  items-center place-content-center mx-auto h-full">
+                    <div className="container flex flex-col divide-y-2  lg:border-l-2 lg:border-r-2 md:divide-y-2  lg:divide-x-2 lg:divide-y-0 divide-white md:flex-col lg:flex-row justify-center  w-max lg:w-fit  items-center place-content-center mx-auto h-full">
 
                         {
                             results?.ficha[0]?.in_amb?.split('A')[0].length !== 0 && results?.ficha[0]?.moneda ? (
-                                <div className="border-b-2 border-t-2 lg:border-l-2 lg:border-t-0 lg:border-b-0 md:border-b-2 md:border-t-2  text-center h-[184px] w-full flex justify-center items-center flex-col px-10 md:px-20 lg:px-20 p-5">
-                                    <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant font-semibold tracking-wider flex  items-center h-fit">Valor</span>
-                                    <p className="text-xl md:text-xl lg:text-3xl self-center font-bold tracking-wider flex gap-2">
+                                <div className="text-center  w-full flex justify-center items-center flex-col md:px-20 lg:px-14 p-5">
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex  w-max ">Valor</span>
+                                    <p className="text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide w-max">
                                         {results?.ficha[0]?.precio !== '' && results?.ficha[0]?.precio !== 'Consultar' && (
                                             results?.ficha[0]?.moneda === 'U$S' ? `U$S ${results?.ficha[0]?.precio.replace('U$S', '')}` :
                                                 results?.ficha[0]?.moneda === '$' ? `$ ${results?.ficha[0]?.precio.replace('$', '')}` :
@@ -167,34 +170,33 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                         }
 
                         {
-                            results?.superficie.dato[3] !== '0.00m2' ? (<div className="border-b-2 lg:border-l-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5 ">
-                                <div className="flex items-center justify-center ">
-                                    <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/superficie.png'} alt="superficie" />
-                                </div>
-                                <span className="text-2xl md:text-2xl lg:text-4xl  h-[56px] font-cormorant font-semibold tracking-wider flex items-center justify-center">Sup.Total</span>
-                                <span className={"text-xl md:text-xl self-center lg:text-3xl font-bold tracking-wide "}>{results?.superficie.dato[3]}</span>
-                            </div>) : null
+                            results?.superficie.dato[3] !== '0.00m2' ? (
+                                <div className="text-center  w-full flex justify-center items-center flex-col md:px-20 lg:px-14 p-5">
+                                    <div className="flex items-center justify-center ">
+                                        <img className="  object-contain aspect-square" src={'/images/superficie.png'} alt="superficie" />
+                                    </div>
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex w-max ">Sup.Total</span>
+                                    <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide "}>{results?.superficie.dato[3].replaceAll(".00", "")}</span>
+                                </div>) : null
 
                         }
                         {
-                            results?.ficha[0]?.in_amb?.split('A')[0].length !== 0 ? (<div className="border-b-2  lg:border-r-2  lg:border-l-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5">
-                                <div className="flex items-center justify-center">
-
-                                    <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/puerta.png'} alt="superficie" />
-                                </div>
-                                <span className="text-2xl md:text-2xl lg:text-4xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center justify-center">Ambientes</span>
-                                <span className={"text-xl md:text-xl place-content-center self-center lg:text-3xl font-bold tracking-wide "}>{results?.ficha[0]?.in_amb?.split('A')[0] === "0" ? "Monoambiente" : results?.ficha[0]?.in_amb?.split('A')[0]}</span>
-                            </div>) : null
+                            results?.ficha[0]?.in_amb?.split('A')[0].length !== 0 ? (
+                                <div className="text-center  w-full flex justify-center items-center flex-col md:px-20 lg:px-14 p-5">
+                                    <div className="flex items-center justify-center">
+                                        <img className="object-contain aspect-square" src={'/images/puerta.png'} alt="superficie" />
+                                    </div>
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex w-max ">Ambientes</span>
+                                    <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide "}>{results?.ficha[0]?.in_amb?.split('A')[0] === "0" ? "Monoambiente" : results?.ficha[0]?.in_amb?.split('A')[0]}</span>
+                                </div>) : null
                         }
                         {
-                            results?.ficha[0]?.in_bao ? (<div className="border-b-0 lg:border-l-2 md:border-r-0 lg:border-r-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5">
-                                <div className="flex items-center justify-center">
-
-                                    <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/ducha.png'} alt="superficie" />
-                                </div>
-                                <span className="text-2xl md:text-2xl lg:text-4xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center justify-center">Baños</span>
-                                <span className={"text-xl md:text-xl lg:text-3xl font-bold tracking-wide "}>{results?.ficha[0]?.in_bao}</span>
-                            </div>) : null
+                            results?.ficha[0]?.in_bao ? (
+                                <div className="text-center  w-full flex justify-center items-center flex-col md:px-20 lg:px-14 p-5">
+                                    <BathIcon h="56" w="56" addStyles="object-contain flex items-center justify-center" />
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex w-max ">Baños</span>
+                                    <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide "}>{results?.ficha[0]?.in_bao}</span>
+                                </div>) : null
                         }
 
                     </div>
@@ -204,8 +206,8 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
                 {isLoading ? (<div className="container mx-auto pb-16"><BreadCrumbSkeleton /> </div>) : (
                     <div className="flex items-end gap-1 w-fit">
-                        <img src="/images/map.png" alt="marker map" className="object-contain  flex items-center" />
-                        <span className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold">{he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`)}</span>
+                     <MapLocationIcon />
+                        <span className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold">{capitalize(he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`))}</span>
                     </div>)
                 }
                 <div className={'flex flex-col md:flex-row lg:flex-row  md:justify-center lg:justify-center gap-5'} >

@@ -60,8 +60,8 @@ const Button: FunctionComponent<Props> = ({
       {children}
       {
         isFavorite && (
-          <span onClick={handleButtonClick} className={ isFavorite && favorited ? " fill-black-400" : "hover:fill-black-300"}>
-            <HeartIcon addStyles={isFavorite && favorited ? "relative z-10 stroke-primary-text-msb transition-all hover:fill-primary-text-msb" : "fill-primary-text-msb "}  />
+          <span onClick={handleButtonClick} className={ isFavorite && favorited ? " fill-black-400" : "fill-black-400"}>
+            <HeartIcon addStyles={isFavorite && favorited ? "fill-primary-white stroke-primary-text-msb  hover:fill-primary-text-msb " : "stroke-primary-text-msb transition-all hover:fill-primary-text-msb fill-primary-text-msb"}  />
           </span>
         )
       }

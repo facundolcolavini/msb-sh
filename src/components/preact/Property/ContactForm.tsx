@@ -5,11 +5,11 @@ import { initContactForm, type ContactFormProperty } from "src/models/contact/co
 import { formContactValidator } from "src/models/validations/forms.validations";
 import OkIcon from "../Icons/OkIcon";
 import WarningAlertIcon from "../Icons/WarningAlertIcon";
+import { WhatsAppIcon } from "../Icons/WhatsAppIcon";
 import Spinner from "../Spinner";
 import Button from "../ui/Buttons/Button";
 import InputField from "../ui/Inputs/InputField";
 import { Toast } from "../ui/Toast/Toast";
-import { WhatsAppIcon } from "../Icons/WhatsAppIcon";
 
 interface ContactFormProps {
     id: string;
@@ -19,7 +19,7 @@ interface ContactFormProps {
     desde?: string;
     toggleModal?: () => void;
 }
-const ContactForm = ({ id, codsuc, tipo = '', contact_prop, desde = 'pagweb' , toggleModal }: ContactFormProps) => {
+const ContactForm = ({ id, codsuc, tipo = '', contact_prop, desde = 'pagweb', toggleModal }: ContactFormProps) => {
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [formError, setFormError] = useState(false);
     const [erroMsg, setErroMsg] = useState('');
@@ -87,7 +87,7 @@ const ContactForm = ({ id, codsuc, tipo = '', contact_prop, desde = 'pagweb' , t
                     <Button variant={`${isFormValid ? "primary" : "disabled"}`} addStyles={`text-white transition-all h-14 text-sm md:text-md lg:text-lg border-gray-50 flex justify-center items-center gap-3`} type="submit">Enviar Consulta {formSubmitted && isFormValid && <Spinner />}</Button>
                     <h2 className={'font-bold text-center tracking-normal pb-1 text-base md:text-md lg:text-lg'}>OTRA VÍA DE CONTACTO</h2>
                     {contact_prop !== "" && <a target={'_blank'} href={contact_prop} className={'mx-auto '}>
-                  <WhatsAppIcon  addStyles="" h="30" w="30"/>
+                        <WhatsAppIcon addStyles="" h="30" w="30" />
                     </a>}
                     <span className={'text-sm font-medium text-center'}>ESCRIBINOS POR WHATSAPP</span>
                 </form>

@@ -8,7 +8,9 @@ import type { APIResponseDetailEntrepreneurShip, APIResponseEntrepreneurShipUnit
 import { capitalize } from '@utils/formats';
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
+import MapLocationIcon from '../Icons/MapLocationIcon';
 import PrintIcon from "../Icons/PrintIcon";
+import PropertyBuildIcon from '../Icons/PropertyBuildIcon';
 import PDFViewer from '../PDFViewer';
 import ContactForm from '../Property/ContactForm';
 import Description from '../Property/Description';
@@ -120,19 +122,19 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 <header className="container mx-auto lg:flex justify-between items-center px-0 transition-all">
                     {isLoading ? <BreadCrumbSkeleton /> : props.breadCrumbChild}
                     <Button onClick={toggleModal} /* target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} */ addStyles="flex justify-end  items-end relative inset-0 bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</Button>
-                    {modalState.isOpen && (
-                        <Modal
-                            header=""
-                            footer=""
-                            onHeaderCloseClick={toggleModal}
-                            onBackdropClick={toggleModal}
-                        >
-                            <div className={'bg-[#D9D9D9]  h-fit w-100  lg:col-start-7 lg-col-end-12 sticky inset-0 transition-all '}>
-                                <ContactForm id={results?.emprendimiento[0]?.ed_idl ?? ''} tipo={results?.emprendimiento[0].tipo} codsuc={results?.datos?.codemp ?? ''} contact_prop={results?.emprendimiento[0]?.celular ? `https://api.whatsapp.com/send?phone=${123}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=` : ''} />
-                            </div>
-                        </Modal>
-                    )}
                 </header>
+                {modalState.isOpen && (
+                    <Modal
+                        header=""
+                        footer=""
+                        onHeaderCloseClick={toggleModal}
+                        onBackdropClick={toggleModal}
+                    >
+                        <div className={'bg-[#D9D9D9]  h-fit w-100  lg:col-start-7 lg-col-end-12 sticky inset-0 transition-all '}>
+                            <ContactForm id={results?.emprendimiento[0]?.ed_idl ?? ''} tipo={results?.emprendimiento[0].tipo} codsuc={results?.datos?.codemp ?? ''} contact_prop={results?.emprendimiento[0]?.celular ? `https://api.whatsapp.com/send?phone=${123}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=` : ''} />
+                        </div>
+                    </Modal>
+                )}
                 <div className="container mx-auto pt-5 flex justify-between">
                     {isLoading ? <BreadCrumbSkeleton /> : <TabMenu videoUrl={null} unitData={resultsUnit?.unidadesDisponibles.length} unitList={resultsUnit?.unidadesDisponibles ? true : false} pdf={(results?.pdf?.length ?? 0) > 0 && !isLoading} blueprint={(resultsUnit?.unidadesDisponibles?.map(emp => emp.img_princ) ?? []).length > 0 && !isLoading} />}
                     {isLoading ? <BreadCrumbSkeleton /> : <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>}
@@ -153,45 +155,48 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 }
             </section>
             {/* Caracteristicas */}
-            <section className="bg-[#939B41] py-10 text-white  md:px-0 lg:px-0 ">
+            <section className="bg-[#939B41] py-10 text-white  md:px-0 lg:px-0">
                 {isLoading ? <DetailsPropertySkeleton />
                     :
-                    <div className="container flex flex-col md:flex-col lg:flex-row justify-center w-3/4 lg:w-fit  items-center place-content-center mx-auto h-full">
+                    <div className="container flex flex-col divide-y-2  lg:border-l-2 lg:border-r-2 md:divide-y-2  lg:divide-x-2 lg:divide-y-0 divide-white md:flex-col lg:flex-row justify-center  w-max lg:w-fit  items-center place-content-center mx-auto h-full">
 
                         {
-                            (results?.emprendimiento[0]?.valor_desde !== "0" && results?.emprendimiento[0]?.valor_desde !== "") ? (<div className="border-b-2 border-t-2 lg:border-l-2 lg:border-t-0 lg:border-b-0 md:border-b-2 md:border-t-2  text-center h-[184px] w-full flex justify-center items-center flex-col md:px-20 lg:px-20 p-5">
-                                <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant flex flex-col font-semibold">Valor desde</span>
-                                <p className="text-xl md:text-xl lg:text-3xl self-center font-bold tracking-wider block gap-2">{results?.emprendimiento[0]?.valor_desde}</p>
-                            </div>) : null}
+                            (results?.emprendimiento[0]?.valor_desde !== "0" && results?.emprendimiento[0]?.valor_desde !== "") ? (
+                                <div className="text-center  w-full flex justify-center items-center flex-col md:px-20 lg:px-14 p-5">
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex  w-max ">Valor desde</span>
+                                    <p className="text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide">U$S {results?.emprendimiento[0]?.valor_desde}</p>
+                                </div>) : null}
                         {
-                            results?.emprendimiento[0]?.tipo !== '' ? (<div className="border-b-2 lg:border-l-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5 ">
+                            results?.emprendimiento[0]?.tipo !== '' ? (<div className=" flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5 ">
                                 <div className="flex items-center justify-center ">
-                                    <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/home-property.png'} alt="home property" />
+                                    <PropertyBuildIcon addStyles="fill-white pb-1" h={"56"} w={"64"} />
+                                    {/*     <img className="w-[56px] h-[56px]  " src={'/images/home-property.png'} alt="home property" /> */}
                                 </div>
-                                <span className="text-2xl md:text-2xl lg:text-4xl  h-[56px] font-cormorant font-semibold tracking-wider flex items-center justify-center">Tipo</span>
-                                <span className={"text-xl md:text-xl lg:text-3xl self-center font-bold tracking-wide "}>{results?.emprendimiento[0]?.tipo}</span>
+                                <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant font-base tracking-wide flex items-center justify-center">Tipo</span>
+                                <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide "}>{results?.emprendimiento[0]?.tipo}</span>
                             </div>) : null
 
                         }
                         {
-                            results?.emprendimiento[0]?.ed_amb?.split('A')[0].length !== 0 ? (<div className="border-b-2  lg:border-r-2  lg:border-l-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5">
+                            results?.emprendimiento[0]?.ed_amb?.split('A')[0].length !== 0 ? (<div className="flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5">
                                 <div className="flex items-center justify-center">
 
                                     <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/puerta.png'} alt="superficie" />
                                 </div>
-                                <span className="text-2xl md:text-2xl lg:text-4xl h-[56px] font-cormorant font-semibold tracking-wider flex  items-center justify-center">Ambientes</span>
-                                <span className={"text-xl md:text-xl place-content-center self-center lg:text-3xl font-bold tracking-wide "}>{results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : results?.emprendimiento[0]?.ed_amb?.split('A')[0]}</span>
+                                <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant font-base tracking-wide flex  items-center justify-center">Ambientes</span>
+                                <span className={"text-xl md:text-xl place-content-center self-center lg:text-3xl font-semibold tracking-wide w-max "}>{results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : results?.emprendimiento[0]?.ed_amb?.split('A')[0]}</span>
                             </div>) : null
                         }
                         {
-                            results?.emprendimiento[0]?.ed_bar !== "" ? (<div className={`border-b-0 ${results?.emprendimiento[0]?.ed_bar !== "" ? "lg:border-l-2" : "lg:border-l-0"} md:border-r-0 lg:border-r-2 lg:border-b-0 md:border-b-2 flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5`}>
-                                <div className="flex items-center justify-center pb-4">
+                            results?.emprendimiento[0]?.ed_bar !== "" ? (
+                                <div className=" flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5 ">
+                                    <div className="flex items-center justify-center w-100">
 
-                                    <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/map-mark.png'} alt="map-mark" />
-                                </div>
-
-                                <span className={"text-xl md:text-xl lg:text-3xl self-center  font-bold tracking-wide "}>{he.decode(results?.emprendimiento[0]?.ed_bar || '')}</span>
-                            </div>) : null
+                                        <MapLocationIcon addStyles="fill-white" h={"56"} w={"56"} />
+                                    </div>
+                                    <span className="text-2xl md:text-2xl lg:text-4xl   font-cormorant font-base tracking-wide flex items-center justify-center">Barrio</span>
+                                    <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide w-max "}>{he.decode(results?.emprendimiento[0]?.ed_bar || '')}</span>
+                                </div>) : null
                         }
 
                     </div>
@@ -201,8 +206,8 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
 
                 {isLoading ? (<div className="container mx-auto pb-16"><BreadCrumbSkeleton /> </div>) : (
                     <div className="flex items-end gap-1 w-fit">
-                        <img src="/images/map.png" alt="marker map" className="object-contain  flex items-center" />
-                        <span className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold">{he.decode(`${results?.emprendimiento[0]?.ed_nom}, ${results?.emprendimiento[0]?.ed_loc}`)}</span>
+                        <MapLocationIcon /> 
+                        <span className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold capitalize">{capitalize(he.decode(`${results?.emprendimiento[0]?.ed_nom}, ${results?.emprendimiento[0]?.ed_loc}`))}</span>
                     </div>)
                 }
                 <div className={'flex flex-col md:flex-row lg:flex-row  md:justify-center lg:justify-center gap-5'} >
@@ -223,7 +228,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                         </div>
                         : (
                             <div>
-                                <div className="h-[208px] w-full md:col-span-1 lg:col-span-1">
+                         <div className="h-[400px] w-full md:col-span-1 lg:col-span-1">
                                     {/* Agregar el titulo de la direcion en alado del market  */}
                                     <iframe
                                         className="w-full h-full"
@@ -262,7 +267,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                             </div>
                         )}
                 </div>
-                <div className={'bg-[#D9D9D9]  h-fit w-100  lg:col-start-7 lg-col-end-12 sticky inset-0 transition-all '}>
+                <div className={'bg-[#D9D9D9]  h-fit w-100  lg:col-start-7 lg-col-end-12 relative  lg:sticky lg:inset-0'}>
                     <ContactForm id={results?.emprendimiento[0]?.ed_idl ?? ''} tipo={results?.emprendimiento[0].tipo} codsuc={results?.datos?.codemp ?? ''} contact_prop={results?.emprendimiento[0]?.celular ? `https://api.whatsapp.com/send?phone=${123}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=` : ''} />
                 </div>
             </section>

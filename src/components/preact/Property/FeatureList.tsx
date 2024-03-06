@@ -30,57 +30,63 @@ const FeatureList = ({
     light,
     pet_accepted,
     antiquity
-}: Props
-) => {
+}: Props) => {
 
     return (
-        <div className={'flex flex-wrap justify-evenly lg:justify-start  w-full gap-10 p-5 items-start'}>
-
-            {sup_cubierta !== '0.00m2' ? (<div className={'flex justify-center flex-col text-center'}>
-                <RuleIcon addStyles="mx-auto" h={"24"} w={"24"} />
-                <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center"}>{sup_cubierta}</p>
-            </div>) : null
-            }
-            {sup_total !== "" ? (<div className={'flex justify-center flex-col text-center'}>
-                <SquareMeterIcon addStyles="mx-auto" h={"24"} w={"24"} />
-                <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center"}>{sup_total}</p>
-            </div>) : null}
-
-            {environments !== "" ? (<div className={'flex justify-center flex-col text-center'}>
-                <DoorOpen addStyles="mx-auto" h={"24"} w={"24"} />
-                <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center"}>{environments} dorm.</p>
-            </div>) : null}
-            {baths !== "" ? (<div className={'flex justify-center flex-col text-center'}>
-                <BathIcon addStyles="mx-auto" h={"24"} w={"24"} />
-                <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center"}>{baths} baños</p>
-            </div>) : null}
-            {location !== "" ? (<div className={'flex justify-center flex-col text-center'}>
-                <CurtainsIcon addStyles="mx-auto" h={"24"} w={"24"} />
-                <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center capitalize"}>{location}</p>
-            </div>) : null}
-            {light !== "" ? (
+        <div className={'grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 p-3'}>
+            {sup_cubierta !== '0.00m2' && (
+                <div className={'flex justify-center flex-col text-center'}>
+                    <RuleIcon addStyles="mx-auto" h={"24"} w={"24"} />
+                    <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center w-max self-center"}>{sup_cubierta}</p>
+                </div>
+            )}
+            {sup_total !== "" && (
+                <div className={'flex justify-center flex-col text-center'}>
+                    <SquareMeterIcon addStyles="mx-auto" h={"24"} w={"24"} />
+                    <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center w-max self-center"}>{sup_total}</p>
+                </div>
+            )}
+            {environments !== "" && (
+                <div className={'flex justify-center flex-col text-center'}>
+                    <DoorOpen addStyles="mx-auto" h={"24"} w={"24"} />
+                    <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center w-max self-center"}>{environments} dorm.</p>
+                </div>
+            )}
+            {baths !== "" && (
+                <div className={'flex justify-center flex-col text-center'}>
+                    <BathIcon addStyles="mx-auto" h={"24"} w={"24"} />
+                    <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center w-max self-center"}>{baths} baños</p>
+                </div>
+            )}
+            {location !== "" && (
+                <div className={'flex justify-center flex-col text-center'}>
+                    <CurtainsIcon addStyles="mx-auto" h={"24"} w={"24"} />
+                    <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center w-max self-center capitalize"}>{location}</p>
+                </div>
+            )}
+            {light !== "" && (
                 <div className={'flex justify-center flex-col text-center'}>
                     <SunIcon addStyles="mx-auto" h={"24"} w={"24"} />
-                    <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center"}>{light === 'Luz' && 'Luminoso'}</p>
-                </div>) : null}
-
-            {(antiquity !== "") ? (
+                    <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center w-max self-center"}>{light === 'Luz' && 'Luminoso'}</p>
+                </div>
+            )}
+            {antiquity !== "" && (
                 <div className={'flex justify-center flex-col text-center'}>
                     <CalendarIcon addStyles="mx-auto" h={"24"} w={"24"} />
-                    <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center"}>{antiquity} años</p>
+                    <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center w-max self-center"}>{antiquity} años</p>
                 </div>
-            ) : null}
-
+            )}
             <div className={'flex justify-center flex-col text-center'}>
                 <PawIcon addStyles="mx-auto" h={"24"} w={"24"} />
-                <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center"}>{pet_accepted ? 'Apto Mascotas' : 'No Apto'}</p>
+                <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center w-max self-center"}>{pet_accepted ? 'Apto Mascotas' : 'No Apto'}</p>
             </div>
-            {furnished !== "" ? (<div className={'flex justify-center flex-col text-center'}>
-                <FurnitureIcon addStyles="mx-auto" h={"24"} w={"24"} />
-                <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center"}>{furnished}</p>
-            </div>) : null}
+            {furnished !== "" && (
+                <div className={'flex justify-center flex-col text-center'}>
+                    <FurnitureIcon addStyles="mx-auto" h={"24"} w={"24"} />
+                    <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center w-max self-center"}>{furnished}</p>
+                </div>
+            )}
         </div>
     )
 }
-
 export default FeatureList
