@@ -313,14 +313,12 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
                 <BreadCrumbSkeleton />
                 <BreadCrumbSkeleton />
-                <div className={'grid grid-cols-4 md:grid-cols-2  gap-5  my-10 w-100'}>
+                <div className={'grid grid-cols-2 md:grid-cols-2  gap-5  my-10 w-100'}>
                     <CardResultSkeleton />
                     <CardResultSkeleton />
                     <CardResultSkeleton />
                     <CardResultSkeleton />
                 </div>
-
-
             </section>
 
         </article>
