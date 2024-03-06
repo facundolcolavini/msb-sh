@@ -15,7 +15,7 @@ const currentURL = urlsObjtAstro; // Este objeto contiene la información de la 
 
 // Obtenemos las partes de la URL que deseamos mostrar en el breadcrumb
 const { pathname, origin, searchParams } = currentURL;
-console.log(`${origin}${pathname}`)
+
 // Dividir la ruta en partes separadas
 const pathParts = pathname.split("/").filter((part) => part !== ""); // Eliminar partes vacías
 
@@ -52,7 +52,7 @@ const breadcrumbWithHome = [
 // Eliminar el último elemento del breadcrumb
 ---
 
-<nav class="flex p-5 lg:px-0 md:px-0" aria-label="Breadcrumb">
+<nav class="flex p-5 px-0 lg:px-0 md:px-0" aria-label="Breadcrumb">
   <ol class="flex flex-wrap items-center">
     {
       breadcrumbWithHome?.map((item: BreadcrumbItem, index: number) => {

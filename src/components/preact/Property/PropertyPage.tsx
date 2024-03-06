@@ -7,8 +7,10 @@ import { useEffect, useState } from "preact/hooks";
 
 import { navigate } from "astro:transitions/client";
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
+import { capitalize } from '../../../utils/formats';
 import GalleryProperty from "../Gallery/GalleryProperty";
 import BathIcon from "../Icons/BathIcon";
+import MapLocationIcon from "../Icons/MapLocationIcon";
 import PrintIcon from "../Icons/PrintIcon";
 import PDFViewer from "../PDFViewer";
 import ShareButton from "../ShareButton/ShareButton";
@@ -24,8 +26,6 @@ import DetailsList from "./DetailsList";
 import FeatureList from "./FeatureList";
 import ServiceList from "./ServiceList";
 import TabMenu from "./TabMenu";
-import MapLocationIcon from "../Icons/MapLocationIcon";
-import { capitalize } from '../../../utils/formats';
 
 
 interface Props {
@@ -105,7 +105,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
     return (
         <article className=" px-3 md:px-0 lg:px-0 font-gotham">
-            <section className="h-full">
+            <section className="h-full md:px-5 lg:px-10">
                 <header className="container mx-auto lg:flex justify-between items-center px-0 transition-all">
                     {isLoading ? <BreadCrumbSkeleton /> : props.breadCrumbChild}
                     <Button onClick={toggleModal} addStyles="bg-primary-bg-hover-msb py-3 w-100 rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</Button>
@@ -127,7 +127,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     <TabMenu videoUrl={videoUrl} unitRedirect={window.location.pathname.includes('unidad-disponible') ? 'Edificio' : 'Unidades disponibles'} unitList={results!?.emprendimiento ? true : false} pdf={results?.emprendimiento && results?.emprendimiento?.ed_pdf !== "" && results?.emprendimiento?.ed_pdf !== null ? true : false} blueprint={results!?.plano !== null && !isLoading} />
                     <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>
                 </div>
-                {isLoading ? <div className="container mx-auto pb-16"><GalleryPropertySkeleton /></div> :
+                {isLoading ? <div className="container mx-auto pb-16 md:px-5 lg:px-10"><GalleryPropertySkeleton /></div> :
                     tabMenuProperty.gallery ?
                         (<GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fadeIn transition " galleryID={`gallery-property-${results?.datos?.codigo_ficha}`} images={results?.img || []} />)
                         : <div className={'grid pb-16'}>
@@ -202,11 +202,11 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     </div>
                 }
             </section>
-            <section className="container mx-auto flex justify-between gap-2 pt-16 pb-5">
+            <section className="container mx-auto flex justify-between gap-2 pt-16 pb-5 md:px-5 lg:px-10">
 
                 {isLoading ? (<div className="container mx-auto pb-16"><BreadCrumbSkeleton /> </div>) : (
                     <div className="flex items-end gap-1 w-fit">
-                     <MapLocationIcon />
+                        <MapLocationIcon />
                         <span className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold">{capitalize(he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`))}</span>
                     </div>)
                 }
@@ -219,7 +219,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     </button>
                 </div>
             </section>
-            <section className="container mx-auto grid grid-cols md:gap-5 lg:gap-7">
+            <section className="container mx-auto grid grid-cols md:gap-5 lg:gap-7 md:px-5 lg:px-10">
                 {/* Google map iframe */}
                 <div className={'col-start-1 cold-end-7'}>
                     {isLoading || !results?.ficha[0]?.direccion
@@ -309,11 +309,11 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                 </div>
 
             </section>
-            <section className={'container mx-auto  my-30'}>
+            <section className={'container mx-auto  my-30 md:px-5 lg:px-10'}>
 
                 <BreadCrumbSkeleton />
                 <BreadCrumbSkeleton />
-                <div className={'grid grid-cols-4  gap-5  my-10 w-100'}>
+                <div className={'grid grid-cols-4 md:grid-cols-2  gap-5  my-10 w-100'}>
                     <CardResultSkeleton />
                     <CardResultSkeleton />
                     <CardResultSkeleton />

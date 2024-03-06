@@ -116,9 +116,9 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
     };
 
     return (
-        <article className=" px-3 md:px-0 lg:px-0 font-gotham">
+        <article className=" px-3 md:px-0 font-gotham">
 
-            <section className="h-full">
+            <section className="h-full md:px-5 lg:px-10">
                 <header className="container mx-auto lg:flex justify-between items-center px-0 transition-all">
                     {isLoading ? <BreadCrumbSkeleton /> : props.breadCrumbChild}
                     <Button onClick={toggleModal} /* target={'_blank'} href={`https://api.whatsapp.com/send?phone=${results?.ficha[0]?.whatsapp ?? results?.ficha[0]?.vendedor_celular}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=`} */ addStyles="flex justify-end  items-end relative inset-0 bg-primary-bg-hover-msb py-3 h-fit rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</Button>
@@ -135,11 +135,11 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                         </div>
                     </Modal>
                 )}
-                <div className="container mx-auto pt-5 flex justify-between">
+                <div className="container mx-auto pt-5 flex justify-between ">
                     {isLoading ? <BreadCrumbSkeleton /> : <TabMenu videoUrl={null} unitData={resultsUnit?.unidadesDisponibles.length} unitList={resultsUnit?.unidadesDisponibles ? true : false} pdf={(results?.pdf?.length ?? 0) > 0 && !isLoading} blueprint={(resultsUnit?.unidadesDisponibles?.map(emp => emp.img_princ) ?? []).length > 0 && !isLoading} />}
                     {isLoading ? <BreadCrumbSkeleton /> : <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>}
                 </div>
-                {isLoading ? <div className="container mx-auto pb-16"><GalleryPropertySkeleton /></div> : (
+                {isLoading ? <div className="container mx-auto pb-16  md:px-5 lg:px-10"><GalleryPropertySkeleton /></div> : (
                     <div className={'grid pb-16 container mx-auto'}>
                         {tabMenuProperty.gallery ?
                             (<GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fadeIn transition" galleryID={`gallery-property-${results?.emprendimiento[0]?.codsuc}`} images={results?.img[0]?.flat() || []} />) :
@@ -158,13 +158,13 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
             <section className="bg-[#939B41] py-10 text-white  md:px-0 lg:px-0">
                 {isLoading ? <DetailsPropertySkeleton />
                     :
-                    <div className="container flex flex-col divide-y-2  lg:border-l-2 lg:border-r-2 md:divide-y-2  lg:divide-x-2 lg:divide-y-0 divide-white md:flex-col lg:flex-row justify-center  w-max lg:w-fit  items-center place-content-center mx-auto h-full">
+                    <div className="container flex flex-col divide-y-2 md:divide-y-2 lg:divide-x-2 lg:divide-y-0  md:flex-col lg:flex-row justify-center  w-max lg:w-fit  items-center place-content-center mx-auto h-full">
 
                         {
                             (results?.emprendimiento[0]?.valor_desde !== "0" && results?.emprendimiento[0]?.valor_desde !== "") ? (
                                 <div className="text-center  w-full flex justify-center items-center flex-col md:px-20 lg:px-14 p-5">
-                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex  w-max ">Valor desde</span>
-                                    <p className="text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide">U$S {results?.emprendimiento[0]?.valor_desde}</p>
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex  w-max">Valor desde</span>
+                                    <p className="text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide w-max">U$S {results?.emprendimiento[0]?.valor_desde}</p>
                                 </div>) : null}
                         {
                             results?.emprendimiento[0]?.tipo !== '' ? (<div className=" flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5 ">
@@ -202,7 +202,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     </div>
                 }
             </section>
-            <section className="container mx-auto flex justify-between gap-2 pt-16 pb-5 relative">
+            <section className="container mx-auto flex justify-between gap-2 pt-16 pb-5 relative md:px-5 lg:px-10">
 
                 {isLoading ? (<div className="container mx-auto pb-16"><BreadCrumbSkeleton /> </div>) : (
                     <div className="flex items-end gap-1 w-fit">
@@ -219,7 +219,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     </button>
                 </div>
             </section>
-            <section className="container mx-auto grid grid-cols md:gap-5 lg:gap-7">
+            <section className="container mx-auto grid grid-cols md:gap-5 lg:gap-7 md:px-5 lg:px-10">
                 {/* Google map iframe */}
                 <div className={'col-start-1 cold-end-7'}>
                     {isLoading || !results?.emprendimiento[0]?.ed_coo
@@ -271,7 +271,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     <ContactForm id={results?.emprendimiento[0]?.ed_idl ?? ''} tipo={results?.emprendimiento[0].tipo} codsuc={results?.datos?.codemp ?? ''} contact_prop={results?.emprendimiento[0]?.celular ? `https://api.whatsapp.com/send?phone=${123}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=` : ''} />
                 </div>
             </section>
-            <section className={'container mx-auto  my-30'}>
+            <section className={'container mx-auto  my-30 md:px-5 lg:px-10'}>
                 <BreadCrumbSkeleton />
                 <BreadCrumbSkeleton />
                 <div className={'grid grid-cols md:grid-cols-2 lg:grid-cols-4 gap-5 my-10 w-100'}>
