@@ -74,18 +74,18 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
       </h3>
       <ul class="w-100 text-center md:text-center lg:text-start">
         <li class="mb-1">
-          <a href="/resultados-de-busqueda?tipo_operacion=V" class="text-sm"
-            >Venta</a
+          <button value="V" transition:name="fade" id="btnOp" class="text-sm"
+            >Venta</button
           >
         </li>
         <li>
-          <a href="/resultados-de-busqueda?tipo_operacion=A" class="text-sm"
-            >Alquiler</a
+          <button  value={"A"} id="btnOp" transition:name="fade" class="text-sm"
+            >Alquiler</button
           >
         </li>
         <li class="mb-1">
-          <a href="/resultados-de-busqueda?tipo_operacion=T" class="text-sm"
-            >Alquiler Temporario</a
+          <button value={"T"}  id="btnOp"  transition:name="fade" class="text-sm"
+            >Alquiler Temporario</button
           >
         </li>
       </ul>
@@ -146,3 +146,20 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
     </div>
   </div>
 </footer>
+
+
+<script>
+// Script para obtener los btnOps y hacer una navegacion con el valor de cada boton a /resultados-de-busqueda?tipo_operacion=valorDelBoton
+document.addEventListener("astro:page-load", (event) => {
+const btnOps = document.querySelectorAll("#btnOp");
+btnOps.forEach((btnOp) => {
+  btnOp.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    // Dejar la viewtransition 
+    btnOp.scrollIntoView({ behavior: "smooth" });
+    window.location.href = `/resultados-de-busqueda?tipo_operacion=${(e.target as HTMLButtonElement).value}`;
+  });
+});
+});
+</script>

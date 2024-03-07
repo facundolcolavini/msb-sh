@@ -127,7 +127,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     <TabMenu videoUrl={videoUrl} unitRedirect={window.location.pathname.includes('unidad-disponible') ? 'Edificio' : 'Unidades disponibles'} unitList={results!?.emprendimiento ? true : false} pdf={results?.emprendimiento && results?.emprendimiento?.ed_pdf !== "" && results?.emprendimiento?.ed_pdf !== null ? true : false} blueprint={results!?.plano !== null && !isLoading} />
                     <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>
                 </div>
-                {isLoading ? <div className="container mx-auto pb-16 md:px-5 lg:px-10"><GalleryPropertySkeleton /></div> :
+                {isLoading ? <div className="container mx-auto pb-16 md:px-5 lg:px-0"><GalleryPropertySkeleton /></div> :
                     tabMenuProperty.gallery ?
                         (<GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fadeIn transition " galleryID={`gallery-property-${results?.datos?.codigo_ficha}`} images={results?.img || []} />)
                         : <div className={'grid pb-16'}>

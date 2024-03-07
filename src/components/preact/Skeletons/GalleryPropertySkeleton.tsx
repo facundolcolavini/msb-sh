@@ -2,7 +2,7 @@
 const GalleryPropertySkeleton = () => {
     const imagesSkeletonData = ['1', '2', '3', '4', '5']
     return (
-        <div class="grid grid-cols  lg:grid-cols-2 gap-5 animate-pulse" id="gallery"  >
+        <div class="grid grid-cols lg:grid-cols-2 gap-5 animate-pulse" id="gallery"  >
             {
                 imagesSkeletonData[0] && (
                     <div class="col-span-1 h-100">

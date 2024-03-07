@@ -139,7 +139,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     {isLoading ? <BreadCrumbSkeleton /> : <TabMenu videoUrl={null} unitData={resultsUnit?.unidadesDisponibles.length} unitList={resultsUnit?.unidadesDisponibles ? true : false} pdf={(results?.pdf?.length ?? 0) > 0 && !isLoading} blueprint={(resultsUnit?.unidadesDisponibles?.map(emp => emp.img_princ) ?? []).length > 0 && !isLoading} />}
                     {isLoading ? <BreadCrumbSkeleton /> : <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>}
                 </div>
-                {isLoading ? <div className="container mx-auto pb-16  md:px-5 lg:px-10"><GalleryPropertySkeleton /></div> : (
+                {isLoading ? <div className="container mx-auto pb-16  md:px-5 lg:px-0"><GalleryPropertySkeleton /></div> : (
                     <div className={'grid pb-16 container mx-auto'}>
                         {tabMenuProperty.gallery ?
                             (<GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fadeIn transition" galleryID={`gallery-property-${results?.emprendimiento[0]?.codsuc}`} images={results?.img[0]?.flat() || []} />) :
@@ -206,7 +206,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
 
                 {isLoading ? (<div className="container mx-auto pb-16"><BreadCrumbSkeleton /> </div>) : (
                     <div className="flex items-end gap-1 w-fit">
-                        <MapLocationIcon /> 
+                        <MapLocationIcon />
                         <span className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold capitalize">{capitalize(he.decode(`${results?.emprendimiento[0]?.ed_nom}, ${results?.emprendimiento[0]?.ed_loc}`))}</span>
                     </div>)
                 }
@@ -228,7 +228,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                         </div>
                         : (
                             <div>
-                         <div className="h-[400px] w-full md:col-span-1 lg:col-span-1">
+                                <div className="h-[400px] w-full md:col-span-1 lg:col-span-1">
                                     {/* Agregar el titulo de la direcion en alado del market  */}
                                     <iframe
                                         className="w-full h-full"
