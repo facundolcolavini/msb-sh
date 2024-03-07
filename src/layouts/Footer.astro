@@ -7,15 +7,17 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
 <footer
   class="bg-secondary-msb text-black shadow-inner flex justify-between items-center"
 >
-  <div class="mx-auto py-20 container grid grid-col lg:grid-col-2 gap-5 lg:gap-0 md:gap-5">
-    <div class="flex flex-col lg:col-starts-1 lg:col-ends-2 ">
+  <div
+    class="mx-auto py-20 container grid grid-col lg:grid-col-2 gap-5 lg:gap-0 md:gap-5"
+  >
+    <div class="flex flex-col lg:col-starts-1 lg:col-ends-2">
       <h2
         class="text-3xl font-bold mb-4 flex justify-center md:justify-center lg:justify-start"
       >
         <Link
           href="/"
           checkActive={false}
-          class="flex flex-shrink items-center justify-center "
+          class="flex flex-shrink items-center justify-center"
         >
           <Image
             width={300}
@@ -66,7 +68,7 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
         >
       </div>
     </div>
-    <div class="lg:col-start-3 lg:col-end-4  mb-6 sm:mb-0 ">
+    <div class="lg:col-start-3 lg:col-end-4 mb-6 sm:mb-0">
       <h3
         class="text-sm text-center md:text-center lg:text-start font-semibold mb-4 text-[#4E5A2B]"
       >
@@ -74,23 +76,19 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
       </h3>
       <ul class="w-100 text-center md:text-center lg:text-start">
         <li class="mb-1">
-          <button value="V" transition:name="fade" id="btnOp" class="text-sm"
-            >Venta</button
-          >
+          <button value="V" id="btnOp" class="text-sm">Venta</button>
         </li>
         <li class="mb-1">
-          <button  value={"A"} id="btnOp" transition:name="fade" class="text-sm"
-            >Alquiler</button
-          >
+          <button value={"A"} id="btnOp" class="text-sm">Alquiler</button>
         </li>
         <li class="mb-1">
-          <button value={"T"}  id="btnOp"  transition:name="fade" class="text-sm"
+          <button value={"T"} id="btnOp" class="text-sm"
             >Alquiler Temporario</button
           >
         </li>
       </ul>
     </div>
-    <div class="lg:col-start-5 lg:col-end-6 mb-6 sm:mb-0 ">
+    <div class="lg:col-start-5 lg:col-end-6 mb-6 sm:mb-0">
       <h3
         class="text-sm text-center md:text-center lg:text-start font-semibold mb-4 text-[#4E5A2B]"
       >
@@ -114,7 +112,7 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
         </li>
       </ul>
     </div>
-    <div class="lg:col-start-6 lg:col-end-7 mb-6 sm:mb-0 ">
+    <div class="lg:col-start-6 lg:col-end-7 mb-6 sm:mb-0">
       <h3
         class="text-sm text-center md:text-center lg:text-start font-semibold mb-4 text-nowrap text-[#4E5A2B]"
       >
@@ -125,7 +123,7 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
         <li><a href="#" class="text-sm">Administración</a></li>
       </ul>
     </div>
-    <div  class="lg:col-start-7 lg:col-end-8 mb-6 sm:mb-0 ">
+    <div class="lg:col-start-7 lg:col-end-8 mb-6 sm:mb-0">
       <h3
         class="text-sm text-center md:text-center lg:text-start font-semibold mb-4 text-nowrap text-[#4E5A2B]"
       >
@@ -147,19 +145,20 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
   </div>
 </footer>
 
-
 <script>
-// Script para obtener los btnOps y hacer una navegacion con el valor de cada boton a /resultados-de-busqueda?tipo_operacion=valorDelBoton
-document.addEventListener("astro:page-load", (event) => {
-const btnOps = document.querySelectorAll("#btnOp");
-btnOps.forEach((btnOp) => {
-  btnOp.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    // Dejar la viewtransition 
-    btnOp.scrollIntoView({ behavior: "smooth" });
-    window.location.href = `/resultados-de-busqueda?tipo_operacion=${(e.target as HTMLButtonElement).value}`;
+  // Script para obtener los btnOps y hacer una navegacion con el valor de cada boton a /resultados-de-busqueda?tipo_operacion=valorDelBoton
+  document.addEventListener("astro:page-load", (event) => {
+    const btnOps = document.querySelectorAll("#btnOp");
+    btnOps.forEach((btnOp) => {
+      btnOp.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        // Dejar la viewtransition
+        btnOp.scrollIntoView({ behavior: "smooth" });
+        window.location.href = `/resultados-de-busqueda?tipo_operacion=${
+          (e.target as HTMLButtonElement).value
+        }`;
+      });
+    });
   });
-});
-});
 </script>
