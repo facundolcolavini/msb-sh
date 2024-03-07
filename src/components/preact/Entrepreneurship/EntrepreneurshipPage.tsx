@@ -24,7 +24,7 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
   const searchPStore = searchParamsStore.get()
   const defaultOptions = {
     ed_est: {
-      value: window.location.search?.includes('Pozo') ? 'En Pozo' : window.location.search?.includes('Construccion') ? 'En Construccion' : window.location.search?.includes('Terminado') ? 'Terminado' : 'Pozo'
+      value: window.location.search?.includes('Pozo') ? 'En Pozo' : window.location.search?.includes('Construccion') ? 'En Construccion' : window.location.search?.includes('Terminado') ? 'Terminado' : filterStore.ed_est?.value ?? 'En Pozo'
       , label: 'Estado'
     }, // En pozo , En construccion , Terminado
     /*  tipo:{ label: 'tipo', isLocation: false, isDefault: false }, */
@@ -57,7 +57,7 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
     ,
     ...filterStore,
     ed_est: {
-      value: window.location.search?.includes('Pozo') ? 'En Pozo' : window.location.search?.includes('Construccion') ? 'En Construccion' : window.location.search?.includes('Terminado') ? 'Terminado' : 'En Pozo',
+      value: window.location.search?.includes('Pozo') ? 'En Pozo' : window.location.search?.includes('Construccion') ? 'En Construccion' : window.location.search?.includes('Terminado') ? 'Terminado' : filterStore.ed_est?.value ?? 'En Pozo',
       label: "Estado"
     }
   })

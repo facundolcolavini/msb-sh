@@ -37,7 +37,12 @@ const ResultsPage = ({ selects, locations }: Props) => {
 
 
   const defaultOptions = {
-    tipo_operacion: { value: '', label: '' },
+    tipo_operacion: {  value: window.location.search?.includes('tipo_operacion') ? 
+    window.location.search?.includes('tipo_operacion=A') ? 'A' : 
+    window.location.search?.includes('tipo_operacion=T') ? 'T' :  
+     window.location.search?.includes('tipo_operacion=V') ? 'V' :  '' : 
+   filterStore?.tipo_operacion?.value,
+   label: ""},
     tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
     Ambientes: { value: 'All', label: 'Cantidad de Ambientes' },
     calles: { value: 'All', label: 'Calle' },
@@ -56,25 +61,31 @@ const ResultsPage = ({ selects, locations }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [monedaSeleccionada, setMonedaSeleccionada] = useState<OutputOption>(defaultOptions?.moneda);
-
+// Obtene los search params de la url 
+  const searchWindowParams = new URLSearchParams(window.location.search);
   const { handleSelect, resetSelect, handleCheckboxChange, filtersSelected } = useSearch(filtersformatted, {
     ...defaultOptions, moneda:
       monedaSeleccionada
     , ...filterStore,
 
     tipo_operacion: {
-      value: window.location.search?.includes('V') ? 'V' : window.location.search?.includes('A') ? 'A' : window.location.search?.includes('T') ? 'T' : '',
+      value: window.location.search?.includes('tipo_operacion') ? 
+       window.location.search?.includes('tipo_operacion=A') ? 'A' : 
+       window.location.search?.includes('tipo_operacion=T') ? 'T' :  
+        window.location.search?.includes('tipo_operacion=V') ? 'V' :  '' : 
+      filterStore?.tipo_operacion?.value,
       label: ""
     }
-
   })
 
   useEffect(() => {
     fetchResults()
     setResetPagination(false)
     setIsSubmitting(false)
-  }, [])
+  }, [searchPStore])
 
+
+  
   const fetchResults = async () => {
     try {
       setIsLoading(true);

@@ -1,4 +1,4 @@
-import type { ResultLocation, Results } from '@interfaces/selects.form.interfaces';
+import type { FilterDefault, FilterSelects, ResultLocation, Results } from '@interfaces/selects.form.interfaces';
 import { formatOptions, type OutputOption } from '@utils/formats';
 
 import { useSearch } from '@hooks/useSearch.ts';
@@ -9,6 +9,8 @@ import SearchIcon from '../Icons/SearchIcon';
 import Button from "../ui/Buttons/Button";
 import SelectField from '../ui/Selects/SelectField';
 import SearchDebounce from './SearchDebounce';
+import { formatAndUseSearch } from '@utils/formatAndUseSearch';
+import { defaultsFilters, filterResultToFill, labelMappingResultForQuerys } from '@utils/filter-default';
 
 interface Props {
   selects: Results
@@ -17,7 +19,7 @@ interface Props {
 const SearchHome = ({ selects, locations }: Props) => {
   const searchPStore = searchParamsStore.get()
 
-  let tipo_propiedad = [] as OutputOption[];
+/*   let tipo_propiedad = [] as OutputOption[];
   let tipo_operacion = [] as OutputOption[];
   let in_iub = [] as OutputOption[];
   let in_tpr = [] as OutputOption[];
@@ -29,10 +31,17 @@ const SearchHome = ({ selects, locations }: Props) => {
       value: 'COUNTRY',
       label: 'Barrios Cerrados y Countries'
     }
-  ]
+  ] */
+  const filters: FilterSelects = {
+    selects,
+    locations,
+    default: defaultsFilters,
+  };
+  const filterToFill: FilterDefault[] = filterResultToFill;
+  const filtersformatted = formatAndUseSearch(filters, filterToFill, labelMappingResultForQuerys)
 
-  const { handleSelect, resetSelect, handleOnChange, filtersSelected, searchParams } = useSearch({ tipo_propiedad, tipo_operacion, in_iub, in_tpr }, {
-    tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
+  const { handleSelect, resetSelect, handleOnChange, filtersSelected, searchParams } = useSearch(filtersformatted, {
+    tipo_propiedad: { value: '', label: 'Tipo de propiedad' },
     tipo_operacion: { value: '', label: '' },
     in_iub: { value: '', label: '' },
     in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
@@ -40,11 +49,10 @@ const SearchHome = ({ selects, locations }: Props) => {
 
   useEffect(() => {
     // REINICIA EL ESTADO DE LOS FILTROS CUANDO SE CARGA LA PÁGINA HOME
-
     searchParamsStore.set('')
     resetFilter({})
     resetSelect({
-      tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
+      tipo_propiedad: { value: '', label: 'Tipo de propiedad' },
       tipo_operacion: { value: '', label: '' },
       in_iub: { value: '', label: '' },
       in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
@@ -112,10 +120,10 @@ const SearchHome = ({ selects, locations }: Props) => {
           </div>
           {/* Selector e input de la fila inferior */}
           <div className="lg:col-start-1  lg:col-end-3 flex  h-full  ">
-            <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filtersSelected?.tipo_propiedad} opts={tipo_propiedad} />
+            <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filtersSelected?.tipo_propiedad} opts={filtersformatted.tipo_propiedad}/>
           </div>
           <div className="md:col-1 lg:col-start-3  lg:col-end-11 md:col-start-2 md:col-end-5 flex gap-4  w-full flex-grow ">
-            <SearchDebounce filterOptsLocations={in_iub} propIdRef={"in_iub"} />
+            <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />
             <div className="hidden md:flex lg:hidden gap-4">
               <Button
                 variant="primary"
