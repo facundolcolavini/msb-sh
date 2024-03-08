@@ -19,7 +19,7 @@ export function formatOptions(options: InputOption[]): OutputOption[] {
     ?.filter(option => {
       const description = 'description' in option ? option.description : option?.descripcion;
       const value = 'value' in option ? option.value : ('val' in option ? option.val : '');
-      return !(description === "INDISTINTO" && value === "All" || description === "INDISTINTO" && ('val' in option) && option.val === "" || description === "TODAS" && value === "All");
+      return !(description === "INDISTINTO" /* && value === "All" */ || description === "INDISTINTO" && ('val' in option) && option.val === "" || description === "TODAS" /* && value === "All" */);
     })
     .map((option) => {
       let description: string;

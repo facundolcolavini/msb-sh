@@ -19,11 +19,11 @@ interface Props {
 const SearchHome = ({ selects, locations }: Props) => {
   const searchPStore = searchParamsStore.get()
 
-/*   let tipo_propiedad = [] as OutputOption[];
+/*   let tipo_inmueble = [] as OutputOption[];
   let tipo_operacion = [] as OutputOption[];
   let in_iub = [] as OutputOption[];
   let in_tpr = [] as OutputOption[];
-  tipo_propiedad = formatOptions(selects?.tipo);
+  tipo_inmueble = formatOptions(selects?.tipo);
   tipo_operacion = formatOptions(selects.operacion);
   in_iub = formatOptions(locations?.ubicaciones);
   in_tpr = [
@@ -41,10 +41,11 @@ const SearchHome = ({ selects, locations }: Props) => {
   const filtersformatted = formatAndUseSearch(filters, filterToFill, labelMappingResultForQuerys)
 
   const { handleSelect, resetSelect, handleOnChange, filtersSelected, searchParams } = useSearch(filtersformatted, {
-    tipo_propiedad: { value: '', label: 'Tipo de propiedad' },
+    tipo_inmueble: { value: 'All', label: 'Tipo de propiedad' },
     tipo_operacion: { value: '', label: '' },
     in_iub: { value: '', label: '' },
     in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
+
   })
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const SearchHome = ({ selects, locations }: Props) => {
     searchParamsStore.set('')
     resetFilter({})
     resetSelect({
-      tipo_propiedad: { value: '', label: 'Tipo de propiedad' },
+      tipo_inmueble: { value: 'All', label: 'Tipo de propiedad' },
       tipo_operacion: { value: '', label: '' },
       in_iub: { value: '', label: '' },
       in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
@@ -120,7 +121,7 @@ const SearchHome = ({ selects, locations }: Props) => {
           </div>
           {/* Selector e input de la fila inferior */}
           <div className="lg:col-start-1  lg:col-end-3 flex  h-full  ">
-            <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filtersSelected?.tipo_propiedad} opts={filtersformatted.tipo_propiedad}/>
+            <SelectField id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble}/>
           </div>
           <div className="md:col-1 lg:col-start-3  lg:col-end-11 md:col-start-2 md:col-end-5 flex gap-4  w-full flex-grow ">
             <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />

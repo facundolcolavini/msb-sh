@@ -1,10 +1,10 @@
 import type { Default } from "@interfaces/selects.form.interfaces";
 
-  /* B= Barrio Cerrado
-  T= Country
-  P= Parque Industrial
-  L= Loteo
-  E= Edificio */
+/* B= Barrio Cerrado
+T= Country
+P= Parque Industrial
+L= Loteo
+E= Edificio */
 
 export const defaultsFilters: Default = {
 
@@ -42,6 +42,10 @@ export const defaultsFilters: Default = {
       label: "U$D",
     },
   ],
+  ordenar: [
+    { value: 'preciomenor', label: 'Menor precio' },
+    { value: 'preciomayor', label: 'Mayor precio' },
+  ],
   rppagina: [{ value: '15', label: '15' }]
 }
 
@@ -57,29 +61,30 @@ export const filterResultToFill = [
   { label: 'in_tpr', isLocation: false, isDefault: true },
   { label: 'valor', isLocation: false, isDefault: false },
   { label: 'moneda', isLocation: false, isDefault: true },
-  { label: 'rppagina', isLocation: false, isDefault: true }
+  { label: 'rppagina', isLocation: false, isDefault: true },
+  { label: 'ordenar', isLocation: false, isDefault: true }
 ]
 export const labelMappingResultForQuerys = {
   'ambientes': 'Ambientes',
   'localidades': 'sellocalidades',
   'barrio': 'barrios1',
   'operacion': 'tipo_operacion',
-  'tipo': 'tipo_propiedad',
+  'tipo': 'tipo_inmueble',
   'ubicaciones': 'ubicaciones', // Este se actualizará más adelante
 };
 // Nombre de los selects 
 export const filterEntrePreneurshipToFillDefault = [
-/*   { label: 'tipo', isLocation: false, isDefault: false }, */
-{ label: 'ed_est' , isLocation: false, isDefault: true},
-/*   { label: 'estado', isLocation: false, isDefault: true }, */
+  /*   { label: 'tipo', isLocation: false, isDefault: false }, */
+  { label: 'ed_est', isLocation: false, isDefault: true },
+  /*   { label: 'estado', isLocation: false, isDefault: true }, */
   { label: 'tipo', isLocation: false, isDefault: false },
   { label: 'ambientes', isLocation: false, isDefault: false },
   { label: 'localidad', isLocation: false, isDefault: false },
-/*   { label: 'ubicaciones', isLocation: true, isDefault: false }, */
+  /*   { label: 'ubicaciones', isLocation: true, isDefault: false }, */
   { label: 'ed_iub', isLocation: true, isDefault: false },
   { label: 'valor', isLocation: false, isDefault: false },
   { label: 'moneda', isLocation: false, isDefault: true },
-/*   { label: 'rppagina', isLocation: false, isDefault: true } */
+  /*   { label: 'rppagina', isLocation: false, isDefault: true } */
 
 ]
 // Se usa para renombrar propiedades

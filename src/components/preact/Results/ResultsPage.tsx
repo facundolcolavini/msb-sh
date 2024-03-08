@@ -41,9 +41,9 @@ const ResultsPage = ({ selects, locations }: Props) => {
     window.location.search?.includes('tipo_operacion=A') ? 'A' : 
     window.location.search?.includes('tipo_operacion=T') ? 'T' :  
      window.location.search?.includes('tipo_operacion=V') ? 'V' :  '' : 
-   filterStore?.tipo_operacion?.value,
+   filterStore?.tipo_operacion?.value ?? '',
    label: ""},
-    tipo_propiedad: { value: 'All', label: 'Tipo de propiedad' },
+    tipo_inmueble: { value: 'All', label: 'Tipo de propiedad' },
     Ambientes: { value: 'All', label: 'Cantidad de Ambientes' },
     calles: { value: 'All', label: 'Calle' },
     sellocalidades: { value: 'All', label: 'Localidad' },
@@ -53,6 +53,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
     valor_maximo: { value: 'All', label: 'Hasta' },
     rppagina: { value: '15', label: '15' },
     in_iub: { value: '', label: '' },
+    ordenar:{value:'preciomenor', label: 'Ordenar'},
     in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
   }
 
@@ -78,6 +79,8 @@ const ResultsPage = ({ selects, locations }: Props) => {
     }
   })
 
+
+  console.log(filterStore)
   useEffect(() => {
     fetchResults()
     setResetPagination(false)
@@ -139,11 +142,18 @@ const ResultsPage = ({ selects, locations }: Props) => {
     e.preventDefault();
     e.stopPropagation();
     // Establecer los filtros en los valores predeterminados
-    resetSelect(defaultOptions);
+    resetSelect({});
     setMonedaSeleccionada(defaultOptions.moneda);
     setResetPagination(true)
     // Reinicia el estado de los filtros y realiza el fetch con los filtros predeterminados
-    resetFilter(defaultOptions);
+    resetFilter({
+        ...defaultOptions,
+        tipo_operacion: {
+          value:  "",
+          label: ""
+        }
+
+    });
     await fetchResults();
     setResetPagination(false)
   };
@@ -210,7 +220,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
           </Button>
         </div>
         <div className="lg:col-start-1 lg:col-end-3">
-          <SelectField id="tipo_propiedad" onChange={handleSelect} defaultOption={filterStore.tipo_propiedad} opts={filtersformatted.tipo_propiedad} />
+          <SelectField id="tipo_inmueble" onChange={handleSelect} defaultOption={filterStore.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
         </div>
         <div className="md:col-1 lg:col-start-3  lg:col-end-13 md:col-start-1 md:col-end-4 flex gap-4  w-full flex-grow ">
           <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />
@@ -244,11 +254,10 @@ const ResultsPage = ({ selects, locations }: Props) => {
       <div className="py-20">
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 md:px-0 px-3">
-        <div class="lg:col-start-4 lg:col-end-13 md:hidden sm:hidden lg:flex flex items-end justify-between w-full">
+        <div class="lg:col-start-4 lg:col-end-13 md:hidden hidden lg:flex  items-end justify-between w-full">
             <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.fichas.length : 0}</span> resultados con tu búsqueda</p>
-            <Button onClick={orderAscDesc} addStyles="bg-transparent hover:bg-transparent p-0 m-0">
-              <div className="flex items-center text-primary-text-msb text-sm md:text-md lg:text-lg font-bold  gap-1"> Ordenar <ArrowSortIcon /></div>
-            </Button>
+           <SelectField id="ordenar"  variant="secondary" addStyles="bg-transparent relative w-full h-[56px] transition-all flex justify-between items'end h-fit py-0 w-fit gap-8" onChange={handleSelect} defaultOption={filterStore.ordenar} opts={filtersformatted.ordenar}><ArrowSortIcon/></SelectField>
+
           </div>
           {/* Aside para filtros */}
           <aside className="md:col-12 lg:col-start-1 lg:col-end-4">
@@ -277,11 +286,11 @@ const ResultsPage = ({ selects, locations }: Props) => {
                       className="hidden"
                       id="moneda"
                       value="P"
-                      checked={monedaSeleccionada.value === 'P'}
+                      checked={filterStore.moneda?.value === 'P'}
                       onChange={() => handleCheckbox("moneda", "P")}
                     />
-                    <div className={`rounded-full border bg-tertiary-bg-msb w-5 h-5 flex items-center justify-center ${monedaSeleccionada.value === 'P' ? 'bg-tertiary-bg-msb' : 'bg-white border-5 border-separate'}`}>
-                      {monedaSeleccionada.value === 'P' && <div className="w-4 h-4 border-2 rounded-full"></div>}
+                    <div className={`rounded-full border bg-tertiary-bg-msb w-5 h-5 flex items-center justify-center ${filterStore.moneda?.value === 'P' ? 'bg-tertiary-bg-msb' : 'bg-white border-5 border-separate'}`}>
+                      {filterStore.moneda?.value === 'P' && <div className="w-4 h-4 border-2 rounded-full"></div>}
                     </div>
                     <span className={"text-secondary-text-msb font-base  text-sm md:text-md lg:text-lg"}>Pesos</span>
                   </label>
@@ -291,11 +300,11 @@ const ResultsPage = ({ selects, locations }: Props) => {
                       className="hidden"
                       id="moneda"
                       value="D"
-                      checked={monedaSeleccionada.value === 'D'}
+                      checked={filterStore.moneda?.value === 'D'}
                       onChange={() => handleCheckbox("moneda", "D")}
                     />
-                    <div className={`rounded-full border bg-tertiary-bg-msb w-5 h-5 flex items-center justify-center ${monedaSeleccionada.value === 'D' ? 'bg-tertiary-bg-msb' : 'bg-white border-5 border-separate'}`}>
-                      {monedaSeleccionada.value === 'D' && <div className="w-4 h-4 border-2 rounded-full"></div>}
+                    <div className={`rounded-full border bg-tertiary-bg-msb w-5 h-5 flex items-center justify-center ${filterStore.moneda?.value === 'D' ? 'bg-tertiary-bg-msb' : 'bg-white border-5 border-separate'}`}>
+                      {filterStore.moneda?.value === 'D' && <div className="w-4 h-4 border-2 rounded-full"></div>}
                     </div>
                     <span className={"text-secondary-text-msb font-base  text-sm md:text-md lg:text-lg"}>U$D</span>
                   </label>
@@ -324,9 +333,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
               </div>
               <div class="lg:col-start-4 lg:col-end-13 lg:hidden flex items-end justify-between w-full mt-4">
                 <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.fichas.length : 0}</span> resultados con tu búsqueda</p>
-                <Button onClick={orderAscDesc} addStyles="bg-transparent hover:bg-transparent p-0 m-0">
-                  <div className="flex items-center text-primary-text-msb text-sm md:text-md lg:text-lg font-bold  gap-1"> Ordenar <ArrowSortIcon /></div>
-                </Button>
+                <SelectField id="ordenar"  variant="secondary" addStyles="bg-transparent relative w-full h-[56px] transition-all flex justify-between items'end h-fit py-0 w-fit" onChange={handleSelect} defaultOption={filterStore.ordenar} opts={filtersformatted.ordenar}><ArrowSortIcon/></SelectField>
               </div>
             </div>
           </aside>
