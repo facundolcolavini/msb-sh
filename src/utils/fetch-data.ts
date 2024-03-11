@@ -40,7 +40,9 @@ export async function fetchData<T>(
   }
 
   try {
-    const response = await fetch(url.toString());
+    const controller = new AbortController();
+    const signal = controller.signal; 
+    const response = await fetch(url.toString() , { signal });
     if (!response.ok) {
       throw new Error('Error al obtener los datos');
     }

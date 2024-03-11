@@ -34,9 +34,12 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
   };
 
   const fetchResults = async () => {
+    // Cancelar la petición anterior si existe  con abort 
+    const controller = new AbortController();
+    const signal = controller.signal;
     try {
       setLoading(true);
-      const response = await fetch(`/api/results.json?${searchPStore}&page=${filterStore?.page?.value}`);
+      const response = await fetch(`/api/results.json?${searchPStore}&page=${filterStore?.page?.value}` , { signal });
 
       const data: APIResponseResultsRecords = await response.json();
 
