@@ -13,10 +13,12 @@ let prop = url.toString().split("/").pop();
 let suc = prop?.split("-")[0] ?? "";
 let id = prop?.split("-")[1] ?? "";
 const data = await getEntrepreneurshipById(id)
+console.log(data)
 const amig = capitalize(data.emprendimiento[0].amigable.replaceAll("-" , " "))
+const image  = data.emprendimiento[0].img_princ;
 ---
 
-<Layout title={data?.emprendimiento[0]?.titulo} description={amig}>
+<Layout title={data?.emprendimiento[0]?.titulo} description={amig} img={image}>
   <section class="bg-[#FFFBF4] h-full py-2">
 
       <EntrepreneurshipDetail

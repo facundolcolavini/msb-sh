@@ -18,7 +18,7 @@ const description =
   export const prerender = true;
 const { resultado: resEmprendimientos } = (await fetchData(
   "resultados.emprendimientos",
-  { amaira: "false" },
+  { amaira: "true" },
 )) as APIResponseEntrepreneurship;
 const { emprendimiento: entrepreneurship, img } =
   resEmprendimientos as ResultEntrepreneurship;
