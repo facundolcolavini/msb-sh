@@ -29,8 +29,10 @@ const { title, description , img } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <!-- Img -->
     <meta property="og:image" content={img} />
+    <meta property="og:image:url" content={img} />
     <meta name="generator" content={Astro.generator} />
     <meta name="view-transition" content="same-origin" />
+    <link rel="image_src" href={img ?? "/images/logo.png"}>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <ViewTransitions />
