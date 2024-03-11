@@ -5,11 +5,11 @@ import { addFilterValue, filterItems, searchParamsStore } from '../../../store/f
 import "../ui/Selects/selectsField.css";
 
 interface Props {
-    filterOptsLocations:  OutputOption[] 
-    propIdRef :string;
+    filterOptsLocations: OutputOption[]
+    propIdRef: string;
 }
 /* AJUSTA LOS PARAMETROS DE BUSCA Y LA LISTA DE OPCIONES  */
-const SearchDebounce = ({ filterOptsLocations,propIdRef }: Props) => {
+const SearchDebounce = ({ filterOptsLocations, propIdRef }: Props) => {
     const filters = filterItems.get();
     const params = searchParamsStore.get();
     const [searchTerm, setSearchTerm] = useState<OutputOption>(filters[propIdRef]);
@@ -51,14 +51,14 @@ const SearchDebounce = ({ filterOptsLocations,propIdRef }: Props) => {
     useEffect(() => {
         // Ajustar la altura del listado de opciones al contenido
         if (listContainerRef.current) {
-            const maxHeight = window.innerHeight - listContainerRef.current.getBoundingClientRect().top - 100; // 20px de margen inferior
+            const maxHeight = window.innerHeight - listContainerRef.current.getBoundingClientRect().top - 160; // 20px de margen inferior
             listContainerRef.current.style.maxHeight = `${maxHeight}px`;
         }
     }, [listOpts]);
 
     // Actualizar la url con los filtros del buscador 
     useEffect(() => {
- 
+
         if (filters[propIdRef]?.value === '' && filters[propIdRef]?.label === '') {
             setSearchTerm({ label: filters[propIdRef]?.label, value: filters[propIdRef]?.value });
         }
@@ -75,6 +75,46 @@ const SearchDebounce = ({ filterOptsLocations,propIdRef }: Props) => {
         setShowResults(false); // Ocultar el listado después de seleccionar una opción
     };
 
+    // Funcion para escuchar el evento de click fuera del input y cerrar el listado de opciones 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (listContainerRef.current && !listContainerRef.current.contains(event.target as Node)) {
+                setShowResults(false);
+            }
+        };
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, []);
+
+    // Funcion para habilitar la navegacion con teclas de opciones del listado y seleccionar con enter el listado de opciones  y Tambien marcar la opcion seleccionada cuando se navega con las flechas 
+    useEffect(() => {
+        const handleKeyPress = (event: KeyboardEvent) => {
+            if (showResults && listOpts.length > 0) {
+                const currentOptionIndex = listOpts.findIndex(option => option.label === searchTerm.label);
+                switch (event.key) {
+                    case 'ArrowUp':
+                        if (currentOptionIndex > 0) {
+                            setSearchTerm(listOpts[currentOptionIndex - 1]);
+                        }
+                        break;
+                    case 'ArrowDown':
+                        if (currentOptionIndex < listOpts.length - 1) {
+                            setSearchTerm(listOpts[currentOptionIndex + 1]);
+                        }
+                        break;
+                    case 'Enter':
+                        addFilterValue({ [propIdRef]: { value: searchTerm.value, label: searchTerm.label } });
+                        setShowResults(false);
+                        break;
+                }
+            }
+        };
+        document.addEventListener('keydown', handleKeyPress);
+        return () => document.removeEventListener('keydown', handleKeyPress);
+    }, [showResults, listOpts, searchTerm]);
+
+
+
     return (
         <div className={`relative top-0  w-full`}>
             <InputField
@@ -90,7 +130,7 @@ const SearchDebounce = ({ filterOptsLocations,propIdRef }: Props) => {
             {showResults && (
                 <ul
                     ref={listContainerRef}
-                    className={`absolute z-20 top-12 bg-white w-full border border-gray-300 rounded-md shadow-md overflow-auto scrollbar scrollbar-thumb-color scrollbar-track-color`}
+                    className={`absolute z-20 inset-50 bg-white w-full border border-gray-300 rounded-md shadow-md overflow-auto scrollbar scrollbar-thumb-color scrollbar-track-color`}
                 >
                     {listOpts.length > 0 ? (
                         listOpts.map(location => (
@@ -98,6 +138,7 @@ const SearchDebounce = ({ filterOptsLocations,propIdRef }: Props) => {
                                 key={`${location.label}-${location.value}`}
                                 className={`py-2 px-4 relative z-10 hover:bg-gray-200 cursor-pointer`}
                                 onClick={(e) => handleOptionSelect(location)}
+
                             >
                                 {location.label}
                             </li>

@@ -80,10 +80,8 @@ const ResultsPage = ({ selects, locations }: Props) => {
   })
 
 
-  console.log(filterStore)
   useEffect(() => {
     fetchResults()
-    setResetPagination(false)
     setIsSubmitting(false)
   }, [searchPStore])
 
@@ -159,7 +157,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
   };
 
   // Obtenemos los searchParams para mandarlo en el fetch y actualizar la url de busqueda.
-  const onSubmit = async (e: MouseEvent) => {
+  const onSubmit = async (e: MouseEvent | KeyboardEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const currentUrl = window.location.pathname;
@@ -169,6 +167,18 @@ const ResultsPage = ({ selects, locations }: Props) => {
     await fetchResults()
     setResetPagination(false)
   };
+
+  // Evento enter para el input de búsqueda
+  const handleKeyPress = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      onSubmit(e);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [searchPStore]);
 
   return (
     <article className="py-10">
@@ -328,7 +338,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
                   }
                   addStyles="w-full text-md border-2 border-gray-300 rounded-md flex justify-center items-center"
                 >
-                  Limpiar Filtros
+                  Limpiar búsqueda
                 </Button>
               </div>
               <div class="lg:col-start-4 lg:col-end-13 lg:hidden flex items-end justify-between w-full mt-4">

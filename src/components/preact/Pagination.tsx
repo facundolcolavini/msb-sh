@@ -1,7 +1,7 @@
 import type { APIResponseResultsRecords, Datos as DatosResults, Result } from "@interfaces/results.records.interfaces";
 import { useEffect, useState } from "preact/hooks";
 import Button from "./ui/Buttons/Button";
-import { searchParamsStore } from "src/store/filterStore";
+import { addFilterValue, filterItems, searchParamsStore } from "src/store/filterStore";
 import ChevronRight from "./Icons/ChevronRight";
 import ChevronLeft from "./Icons/ChevronLeft";
 
@@ -14,23 +14,29 @@ interface Props {
 }
 
 const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSubmitting }: Props) => {
-  const [currentPage, setCurrentPage] = useState(0);
   const searchPStore = searchParamsStore.get()
-
+  const filterStore = filterItems.get();
+  const [currentPage, setCurrentPage] = useState(Number(filterStore?.page?.value) ? Number(filterStore?.page?.value): 0);
   useEffect(() => {
-    setCurrentPage(0);
+    setCurrentPage(Number(filterStore?.page?.value) ? Number(filterStore?.page?.value): 0);
   }, [resetPagination, isSubmitting]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 0 && newPage <= paginationData?.paginas - 1) {
       setCurrentPage(newPage);
+      addFilterValue(
+        {
+          ...filterStore,
+          page: { label: "page", value: newPage.toString() },
+        }
+       );
     }
   };
 
   const fetchResults = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/results.json?${searchPStore}&page=${currentPage}`);
+      const response = await fetch(`/api/results.json?${searchPStore}&page=${filterStore?.page?.value}`);
 
       const data: APIResponseResultsRecords = await response.json();
 
@@ -75,7 +81,7 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
       
       <Button
         key={page}
-        addStyles={`hover:bg-[#E9ECEF] py-4 px-6 w-100 border-2 border-gray-200 rounded focus:outline-none  ${page === currentPage ? 'relative z-1 border-gray-200 bg-gray-200 hover:bg-gray-200 active:bg-gray-300 focus:outline-none focus:ring focus:ring-[#939B41] ' : 'py-4 px-6'} `}
+        addStyles={`hover:bg-[#E9ECEF] py-4 px-6 w-100 border-2 border-gray-200 rounded focus:outline-none  ${page === currentPage ? 'relative z-1 border-gray-200 bg-gray-200 hover:bg-gray-200 active:bg-gray-300 focus:outline-none focus:ring focus:ring-[#939B41] border-[#939B41] ' : 'py-4 px-6'} `}
         variant={"secondary"}
         onClick={() => handlePageChange(page)}
         disabled={page >= paginationData?.paginas - 1}

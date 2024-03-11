@@ -63,12 +63,24 @@ const SearchHome = ({ selects, locations }: Props) => {
 
   }, [])
 
-  const send = async (e: MouseEvent) => {
+  const send = async (e: MouseEvent | KeyboardEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
     navigate(`/resultados-de-busqueda${searchPStore.length > 0 ? `?${searchPStore}` : ''}`);
   }
+
+  // Evento enter para el input de búsqueda
+  const handleKeyPress = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      send(e);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [searchParams]);
 
   return (
     <>

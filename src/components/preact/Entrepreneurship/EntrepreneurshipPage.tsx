@@ -178,7 +178,7 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
       <div className="py-20">
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 md:px-0 px-3">
-        <div class="lg:col-start-4 lg:col-end-13 md:hidden hidden lg:flex items-end justify-between w-full">
+          <div class="lg:col-start-4 lg:col-end-13 md:hidden hidden lg:flex items-end justify-between w-full">
             <p className="font-bold text-primary-text-msb text-base">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.emprendimiento) ? results?.emprendimiento.length : 0}</span> resultados con tu búsqueda</p>
             <Button onClick={orderAscDesc} addStyles="bg-transparent hover:bg-transparent p-0 m-0">
               <div className="flex items-center text-primary-text-msb text-sm md:text-md lg:text-lg font-bold  gap-1"> Ordenar <ArrowSortIcon /></div>
@@ -206,7 +206,7 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
                   }
                   addStyles="w-full h-[56px] text-md border-2 border-gray-300 rounded-md flex justify-center items-center"
                 >
-                  Limpiar Filtros
+                  Limpiar búsqueda
                 </Button>
               </div>
               <div class="lg:col-start-4 lg:col-end-13 lg:hidden flex items-end justify-between w-full mt-4">
