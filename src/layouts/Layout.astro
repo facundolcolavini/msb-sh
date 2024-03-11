@@ -15,9 +15,10 @@ const user = {
 interface Props {
   title: string;
   description: string;
+  img?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description , img } = Astro.props;
 ---
 
 <!doctype html>
@@ -28,7 +29,7 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <!-- Img -->
     <meta property="og:image" content="images/logo.png">
-    <meta property="og:image:url" content="images/logo.png">
+    <meta property="og:image:url" content={img ?? "images/logo.png"}>
     <meta itemprop="image" content="images/logo.png">
     <meta name="generator" content={Astro.generator} />
     <meta name="view-transition" content="same-origin" />
