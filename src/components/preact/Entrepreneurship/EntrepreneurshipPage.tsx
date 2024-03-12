@@ -29,10 +29,10 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
     }, // En pozo , En construccion , Terminado
     /*  tipo:{ label: 'tipo', isLocation: false, isDefault: false }, */
     ed_tip: { value: '', label: 'Tipo' },
-    ed_amb: { value: 'All', label: 'Cantidad de Ambientes' },
     ed_loc: { value: 'All', label: 'Localidad' },
-    ed_iub: { value: '', label: '' },
-    moneda: { value: 'D', label: 'U$D' },
+    ed_bar: { value: 'All', label: 'Barrio' },
+    ed_cal: { value: 'All', label: 'Calle' },
+    ed_cat: { value: 'All', label: 'Categoria' },
     valor_desde: { value: 'All', label: 'Desde' },
     valor_hasta: { value: 'All', label: 'Hasta' },
     /*   rppagina: { value: '15', label: '15' }, */
@@ -40,7 +40,6 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
 
   const [results, setResults] = useState<ResultEntrepreneurship | null>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [monedaSeleccionada, setMonedaSeleccionada] = useState<OutputOption>(defaultOptions?.moneda);
 
   const filters: FilterSelects = {
     selects,
@@ -50,11 +49,8 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
 
   const filterToFill: FilterDefault[] = filterEntrePreneurshipToFillDefault;
   const filtersformatted = formatAndUseSearch(filters, filterToFill, labelMappingEntrePreneurshipForQuerys)
-
   const { handleSelect, resetSelect, handleCheckboxChange, filtersSelected } = useSearch(filtersformatted, {
-    ...defaultOptions, moneda:
-      monedaSeleccionada
-    ,
+    ...defaultOptions,
     ...filterStore,
     ed_est: {
       value: window.location.search?.includes('Pozo') ? 'En Pozo' : window.location.search?.includes('Construccion') ? 'En Construccion' : window.location.search?.includes('Terminado') ? 'Terminado' : filterStore.ed_est?.value ?? 'En Pozo',
@@ -68,6 +64,9 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
 
   useEffect(() => {
     fetchResults()
+    const currentUrl = window.location.pathname;
+    const newUrl = `${currentUrl}${searchPStore.length > 0 ? `?${searchPStore}` : ''}`;
+    window.history.pushState({}, '', newUrl);
   }, [searchPStore])
 
   const fetchResults = async () => {
@@ -88,25 +87,16 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
     }
   };
 
-  const handleCheckbox = (id: string, value: string) => {
-    const updatedMonedaSeleccionada: OutputOption = {
-      value: value,
-      label: id,
-    };
-    setMonedaSeleccionada(updatedMonedaSeleccionada);
-    handleCheckboxChange(id, value);
-  };
-
   const resetAndFetch = async (e: Event) => {
     e.preventDefault();
     e.stopPropagation();
     // Establecer los filtros en los valores predeterminados
     resetSelect(defaultOptions);
-    setMonedaSeleccionada(defaultOptions.moneda);
     // Reinicia el estado de los filtros y realiza el fetch con los filtros predeterminados
     resetFilter(defaultOptions);
     await fetchResults();
   };
+
   const orderAscDesc = () => {
     // Al darle click lo ordena de menor a mayor si se da otro click lo ordena de mayor a menor y asi sucesivamente
     if (Array.isArray(results?.emprendimiento)) {
@@ -125,17 +115,6 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
       })
     }
   }
-
-  // Obtenemos los searchParams para mandarlo en el fetch y actualizar la url de busqueda.
-  const onSubmit = async (e: MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const currentUrl = window.location.pathname;
-    const newUrl = `${currentUrl}${searchPStore.length > 0 ? `?${searchPStore}` : ''}`;
-    window.history.pushState({}, '', newUrl);
-    await fetchResults()
-  };
-
 
   return (
     <div className={'container mx-auto'}>
@@ -190,12 +169,17 @@ const EntrepreneurshipPage = ({ selects, locations }: Props) => {
               <div className="flex mb-4">
                 <SelectField id="ed_tip" onChange={handleSelect} defaultOption={filterStore.ed_tip} opts={filtersformatted.ed_tip} />
               </div>
-
               <div className="flex mb-4">
                 <SelectField id="ed_loc" onChange={handleSelect} defaultOption={filterStore.ed_loc} opts={filtersformatted.ed_loc} />
               </div>
               <div className="flex mb-4">
-                <SelectField id="ed_amb" onChange={handleSelect} defaultOption={filterStore.ed_amb} opts={filtersformatted.ed_amb} />
+                <SelectField id="ed_bar" onChange={handleSelect} defaultOption={filterStore.ed_bar} opts={filtersformatted.ed_bar} />
+              </div>
+              <div className="flex mb-4">
+                <SelectField id="ed_cal" onChange={handleSelect} defaultOption={filterStore.ed_cal} opts={filtersformatted.ed_cal} />
+              </div>
+              <div className="flex mb-4">
+                <SelectField id="ed_cat" onChange={handleSelect} defaultOption={filterStore.ed_cat} opts={filtersformatted.ed_cat} />
               </div>
               <div className="mt-4">
                 <Button

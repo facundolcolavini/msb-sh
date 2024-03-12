@@ -3,6 +3,7 @@ import type { ApiResponseConsultationError } from "@interfaces/consultation.prop
 import { useState } from "preact/hooks";
 import { initContactForm, type ContactFormProperty } from "src/models/contact/contact";
 import { formContactValidator } from "src/models/validations/forms.validations";
+import ErrorIcon from "../Icons/ErrorIcon";
 import OkIcon from "../Icons/OkIcon";
 import WarningAlertIcon from "../Icons/WarningAlertIcon";
 import { WhatsAppIcon } from "../Icons/WhatsAppIcon";
@@ -25,7 +26,7 @@ const ContactForm = ({ id, codsuc, tipo = '', contact_prop, desde = 'pagweb', to
     const [erroMsg, setErroMsg] = useState('');
     const {
         isFormValid,
-        formState,
+        changeFields,
         contactEmail,
         contactMessage,
         contactPhone,
@@ -53,7 +54,7 @@ const ContactForm = ({ id, codsuc, tipo = '', contact_prop, desde = 'pagweb', to
             const response = await fetch(`/api/consultationProperty.json?method=POST&telefono=${formData.get("contactPhone")}&comentario=${formData.get("contactMessage")}&nombre=${formData.get("contactName")}&email=${formData.get("contactEmail")}&id=${id}&tipo=${tipo}&codsuc=${codsuc}&desde=${desde}&ip=${desde}_${codsuc.toUpperCase()}${id}`)
             const data = await response.json()
             if (data.hasOwnProperty('error')) {
-                setFormSubmitted(false);
+                setFormSubmitted(false)
                 setFormError(true);
                 throw data
             } else {
@@ -76,14 +77,14 @@ const ContactForm = ({ id, codsuc, tipo = '', contact_prop, desde = 'pagweb', to
                     <p className={'text-center font-thin pb-5 text-secondary-text-msb'}>Envianos tu consulta y te responderemos a la brevedad</p>
                 </header>
                 <form className="grid grid-cols text-start gap-3 h-fit" noValidate onSubmit={sendContactForm}>
-                    <InputField value={contactName} onChange={onInputChange} icon={contactNameValid === null ? <OkIcon /> : <></>} addStyles="h-12" name="contactName" id="contactName" type="text" placeholder="*Nombre" />
-                    {(formSubmitted && contactNameValid) && <label htmlFor="contactName" className="text-xs px-3 font-thin text-red-500">{contactNameValid}</label>}
-                    <InputField value={contactEmail} onChange={onInputChange} icon={contactEmailValid === null ? <OkIcon /> : <></>} addStyles="h-12" name="contactEmail" id="contactEmail" type="email" placeholder="*Email" />
-                    {(formSubmitted && contactEmailValid) && <label htmlFor="contactEmail" className="text-xs px-3 font-thin text-red-500">{contactEmailValid}</label>}
-                    <InputField value={contactPhone} onChange={onInputChange} icon={contactPhoneValid === null ? <OkIcon /> : <></>} addStyles="h-12" name="contactPhone" id="contactPhone" type="phone" placeholder="*Teléfono" />
-                    {(formSubmitted && contactPhoneValid) && <label htmlFor="contactPhone" className="text-xs px-3 font-thin text-red-500">{contactPhoneValid}</label>}
-                    <InputField value={contactMessage} onChange={onInputChange} icon={contactMessageValid === null ? <OkIcon /> : <></>} addStyles="place-content-start h-full" name="contactMessage" id="contactMessage" type="textarea" placeholder="Me gustaría que me contacten por esta propiedad. Gracias..." />
-                    {(formSubmitted && contactMessageValid) && <label htmlFor="contactMessage" className="text-xs px-3 font-thin text-red-500">{contactMessageValid}</label>}
+                    <InputField value={contactName} onChange={onInputChange} icon={contactNameValid === null ? <OkIcon /> : changeFields?.contactName === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={contactNameValid === null} error={changeFields?.contactName} addStyles="h-12" name="contactName" id="contactName" type="text" placeholder="*Nombre" />
+                    {(changeFields?.contactName && contactNameValid) && <label htmlFor="contactName" className="text-xs px-2 font-thin text-red-700">{contactNameValid}</label>}
+                    <InputField value={contactEmail} onChange={onInputChange} icon={contactEmailValid === null ? <OkIcon /> : changeFields?.contactEmail === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={contactEmailValid === null} error={changeFields?.contactEmail} addStyles="h-12" name="contactEmail" id="contactEmail" type="email" placeholder="*Email" />
+                    {(changeFields?.contactEmail && contactNameValid) && <label htmlFor="contactEmail" className="text-xs px-2 font-thin text-red-700">{contactEmailValid}</label>}
+                    <InputField value={contactPhone} onChange={onInputChange} icon={contactPhoneValid === null ? <OkIcon /> : changeFields?.contactPhone === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={contactPhoneValid === null} error={changeFields?.contactPhone} addStyles="h-12" name="contactPhone" id="contactPhone" type="phone" placeholder="*Teléfono" />
+                    {(changeFields?.contactPhone && contactPhoneValid) && <label htmlFor="contactPhone" className="text-xs px-2 font-thin text-red-700">{contactPhoneValid}</label>}
+                    <InputField value={contactMessage} onChange={onInputChange} icon={contactMessageValid === null ? <OkIcon /> : changeFields?.contactMessage === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={contactMessageValid === null} error={changeFields?.contactMessage} addStyles="place-content-start h-full" name="contactMessage" id="contactMessage" type="textarea" placeholder="Me gustaría que me contacten por esta propiedad. Gracias..." />
+                    {(changeFields?.contactMessage && contactMessageValid) && <label htmlFor="contactMessage" className="text-xs px-2 font-thin text-red-700">{contactMessageValid}</label>}
                     <Button variant={`${isFormValid ? "primary" : "disabled"}`} addStyles={`text-white transition-all h-14 text-sm md:text-md lg:text-lg border-gray-50 flex justify-center items-center gap-3`} type="submit">Enviar Consulta {formSubmitted && isFormValid && <Spinner />}</Button>
                     <h2 className={'font-bold text-center tracking-normal pb-1 text-base md:text-md lg:text-lg'}>OTRA VÍA DE CONTACTO</h2>
                     {contact_prop !== "" && <a target={'_blank'} href={contact_prop} className={'mx-auto '}>

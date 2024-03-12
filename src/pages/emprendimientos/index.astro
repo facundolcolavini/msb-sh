@@ -37,7 +37,6 @@ let selects = {
   ...selectEntrepreneurship?.ambientes5,
   ]?.filter((v, i, a) => a.findIndex((t) => t.value === v.value) === i),
 }
-
 const locations = (await getLocations({ ed_int: "True" })) as ResultLocation;
 ---
 

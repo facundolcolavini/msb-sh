@@ -33,8 +33,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
   };
 
   const filterToFill: FilterDefault[] = filterResultToFill;
-  const filtersformatted = formatAndUseSearch(filters, filterToFill, labelMappingResultForQuerys)
-
+  const filtersformatted = formatAndUseSearch(filters, filterToFill, labelMappingResultForQuerys);
 
   const defaultOptions = {
     tipo_operacion: {  value: window.location.search?.includes('tipo_operacion') ? 
@@ -62,8 +61,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [monedaSeleccionada, setMonedaSeleccionada] = useState<OutputOption>(defaultOptions?.moneda);
-// Obtene los search params de la url 
-  const searchWindowParams = new URLSearchParams(window.location.search);
+
   const { handleSelect, resetSelect, handleCheckboxChange, filtersSelected } = useSearch(filtersformatted, {
     ...defaultOptions, moneda:
       monedaSeleccionada
@@ -78,7 +76,6 @@ const ResultsPage = ({ selects, locations }: Props) => {
       label: ""
     }
   })
-
 
   useEffect(() => {
     fetchResults()
@@ -107,25 +104,6 @@ const ResultsPage = ({ selects, locations }: Props) => {
       console.log(error);
     }
   };
-
-  const orderAscDesc = () => {
-    // Al darle click lo ordena de menor a mayor si se da otro click lo ordena de mayor a menor y asi sucesivamente
-    if (Array.isArray(results?.fichas)) {
-      results?.fichas.map((result) => {
-        const precio = result.precio.replace(/[$.]/g, '')
-        return {
-          ...result,
-          precio: Number(precio)
-        }
-      })
-        .sort((a, b) => a.precio - b.precio)
-      // Actualizar el estado de los resultados con el ordenamiento 
-      setResults({
-        ...results,
-        fichas: results?.fichas.reverse()
-      })
-    }
-  }
 
   const handleCheckbox = (id: string, value: string) => {
     const updatedMonedaSeleccionada: OutputOption = {

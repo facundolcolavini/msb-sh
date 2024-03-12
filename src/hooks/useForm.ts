@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
-import type { JSX } from 'preact';
 import type { FormValidations, formCheckedValues } from 'src/models/validations/forms.validations';
 
 
@@ -13,6 +12,7 @@ export const useForm = <T>(initialValues: T, formValidations: FormValidations = 
 
     const [formState, setFormState] = useState<typeof initialValues>(initialValues);//{email: '', password: '', displayName: '',} RegisterUser = T
     const [formValidation, setValidations] = useState({} as formCheckedValues);
+    const [changeFields, setChangeFields] = useState<Record<string, boolean>>({});
 
     useEffect(() => {
         createValidators()
@@ -31,18 +31,19 @@ export const useForm = <T>(initialValues: T, formValidations: FormValidations = 
 
 
 
-    //Inputs Handlers
+    // Actualiza la función onInputChange para marcar el campo como tocado
     const onInputChange = ({ target }: Event): void => {
-        const { name, value }: inputF = target as HTMLInputElement
+        const { name, value }: inputF = target as HTMLInputElement;
+        setChangeFields(prev => ({ ...prev, [name]: true }));
         setFormState(
             (prev: typeof initialValues) => ({
                 ...prev, // Campos anteriores
                 [name]: value // Valor del input o de campos {email: , password: , displayName:}
             })
-        )
-    }
-
+        );
+    };
     const onResetForm = (): void => {
+        setChangeFields({})
         setFormState(initialValues)
     }
 
@@ -65,6 +66,7 @@ export const useForm = <T>(initialValues: T, formValidations: FormValidations = 
         onInputChange,
         onResetForm,
         ...formValidation,
-        isFormValid
+        isFormValid,
+        changeFields
     }
 }

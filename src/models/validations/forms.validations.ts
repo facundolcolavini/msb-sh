@@ -32,7 +32,7 @@ export const formContactValidator = {
       'El nombre es requerido y solo puede contener letras y espacios'
     ],
     contactEmail: [
-      (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()), 
+      (value: string): boolean => /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value.trim()),
       'El correo debe tener un formato válido'
     ],
     contactPhone: [

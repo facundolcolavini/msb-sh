@@ -74,26 +74,23 @@ export const labelMappingResultForQuerys = {
 };
 // Nombre de los selects 
 export const filterEntrePreneurshipToFillDefault = [
-  /*   { label: 'tipo', isLocation: false, isDefault: false }, */
   { label: 'ed_est', isLocation: false, isDefault: true },
-  /*   { label: 'estado', isLocation: false, isDefault: true }, */
   { label: 'tipo', isLocation: false, isDefault: false },
-  { label: 'ambientes', isLocation: false, isDefault: false },
   { label: 'localidad', isLocation: false, isDefault: false },
-  /*   { label: 'ubicaciones', isLocation: true, isDefault: false }, */
-  { label: 'ed_iub', isLocation: true, isDefault: false },
+  { label: 'barrio', isLocation: false, isDefault: false },
+  { label: 'calles', isLocation: false, isDefault: false },
+  { label: 'categoria', isLocation: false, isDefault: false },
   { label: 'valor', isLocation: false, isDefault: false },
-  { label: 'moneda', isLocation: false, isDefault: true },
-  /*   { label: 'rppagina', isLocation: false, isDefault: true } */
 
 ]
 // Se usa para renombrar propiedades
 export const labelMappingEntrePreneurshipForQuerys = {
   'tipo': 'ed_tip',
-  'ambientes': 'ed_amb',
   'localidad': 'ed_loc',
+  'barrio': 'ed_bar',
+  'calles': 'ed_cal',
+  'categoria': 'ed_cat',
   'operacion': 'tipo_operacion',
-  'ubicaciones': 'ed_iub', // Este se actualizará más adelante
   'valor_maximo': 'valor_hasta',
   'valor_minimo': 'valor_desde'
 };
