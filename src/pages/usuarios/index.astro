@@ -5,9 +5,9 @@ import Layout from "@layouts/Layout.astro"
 const titlePage = "Usuarios"
 const description = "CRUD de usuarios"
 
-const users = await fetch(`${Astro.url.origin}/api/users/users`)
-console.log(users)
-const data = await users.status === 200 ? await users.json() : null
+const users = await fetch(`${Astro.url.host}/api/users.json`)
+
+
 
 ---
 
@@ -16,7 +16,7 @@ const data = await users.status === 200 ? await users.json() : null
     <h1>{titlePage}</h1>
     <p>{description}</p>
    <!--  <ul>
-        {users?.map((user:any ) => (
+        {users!.map((user:any ) => (
         <li>
             {user.name} {user.lastName}
         </li>
