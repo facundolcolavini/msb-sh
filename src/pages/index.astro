@@ -33,12 +33,6 @@ import Layout from "@layouts/Layout.astro";
 import { getAllSelects, getAllSelectsEntrepreneurship, getLocations } from "@services/get-selects-form";
 import { fetchData } from "@utils/fetch-data";
 
-
-import { db, Users } from 'astro:db';
-
-const users = await db.select().from(Users);
-
-  console.log(users,'Usuarios');
 const { resultado } = (await fetchData(
   "fichas.destacadas",
 )) as APIResponseResultsRecords;
