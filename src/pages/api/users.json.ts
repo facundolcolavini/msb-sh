@@ -3,7 +3,6 @@ import type { APIRoute } from 'astro';
 import { Users, db } from 'astro:db';
 
 
-
 // Astro API endpoint for user CRUD 
 
 export const GET: APIRoute = async (ctx) => {
@@ -14,7 +13,7 @@ export const GET: APIRoute = async (ctx) => {
         { id: Math.floor(Math.random() * 1000000), name: 'Jane', lastName: 'Doe', password:'', email: 'jane@doe.com' },
     ]); */
             const users = await db.select().from(Users)
-            console.log(users)
+
                 return new Response(JSON.stringify( users ), {
                     headers: {
                         'content-type': 'application/json',
