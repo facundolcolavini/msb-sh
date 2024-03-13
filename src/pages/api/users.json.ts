@@ -3,6 +3,7 @@ import type { APIRoute } from 'astro';
 import { Users, db } from 'astro:db';
 
 
+
 // Astro API endpoint for user CRUD 
 
 export const GET: APIRoute = async (ctx) => {
