@@ -4,12 +4,12 @@ import { db,Users } from "astro:db";
 
 const titlePage = "Usuarios"
 const description = "CRUD de usuarios"
-
+/* 
 const users = await fetch(`${Astro.url}/api/users.ts`)
 const data = await users.json()
 
-console.log(data)
-
+console.log(data) */
+await db.select().from(Users);
 ---
 
 
