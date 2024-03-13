@@ -8,8 +8,8 @@ export const GET: APIRoute = async (ctx) => {
 
 
             await db.insert(Users).values([
-                { id: 3, name: 'John', lastName: 'Doe', password:'', email: ' john@ doe.com' },
-                { id: 4, name: 'Jane', lastName: 'Doe', password:'',email: ' jane@ doe.com' },
+                { id: 5, name: 'John', lastName: 'Doe', password:'', email: ' john@ doe.com' },
+                { id: 6, name: 'Jane', lastName: 'Doe', password:'',email: ' jane@ doe.com' },
             ]);
               await db.select().from(Users);
     
