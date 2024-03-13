@@ -14,13 +14,16 @@ export const GET: APIRoute = async (ctx) => {
         { id: Math.floor(Math.random() * 1000000), name: 'Jane', lastName: 'Doe', password:'', email: 'jane@doe.com' },
     ]); */
             const users = await db.select().from(Users)
-            console.log(users)
-                return new Response(JSON.stringify( users ), {
-                    headers: {
-                        'content-type': 'application/json',
-                    },
-    });
-
+            //  devuelve los usuarios de la tabla Users
+        if(users){
+            return new Response(JSON.stringify( users ), {
+                headers: {
+                    'content-type': 'application/json',
+                },
+            });
+ 
+   
+        }
 };
  
 /* export const POST: APIRoute = async (ctx) => {
