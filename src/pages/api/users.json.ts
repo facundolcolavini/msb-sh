@@ -9,12 +9,12 @@ import { Users, db } from 'astro:db';
 export const GET: APIRoute = async (ctx) => {
 
 
-    await db.insert(Users).values([
+/*     await db.insert(Users).values([
         { id: Math.floor(Math.random() * 1000000), name: 'John', lastName: 'Doe', password:'', email: 'john@doe.com' },
         { id: Math.floor(Math.random() * 1000000), name: 'Jane', lastName: 'Doe', password:'', email: 'jane@doe.com' },
-    ]);
-            const users = await db.select().from(Users);
-    
+    ]); */
+            const users = await db.select().from(Users)
+            console.log(users)
                 return new Response(JSON.stringify( users ), {
                     headers: {
                         'content-type': 'application/json',
