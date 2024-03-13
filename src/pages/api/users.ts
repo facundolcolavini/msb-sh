@@ -1,4 +1,4 @@
-export const  prerender = true;
+
 import type { APIRoute } from 'astro';
 import { Users, db } from 'astro:db';
 
