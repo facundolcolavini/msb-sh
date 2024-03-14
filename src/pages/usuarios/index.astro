@@ -1,10 +1,12 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import { Users, db } from "astro:db";
 
 const titlePage = "Usuarios";
 const description = "CRUD de usuarios";
-const users = await fetch(`${Astro.url.origin}/api/users.json`);
-const usersData = await users.json();
+/* const users = await fetch(`${Astro.url.origin}/api/getUsers.json`);
+const usersData = await users.json(); */
+const usersData = await db.select().from(Users);
 ---
 
 <Layout title={titlePage} description={description}>
@@ -16,6 +18,9 @@ const usersData = await users.json();
         <table class="table-auto">
           <thead>
             <tr>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold truncate"
+                >Id</th
+              >
               <th class="px-4 py-2 text-gray-700 text-sm font-bold">Nombre</th>
               <th class="px-4 py-2 text-gray-700 text-sm font-bold">Apellido</th
               >
@@ -26,16 +31,26 @@ const usersData = await users.json();
           </thead>
           <tbody>
             {
-              usersData.map((user:any) => (
+              usersData.map((user) => (
                 <tr>
+                  <td class="border px-4 py-2">{user.id}</td>
                   <td class="border px-4 py-2">{user.name}</td>
                   <td class="border px-4 py-2">{user.lastName}</td>
-                  <td class="border px-4 py-2 truncate">{user.email}</td>
+                  <td class="border px-4 py-2 ">{user.email}</td>
                   <td class="border px-4 py-2">
-                    <button id="btnEdit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <button
+                      id="btnEdit"
+                      data-edit={user.id}
+                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
                       Editar
                     </button>
-                    <button  id="btnDelete"class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <button
+                      id={String(user.id)}
+                      data-delete={user.id}
+
+                      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
                       Eliminar
                     </button>
                   </td>
@@ -47,7 +62,10 @@ const usersData = await users.json();
       </div>
 
       <div class="flex justify-center">
-        <form id="add-form" class="grid grid-cols-2 gap-x-2 fixed justify-center">
+        <form
+          id="add-form"
+          class="grid grid-cols-2 gap-x-2 fixed justify-center"
+        >
           <div class="mb-4">
             <label for="name" class="block text-gray-700 text-sm font-bold mb-2"
               >Nombre</label
@@ -98,53 +116,78 @@ const usersData = await users.json();
           <div class="mb-4">
             <button
               id="addBtn"
+              data-add="addBtn"
               type="submit"
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >Agregar</button
             >
           </div>
-          
         </form>
-
-       
-       
+        <!-- Edit Form -->
       </div>
     </div>
   </div>
 </Layout>
 
-
 <script>
-  const AddForm = document.querySelector("#add-form") as HTMLFormElement;
-import { navigate, type EventModule } from "astro:transitions/client";
-import type { TargetedEvent } from "preact/compat";
-  const inputName = document.getElementById("name")
-  const inputlastName = document.getElementById("lastName")
-  const inputPass = document.getElementById("passwor")
-  const inputEmail = document.getElementById("email")
+  import { navigate } from "astro:transitions/client";
 
 
-  /* CRUD de usuarios */
-    AddForm.addEventListener("submit",async(e)=>{
-      e.preventDefault();  
+  document.addEventListener("astro:page-load", (event) => {
+    const AddForm = document.querySelector("#add-form") as HTMLFormElement;
 
-      const formData = new FormData(AddForm)
-      const values = Object.fromEntries(formData)
-        try{
-            /* Call to endpoint POST user */
-          const res = await fetch('/api/users.json/',{
-            method: 'POST',
-            body: JSON.stringify(values)
-          })
-          /* Refresh */
-          if(!res.ok){
-            throw new Error(res.statusText)
-          }
-         navigate("/usuarios")
-          console.log(res)
-        }catch(err){
-          console.log(err)
+    const email = document.querySelector("#email") as HTMLInputElement;
+    const name = document.querySelector("#name") as HTMLInputElement;
+    const lastName = document.querySelector("#lastName") as HTMLInputElement;
+    const password = document.querySelector("#password") as HTMLInputElement;
+    const addBtn = document.getElementById("addBtn") as  HTMLButtonElement
+
+
+    addBtn.addEventListener("click",async (e)=>{
+      e.preventDefault();
+
+      const formData = new FormData(AddForm);
+      const values = Object.fromEntries(formData);
+      try {
+        /* Call to endpoint POST user */
+        const res = await fetch("/api/addUser.json/", {
+          method: "POST",
+          body: JSON.stringify(values),
+        });
+        /* Refresh */
+        if (!res.ok) {
+          throw new Error("No se pudo realizar la peticion a la DB");
         }
-    })
+        navigate("/usuarios");
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    });
 
+    /* Edit functionality */
+    /* When user clicked the add button change into edit form and charge the inputs of edit form with data of row*/
+    const btnEdit = document.querySelectorAll("#btnEdit");
+
+
+    /* Delete button */
+    const deleteBtns = document.querySelectorAll(
+    "[data-delete]"
+  ) as NodeListOf<HTMLButtonElement>;
+    deleteBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const id = (e.target as HTMLInputElement)?.id 
+        if(!id) return console.log("No se encontro el id");
+        
+        fetch(`/api/${id}.json/`, {
+          method: "DELETE",
+        }).then((res) => {
+          if (!res.ok) {
+            throw new Error("No se pudo realizar la peticion a la DB");
+          }
+          navigate("/usuarios");
+        });
+      });
+    });
+  });
 </script>
