@@ -132,7 +132,7 @@ import type { TargetedEvent } from "preact/compat";
       const values = Object.fromEntries(formData)
         try{
             /* Call to endpoint POST user */
-          const res = await fetch('/api/useraas.json/',{
+          const res = await fetch('/api/users.json/',{
             method: 'POST',
             body: JSON.stringify(values)
           })
