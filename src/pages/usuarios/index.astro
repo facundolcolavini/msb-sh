@@ -1,28 +1,150 @@
 ---
-import Layout from "@layouts/Layout.astro"
+import Layout from "@layouts/Layout.astro";
 
-
-const titlePage = "Usuarios"
-const description = "CRUD de usuarios"
-const users = await fetch(`${Astro.url.origin}/api/users.json`)
-const usersData = await users.json()
-
-/* 
-
- */
-
+const titlePage = "Usuarios";
+const description = "CRUD de usuarios";
+const users = await fetch(`${Astro.url.origin}/api/users.json`);
+const usersData = await users.json();
 ---
 
+<Layout title={titlePage} description={description}>
+  <div class="container mx-auto">
+    <h1 class="text-gray-450 text-2xl">{titlePage}</h1>
+    <div class="grid lg:grid-cols-2 place-content-between">
+      <div>
+        <!-- Table  -->
+        <table class="table-auto">
+          <thead>
+            <tr>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Nombre</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Apellido</th
+              >
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Email</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Acciones</th
+              >
+            </tr>
+          </thead>
+          <tbody>
+            {
+              usersData.map((user:any) => (
+                <tr>
+                  <td class="border px-4 py-2">{user.name}</td>
+                  <td class="border px-4 py-2">{user.lastName}</td>
+                  <td class="border px-4 py-2 truncate">{user.email}</td>
+                  <td class="border px-4 py-2">
+                    <button id="btnEdit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                      Editar
+                    </button>
+                    <button  id="btnDelete"class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
 
-<Layout title={titlePage}  description={description}>
-    <h1>{titlePage}</h1>
-    <p>{description}</p>
-    <ul>
-        {usersData!.map((user:any ) => (
-        <li>
-            {user.name} {user.lastName}
-        </li>
-        ))}
-    </ul>
+      <div class="flex justify-center">
+        <form id="add-form" class="grid grid-cols-2 gap-x-2 fixed justify-center">
+          <div class="mb-4">
+            <label for="name" class="block text-gray-700 text-sm font-bold mb-2"
+              >Nombre</label
+            >
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="lastName"
+              class="block text-gray-700 text-sm font-bold mb-2">Apellido</label
+            >
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="email"
+              class="block text-gray-700 text-sm font-bold mb-2">Email</label
+            >
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="password"
+              class="block text-gray-700 text-sm font-bold mb-2">Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
+            <button
+              id="addBtn"
+              type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >Agregar</button
+            >
+          </div>
+          
+        </form>
 
+       
+       
+      </div>
+    </div>
+  </div>
 </Layout>
+
+
+<script>
+  const AddForm = document.querySelector("#add-form") as HTMLFormElement;
+import { navigate, type EventModule } from "astro:transitions/client";
+import type { TargetedEvent } from "preact/compat";
+  const inputName = document.getElementById("name")
+  const inputlastName = document.getElementById("lastName")
+  const inputPass = document.getElementById("passwor")
+  const inputEmail = document.getElementById("email")
+
+
+  /* CRUD de usuarios */
+    AddForm.addEventListener("submit",async(e)=>{
+      e.preventDefault();  
+
+      const formData = new FormData(AddForm)
+      const values = Object.fromEntries(formData)
+        try{
+            /* Call to endpoint POST user */
+          const res = await fetch('/api/useraas.json/',{
+            method: 'POST',
+            body: JSON.stringify(values)
+          })
+          /* Refresh */
+          if(!res.ok){
+            throw new Error(res.statusText)
+          }
+         navigate("/usuarios")
+          console.log(res)
+        }catch(err){
+          console.log(err)
+        }
+    })
+
+</script>
