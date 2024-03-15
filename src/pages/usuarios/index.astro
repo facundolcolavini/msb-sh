@@ -218,7 +218,7 @@ const usersData = await db.select().from(Users);
             method: "GET",
           });
           const userData = await res.json();
-          console.log(userData);
+
           // Charge the inputs of edit form with data of row
           name.value = userData[0].name;
           lastName.value = userData[0].lastName;
@@ -244,14 +244,13 @@ const usersData = await db.select().from(Users);
       lastName.value = "";
       email.value = "";
       password.value = "";
-      
+
     });
     // Listen to inputs change on edit form 
     updateBtn.addEventListener("click", async (e) => {
       e.preventDefault();
       const formData = new FormData(Form);
       const values = Object.fromEntries(formData);
-      console.log(idUserRow)
  
       try {
         /* Call to endpoint POST user */
