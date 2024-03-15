@@ -31,6 +31,8 @@ export const POST: APIRoute = async ({ request }) => {
             email: sanitize(email),
             phone: sanitize(data.phone),
             alternativePhone: sanitize(data.alternativePhone),
+            creationDate: Date.now(),
+            lastUpdate: Date.now(),
         });
 
         if (res) {
