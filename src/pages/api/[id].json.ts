@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 
-import { Users, db ,} from "astro:db";
+import { Users, db, eq } from "astro:db";
 
 export const DELETE: APIRoute = async ({ params }) => {
   const id = Number(params.id);
@@ -39,8 +39,21 @@ export const DELETE: APIRoute = async ({ params }) => {
 };
 
 export const PATCH: APIRoute = async ({ params, request }) => {
-  const { name, lastName, password, email, phone,alternativePhone } = await request.json();
+  const { name, lastName, password, email, phone, alternativePhone } = await request.json();
   const id = Number(params.id);
+  
+  // Handler de los campos requeridos para el registro 
+  if (!name || !lastName || !email || !password) {
+    return new Response(
+      JSON.stringify({
+        message: `${!name ? "name, " : ""}${!lastName ? "lastName, " : ""}${!email ? "email, " : ""}${!password ? "password, " : ""} son campos requeridos.`,
+        success: false,
+      }),
+      {
+        status: 404,
+      }
+    );
+  }
 
   if (!id) {
     return new Response(
@@ -55,15 +68,15 @@ export const PATCH: APIRoute = async ({ params, request }) => {
   }
 
   try {
-    const res = await db.update(Users).set({ 
-        name,
-        lastName,
-        password,
-        email,
-        phone,
-        alternativePhone,
-        lastUpdate: Date.now()
-     }).where(eq(Users.id, id));
+    const res = await db.update(Users).set({
+      name,
+      lastName,
+      password,
+      email,
+      phone,
+      alternativePhone,
+      lastUpdate: Date.now()
+    }).where(eq(Users.id, id));
 
     if (res) {
       return new Response(
@@ -90,41 +103,40 @@ export const PATCH: APIRoute = async ({ params, request }) => {
 };
 
 export const GET: APIRoute = async ({ params }) => {
-    const id = Number(params.id);
-    console.log(id)
-    if (!id) {
-      return new Response(
-        JSON.stringify({
-          message: "Please provide all required fields.",
-          success: false,
-        }),
-        {
-          status: 404,
-        }
-      );
-    }
-  
-    try {
-      const res = await db.select().from(Users).where(eq(Users.id, id));
-  
-      if (res) {
-        return  new Response( JSON.stringify(res), { 
-            headers: { "content-type": "application/json" },
-            });
-      } else {
-        throw new Error("prob, bob");
+  const id = Number(params.id);
+  console.log(id)
+  if (!id) {
+    return new Response(
+      JSON.stringify({
+        message: "Please provide all required fields.",
+        success: false,
+      }),
+      {
+        status: 404,
       }
-    } catch (e) {
-      console.error(e);
-      return new Response(
-        JSON.stringify({
-          message: e,
-          success: false,
-        }),
-        {
-          status: 404,
-        }
-      );
+    );
+  }
+
+  try {
+    const res = await db.select().from(Users).where(eq(Users.id, id));
+
+    if (res) {
+      return new Response(JSON.stringify(res), {
+        headers: { "content-type": "application/json" },
+      });
+    } else {
+      throw new Error("prob, bob");
     }
-  };
-  
+  } catch (e) {
+    console.error(e);
+    return new Response(
+      JSON.stringify({
+        message: e,
+        success: false,
+      }),
+      {
+        status: 404,
+      }
+    );
+  }
+};
