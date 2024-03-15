@@ -1,7 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import { Users, db } from "astro:db";
-export const prerender = true;
+export const prerender = false;
 const titlePage = "Usuarios";
 const description = "CRUD de usuarios";
 /* const users = await fetch(`${Astro.url.origin}/api/getUsers.json`);
