@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
-import { Users, db, eq } from "astro:db";
+import {eq} from "astro:db";
+import { Users, db } from "astro:db";
 
 export const DELETE: APIRoute = async ({ params }) => {
   const id = Number(params.id);
