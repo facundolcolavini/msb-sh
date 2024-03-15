@@ -1,6 +1,7 @@
 
 import type { APIRoute } from 'astro';
 import { Users, db } from 'astro:db';
+import bcrypt from 'bcrypt';
 import sanitize from "sanitize-html";
 
 
@@ -11,7 +12,7 @@ export const POST: APIRoute = async ({ request }) => {
     try {
         const { name, lastName, email, password } = data;
 
-       // Handler de los campos requeridos para el registro 
+        // Handler de los campos requeridos para el registro 
         if (!name || !lastName || !email || !password) {
             return new Response(
                 JSON.stringify({
@@ -24,10 +25,15 @@ export const POST: APIRoute = async ({ request }) => {
             );
         }
 
+        // Encriptar la contraseña
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(sanitize(password), salt);
+
+
         const res = await db.insert(Users).values({
             name: sanitize(name),
             lastName: sanitize(lastName),
-            password: sanitize(password),
+            password: hashedPassword,
             email: sanitize(email),
             phone: sanitize(data.phone),
             alternativePhone: sanitize(data.alternativePhone),

@@ -7,8 +7,8 @@ const Users = defineTable({
     lastName: column.text({required: true}),
     email: column.text({unique: true , required: true}),
     password: column.text({required: true}),
-    phone: column.text(),
-    alternativePhone: column.text(),
+    phone: column.text({ optional: true }),
+    alternativePhone: column.text({ optional: true }),
     creationDate: column.number({
       default: Date.now()
     }), 
