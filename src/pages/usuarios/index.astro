@@ -120,6 +120,20 @@ const usersData = await db.select().from(Users);
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               >Agregar</button
             >
+            <button
+              id="updateBtn"
+              data-update="updateBtn"
+              type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden"
+              >Guardar</button
+            >
+            <button
+            id="backBtn"
+            data-update="backBtn"
+            type="button"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden"
+            >Volver</button
+          >
           </div>
         </form>
         <!-- Edit Form -->
@@ -132,18 +146,21 @@ const usersData = await db.select().from(Users);
   import { navigate } from "astro:transitions/client";
 
   document.addEventListener("astro:page-load", (event) => {
-    const AddForm = document.querySelector("#add-form") as HTMLFormElement;
+    const Form = document.querySelector("#add-form") as HTMLFormElement;
 
-    const email = document.querySelector("#email") as HTMLInputElement;
-    const name = document.querySelector("#name") as HTMLInputElement;
-    const lastName = document.querySelector("#lastName") as HTMLInputElement;
-    const password = document.querySelector("#password") as HTMLInputElement;
+    let email = document.querySelector("#email") as HTMLInputElement;
+    let name = document.querySelector("#name") as HTMLInputElement;
+    let lastName = document.querySelector("#lastName") as HTMLInputElement;
+    let password = document.querySelector("#password") as HTMLInputElement;
+    let idUserRow =""; 
     const addBtn = document.getElementById("addBtn") as HTMLButtonElement;
+    const updateBtn = document.getElementById("updateBtn") as HTMLButtonElement;
+    const backBtn = document.getElementById("backBtn") as HTMLButtonElement;
 
     addBtn.addEventListener("click", async (e) => {
       e.preventDefault();
 
-      const formData = new FormData(AddForm);
+      const formData = new FormData(Form);
       const values = Object.fromEntries(formData);
       try {
         /* Call to endpoint POST user */
@@ -162,20 +179,16 @@ const usersData = await db.select().from(Users);
       }
     });
 
-    /* Edit functionality */
-    /* When user clicked the add button change into edit form and charge the inputs of edit form with data of row*/
-    const btnEdit = document.querySelectorAll("#btnEdit");
-
     /* Delete button */
     const deleteBtns = document.querySelectorAll(
       "[data-delete]"
     ) as NodeListOf<HTMLButtonElement>;
-      deleteBtns.forEach((btn) => {
+    deleteBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
-        const id = (e.target as HTMLInputElement)?.id;
-        if (!id) return console.log("No se encontro el id");
+         idUserRow = (e.target as HTMLInputElement)?.id;
+        if (!idUserRow) return console.log("No se encontro el id");
 
-        fetch(`/api/${id}.json/`, {
+        fetch(`/api/${idUserRow}.json/`, {
           method: "DELETE",
         }).then((res) => {
           if (!res.ok) {
@@ -184,6 +197,77 @@ const usersData = await db.select().from(Users);
           navigate("/usuarios");
         });
       });
+    });
+
+    /* Edit  */
+    /* When user clicked on the edit button change into edit form and charge the inputs of edit form with data of row*/
+    const btnEdit = document.querySelectorAll("#btnEdit");
+
+    btnEdit.forEach((btn) => {
+      btn.addEventListener("click", async (e) => {
+        // if clic on edit button hide the add button form and show the edit form
+        addBtn.classList.add("hidden");
+        updateBtn.classList.remove("hidden");
+        backBtn.classList.remove("hidden");
+        idUserRow = (e.target as HTMLButtonElement)?.dataset.edit ?? "";
+        if (!idUserRow) return console.log("No se encontro el id");
+  
+        try {
+          /* Call to endpoint POST user */
+          const res = await fetch(`/api/${idUserRow}.json/`, {
+            method: "GET",
+          });
+          const userData = await res.json();
+          console.log(userData);
+          // Charge the inputs of edit form with data of row
+          name.value = userData[0].name;
+          lastName.value = userData[0].lastName;
+          email.value = userData[0].email;
+          password.value = userData[0].password;
+         
+          /* Refresh */
+          if (!res.ok) {
+            throw new Error("No se pudo realizar la peticion a la DB");
+          }
+          /*  navigate("/usuarios"); */
+        } catch (err) {
+          console.log(err);
+        }
+      });
+    });
+    // When user clicked on the back button hide the edit form and show the add button form and clean the inputs of edit form
+    backBtn.addEventListener("click", (e) => {
+      addBtn.classList.remove("hidden");
+      updateBtn.classList.add("hidden");
+      backBtn.classList.add("hidden");
+      name.value = "";
+      lastName.value = "";
+      email.value = "";
+      password.value = "";
+      
+    });
+    // Listen to inputs change on edit form 
+    updateBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(Form);
+      const values = Object.fromEntries(formData);
+      console.log(idUserRow)
+ 
+      try {
+        /* Call to endpoint POST user */
+        const res = await fetch(`/api/${idUserRow}.json/`, {
+          method: "PATCH",
+          body: JSON.stringify(values),
+        });
+        /* Refresh */
+        if (!res.ok) {
+          throw new Error("No se pudo realizar la peticion a la DB");
+        }
+        navigate("/usuarios");
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
     });
   });
 </script>
