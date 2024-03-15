@@ -13,20 +13,20 @@ const usersData = await db.select().from(Users);
   <div class="container mx-auto">
     <h1 class="text-gray-450 text-2xl">{titlePage}</h1>
     <div class="grid lg:grid-cols-2 place-content-between">
-      <div>
+      <div class="overflow-x-auto">
         <!-- Table  -->
-        <table class="table-auto">
+        <table class="table-auto w-full">
           <thead>
             <tr>
-              <th class="px-4 py-2 text-gray-700 text-sm font-bold truncate"
-                >Id</th
-              >
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold truncate">Id</th>
               <th class="px-4 py-2 text-gray-700 text-sm font-bold">Nombre</th>
-              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Apellido</th
-              >
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Apellido</th>
               <th class="px-4 py-2 text-gray-700 text-sm font-bold">Email</th>
-              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Acciones</th
-              >
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Telefono</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Alt Tel</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Creado</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Ult Actualización</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -36,9 +36,14 @@ const usersData = await db.select().from(Users);
                   <td class="border px-4 py-2">{user.id}</td>
                   <td class="border px-4 py-2">{user.name}</td>
                   <td class="border px-4 py-2">{user.lastName}</td>
-                  <td class="border px-4 py-2 ">{user.email}</td>
-                  <td class="border px-4 py-2">
-                    <button
+                  <td class="border px-4 py-2">{user.email}</td>
+                  <td class="border px-4 py-2">{user.phone}</td>
+                  <td class="border px-4 py-2">{user.alternativePhone}</td>
+                  <td class="border px-4 py-2">{`${new Date(user.creationDate).toLocaleDateString()} ${new Date(user.creationDate).toLocaleTimeString()}`}</td>
+                  <td class="border px-4 py-2">{`${new Date(user.lastUpdate).toLocaleDateString()} ${new Date(user.lastUpdate).toLocaleTimeString()}`}</td>
+                  <td class="border px-4 py-2 ">
+                    <div class="flex gap-2">
+                      <button
                       id="btnEdit"
                       data-edit={user.id}
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -52,13 +57,15 @@ const usersData = await db.select().from(Users);
                     >
                       Eliminar
                     </button>
+                      </div>
+                 
                   </td>
                 </tr>
               ))
             }
           </tbody>
         </table>
-      </div>
+    </div>
 
       <div class="flex justify-center">
         <form
@@ -113,6 +120,30 @@ const usersData = await db.select().from(Users);
             />
           </div>
           <div class="mb-4">
+            <label
+              for="password"
+              class="block text-gray-700 text-sm font-bold mb-2">Telefono</label
+            >
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="password"
+              class="block text-gray-700 text-sm font-bold mb-2">Tel Alternativo</label
+            >
+            <input
+              type="text"
+              id="alternativePhone"
+              name="alternativePhone"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
             <button
               id="addBtn"
               data-add="addBtn"
@@ -128,12 +159,12 @@ const usersData = await db.select().from(Users);
               >Guardar</button
             >
             <button
-            id="backBtn"
-            data-update="backBtn"
-            type="button"
-            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden"
-            >Volver</button
-          >
+              id="backBtn"
+              data-update="backBtn"
+              type="button"
+              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden"
+              >Volver</button
+            >
           </div>
         </form>
         <!-- Edit Form -->
@@ -152,7 +183,9 @@ const usersData = await db.select().from(Users);
     let name = document.querySelector("#name") as HTMLInputElement;
     let lastName = document.querySelector("#lastName") as HTMLInputElement;
     let password = document.querySelector("#password") as HTMLInputElement;
-    let idUserRow =""; 
+    let phone = document.querySelector("#phone") as HTMLInputElement;
+    let alternativePhone = document.querySelector("#alternativePhone") as HTMLInputElement;
+    let idUserRow = "";
     const addBtn = document.getElementById("addBtn") as HTMLButtonElement;
     const updateBtn = document.getElementById("updateBtn") as HTMLButtonElement;
     const backBtn = document.getElementById("backBtn") as HTMLButtonElement;
@@ -162,15 +195,19 @@ const usersData = await db.select().from(Users);
 
       const formData = new FormData(Form);
       const values = Object.fromEntries(formData);
+      console.log(values)
       try {
         /* Call to endpoint POST user */
         const res = await fetch("/api/addUser.json/", {
           method: "POST",
           body: JSON.stringify(values),
         });
+        const data = await res.json();
         /* Refresh */
         if (!res.ok) {
-          throw new Error("No se pudo realizar la peticion a la DB");
+          
+          console.log(data)
+          throw new Error(data);
         }
         navigate("/usuarios");
         console.log(res);
@@ -185,7 +222,7 @@ const usersData = await db.select().from(Users);
     ) as NodeListOf<HTMLButtonElement>;
     deleteBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
-         idUserRow = (e.target as HTMLInputElement)?.id;
+        idUserRow = (e.target as HTMLInputElement)?.id;
         if (!idUserRow) return console.log("No se encontro el id");
 
         fetch(`/api/${idUserRow}.json/`, {
@@ -211,7 +248,7 @@ const usersData = await db.select().from(Users);
         backBtn.classList.remove("hidden");
         idUserRow = (e.target as HTMLButtonElement)?.dataset.edit ?? "";
         if (!idUserRow) return console.log("No se encontro el id");
-  
+
         try {
           /* Call to endpoint POST user */
           const res = await fetch(`/api/${idUserRow}.json/`, {
@@ -224,7 +261,9 @@ const usersData = await db.select().from(Users);
           lastName.value = userData[0].lastName;
           email.value = userData[0].email;
           password.value = userData[0].password;
-         
+          phone.value = userData[0].phone;
+          alternativePhone.value = userData[0].alternativePhone;
+
           /* Refresh */
           if (!res.ok) {
             throw new Error("No se pudo realizar la peticion a la DB");
@@ -244,14 +283,15 @@ const usersData = await db.select().from(Users);
       lastName.value = "";
       email.value = "";
       password.value = "";
-
+      phone.value = "";
+      alternativePhone.value = "";
     });
-    // Listen to inputs change on edit form 
+    // Listen to inputs change on edit form
     updateBtn.addEventListener("click", async (e) => {
       e.preventDefault();
       const formData = new FormData(Form);
       const values = Object.fromEntries(formData);
- 
+      console.log(values)
       try {
         /* Call to endpoint POST user */
         const res = await fetch(`/api/${idUserRow}.json/`, {

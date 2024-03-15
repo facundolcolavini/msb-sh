@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import {eq} from "astro:db";
-import { Users, db } from "astro:db";
+
+import { Users, db ,} from "astro:db";
 
 export const DELETE: APIRoute = async ({ params }) => {
   const id = Number(params.id);
@@ -39,7 +39,7 @@ export const DELETE: APIRoute = async ({ params }) => {
 };
 
 export const PATCH: APIRoute = async ({ params, request }) => {
-  const { name, lastName, password, email } = await request.json();
+  const { name, lastName, password, email, phone,alternativePhone } = await request.json();
   const id = Number(params.id);
 
   if (!id) {
@@ -60,6 +60,9 @@ export const PATCH: APIRoute = async ({ params, request }) => {
         lastName,
         password,
         email,
+        phone,
+        alternativePhone,
+        lastUpdate: Date.now()
      }).where(eq(Users.id, id));
 
     if (res) {
@@ -103,7 +106,7 @@ export const GET: APIRoute = async ({ params }) => {
   
     try {
       const res = await db.select().from(Users).where(eq(Users.id, id));
-      console.log(res)
+  
       if (res) {
         return  new Response( JSON.stringify(res), { 
             headers: { "content-type": "application/json" },

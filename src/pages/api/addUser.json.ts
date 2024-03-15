@@ -11,10 +11,11 @@ export const POST: APIRoute = async ({ request }) => {
     try {
         const { name, lastName, email, password } = data;
 
+       // Handler de los campos requeridos para el registro 
         if (!name || !lastName || !email || !password) {
             return new Response(
                 JSON.stringify({
-                    message: "Please provide all required fields.",
+                    message: `${!name ? "name, " : ""}${!lastName ? "lastName, " : ""}${!email ? "email, " : ""}${!password ? "password, " : ""} son campos requeridos.`,
                     success: false,
                 }),
                 {
@@ -28,7 +29,8 @@ export const POST: APIRoute = async ({ request }) => {
             lastName: sanitize(lastName),
             password: sanitize(password),
             email: sanitize(email),
-
+            phone: sanitize(data.phone),
+            alternativePhone: sanitize(data.alternativePhone),
         });
 
         if (res) {
