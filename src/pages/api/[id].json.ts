@@ -1,6 +1,8 @@
 import type { APIRoute } from "astro";
 
 import { Users, db, eq } from "astro:db";
+import bcrypt from 'bcrypt';
+import sanitize from "sanitize-html";
 
 export const DELETE: APIRoute = async ({ params }) => {
   const id = Number(params.id);
@@ -41,7 +43,7 @@ export const DELETE: APIRoute = async ({ params }) => {
 export const PATCH: APIRoute = async ({ params, request }) => {
   const { name, lastName, password, email, phone, alternativePhone } = await request.json();
   const id = Number(params.id);
-  
+  let newPassword: string;
   // Handler de los campos requeridos para el registro 
   if (!name || !lastName || !email || !password) {
     return new Response(
@@ -68,10 +70,27 @@ export const PATCH: APIRoute = async ({ params, request }) => {
   }
 
   try {
+
+    // Desencriptar la contraseña del usuario que esta en la base de datos para compararla con la que se esta enviando en el formulario
+    const user = await db.select().from(Users).where(eq(Users.id, id));
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const isMatch = await bcrypt.compare(password, user[0].password);
+    // Si la contraseña no es igual a la que esta en la base de datos, encriptar la nueva contraseña y guardarla 
+    if (!isMatch) {
+      const salt = await bcrypt.genSalt(10);
+      newPassword = await bcrypt.hash(sanitize(password), salt);
+    }
+    // Si la contraseña es igual  entonces no cambiarla
+    else {
+      newPassword = user[0].password;
+    }
+
     const res = await db.update(Users).set({
       name,
       lastName,
-      password,
+      password: newPassword,
       email,
       phone,
       alternativePhone,
@@ -104,7 +123,6 @@ export const PATCH: APIRoute = async ({ params, request }) => {
 
 export const GET: APIRoute = async ({ params }) => {
   const id = Number(params.id);
-  console.log(id)
   if (!id) {
     return new Response(
       JSON.stringify({

@@ -205,8 +205,6 @@ const usersData = await db.select().from(Users);
         const data = await res.json();
         /* Refresh */
         if (!res.ok) {
-          
-          console.log(data)
           throw new Error(data);
         }
         navigate("/usuarios");
@@ -291,7 +289,7 @@ const usersData = await db.select().from(Users);
       e.preventDefault();
       const formData = new FormData(Form);
       const values = Object.fromEntries(formData);
-      console.log(values)
+ 
       try {
         /* Call to endpoint POST user */
         const res = await fetch(`/api/${idUserRow}.json/`, {
