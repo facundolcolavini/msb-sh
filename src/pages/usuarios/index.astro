@@ -48,7 +48,6 @@ const usersData = await db.select().from(Users);
                     <button
                       id={String(user.id)}
                       data-delete={user.id}
-
                       class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     >
                       Eliminar
@@ -132,7 +131,6 @@ const usersData = await db.select().from(Users);
 <script>
   import { navigate } from "astro:transitions/client";
 
-
   document.addEventListener("astro:page-load", (event) => {
     const AddForm = document.querySelector("#add-form") as HTMLFormElement;
 
@@ -140,10 +138,9 @@ const usersData = await db.select().from(Users);
     const name = document.querySelector("#name") as HTMLInputElement;
     const lastName = document.querySelector("#lastName") as HTMLInputElement;
     const password = document.querySelector("#password") as HTMLInputElement;
-    const addBtn = document.getElementById("addBtn") as  HTMLButtonElement
+    const addBtn = document.getElementById("addBtn") as HTMLButtonElement;
 
-
-    addBtn.addEventListener("click",async (e)=>{
+    addBtn.addEventListener("click", async (e) => {
       e.preventDefault();
 
       const formData = new FormData(AddForm);
@@ -169,16 +166,15 @@ const usersData = await db.select().from(Users);
     /* When user clicked the add button change into edit form and charge the inputs of edit form with data of row*/
     const btnEdit = document.querySelectorAll("#btnEdit");
 
-
     /* Delete button */
     const deleteBtns = document.querySelectorAll(
-    "[data-delete]"
-  ) as NodeListOf<HTMLButtonElement>;
-    deleteBtns.forEach((btn) => {
+      "[data-delete]"
+    ) as NodeListOf<HTMLButtonElement>;
+  /*   deleteBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
-        const id = (e.target as HTMLInputElement)?.id 
-        if(!id) return console.log("No se encontro el id");
-        
+        const id = (e.target as HTMLInputElement)?.id;
+        if (!id) return console.log("No se encontro el id");
+
         fetch(`/api/${id}.json/`, {
           method: "DELETE",
         }).then((res) => {
@@ -188,6 +184,6 @@ const usersData = await db.select().from(Users);
           navigate("/usuarios");
         });
       });
-    });
+    }); */
   });
 </script>
