@@ -9,6 +9,7 @@
     "baseUrl": ".",
     "paths": {
       "@" : ["src"],
+      
       "@pages/*": ["src/pages/*"],
       "@layouts/*": ["src/layouts/*"],
       "@components/*": ["src/components/*"],
@@ -19,6 +20,7 @@
       "@scripts/*": ["src/scripts/*"],
       "@services/*": ["src/services/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@lib/*": ["src/lib/*"],
     }
   },
   "include": [

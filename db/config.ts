@@ -1,35 +1,27 @@
 import { defineTable, column, defineDb } from 'astro:db';
 
-const Users = defineTable({
-  columns: {
-    id: column.number({ primaryKey: true, autoIncrement: true}),
-    name: column.text({required: true}),
-    lastName: column.text({required: true}),
-    email: column.text({unique: true , required: true}),
-    password: column.text({required: true}),
-    phone: column.text({ optional: true }),
-    alternativePhone: column.text({ optional: true }),
-    creationDate: column.number({
-      default: Date.now()
-    }), 
-    lastUpdate: column.number({
-      default:Date.now()
-    }),
-  }
+export interface DatabaseUser {
+	id: number;
+	username: string;
+	password: string;
+}
+
+const User = defineTable({
+	name: 'User',
+	columns: {
+		id: column.text({ primaryKey: true }),
+		username: column.text(),
+		password: column.text(),
+	},
 });
 
-
-const Sessions = defineTable({
+const Session = defineTable({
+  name: 'Session',
   columns: {
-    id: column.number({ primaryKey: true }),
-    token: column.text({ unique: true }), // token de la sesión
-    userId: column.number({ references: () => Users.columns.id }), // referencia al usuario de la sesión
-    expiresAt: column.number(), // fecha de expiración de la sesión
-    isActive: column.boolean({ default: true }), // si la sesión está activa
-    createdAt: column.number({ default: Date.now() }),  // datetime de creación de la sesión
-  }
-})
-
+    id: column.text({ primaryKey: true }),
+    userId: column.text(),
+  },
+});
 export default defineDb({
-  tables: {  Users, Sessions },
+  tables: { User,Session },
 })
