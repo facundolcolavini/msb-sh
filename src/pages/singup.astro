@@ -25,7 +25,7 @@ import Layout from "@layouts/Layout.astro";
 	console.log(values)
 	try {
 	  /* Call to endpoint POST user */
-	  const res = await fetch("/api/singup.json/", {
+	  const res = await fetch("/api/singup/", {
 		method: "POST",
 		body: JSON.stringify(values),
 	  });
