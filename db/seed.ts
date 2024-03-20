@@ -1,12 +1,16 @@
+/* import {db,Session} from "astro:db"; */
 
+/* import { db,UserAuth,SessionAuth } from 'astro:db';
+import { Session } from '../.astro/db-types';
+ */
 export default async function () {
 
   //Delete all records from the table and reset the auto incrementing primary key 
 
   // Seed your database with users here
   // Eliminar la tabla User 
-/*   await db.delete(User).run();  */
-  
 
+ 
+   /* await db.delete(Session) */
 
 }   

@@ -4,7 +4,7 @@ import { generateId } from "lucia";
 import { Argon2id } from "oslo/password";
 
 import type { APIContext } from "astro";
-import { User, db } from "astro:db";
+import { UserT, db } from "astro:db";
 
 export async function POST(context: APIContext): Promise<Response> {
 	const data = await context.request.json();
@@ -35,7 +35,7 @@ export async function POST(context: APIContext): Promise<Response> {
 	// TODO: check if username is already used
 	
 
-	await db.insert(User).values({
+	await db.insert(UserT).values({
 		id: userId,
 		username: username,
 		password: hashedPassword

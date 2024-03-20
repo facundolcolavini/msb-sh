@@ -1,4 +1,4 @@
-import { defineTable, column, defineDb } from 'astro:db';
+import { column, defineDb, defineTable } from 'astro:db';
 
 export interface DatabaseUser {
 	id: number;
@@ -6,22 +6,21 @@ export interface DatabaseUser {
 	password: string;
 }
 
-const User = defineTable({
-	name: 'User',
+const UserT = defineTable({
 	columns: {
-		id: column.text({ primaryKey: true }),
-		username: column.text(),
-		password: column.text(),
+		id: column.text({ primaryKey: true, deprecated: true }),
+		username: column.text({ unique: true, deprecated: true }),
+		password: column.text({ deprecated: true }),
 	},
 });
 
-const Session = defineTable({
-  name: 'Session',
-  columns: {
-    id: column.text({ primaryKey: true }),
-    userId: column.text(),
-  },
+const SessionT = defineTable({
+	deprecated: true,
+	columns: {
+		id: column.text({ primaryKey: true, deprecated: true }),
+		userId: column.text({ deprecated: true }),
+	},
 });
 export default defineDb({
-  tables: { User,Session },
+	tables: { UserT, SessionT },
 })

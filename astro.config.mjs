@@ -15,5 +15,10 @@ export default defineConfig({
   adapter: vercel(),
   image: {
     service: squooshImageService()
-  }
+  },
+  vite: {
+		optimizeDeps: {
+			exclude: ["oslo"]
+		}
+	}
 });
