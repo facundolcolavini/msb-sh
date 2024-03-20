@@ -1,12 +1,12 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import { Users, db } from "astro:db";
+/* import { Users, db } from "astro:db"; */
 
 const titlePage = "Usuarios";
 const description = "CRUD de usuarios";
 /* const users = await fetch(`${Astro.url.origin}/api/getUsers.json`);
 const usersData = await users.json(); */
-const usersData = await db.select().from(Users);
+/* const usersData = await db.select().from(Users); */
 ---
 
 <Layout title={titlePage} description={description}>
@@ -31,7 +31,7 @@ const usersData = await db.select().from(Users);
           </thead>
           <tbody>
             {
-              usersData.map((user) => (
+           /*    usersData.map((user) => (
                 <tr>
                   <td class="border px-4 py-2">{user.id}</td>
                   <td class="border px-4 py-2">{user.name}</td>
@@ -61,7 +61,7 @@ const usersData = await db.select().from(Users);
                  
                   </td>
                 </tr>
-              ))
+              )) */
             }
           </tbody>
         </table>
@@ -197,7 +197,7 @@ const usersData = await db.select().from(Users);
       const values = Object.fromEntries(formData);
       console.log(values)
       try {
-        /* Call to endpoint POST user */
+        // Call to endpoint POST user
         const res = await fetch("/api/addUser.json/", {
           method: "POST",
           body: JSON.stringify(values),
@@ -214,7 +214,7 @@ const usersData = await db.select().from(Users);
       }
     });
 
-    /* Delete button */
+    // Delete button
     const deleteBtns = document.querySelectorAll(
       "[data-delete]"
     ) as NodeListOf<HTMLButtonElement>;
@@ -234,8 +234,8 @@ const usersData = await db.select().from(Users);
       });
     });
 
-    /* Edit  */
-    /* When user clicked on the edit button change into edit form and charge the inputs of edit form with data of row*/
+    // Edit 
+    // When user clicked on the edit button change into edit form and charge the inputs of edit form with data of row
     const btnEdit = document.querySelectorAll("#btnEdit");
 
     btnEdit.forEach((btn) => {
@@ -248,7 +248,7 @@ const usersData = await db.select().from(Users);
         if (!idUserRow) return console.log("No se encontro el id");
 
         try {
-          /* Call to endpoint POST user */
+          // Call to endpoint POST user
           const res = await fetch(`/api/${idUserRow}.json/`, {
             method: "GET",
           });
@@ -262,11 +262,11 @@ const usersData = await db.select().from(Users);
           phone.value = userData[0].phone;
           alternativePhone.value = userData[0].alternativePhone;
 
-          /* Refresh */
+          // Refresh
           if (!res.ok) {
             throw new Error("No se pudo realizar la peticion a la DB");
           }
-          /*  navigate("/usuarios"); */
+          //  navigate("/usuarios");
         } catch (err) {
           console.log(err);
         }
@@ -291,12 +291,12 @@ const usersData = await db.select().from(Users);
       const values = Object.fromEntries(formData);
  
       try {
-        /* Call to endpoint POST user */
+        // Call to endpoint POST user
         const res = await fetch(`/api/${idUserRow}.json/`, {
           method: "PATCH",
           body: JSON.stringify(values),
         });
-        /* Refresh */
+        // Refresh
         if (!res.ok) {
           throw new Error("No se pudo realizar la peticion a la DB");
         }
