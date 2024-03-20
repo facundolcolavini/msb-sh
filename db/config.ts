@@ -8,17 +8,17 @@ export interface DatabaseUser {
 
 const UserT = defineTable({
 	columns: {
-		id: column.text({ primaryKey: true, deprecated: true }),
-		username: column.text({ unique: true, deprecated: true }),
-		password: column.text({ deprecated: true }),
+		id: column.text({ primaryKey: true }),
+		username: column.text({ unique: true}),
+		password: column.text({  }),
 	},
 });
 
 const SessionT = defineTable({
 	deprecated: true,
 	columns: {
-		id: column.text({ primaryKey: true, deprecated: true }),
-		userId: column.text({ deprecated: true }),
+		id: column.text({ primaryKey: true }),
+		userId: column.text({ }),
 	},
 });
 export default defineDb({

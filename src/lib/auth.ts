@@ -1,11 +1,11 @@
 
 import { AstroDBAdapter } from "lucia-adapter-astrodb";
-import { db, Session, User } from "astro:db";
+import { db, SessionT, UserT } from "astro:db";
 import { Lucia } from "lucia";
 import type { DatabaseUser } from '../../db/config';
  
 
-const adapter = new AstroDBAdapter(db, Session, User);
+const adapter = new AstroDBAdapter(db, SessionT, UserT);
 
 export const lucia = new Lucia(adapter, {
     sessionCookie: {

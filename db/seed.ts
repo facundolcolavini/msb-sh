@@ -10,7 +10,7 @@ export default async function () {
   // Seed your database with users here
   // Eliminar la tabla User 
 
- 
-   /* await db.delete(Session) */
+/*  
+   await db.delete(Session) */
 
 }   
