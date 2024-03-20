@@ -1,4 +1,4 @@
-
+/* 
 import type { APIRoute } from 'astro';
 import { Users, db } from 'astro:db';
 import bcrypt from 'bcrypt';
@@ -67,4 +67,4 @@ export const POST: APIRoute = async ({ request }) => {
             }
         );
     }
-};
+}; */

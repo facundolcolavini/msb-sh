@@ -1,4 +1,4 @@
-import type { APIRoute } from "astro";
+/* import type { APIRoute } from "astro";
 
 import { Users, db, eq } from "astro:db";
 import bcrypt from 'bcrypt';
@@ -158,3 +158,4 @@ export const GET: APIRoute = async ({ params }) => {
     );
   }
 };
+ */
