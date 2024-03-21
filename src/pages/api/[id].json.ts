@@ -1,5 +1,4 @@
 import type { APIRoute } from "astro";
-
 import { User, db, eq } from "astro:db";
 import bcrypt from 'bcrypt';
 import sanitize from "sanitize-html";
