@@ -6,7 +6,7 @@ import RuleIcon from "@components/preact/Icons/RuleIcon";
 import type { File } from "@interfaces/results.records.interfaces";
 import type { HTMLAttributes } from "astro/types";
 import clsx from 'clsx';
-import type { FunctionComponent } from "preact/compat";
+import { useState, type FunctionComponent } from "preact/compat";
 import { twMerge } from 'tailwind-merge';
 import SquareMeterIcon from '../../Icons/SquareMeterIcon';
 import HeartIcon from "@components/preact/Icons/HeartIcon";
@@ -20,7 +20,7 @@ interface Props extends HTMLAttributes<"a"> {
     key: string;
 }
 const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles,href, key }: Props) => {
-
+    const [favorited, setFavorited] = useState(false); // Estado para controlar si se marca como favorito
     const styles = twMerge(clsx("rounded relative overflow-hidden shadow-lg h-100 animate-fade", addStyles));
     
     //Add To Favorite
@@ -42,6 +42,7 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles,href, key 
         const res = await data.json();
         console.log(res);
         if(!res.success){
+            setFavorited(false);
             const data = await fetch(`/api/favorites/${cardData.in_fic}`, {
                 method: 'DELETE',
                 body: JSON.stringify({
@@ -53,6 +54,8 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles,href, key 
             }); 
 
             console.log(data)
+        }else{
+            setFavorited(true);
         }
     }
 
