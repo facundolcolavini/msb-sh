@@ -41,6 +41,19 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles,href, key 
         });
         const res = await data.json();
         console.log(res);
+        if(!res.success){
+            const data = await fetch(`/api/favorites/${cardData.in_fic}`, {
+                method: 'DELETE',
+                body: JSON.stringify({
+                    userId: 1, // userId 
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }); 
+
+            console.log(data)
+        }
     }
 
     return (
