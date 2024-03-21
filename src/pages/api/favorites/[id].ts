@@ -4,7 +4,7 @@ import type { APIResponseDetailEntrepreneurShip } from "@interfaces/entrepreneur
 import type { APIResponseResultsRecords } from "@interfaces/results.records.interfaces";
 import { fetchData } from "@utils/fetch-data";
 import type { APIContext, APIRoute } from "astro";
-import { Favorite, User, and, db, eq } from "astro:db";
+import { Favorite, UserT, and, db, eq } from "astro:db";
 import { capitalize } from '../../../utils/formats';
 import he from 'he';
 
@@ -25,7 +25,7 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
       }
     );
   }
-  const user = (await db.select().from(User).where(eq(User.id, userId))).at(0);
+  const user = (await db.select().from(UserT).where(eq(UserT.id, userId))).at(0);
 
   if (!userId || !user) {
     return new Response(
