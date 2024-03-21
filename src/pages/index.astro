@@ -42,7 +42,7 @@ const { resultado: resEmprendimientos } = (await fetchData(
 
 const { emprendimiento: entrepreneurship, img } = resEmprendimientos as ResultEntrepreureShip;
 const { fichas } = resultado;
-export const prerender = true;
+
 const cardData: File[] = fichas as File[]; // Update the type of cardData
 const titlePage = "Inicio - Matías Szpira Bienes Raíces";
 const description =
@@ -163,7 +163,7 @@ const locations = (await getLocations()) as ResultLocation;
         {
           cardData.map((card) => (
             <CardProperty
-              client:only
+              client:load
               key="unique-key"
               href={`/resultados-de-busqueda/${card.operacion}/${card.in_loc}/${card.direccion_completa}/${card.in_suc}-${card.in_num}`}
               addStyles={"card my-3"}
