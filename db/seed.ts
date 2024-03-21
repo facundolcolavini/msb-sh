@@ -1,4 +1,4 @@
-import {db,Favorites,User} from "astro:db";
+/* import {db,Favorites,User} from "astro:db"; */
 
 /* import {db,insert} from "astro:db"; */
 
@@ -11,7 +11,7 @@ export default async function () {
 
   // Seed your database with users here
    
-   await db.delete(Favorites) 
-   await db.delete(User)
+/*    await db.delete(Favorites) 
+   await db.delete(User) */
 
 }   
