@@ -83,7 +83,7 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles,href, key 
                         {he.decode(cardData.operacion)}
                     </button>
                     <div class="flex items-center justify-center gap-1 ">
-                            <Button type="button" onClick={addToFavorite} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}></Button>
+                            <Button type="button" onClick={addToFavorite} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={favorited}></Button>
                             <a href={`https://api.whatsapp.com/send/?phone=5491144161700&text=Hola%2C+me+contactaba+desde+http%3A%2F%2Fmatiasszpira.com.ar%2F+para+consultarles&type=phone_number&app_absent=0`} target="_blank"><WhatsAppIcon /></a>
                         </div>
                    
