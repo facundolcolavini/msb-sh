@@ -26,7 +26,7 @@ const Session = defineTable({
 
 */
 
-const UTable = defineTable({
+const User = defineTable({
 	columns: {
 		id: column.number({ primaryKey: true, autoIncrement: true}),
 		username: column.text({ unique: true }),
@@ -48,7 +48,7 @@ const Favorite = defineTable({
 		userId: column.number(
 			{
 				// Referencia al usuario  que tiene el favorito
-				references: () => UTable.columns.id
+				references: () => User.columns.id
 			}
 		),
 		publicationId: column.text(),
@@ -62,7 +62,7 @@ const Favorite = defineTable({
 }) */
 export default defineDb({
 	tables: {
-		UTable,
+		User,
 		Favorite,
 	},
 })

@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 
-import { UTable, db, eq } from "astro:db";
+import { User, db, eq } from "astro:db";
 import bcrypt from 'bcrypt';
 import sanitize from "sanitize-html";
 
@@ -20,7 +20,7 @@ export const DELETE: APIRoute = async ({ params }) => {
   }
 
   try {
-    const res = await db.delete(UTable).where(eq(UTable.id, id));
+    const res = await db.delete(User).where(eq(User.id, id));
     if (res) {
       return new Response(null, { status: 204 });
     } else {
@@ -72,7 +72,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
   try {
 
     // Desencriptar la contraseña del usuario que esta en la base de datos para compararla con la que se esta enviando en el formulario
-    const user = await db.select().from(UTable).where(eq(UTable.id, id));
+    const user = await db.select().from(User).where(eq(User.id, id));
     if (!user) {
       throw new Error("User not found");
     }
@@ -87,7 +87,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
       newPassword = user[0].password;
     }
 
-    const res = await db.update(UTable).set({
+    const res = await db.update(User).set({
       name,
       lastName,
       password: newPassword,
@@ -95,7 +95,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
       phone,
       alternativePhone,
       lastUpdate: Date.now()
-    }).where(eq(UTable.id, id));
+    }).where(eq(User.id, id));
 
     if (res) {
       return new Response(
@@ -136,7 +136,7 @@ export const GET: APIRoute = async ({ params }) => {
   }
 
   try {
-    const res = await db.select().from(UTable).where(eq(UTable.id, id));
+    const res = await db.select().from(User).where(eq(User.id, id));
 
     if (res) {
       return new Response(JSON.stringify(res), {
