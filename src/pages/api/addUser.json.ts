@@ -1,6 +1,6 @@
-/* 
+
 import type { APIRoute } from 'astro';
-import { Users, db } from 'astro:db';
+import { UserT, db } from 'astro:db';
 import bcrypt from 'bcrypt';
 import sanitize from "sanitize-html";
 
@@ -10,13 +10,13 @@ export const POST: APIRoute = async ({ request }) => {
     const data = await request.json();
 
     try {
-        const { name, lastName, email, password } = data;
+        const { name, lastName, email, password, username } = data;
 
         // Handler de los campos requeridos para el registro 
-        if (!name || !lastName || !email || !password) {
+        if (!name || !lastName || !email || !password || !username) {
             return new Response(
                 JSON.stringify({
-                    message: `${!name ? "name, " : ""}${!lastName ? "lastName, " : ""}${!email ? "email, " : ""}${!password ? "password, " : ""} son campos requeridos.`,
+                    message: `${!username ? "username, " : ""}${!name ? "name, " : ""}${!lastName ? "lastName, " : ""}${!email ? "email, " : ""}${!password ? "password, " : ""} son campos requeridos.`,
                     success: false,
                 }),
                 {
@@ -30,7 +30,8 @@ export const POST: APIRoute = async ({ request }) => {
         const hashedPassword = await bcrypt.hash(sanitize(password), salt);
 
 
-        const res = await db.insert(Users).values({
+        const res = await db.insert(UserT).values({
+            username: sanitize(username),
             name: sanitize(name),
             lastName: sanitize(lastName),
             password: hashedPassword,
@@ -44,7 +45,7 @@ export const POST: APIRoute = async ({ request }) => {
         if (res) {
             return new Response(
                 JSON.stringify({
-                    message: "success",
+                    message: "User created",
                     data: res,
                     success: true,
                 }),
@@ -67,4 +68,4 @@ export const POST: APIRoute = async ({ request }) => {
             }
         );
     }
-}; */
+};

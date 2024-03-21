@@ -1,3 +1,4 @@
+import type { APIResponseResultsRecords } from '@interfaces/results.records.interfaces';
 import { fetchData } from '@utils/fetch-data';
 import type { APIRoute } from 'astro';
 
@@ -13,7 +14,7 @@ export const GET: APIRoute = async ({ url }) => {
     });
 
     try {
-        const data = await fetchData('resultados.fichas', queryParams);
+        const data = await fetchData<APIResponseResultsRecords>('resultados.fichas', queryParams);
         return new Response(JSON.stringify(data)
             , {
                 status: 200,

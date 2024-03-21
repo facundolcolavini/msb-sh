@@ -6,7 +6,9 @@ export interface DatabaseUser {
 	password: string;
 }
 
-const UserT = defineTable({
+/* 
+// Auth Tables
+const User = defineTable({
 	columns: {
 		id: column.text({ primaryKey: true }),
 		username: column.text({ unique: true}),
@@ -14,13 +16,53 @@ const UserT = defineTable({
 	},
 });
 
-const SessionT = defineTable({
+const Session = defineTable({
 	deprecated: true,
 	columns: {
 		id: column.text({ primaryKey: true }),
 		userId: column.text({ }),
 	},
+}); 
+
+*/
+
+const UTable = defineTable({
+	columns: {
+		id: column.number({ primaryKey: true, autoIncrement: true}),
+		username: column.text({ unique: true }),
+		password: column.text({ optional: false }),
+		name: column.text({ optional: false }),
+		lastName: column.text({ optional: false }),
+		email: column.text({ unique: true, required: false }),
+		phone: column.text({ optional: true }),
+		alternativePhone: column.text({ optional: true }),
+		creationDate: column.number(),
+		lastUpdate: column.number(),
+	},
 });
+// Relacion de un usuarios a muchos Favoritos
+// Favorite 
+const Favorite = defineTable({
+	columns: {
+		id: column.number({ primaryKey: true,optional:false, autoIncrement: true}),
+		userId: column.number(
+			{
+				// Referencia al usuario  que tiene el favorito
+				references: () => UTable.columns.id
+			}
+		),
+		publicationId: column.text(),
+		publicationSuc: column.text(),
+		isEntrepreneurshipPublic: column.boolean(),
+	},
+});
+/* const History = defineTable({
+	id: column.text({ primaryKey: true }),
+
+}) */
 export default defineDb({
-	tables: { UserT, SessionT },
+	tables: {
+		UTable,
+		Favorite,
+	},
 })
