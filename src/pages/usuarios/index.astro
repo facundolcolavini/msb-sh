@@ -191,6 +191,7 @@ const usersData = await users.json(); */
     const Form = document.querySelector("#add-form") as HTMLFormElement;
 
     let email = document.querySelector("#email") as HTMLInputElement;
+    let username = document.querySelector("#username") as HTMLInputElement;
     let name = document.querySelector("#name") as HTMLInputElement;
     let lastName = document.querySelector("#lastName") as HTMLInputElement;
     let password = document.querySelector("#password") as HTMLInputElement;
@@ -268,6 +269,7 @@ const usersData = await users.json(); */
           // Charge the inputs of edit form with data of row
           name.value = userData[0].name;
           lastName.value = userData[0].lastName;
+          username.value = userData[0].username;
           email.value = userData[0].email;
           password.value = userData[0].password;
           phone.value = userData[0].phone;
@@ -290,6 +292,7 @@ const usersData = await users.json(); */
       backBtn.classList.add("hidden");
       name.value = "";
       lastName.value = "";
+      username.value = "";
       email.value = "";
       password.value = "";
       phone.value = "";
