@@ -1,17 +1,17 @@
 
 import BathIcon from "@components/preact/Icons/BathIcon";
 import DoorOpen from "@components/preact/Icons/DoorOpen";
-import he from "he";
+import HeartIcon from "@components/preact/Icons/HeartIcon";
 import RuleIcon from "@components/preact/Icons/RuleIcon";
 import type { File } from "@interfaces/results.records.interfaces";
 import type { HTMLAttributes } from "astro/types";
 import clsx from 'clsx';
-import { useState, type FunctionComponent } from "preact/compat";
+import he from "he";
+import { useState, type FunctionComponent, useEffect } from "preact/compat";
 import { twMerge } from 'tailwind-merge';
 import SquareMeterIcon from '../../Icons/SquareMeterIcon';
-import HeartIcon from "@components/preact/Icons/HeartIcon";
-import Button from "../Buttons/Button";
 import { WhatsAppIcon } from '../../Icons/WhatsAppIcon';
+import Button from "../Buttons/Button";
 
 interface Props extends HTMLAttributes<"a"> {
     cardData: File
@@ -19,15 +19,31 @@ interface Props extends HTMLAttributes<"a"> {
     href: string;
     key: string;
 }
-const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles,href, key }: Props) => {
+const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key }: Props) => {
     const [favorited, setFavorited] = useState(false); // Estado para controlar si se marca como favorito
     const styles = twMerge(clsx("rounded relative overflow-hidden shadow-lg h-100 animate-fade", addStyles));
-    
+
+/*     // Use effect para que carge los favoritos
+     useEffect(() => {
+         const fetchData = async () => {
+             const data = await fetch(`/api/favorites/1`);
+             const res = await data.json();
+             if (res.success) {
+                console.log(res.data.some((favorite: any) => favorite.publicationId === cardData.in_fic))
+                 setFavorited( 
+                        res.data.some((favorite: any) => favorite.publicationId === cardData.in_fic)
+                 );
+             }
+         }
+         fetchData();
+     }, []); */
+
     //Add To Favorite
-    const  addToFavorite = async(e: Event) => {
+    const addToFavorite = async (e: Event) => {
         e.preventDefault();
-        console.log('SE CLICEO')
-        const data = await fetch('/api/favorites/addToFavorite', {
+      
+        setFavorited(true);
+        await fetch('/api/favorites/addToFavorite', {
             method: 'POST',
             body: JSON.stringify({
                 userId: 1,
@@ -39,34 +55,30 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles,href, key 
                 'Content-Type': 'application/json'
             }
         });
-        const res = await data.json();
-        console.log(res);
-        if(!res.success){
-            setFavorited(false);
-            const data = await fetch(`/api/favorites/${cardData.in_fic}`, {
-                method: 'DELETE',
-                body: JSON.stringify({
-                    userId: 1, // userId 
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }); 
+        
 
-            console.log(data)
-        }else{
-            setFavorited(true);
-        }
+    }
+    const removeFromFavorite = async (e: Event) => {
+        setFavorited(false);
+         await fetch(`/api/favorites/${cardData.in_fic}`, {
+            method: 'DELETE',
+            body: JSON.stringify({
+                userId: 1, // userId 
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 
     return (
         <div className={'shadow-lg'}>
-        <a href={href} className={styles} key={key}>
-            <img className="w-full h-[248px]  text-balance object-cover" loading="eager" width={408} height={248} src={cardData.img_princ} alt="Imagen del interior de la vivienda" />
+            <a href={href} className={styles} key={key}>
+                <img className="w-full h-[248px]  text-balance object-cover" loading="eager" width={408} height={248} src={cardData.img_princ} alt="Imagen del interior de la vivienda" />
             </a>
             <div class="bg-secondary-msb relative h-[210px] md:px-3 p-3 md:py-3 lg:px-3 lg:py-3">
                 <div className="">
-                    <div className="lg:text-xl md:text-lg text-lg font-medium"><span className="font-extrabold ">{cardData.precio}</span> | { he.decode(cardData.in_cal)} {cardData.in_nro}</div>
+                    <div className="lg:text-xl md:text-lg text-lg font-medium"><span className="font-extrabold ">{cardData.precio}</span> | {he.decode(cardData.in_cal)} {cardData.in_nro}</div>
                     <p className="text-bg-2-msb font-bold">
                         {he.decode(cardData.in_loc)} {he.decode(cardData.in_bar) ? `- ${he.decode(cardData.in_bar)}` : ""}
                     </p>
@@ -74,23 +86,29 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles,href, key 
                 <div className="flex justify-start  flex-wrap items-center mt-1 lg:gap-x-10 gap-x-5">
 
                     {he.decode(cardData.in_cub) !== "0.00" && he.decode(cardData.in_cub) !== "" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1"><RuleIcon /> {he.decode(cardData?.in_cub)}mt2</span>}
-                    {he.decode(cardData.in_sto) !== "0.00" && he.decode(cardData.in_sto) !== "" &&<span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1"><SquareMeterIcon /> {he.decode(cardData?.in_sto)}mt2</span>}
-                    {he.decode(cardData.ti_dor) !== "" &&  he.decode(cardData.ti_dor) !== "0" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1"><DoorOpen /> {he.decode(cardData.ti_dor)} dorm.</span>}
-                    {he.decode(cardData?.in_bao) !=="" && he.decode(cardData?.in_bao) !== "0" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1"><BathIcon />{`${he.decode(cardData?.in_bao) === "1" ? `${he.decode(cardData?.in_bao)} baño`: `${he.decode(cardData?.in_bao)} baños`}`} </span>}
+                    {he.decode(cardData.in_sto) !== "0.00" && he.decode(cardData.in_sto) !== "" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1"><SquareMeterIcon /> {he.decode(cardData?.in_sto)}mt2</span>}
+                    {he.decode(cardData.ti_dor) !== "" && he.decode(cardData.ti_dor) !== "0" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1"><DoorOpen /> {he.decode(cardData.ti_dor)} dorm.</span>}
+                    {he.decode(cardData?.in_bao) !== "" && he.decode(cardData?.in_bao) !== "0" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1"><BathIcon />{`${he.decode(cardData?.in_bao) === "1" ? `${he.decode(cardData?.in_bao)} baño` : `${he.decode(cardData?.in_bao)} baños`}`} </span>}
                 </div>
                 <div className="flex justify-between items-end absolute p-3 bottom-0 right-0 left-0 h-100 place-content-end self">
                     <button className="text-base bg-bg-2-msb rounded-full px-3 py-2  hover:bg-bg-1-msb text-white font-medium   uppercase">
                         {he.decode(cardData.operacion)}
                     </button>
                     <div class="flex items-center justify-center gap-1 ">
-                            <Button type="button" onClick={addToFavorite} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={favorited}></Button>
-                            <a href={`https://api.whatsapp.com/send/?phone=5491144161700&text=Hola%2C+me+contactaba+desde+http%3A%2F%2Fmatiasszpira.com.ar%2F+para+consultarles&type=phone_number&app_absent=0`} target="_blank"><WhatsAppIcon /></a>
-                        </div>
-                   
+                        <button   onClick={!favorited ? addToFavorite: removeFromFavorite}  >
+                                 <span  className={ !favorited ? " fill-black-400" : "fill-black-400"}>
+                                 <HeartIcon addStyles={!favorited ? "fill-primary-white stroke-primary-text-msb  hover:fill-primary-text-msb " : "stroke-primary-text-msb transition-all hover:fill-primary-text-msb fill-primary-text-msb"}  />
+                                 </span>
+                       
+                        
+                        </button>
+                        <a href={`https://api.whatsapp.com/send/?phone=5491144161700&text=Hola%2C+me+contactaba+desde+http%3A%2F%2Fmatiasszpira.com.ar%2F+para+consultarles&type=phone_number&app_absent=0`} target="_blank"><WhatsAppIcon /></a>
+                    </div>
+
                 </div>
             </div>
 
-            </div>
+        </div>
 
     )
 }
