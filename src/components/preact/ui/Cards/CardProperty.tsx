@@ -7,41 +7,52 @@ import type { File } from "@interfaces/results.records.interfaces";
 import type { HTMLAttributes } from "astro/types";
 import clsx from 'clsx';
 import he from "he";
-import { useState, type FunctionComponent, useEffect } from "preact/compat";
+import { useState, type FunctionComponent } from "preact/compat";
 import { twMerge } from 'tailwind-merge';
 import SquareMeterIcon from '../../Icons/SquareMeterIcon';
 import { WhatsAppIcon } from '../../Icons/WhatsAppIcon';
-import Button from "../Buttons/Button";
 
 interface Props extends HTMLAttributes<"a"> {
     cardData: File
+    favorites: {
+        id: string;
+        titulo: string;
+        image: string;
+    }[]
     addStyles?: string;
     href: string;
     key: string;
 }
-const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key }: Props) => {
-    const [favorited, setFavorited] = useState(false); // Estado para controlar si se marca como favorito
+const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key, favorites }: Props) => {
+    const [favorited, setFavorited] = useState(
+        favorites.some((favorite: {
+            id: string;
+            titulo: string;
+            image: string;
+        }) => favorite.id === cardData.in_fic)
+
+    ); // Debe cargar los favoritos si estan en la lista de favoritos
     const styles = twMerge(clsx("rounded relative overflow-hidden shadow-lg h-100 animate-fade", addStyles));
 
-/*     // Use effect para que carge los favoritos
-     useEffect(() => {
-         const fetchData = async () => {
-             const data = await fetch(`/api/favorites/1`);
-             const res = await data.json();
-             if (res.success) {
-                console.log(res.data.some((favorite: any) => favorite.publicationId === cardData.in_fic))
-                 setFavorited( 
-                        res.data.some((favorite: any) => favorite.publicationId === cardData.in_fic)
-                 );
+    /*     // Use effect para que carge los favoritos
+         useEffect(() => {
+             const fetchData = async () => {
+                 const data = await fetch(`/api/favorites/1`);
+                 const res = await data.json();
+                 if (res.success) {
+                    console.log(res.data.some((favorite: any) => favorite.publicationId === cardData.in_fic))
+                     setFavorited( 
+                            res.data.some((favorite: any) => favorite.publicationId === cardData.in_fic)
+                     );
+                 }
              }
-         }
-         fetchData();
-     }, []); */
+             fetchData();
+         }, []); */
 
     //Add To Favorite
     const addToFavorite = async (e: Event) => {
         e.preventDefault();
-      
+
         setFavorited(true);
         await fetch('/api/favorites/addToFavorite', {
             method: 'POST',
@@ -55,12 +66,12 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key
                 'Content-Type': 'application/json'
             }
         });
-        
+
 
     }
     const removeFromFavorite = async (e: Event) => {
         setFavorited(false);
-         await fetch(`/api/favorites/${cardData.in_fic}`, {
+        await fetch(`/api/favorites/${cardData.in_fic}`, {
             method: 'DELETE',
             body: JSON.stringify({
                 userId: 1, // userId 
@@ -95,12 +106,12 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key
                         {he.decode(cardData.operacion)}
                     </button>
                     <div class="flex items-center justify-center gap-1 ">
-                        <button   onClick={!favorited ? addToFavorite: removeFromFavorite}  >
-                                 <span  className={ !favorited ? " fill-black-400" : "fill-black-400"}>
-                                 <HeartIcon addStyles={!favorited ? "fill-primary-white stroke-primary-text-msb  hover:fill-primary-text-msb " : "stroke-primary-text-msb transition-all hover:fill-primary-text-msb fill-primary-text-msb"}  />
-                                 </span>
-                       
-                        
+                        <button onClick={!favorited ? addToFavorite : removeFromFavorite}  >
+                            <span className={!favorited ? " fill-black-400" : "fill-black-400"}>
+                                <HeartIcon addStyles={!favorited ? "fill-primary-white stroke-primary-text-msb  hover:fill-primary-text-msb " : "stroke-primary-text-msb transition-all hover:fill-primary-text-msb fill-primary-text-msb"} />
+                            </span>
+
+
                         </button>
                         <a href={`https://api.whatsapp.com/send/?phone=5491144161700&text=Hola%2C+me+contactaba+desde+http%3A%2F%2Fmatiasszpira.com.ar%2F+para+consultarles&type=phone_number&app_absent=0`} target="_blank"><WhatsAppIcon /></a>
                     </div>

@@ -36,12 +36,14 @@ const ResultsPage = ({ selects, locations }: Props) => {
   const filtersformatted = formatAndUseSearch(filters, filterToFill, labelMappingResultForQuerys);
 
   const defaultOptions = {
-    tipo_operacion: {  value: window.location.search?.includes('tipo_operacion') ? 
-    window.location.search?.includes('tipo_operacion=A') ? 'A' : 
-    window.location.search?.includes('tipo_operacion=T') ? 'T' :  
-     window.location.search?.includes('tipo_operacion=V') ? 'V' :  '' : 
-   filterStore?.tipo_operacion?.value ?? '',
-   label: ""},
+    tipo_operacion: {
+      value: window.location.search?.includes('tipo_operacion') ?
+        window.location.search?.includes('tipo_operacion=A') ? 'A' :
+          window.location.search?.includes('tipo_operacion=T') ? 'T' :
+            window.location.search?.includes('tipo_operacion=V') ? 'V' : '' :
+        filterStore?.tipo_operacion?.value ?? '',
+      label: ""
+    },
     tipo_inmueble: { value: 'All', label: 'Tipo de propiedad' },
     Ambientes: { value: 'All', label: 'Cantidad de Ambientes' },
     calles: { value: 'All', label: 'Calle' },
@@ -52,11 +54,16 @@ const ResultsPage = ({ selects, locations }: Props) => {
     valor_maximo: { value: 'All', label: 'Hasta' },
     rppagina: { value: '15', label: '15' },
     in_iub: { value: '', label: '' },
-    ordenar:{value:'preciomenor', label: 'Ordenar'},
+    ordenar: { value: 'preciomenor', label: 'Ordenar' },
     in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
   }
 
   const [results, setResults] = useState<Result | null>()
+  const [favorites, setFavorites] = useState<{
+    id: string;
+    titulo: string;
+    image: string;
+  }[] | null>()
   const [resetPagination, setResetPagination] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
@@ -68,22 +75,45 @@ const ResultsPage = ({ selects, locations }: Props) => {
     , ...filterStore,
 
     tipo_operacion: {
-      value: window.location.search?.includes('tipo_operacion') ? 
-       window.location.search?.includes('tipo_operacion=A') ? 'A' : 
-       window.location.search?.includes('tipo_operacion=T') ? 'T' :  
-        window.location.search?.includes('tipo_operacion=V') ? 'V' :  '' : 
-      filterStore?.tipo_operacion?.value,
+      value: window.location.search?.includes('tipo_operacion') ?
+        window.location.search?.includes('tipo_operacion=A') ? 'A' :
+          window.location.search?.includes('tipo_operacion=T') ? 'T' :
+            window.location.search?.includes('tipo_operacion=V') ? 'V' : '' :
+        filterStore?.tipo_operacion?.value,
       label: ""
     }
   })
 
   useEffect(() => {
     fetchResults()
+
     setIsSubmitting(false)
   }, [searchPStore])
 
+  useEffect(() => {
+    fetchFavorites()
+  },[favorites])
 
-  
+  const fetchFavorites = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`/api/favorites/1`);
+      const data = await response.json();
+
+      if (!data.success) {
+        setFavorites(null)
+        setIsLoading(false);
+        setIsSubmitting(false);
+      } else if (response.ok) {
+        setIsLoading(false);
+        setFavorites(data)
+        setIsSubmitting(false);
+
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const fetchResults = async () => {
     try {
       setIsLoading(true);
@@ -123,11 +153,11 @@ const ResultsPage = ({ selects, locations }: Props) => {
     setResetPagination(true)
     // Reinicia el estado de los filtros y realiza el fetch con los filtros predeterminados
     resetFilter({
-        ...defaultOptions,
-        tipo_operacion: {
-          value:  "",
-          label: ""
-        }
+      ...defaultOptions,
+      tipo_operacion: {
+        value: "",
+        label: ""
+      }
 
     });
     await fetchResults();
@@ -242,9 +272,9 @@ const ResultsPage = ({ selects, locations }: Props) => {
       <div className="py-20">
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 md:px-0 px-3">
-        <div class="lg:col-start-4 lg:col-end-13 md:hidden hidden lg:flex  items-end justify-between w-full">
+          <div class="lg:col-start-4 lg:col-end-13 md:hidden hidden lg:flex  items-end justify-between w-full">
             <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.fichas.length : 0}</span> resultados con tu búsqueda</p>
-           <SelectField id="ordenar"  variant="secondary" addStyles="bg-transparent relative w-full h-[56px] transition-all flex justify-between items'end h-fit py-0 w-fit gap-8" onChange={handleSelect} defaultOption={filterStore.ordenar} opts={filtersformatted.ordenar}><ArrowSortIcon/></SelectField>
+            <SelectField id="ordenar" variant="secondary" addStyles="bg-transparent relative w-full h-[56px] transition-all flex justify-between items'end h-fit py-0 w-fit gap-8" onChange={handleSelect} defaultOption={filterStore.ordenar} opts={filtersformatted.ordenar}><ArrowSortIcon /></SelectField>
 
           </div>
           {/* Aside para filtros */}
@@ -321,7 +351,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
               </div>
               <div class="lg:col-start-4 lg:col-end-13 lg:hidden flex items-end justify-between w-full mt-4">
                 <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.fichas.length : 0}</span> resultados con tu búsqueda</p>
-                <SelectField id="ordenar"  variant="secondary" addStyles="bg-transparent relative w-full h-[56px] transition-all flex justify-between items'end h-fit py-0 w-fit" onChange={handleSelect} defaultOption={filterStore.ordenar} opts={filtersformatted.ordenar}><ArrowSortIcon/></SelectField>
+                <SelectField id="ordenar" variant="secondary" addStyles="bg-transparent relative w-full h-[56px] transition-all flex justify-between items'end h-fit py-0 w-fit" onChange={handleSelect} defaultOption={filterStore.ordenar} opts={filtersformatted.ordenar}><ArrowSortIcon /></SelectField>
               </div>
             </div>
           </aside>
@@ -346,6 +376,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
                 <>
                   {Array.isArray(results?.fichas) && results.fichas.map((result: File,) => (
                     <CardProperty
+                      favData={favorites}
                       cardData={result}
                       key={`${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`} // Aquí estás utilizando result.id como clave
                       href={`resultados-de-busqueda/${result.operacion}/${result.in_loc}/${result.direccion_completa}/${result.in_suc}-${result.in_num}`}
