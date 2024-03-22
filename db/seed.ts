@@ -11,7 +11,18 @@ export default async function () {
 
   // Seed your database with users here
    
-/*    await db.delete(Favorites).run()
-   await db.delete(UserT).run() */
+   // await db.delete(Favorites)
+   await db.delete(UserT)
+    await db.insert(UserT).values({
+      username: "admin",
+      password: "admin",
+      name: "admin",
+      lastName: "admin",
+      email: "admin@admin.com",
+      phone: "123456789",
+      alternativePhone: "123456789",
+      creationDate: Date.now(),
+      lastUpdate: Date.now(),
+    })
 
 }   

@@ -10,13 +10,13 @@ export const POST: APIRoute = async ({ request }) => {
     const data = await request.json();
 
     try {
-        const { name, lastName, email, password, username } = data;
+        const { firstName, lastName, email, password, username } = data;
 
         // Handler de los campos requeridos para el registro 
-        if (!name || !lastName || !email || !password || !username) {
+        if (!firstName || !lastName || !email || !password || !username) {
             return new Response(
                 JSON.stringify({
-                    message: `${!username ? "username, " : ""}${!name ? "name, " : ""}${!lastName ? "lastName, " : ""}${!email ? "email, " : ""}${!password ? "password, " : ""} son campos requeridos.`,
+                    message: `${!username ? "username, " : ""}${!firstName ? "name, " : ""}${!lastName ? "lastName, " : ""}${!email ? "email, " : ""}${!password ? "password, " : ""} son campos requeridos.`,
                     success: false,
                 }),
                 {
@@ -32,7 +32,7 @@ export const POST: APIRoute = async ({ request }) => {
 
         const res = await db.insert(UserT).values({
             username: sanitize(username),
-            name: sanitize(name),
+            firstName: sanitize(firstName),
             lastName: sanitize(lastName),
             password: hashedPassword,
             email: sanitize(email),

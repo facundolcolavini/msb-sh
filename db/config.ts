@@ -27,11 +27,12 @@ const Session = defineTable({
 */
 
 const UserT = defineTable({
+	name: "UserT",
 	columns: {
 		id: column.number({ primaryKey: true,optional: false, autoIncrement: true}),
 		username: column.text({ unique: true }),
 		password: column.text({ optional: false }),
-		name: column.text({ optional: false }),
+		firstName: column.text({ optional: false }),
 		lastName: column.text({ optional: false }),
 		email: column.text({ unique: true, required: false }),
 		phone: column.text({ optional: true }),

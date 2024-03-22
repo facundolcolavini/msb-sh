@@ -73,13 +73,13 @@ const usersData = await users.json(); */
           class="grid grid-cols-2 gap-x-2 fixed justify-center"
         >
           <div class="mb-4">
-            <label for="name" class="block text-gray-700 text-sm font-bold mb-2"
+            <label for="firstName" class="block text-gray-700 text-sm font-bold mb-2"
               >Nombre</label
             >
             <input
               type="text"
-              id="name"
-              name="name"
+              id="firstName"
+              name="firstName"
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -192,7 +192,7 @@ const usersData = await users.json(); */
 
     let email = document.querySelector("#email") as HTMLInputElement;
     let username = document.querySelector("#username") as HTMLInputElement;
-    let name = document.querySelector("#name") as HTMLInputElement;
+    let firstName = document.querySelector("#firstName") as HTMLInputElement;
     let lastName = document.querySelector("#lastName") as HTMLInputElement;
     let password = document.querySelector("#password") as HTMLInputElement;
     let phone = document.querySelector("#phone") as HTMLInputElement;
@@ -267,7 +267,7 @@ const usersData = await users.json(); */
           const userData = await res.json();
 
           // Charge the inputs of edit form with data of row
-          name.value = userData[0].name;
+          firstName.value = userData[0].firstName;
           lastName.value = userData[0].lastName;
           username.value = userData[0].username;
           email.value = userData[0].email;
@@ -290,7 +290,7 @@ const usersData = await users.json(); */
       addBtn.classList.remove("hidden");
       updateBtn.classList.add("hidden");
       backBtn.classList.add("hidden");
-      name.value = "";
+      firstName.value = "";
       lastName.value = "";
       username.value = "";
       email.value = "";
