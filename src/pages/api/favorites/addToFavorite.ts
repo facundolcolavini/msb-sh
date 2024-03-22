@@ -1,6 +1,6 @@
 
 import type { APIRoute } from "astro";
-import { Favorite, User,db,eq } from "astro:db";
+import { Favorite, UserT,db,eq } from "astro:db";
 
 export const POST: APIRoute = async ({ request }) => {
     const data = await request.json();
@@ -36,7 +36,7 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
   
-    const user = (await db.select().from(User).where(eq(User.id, userId))).at(0);
+    const user = (await db.select().from(UserT).where(eq(UserT.id, userId))).at(0);
     if (!userId || !user) {
       return new Response(
         JSON.stringify({
