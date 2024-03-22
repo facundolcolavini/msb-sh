@@ -14,7 +14,7 @@ import { WhatsAppIcon } from '../../Icons/WhatsAppIcon';
 
 interface Props extends HTMLAttributes<"a"> {
     cardData: File
-    favorites: {
+    favData: {
         id: string;
         titulo: string;
         image: string;
@@ -23,9 +23,9 @@ interface Props extends HTMLAttributes<"a"> {
     href: string;
     key: string;
 }
-const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key, favorites }: Props) => {
+const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key, favData }: Props) => {
     const [favorited, setFavorited] = useState(
-        favorites.some((favorite: {
+        favData.some((favorite: {
             id: string;
             titulo: string;
             image: string;
