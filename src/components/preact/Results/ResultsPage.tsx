@@ -59,11 +59,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
   }
 
   const [results, setResults] = useState<Result | null>()
-  const [favorites, setFavorites] = useState<{
-    id: string;
-    titulo: string;
-    image: string;
-  }[] | null>()
+
   const [resetPagination, setResetPagination] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
@@ -90,31 +86,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
     setIsSubmitting(false)
   }, [searchPStore])
 
-  useEffect(() => {
-    fetchFavorites()
-  },[favorites])
 
-
-  const fetchFavorites = async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetch(`/api/favorites/1`);
-      const data = await response.json();
-
-      if (!data.success) {
-        setFavorites(null)
-        setIsLoading(false);
-        setIsSubmitting(false);
-      } else if (response.ok) {
-        setIsLoading(false);
-        setFavorites(data)
-        setIsSubmitting(false);
-
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const fetchResults = async () => {
     try {
       setIsLoading(true);
@@ -377,7 +349,6 @@ const ResultsPage = ({ selects, locations }: Props) => {
                 <>
                   {Array.isArray(results?.fichas) && results.fichas.map((result: File,) => (
                     <CardProperty
-                      favData={favorites ?? []}
                       cardData={result}
                       key={`${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`} // Aquí estás utilizando result.id como clave
                       href={`resultados-de-busqueda/${result.operacion}/${result.in_loc}/${result.direccion_completa}/${result.in_suc}-${result.in_num}`}

@@ -79,7 +79,7 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
 
   const favoritesUser: {
     id: string;
-    titulo: string;
+    title: string;
     image: string;
   }[] = []
   // Consultamos los favoritos de un usuario en particula y devolvemos sus favoritos
@@ -90,8 +90,6 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
       eq(Favorites.userId, userId),
 
     )
-
-  console.log(favorites)
 
   // Una vez teniendo los ids lo consultamos a la api de xintel 
   for (let i = 0; i < favorites.length; i++) {
@@ -105,7 +103,7 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
       favoritesUser.push(
         {
           id: data.resultado.emprendimiento[0].ed_idl,
-          titulo: capitalize(data.resultado.emprendimiento[0].titulo),
+          title: capitalize(data.resultado.emprendimiento[0].titulo),
           image: data.resultado.emprendimiento[0].img_princ
         }
       )
@@ -118,7 +116,7 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
      
       favoritesUser.push({
         id: data.resultado.ficha[0].in_fic,
-        titulo: capitalize(he.decode(`${data.resultado.ficha[0].in_cal} ${data.resultado.ficha[0].in_nro} - ${data.resultado.ficha[0].in_tip} en ${data.resultado.ficha[0].in_loc} ${data.resultado.ficha[0].in_bar}`)),
+        title: capitalize(he.decode(`${data.resultado.ficha[0].in_cal} ${data.resultado.ficha[0].in_nro} - ${data.resultado.ficha[0].in_tip} en ${data.resultado.ficha[0].in_loc} ${data.resultado.ficha[0].in_bar}`)),
         image: data.resultado?.ficha[0].img_princ
       
       })
@@ -137,3 +135,6 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
     })
   );
 }
+
+// GET FAVORITE BY ID Y SUC 
+

@@ -26,6 +26,9 @@ import DetailsList from "./DetailsList";
 import FeatureList from "./FeatureList";
 import ServiceList from "./ServiceList";
 import TabMenu from "./TabMenu";
+import FavoriteButton from "../ui/Buttons/FavoriteButton";
+import WarningAlertIcon from "../Icons/WarningAlertIcon";
+import { Toast } from "../ui/Toast/Toast";
 
 
 interface Props {
@@ -36,6 +39,10 @@ interface Props {
 
 const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [results, setResults] = useState<ResultPropertyDetails | null>()
+    const [favorites, setFavorites] = useState<{ id: string; title: string; image: string }[] | null>()
+    const [isFavorited, setIsFavorited] = useState(false);
+    const [msgToast, setMsgToast] = useState<string>("")
+
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [tabMenuProperty, setTabMenuProperty] = useState(
         tabMenuPropertyStore.get() // Estado local para el valor del almacén
@@ -88,7 +95,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     // Obtener el valor del parámetro 'v' de la URL del video
                     const videoUrl = data.resultado?.ficha[0]?.in_vid;
                     // a veces viene asi https://youtu.be/sA7_jQQ5c84 
-                    const videoId = new URL(videoUrl).searchParams.get("v") || videoUrl.split('/').pop();
+                    const videoId = new URL(videoUrl)?.searchParams.get("v") || videoUrl?.split('/').pop();
                     if (videoId) {
                         setVideoUrl(videoId);
                     } else {
@@ -102,7 +109,75 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             console.log(error);
         }
     };
+    // Fetch Favprotes from API server
+    const fetchFavorites = async () => {
+        try {
+            const response = await fetch(`/api/favorites/1`);
+            const data = await response.json();
+            if (response.ok) {
+                setFavorites(data);
+                // Check if the current property is in the favorites list
+                const isFavorited = data.data.some((favorite: { id: string }) => favorite.id === results?.datos?.codigo_ficha);
+                setIsFavorited(isFavorited);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
+    useEffect(() => {
+        fetchFavorites();
+    }, [results?.datos?.codigo_ficha]);
+
+    // Remove the favorite from the list  API SERVER
+    const removeFavorite = async () => {
+        try {
+            const response = await fetch(`/api/favorites/${results?.datos?.codigo_ficha}`, {
+                method: 'DELETE',
+                body: JSON.stringify({
+                    userId: 1, // userId 
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                if(data.success){
+
+                    setMsgToast(data.message);
+                }
+                fetchFavorites();
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // Add the favorite to the list API SERVER
+    const addFavorite = async () => {
+        try {
+            const response = await fetch(`/api/favorites/addToFavorite`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    userId: 1,
+                    publicationId: results?.datos?.codigo_ficha,
+                    publicationSuc: results?.ficha[0]?.codsuc,
+                    isEntrepreneurshipPublic: false
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                setMsgToast(data.message);
+                fetchFavorites();
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
     return (
         <article className=" px-3 md:px-0 lg:px-0 font-gotham">
             <section className="h-full md:px-5 lg:px-10">
@@ -125,7 +200,11 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
                 <div className="container mx-auto pt-5 flex justify-between">
                     <TabMenu videoUrl={videoUrl} unitRedirect={window.location.pathname.includes('unidad-disponible') ? 'Edificio' : 'Unidades disponibles'} unitList={results!?.emprendimiento ? true : false} pdf={results?.emprendimiento && results?.emprendimiento?.ed_pdf !== "" && results?.emprendimiento?.ed_pdf !== null ? true : false} blueprint={results!?.plano !== null && !isLoading} />
-                    <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>
+                    {/*  <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button> */}
+                 {/*    <button onClick={isFavorited ? removeFavorite : addFavorite}>
+                        {isFavorited ? 'Remove from favorites' : 'Add to favorites'}
+                    </button> */}
+                    <FavoriteButton toggleFavorite={isFavorited ? removeFavorite : addFavorite} initialIsFavorited={isFavorited} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center"><span className={'font-semibold'}>Favorito</span></FavoriteButton>
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16 md:px-5 lg:px-0"><GalleryPropertySkeleton /></div> :
                     tabMenuProperty.gallery ?
@@ -320,7 +399,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     <CardResultSkeleton />
                 </div>
             </section>
-
+            <Toast message={msgToast} isVisible={true} icon={<WarningAlertIcon />} customStyles="flex gap-2 border-2 border-red-500 bg-[#EFF0F2]" duration={3000} />
         </article>
     )
 }

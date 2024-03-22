@@ -1,8 +1,9 @@
-// Toast.tsx
+
  
 import { useState, useEffect } from 'preact/hooks';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import type { JSX } from 'preact/jsx-runtime';
 
 
 type ToastProps = {
