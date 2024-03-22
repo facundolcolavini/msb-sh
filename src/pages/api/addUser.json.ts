@@ -57,7 +57,8 @@ export const POST: APIRoute = async ({ request }) => {
             throw new Error("There was a problem with the db response.");
         }
     } catch (e) {
-        console.error(e);
+        console.error(e.message);
+
         return new Response(
             JSON.stringify({
                 message: e,
