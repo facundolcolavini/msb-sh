@@ -1,6 +1,6 @@
 
 import type { APIRoute } from 'astro';
-import { UserT, db } from 'astro:db';
+import { UserTAuth, db } from 'astro:db';
 import bcrypt from 'bcrypt';
 import sanitize from "sanitize-html";
 
@@ -30,7 +30,7 @@ export const POST: APIRoute = async ({ request }) => {
         const hashedPassword = await bcrypt.hash(sanitize(password), salt);
 
 
-        const res = await db.insert(UserT).values({
+        const res = await db.insert(UserTAuth).values({
             username: sanitize(username),
             firstName: sanitize(firstName),
             lastName: sanitize(lastName),

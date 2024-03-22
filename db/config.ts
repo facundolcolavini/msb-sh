@@ -5,29 +5,10 @@ export interface DatabaseUser {
 	username: string;
 	password: string;
 }
+ 
 
-/* 
-// Auth Tables
-const User = defineTable({
-	columns: {
-		id: column.text({ primaryKey: true }),
-		username: column.text({ unique: true}),
-		password: column.text({  }),
-	},
-});
+const UserTAuth = defineTable({
 
-const Session = defineTable({
-	deprecated: true,
-	columns: {
-		id: column.text({ primaryKey: true }),
-		userId: column.text({ }),
-	},
-}); 
-
-*/
-
-const UserT = defineTable({
-	name: "UserT",
 	columns: {
 		id: column.number({ primaryKey: true,optional: false, autoIncrement: true}),
 		username: column.text({ unique: true }),
@@ -49,7 +30,7 @@ const Favorite = defineTable({
 		userId: column.number(
 			{
 				// Referencia al usuario  que tiene el favorito
-				references: () => UserT.columns.id
+				references: () => UserTAuth.columns.id
 			}
 		),
 		publicationId: column.text(),
@@ -63,7 +44,8 @@ const Favorite = defineTable({
 }) */
 export default defineDb({
 	tables: {
-		UserT,
+		UserTAuth,
 		Favorite,
+
 	},
 })
