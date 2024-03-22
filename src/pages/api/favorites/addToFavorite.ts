@@ -1,6 +1,6 @@
 
 import type { APIRoute } from "astro";
-import { Favorite, UserTAuth,db,eq } from "astro:db";
+import { Favorites, UserTAuths,db,eq } from "astro:db";
 
 export const POST: APIRoute = async ({ request }) => {
     const data = await request.json();
@@ -21,7 +21,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
   
     // Verificar si la propiedad ya esta en favoritos y que no se pueda agregar dos veces
-    const favorite = (await db.select().from(Favorite).where(eq(Favorite.publicationId, publicationId))
+    const favorite = (await db.select().from(Favorites).where(eq(Favorites.publicationId, publicationId))
       
     ).at(0);
     if (favorite) {
@@ -36,7 +36,7 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
   
-    const user = (await db.select().from(UserTAuth).where(eq(UserTAuth.id, userId))).at(0);
+    const user = (await db.select().from(UserTAuths).where(eq(UserTAuths.id, userId))).at(0);
     if (!userId || !user) {
       return new Response(
         JSON.stringify({
@@ -50,7 +50,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
     try {
   
-      const res = await db.insert(Favorite).values({
+      const res = await db.insert(Favorites).values({
         userId: Number(userId),
         publicationId: publicationId,
         publicationSuc: publicationSuc,

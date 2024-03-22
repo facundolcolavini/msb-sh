@@ -4,7 +4,7 @@ import type { APIResponseDetailEntrepreneurShip } from "@interfaces/entrepreneur
 import type { APIResponseResultsRecords } from "@interfaces/results.records.interfaces";
 import { fetchData } from "@utils/fetch-data";
 import type { APIContext, APIRoute } from "astro";
-import { Favorite, UserTAuth, and, db, eq } from "astro:db";
+import {  Favorites, UserTAuths, and, db, eq } from "astro:db";
 import { capitalize } from '../../../utils/formats';
 import he from 'he';
 
@@ -25,7 +25,7 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
       }
     );
   }
-  const user = (await db.select().from(UserTAuth).where(eq(UserTAuth.id, userId))).at(0);
+  const user = (await db.select().from(UserTAuths).where(eq(UserTAuths.id, userId))).at(0);
 
   if (!userId || !user) {
     return new Response(
@@ -41,7 +41,7 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
 
   try {
     // Remover la propiedad de favoritos para el usuario 
-    const res = await db.delete(Favorite).where(and(eq(Favorite.publicationId, id), eq(Favorite.userId, userId)));
+    const res = await db.delete(Favorites).where(and(eq(Favorites.publicationId, id), eq(Favorites.userId, userId)));
     console.log(res)
 
     if (res) {
@@ -85,9 +85,9 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
   // Consultamos los favoritos de un usuario en particula y devolvemos sus favoritos
   const favorites = await db
     .select()
-    .from(Favorite)
+    .from(Favorites)
     .where(
-      eq(Favorite.userId, userId),
+      eq(Favorites.userId, userId),
 
     )
 

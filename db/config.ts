@@ -7,7 +7,7 @@ export interface DatabaseUser {
 }
  
 
-const UserTAuth = defineTable({
+const UserTAuths = defineTable({
 
 	columns: {
 		id: column.number({ primaryKey: true,optional: false, autoIncrement: true}),
@@ -24,13 +24,13 @@ const UserTAuth = defineTable({
 });
 // Relacion de un usuarios a muchos Favoritos
 // Favorite 
-const Favorite = defineTable({
+const Favorites = defineTable({
 	columns: {
 		id: column.number({ primaryKey: true,optional:false, autoIncrement: true}),
 		userId: column.number(
 			{
 				// Referencia al usuario  que tiene el favorito
-				references: () => UserTAuth.columns.id
+				references: () => UserTAuths.columns.id
 			}
 		),
 		publicationId: column.text(),
@@ -38,14 +38,10 @@ const Favorite = defineTable({
 		isEntrepreneurshipPublic: column.boolean(),
 	},
 });
-/* const History = defineTable({
-	id: column.text({ primaryKey: true }),
 
-}) */
 export default defineDb({
 	tables: {
-		UserTAuth,
-		Favorite,
-
+		UserTAuths,
+		Favorites,
 	},
 })
