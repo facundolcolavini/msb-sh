@@ -25,7 +25,7 @@ interface Props extends HTMLAttributes<"a"> {
 }
 const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key, favData }: Props) => {
     const [favorited, setFavorited] = useState(
-        favData.some((favorite: {
+        favData?.some((favorite: {
             id: string;
             titulo: string;
             image: string;

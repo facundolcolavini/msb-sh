@@ -94,6 +94,7 @@ const ResultsPage = ({ selects, locations }: Props) => {
     fetchFavorites()
   },[favorites])
 
+
   const fetchFavorites = async () => {
     try {
       setIsLoading(true);
