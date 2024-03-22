@@ -16,7 +16,7 @@ export default async function () {
     await db.insert(UserT).values({
       username: "admin",
       password: "admin",
-      name: "admin",
+      firstName: "admin",
       lastName: "admin",
       email: "admin@admin.com",
       phone: "123456789",
