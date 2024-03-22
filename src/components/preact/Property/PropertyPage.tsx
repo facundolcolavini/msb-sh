@@ -124,7 +124,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             console.error(error);
         }
     }
-
+    console.log(isFavorited); 
     useEffect(() => {
         fetchFavorites();
     }, [results?.datos?.codigo_ficha]);
@@ -399,7 +399,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     <CardResultSkeleton />
                 </div>
             </section>
-            <Toast message={msgToast} isVisible={true} icon={<WarningAlertIcon />} customStyles="flex gap-2 border-2 border-red-500 bg-[#EFF0F2]" duration={3000} />
+           
         </article>
     )
 }
