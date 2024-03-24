@@ -124,7 +124,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             console.error(error);
         }
     }
-    console.log(isFavorited); 
+
     useEffect(() => {
         fetchFavorites();
     }, [results?.datos?.codigo_ficha]);

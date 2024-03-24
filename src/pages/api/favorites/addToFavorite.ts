@@ -70,10 +70,10 @@ export const POST: APIRoute = async ({ request }) => {
   
   
     } catch (e) {
-  
+      console.log(JSON.stringify(e));
       return new Response(
         JSON.stringify({
-          message: e,
+          message: (e as Error).message,
           success: false,
         }),
         {
