@@ -27,8 +27,7 @@ import FeatureList from "./FeatureList";
 import ServiceList from "./ServiceList";
 import TabMenu from "./TabMenu";
 import FavoriteButton from "../ui/Buttons/FavoriteButton";
-import WarningAlertIcon from "../Icons/WarningAlertIcon";
-import { Toast } from "../ui/Toast/Toast";
+
 
 
 interface Props {
