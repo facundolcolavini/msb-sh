@@ -112,7 +112,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     // Fetch Favprotes from API server
     const fetchFavorites = async () => {
         try {
-            const response = await fetch(`/api/favorites/1`);
+            const response = await fetch(`/api/favorites/1.json`);
             const data = await response.json();
             if (response.ok) {
                 setFavorites(data);
@@ -132,7 +132,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     // Remove the favorite from the list  API SERVER
     const removeFavorite = async () => {
         try {
-            const response = await fetch(`/api/favorites/${results?.datos?.codigo_ficha}`, {
+            const response = await fetch(`/api/favorites/${results?.datos?.codigo_ficha}.json`, {
                 method: 'DELETE',
                 body: JSON.stringify({
                     userId: 1, // userId 
@@ -157,7 +157,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     // Add the favorite to the list API SERVER
     const addFavorite = async () => {
         try {
-            const response = await fetch(`/api/favorites/addToFavorite`, {
+            const response = await fetch(`/api/favorites/addToFavorite.json`, {
                 method: 'POST',
                 body: JSON.stringify({
                     userId: 1,
