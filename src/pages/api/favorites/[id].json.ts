@@ -6,7 +6,7 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
   const data = await request.json();
   const { ids } = data;
   const { id:userId } = params;
-  console.log(params)
+
   // Handler de los campos requeridos para el registro 
 
   if (!ids) {
@@ -38,7 +38,7 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
  
     // if id is and array of ids  
     if (Array.isArray(ids)) {
-      console.log(ids)
+      
         if(ids[0] === 'all') {
           // delete all favorites of user
           const res = await db.delete(Favorites).where(eq(Favorites.userId, userId));
@@ -54,7 +54,7 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
           }
         }
       
-      console.log('es array')
+
       // BATCH and delete in all array of ids to avoid problems 
       const queries = [];
 
