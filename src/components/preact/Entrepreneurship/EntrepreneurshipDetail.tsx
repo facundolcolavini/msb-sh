@@ -25,6 +25,9 @@ import { Modal } from '../ui/Modals/Modal';
 import EntrepreneurshipDetailList from './EntrepreneurshipDetailList';
 import EntrepreneurshipFeatureList from './EntrepreneurshipFeatureList';
 import UnitAvailableTable from './UnitAvailableTable';
+import FavoriteButton from '../ui/Buttons/FavoriteButton';
+import WarningAlertIcon from '../Icons/WarningAlertIcon';
+import { Toast } from '../ui/Toast/Toast';
 
 
 
@@ -38,9 +41,12 @@ interface Props {
 const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [results, setResults] = useState<DetailEntrepreneurship | null>()
     const [resultsUnit, setResultsUnit] = useState<ResultEntrePreneurShipUnit | null>()
+    const [isFavorited, setIsFavorited] = useState(false);
+    const [toastVisible, setToastVisible] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [tabMenuProperty, setTabMenuProperty] = useState(
-        tabMenuPropertyStore.get() // Estado local para el valor del almacén
+        tabMenuPropertyStore.get() 
     );
     const [modalState, setModalState] = useState({ isOpen: false });
 
@@ -70,7 +76,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
             });
         // Limpiar la suscripción al desmontar
         return () => unsubscribe();
-        // Realiza las tareas de inicialización aquí, como la obtención de datos
+        
     }, []);
 
 
@@ -115,6 +121,80 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
         }
     };
 
+     // Fetch Favprotes from API server
+     const fetchFavorites = async () => {
+        try {
+            const response = await fetch(`/api/favorites/1.json`);
+            const data = await response.json();
+            if (response.ok) {
+                /* setFavorites(data); */
+                // Check if the current property is in the favorites list
+                const isFavorited = data.data.some((favorite: { publicationId: string }) => favorite.publicationId === props.propertyCode);
+                setIsFavorited(isFavorited);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        fetchFavorites();
+    }, [props.propertyCode]);
+
+    // Remove the favorite from the list  API SERVER
+    const removeFavorite = async () => {
+        try {
+            const response = await fetch(`/api/favorites/${props.propertyCode}.json`, {
+                method: 'DELETE',
+                body: JSON.stringify({
+                    userId: 1, // userId 
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    setToastMessage(data.message);
+                    setToastVisible(true);
+                    setTimeout(() => setToastVisible(false), 3000);
+                }
+                await fetchFavorites();
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // Add the favorite to the list API SERVER
+    const addFavorite = async () => {
+        try {
+            const response = await fetch(`/api/favorites/addToFavorite.json`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    userId: 1,
+                    publicationId: props.propertyCode,
+                    publicationSuc: props.branchCode,
+                    isEntrepreneurshipPublic: true
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    setToastMessage(data.message);
+                    setToastVisible(true);
+                    setTimeout(() => setToastVisible(false), 3000);
+                }
+                await fetchFavorites();
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
     return (
         <article className=" px-3 md:px-0 font-gotham">
 
@@ -137,7 +217,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 )}
                 <div className="container mx-auto pt-5 flex justify-between ">
                     {isLoading ? <BreadCrumbSkeleton /> : <TabMenu videoUrl={null} unitData={resultsUnit?.unidadesDisponibles.length} unitList={resultsUnit?.unidadesDisponibles ? true : false} pdf={(results?.pdf?.length ?? 0) > 0 && !isLoading} blueprint={(resultsUnit?.unidadesDisponibles?.map(emp => emp.img_princ) ?? []).length > 0 && !isLoading} />}
-                    {isLoading ? <BreadCrumbSkeleton /> : <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button>}
+                    {isLoading ? <BreadCrumbSkeleton /> :   <FavoriteButton toggleFavorite={isFavorited ? removeFavorite : addFavorite} initialIsFavorited={isFavorited} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center"><span className={'font-semibold'}>Favorito</span></FavoriteButton>}
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16  md:px-5 lg:px-0"><GalleryPropertySkeleton /></div> : (
                     <div className={'grid pb-16 container mx-auto'}>
@@ -281,7 +361,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     <CardResultSkeleton />
                 </div>
             </section>
-
+            <Toast message={toastMessage} icon={<WarningAlertIcon />} isVisible={toastVisible} customStyles="flex gap-2 border  border-primary-msb  bg-[#EFF0F2]" />
         </article>
     )
 }

@@ -40,7 +40,6 @@ interface Props {
 
 const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [results, setResults] = useState<ResultPropertyDetails | null>()
-    /*    const [favorites, setFavorites] = useState<{ id: string; title: string; image: string }[] | null>() */
     const [isFavorited, setIsFavorited] = useState(false);
     const [toastVisible, setToastVisible] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
@@ -72,7 +71,6 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         fetchResults();
         // Limpiar la suscripción al desmontar
         return () => unsubscribe();
-        // Realiza las tareas de inicialización aquí, como la obtención de datos
     }, []);
 
 
@@ -186,6 +184,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             console.error(error);
         }
     }
+
     return (
         <article className=" px-3 md:px-0 lg:px-0 font-gotham">
             <section className="h-full md:px-5 lg:px-10">
@@ -208,10 +207,6 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
                 <div className="container mx-auto pt-5 flex justify-between">
                     <TabMenu videoUrl={videoUrl} unitRedirect={window.location.pathname.includes('unidad-disponible') ? 'Edificio' : 'Unidades disponibles'} unitList={results!?.emprendimiento ? true : false} pdf={results?.emprendimiento && results?.emprendimiento?.ed_pdf !== "" && results?.emprendimiento?.ed_pdf !== null ? true : false} blueprint={results!?.plano !== null && !isLoading} />
-                    {/*  <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button> */}
-                    {/*    <button onClick={isFavorited ? removeFavorite : addFavorite}>
-                        {isFavorited ? 'Remove from favorites' : 'Add to favorites'}
-                    </button> */}
                     <FavoriteButton toggleFavorite={isFavorited ? removeFavorite : addFavorite} initialIsFavorited={isFavorited} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center"><span className={'font-semibold'}>Favorito</span></FavoriteButton>
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16 md:px-5 lg:px-0"><GalleryPropertySkeleton /></div> :
