@@ -5,8 +5,6 @@ import type { APIResponseResultsRecords } from "@interfaces/results.records.inte
 import { fetchData } from "@utils/fetch-data";
 import type { APIContext, APIRoute } from "astro";
 import {  Favorites, UserTAuths, and, db, eq } from "astro:db";
-import { capitalize } from '../../../utils/formats';
-import he from 'he';
 
 export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
   const data = await request.json();
@@ -42,7 +40,6 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
   try {
     // Remover la propiedad de favoritos para el usuario 
     const res = await db.delete(Favorites).where(and(eq(Favorites.publicationId, id), eq(Favorites.userId, userId)));
-    console.log(res)
 
     if (res) {
       return new Response(
@@ -90,9 +87,9 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
       eq(Favorites.userId, userId),
 
     )
-
+      console.log(favorites)
   // Una vez teniendo los ids lo consultamos a la api de xintel 
-  for (let i = 0; i < favorites.length; i++) {
+/*   for (let i = 0; i < favorites.length; i++) {
     if (favorites[i].isEntrepreneurshipPublic) {
       // Fetchea al endpoint de emprendimientos y lo une a mi array de favoritos
       const data = await fetchData<APIResponseDetailEntrepreneurShip>('resultados.emprendimientos',
@@ -121,7 +118,7 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
       
       })
     }
-  }
+  } */
 
   // Reducimos la data para que solo devuelva los campos que necesitamos  y eliminamos los null 
 
@@ -131,7 +128,7 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
     JSON.stringify({
       message: "Favoritos",
       success: true,
-      data: favoritesUser
+      data: favorites
     })
   );
 }

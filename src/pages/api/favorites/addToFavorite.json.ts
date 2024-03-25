@@ -5,7 +5,8 @@ export const POST: APIRoute = async ({ request }) => {
   const data = await request.json();
   const { userId, publicationId, publicationSuc, isEntrepreneurshipPublic = false } = data;
 
-  // Handler de los campos requeridos para el registro
+  // Handler de los campos requeridos para el registro 
+
   if (!publicationId || !publicationSuc) {
     return new Response(
       JSON.stringify({
@@ -19,12 +20,9 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   // Verificar si la propiedad ya esta en favoritos y que no se pueda agregar dos veces
-  // y verificar si el usuario existe en paralelo
-  const [favorite, user] = await Promise.all([
-    db.select().from(Favorites).where(eq(Favorites.publicationId, publicationId)),
-    (await db.select().from(UserTAuths).where(eq(UserTAuths.id, userId))).at(0),
-  ]);
+  const favorite = (await db.select().from(Favorites).where(eq(Favorites.publicationId, publicationId))
 
+  ).at(0);
   if (favorite) {
     return new Response(
       JSON.stringify({
@@ -37,6 +35,7 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
+  const user = (await db.select().from(UserTAuths).where(eq(UserTAuths.id, userId))).at(0);
   if (!userId || !user) {
     return new Response(
       JSON.stringify({
@@ -48,8 +47,8 @@ export const POST: APIRoute = async ({ request }) => {
       }
     );
   }
-
   try {
+
     const res = await db.insert(Favorites).values({
       userId: Number(userId),
       publicationId: publicationId,
@@ -67,8 +66,10 @@ export const POST: APIRoute = async ({ request }) => {
     } else {
       throw new Error("Ocurrio un problema al agregar la propiedad a favoritos.");
     }
+
+
   } catch (e) {
-    console.log(JSON.stringify(e));
+  
     return new Response(
       JSON.stringify({
         message: (e as Error).message,

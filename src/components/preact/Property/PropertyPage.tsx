@@ -12,6 +12,7 @@ import GalleryProperty from "../Gallery/GalleryProperty";
 import BathIcon from "../Icons/BathIcon";
 import MapLocationIcon from "../Icons/MapLocationIcon";
 import PrintIcon from "../Icons/PrintIcon";
+import WarningAlertIcon from "../Icons/WarningAlertIcon";
 import PDFViewer from "../PDFViewer";
 import ShareButton from "../ShareButton/ShareButton";
 import BreadCrumbSkeleton from "../Skeletons/BreadCrumbSkeleton";
@@ -19,14 +20,15 @@ import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
 import DetailsPropertySkeleton from "../Skeletons/DetailsPropertySkeleton";
 import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
 import Button from "../ui/Buttons/Button";
+import FavoriteButton from "../ui/Buttons/FavoriteButton";
 import { Modal } from "../ui/Modals/Modal";
+import { Toast } from "../ui/Toast/Toast";
 import ContactForm from "./ContactForm";
 import Description from "./Description";
 import DetailsList from "./DetailsList";
 import FeatureList from "./FeatureList";
 import ServiceList from "./ServiceList";
 import TabMenu from "./TabMenu";
-import FavoriteButton from "../ui/Buttons/FavoriteButton";
 
 
 
@@ -38,9 +40,10 @@ interface Props {
 
 const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [results, setResults] = useState<ResultPropertyDetails | null>()
-    const [favorites, setFavorites] = useState<{ id: string; title: string; image: string }[] | null>()
+    /*    const [favorites, setFavorites] = useState<{ id: string; title: string; image: string }[] | null>() */
     const [isFavorited, setIsFavorited] = useState(false);
-    const [msgToast, setMsgToast] = useState<string>("")
+    const [toastVisible, setToastVisible] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
 
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [tabMenuProperty, setTabMenuProperty] = useState(
@@ -108,15 +111,16 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             console.log(error);
         }
     };
+
     // Fetch Favprotes from API server
     const fetchFavorites = async () => {
         try {
             const response = await fetch(`/api/favorites/1.json`);
             const data = await response.json();
             if (response.ok) {
-                setFavorites(data);
+                /* setFavorites(data); */
                 // Check if the current property is in the favorites list
-                const isFavorited = data.data.some((favorite: { id: string }) => favorite.id === results?.datos?.codigo_ficha);
+                const isFavorited = data.data.some((favorite: { publicationId: string }) => favorite.publicationId === props.propertyCode);
                 setIsFavorited(isFavorited);
             }
         } catch (error) {
@@ -126,12 +130,12 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
     useEffect(() => {
         fetchFavorites();
-    }, [results?.datos?.codigo_ficha]);
+    }, [props.propertyCode]);
 
     // Remove the favorite from the list  API SERVER
     const removeFavorite = async () => {
         try {
-            const response = await fetch(`/api/favorites/${results?.datos?.codigo_ficha}.json`, {
+            const response = await fetch(`/api/favorites/${props.propertyCode}.json`, {
                 method: 'DELETE',
                 body: JSON.stringify({
                     userId: 1, // userId 
@@ -142,11 +146,12 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             });
             if (response.ok) {
                 const data = await response.json();
-                if(data.success){
-
-                    setMsgToast(data.message);
+                if (data.success) {
+                    setToastMessage(data.message);
+                    setToastVisible(true);
+                    setTimeout(() => setToastVisible(false), 3000);
                 }
-                fetchFavorites();
+                await fetchFavorites();
             }
         } catch (error) {
             console.error(error);
@@ -160,8 +165,8 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                 method: 'POST',
                 body: JSON.stringify({
                     userId: 1,
-                    publicationId: results?.datos?.codigo_ficha,
-                    publicationSuc: results?.ficha[0]?.codsuc,
+                    publicationId: props.propertyCode,
+                    publicationSuc: props.branchCode,
                     isEntrepreneurshipPublic: false
                 }),
                 headers: {
@@ -170,8 +175,12 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             });
             if (response.ok) {
                 const data = await response.json();
-                setMsgToast(data.message);
-                fetchFavorites();
+                if (data.success) {
+                    setToastMessage(data.message);
+                    setToastVisible(true);
+                    setTimeout(() => setToastVisible(false), 3000);
+                }
+                await fetchFavorites();
             }
         } catch (error) {
             console.error(error);
@@ -200,7 +209,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                 <div className="container mx-auto pt-5 flex justify-between">
                     <TabMenu videoUrl={videoUrl} unitRedirect={window.location.pathname.includes('unidad-disponible') ? 'Edificio' : 'Unidades disponibles'} unitList={results!?.emprendimiento ? true : false} pdf={results?.emprendimiento && results?.emprendimiento?.ed_pdf !== "" && results?.emprendimiento?.ed_pdf !== null ? true : false} blueprint={results!?.plano !== null && !isLoading} />
                     {/*  <Button addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center" isFavorite={true}>Favorito</Button> */}
-                 {/*    <button onClick={isFavorited ? removeFavorite : addFavorite}>
+                    {/*    <button onClick={isFavorited ? removeFavorite : addFavorite}>
                         {isFavorited ? 'Remove from favorites' : 'Add to favorites'}
                     </button> */}
                     <FavoriteButton toggleFavorite={isFavorited ? removeFavorite : addFavorite} initialIsFavorited={isFavorited} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center"><span className={'font-semibold'}>Favorito</span></FavoriteButton>
@@ -398,7 +407,9 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     <CardResultSkeleton />
                 </div>
             </section>
-           
+            <Toast message={toastMessage} icon={<WarningAlertIcon />} isVisible={toastVisible} customStyles="flex gap-2 border  border-primary-msb  bg-[#EFF0F2]" />
+
+
         </article>
     )
 }
