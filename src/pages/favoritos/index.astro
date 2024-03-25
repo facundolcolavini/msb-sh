@@ -1,4 +1,5 @@
 ---
+import IconDelete from "@components/preact/Icons/DeleteIcon";
 import type { APIResponsePropertyDetail } from "@interfaces/detail.properties.interface";
 import Layout from "@layouts/Layout.astro";
 import { getEntrepreneurshipById } from "@services/get-all-entrepreneurship";
@@ -69,7 +70,7 @@ const description =
       <div class="flex items-center">
         <input
           type="checkbox"
-          class="form-checkbox h-5 border-tertiary-border-msb w-5 text-primary-msb"
+          class="custom-checkbox form-checkbox h-5 w-5 text-primary-msb"
           id="select-all"
         />
         <label for="select-all" class="ml-2 text-black">Seleccionar todos</label
@@ -78,11 +79,25 @@ const description =
       <!-- Botone Eliminar -->
       <button
         id="btn-delete"
-        class="bg-primary-msb text-white px-4 py-2 rounded-lg"
+        disabled={favoritesUser.length === 0}
+        class="bg-primary-msb text-white px-4 py-2 rounded-lg flex items-center gap-2 font-semibold "
       >
-        <!-- Trash icon -->
-        Eliminar</button
-      >
+        <IconDelete class={"size-6"} />
+        Eliminar
+      </button>
+    </section>
+    <section>
+      {
+        favoritesUser.length == 0 ? (
+          <div class="container mx-auto flex justify-center items-center h-96">
+            <p class="text-black text-center">No hay propiedades guardadas</p>
+          </div>
+        ) : (
+          <p class="text-black text-center font-bold py-3 font-gotham text-2xl">
+            {favoritesUser.length} propiedades agregadas
+          </p>
+        )
+      }
     </section>
     <section>
       <!-- List of map User card of properti with check and delete btn -->
@@ -95,18 +110,21 @@ const description =
           favoritesUser.map(
             (favProp: { id: string; title: string; image: string }) => (
               <div class="bg-white rounded-lg shadow-lg">
-                <div class="relative">
+                <div class="relative justify-center">
+       
                   <input
                     type="checkbox"
-                    class="absolute top-2 right-2 form-checkbox h-5 w-5 text-primary-msb"
+                    data-check-prop="checked-prop"
+                    class="absolute top-2 left-2 form-checkbox h-5 w-5 text-primary-msb custom-checkbox"
                     id={favProp.id}
                   />
-                  <label
-                    for={favProp.id}
-                    class="absolute top-2 left-2 text-white bg-primary-msb px-2 py-1 rounded-lg"
+                  <button
+                    id={`btn-delete-prop`}
+                    data-idProp={favProp.id}
+                    class=" absolute top-2 right-2  bg-white text-black px-2 py-1 rounded-lg"
                   >
-                    Eliminar
-                  </label>
+                  <IconDelete class={"size-6"} />
+                  </button>
                   <img
                     src={favProp.image}
                     alt={favProp.title}
@@ -115,15 +133,10 @@ const description =
                 </div>
                 <div class="p-4">
                   <h2 class="text-lg text-black font-bold">{favProp.title}</h2>
-                  <p class="text-sm text-black">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam, quod.
-                  </p>
-                  <div class="flex justify-between items-center mt-4">
-                    <p class="text-lg text-primary-msb font-bold">$ 100.000</p>
-                    <button class="bg-primary-msb text-white px-4 py-2 rounded-lg">
-                      Ver propiedad
-                    </button>
+                
+                  <div class="flex justify-end items-end mt-4">
+                    
+                 
                   </div>
                 </div>
               </div>
@@ -135,61 +148,87 @@ const description =
   </article>
 </Layout>
 
+<style>
+.custom-checkbox:checked {
+  background-color: #10B981 !important; /* Este es el color verde-500 en Tailwind */
+  border-color: #10B981 !important; /* Este es el color verde-500 en Tailwind */
+}
+</style>
+  
 <script>
   /* Delete all selection and fetch API /api/favorites/idselected */
+  document.addEventListener("astro:page-load", (event) => {
   const btnDelete = document.getElementById("btn-delete") as HTMLButtonElement;
+  const selectAll = document.getElementById("select-all") as HTMLInputElement;
   const checkboxes = document.querySelectorAll(
-    "input[type=checkbox]"
+    "input[data-check-prop]"
   ) as NodeListOf<HTMLInputElement>;
-    // Si se selecionan todos
-    const selectAll = document.getElementById("select-all") as HTMLInputElement;
-
-  btnDelete.addEventListener("click", async () => {
-    const checkboxes = document.querySelectorAll(
-      "input[type=checkbox]"
-    ) as NodeListOf<HTMLInputElement>;
-    const selected = Array.from(checkboxes).filter(
-      (checkbox) => checkbox.checked
-    );
-    const ids = selected.map((checkbox) => checkbox.id);
+    const deleteButtons = document.querySelectorAll(
+    "button[id=btn-delete-prop]"
+  ) as NodeListOf<HTMLButtonElement>;
 
 
+  let ids = Array.from(checkboxes).map((checkbox) => checkbox.id);
 
-    if (selectAll?.checked) {
-      const res = await fetch(`/api/favorites/1.json`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ids: ["all"] }),
-      });   
-        if (res.ok) {
-         const data= await res.json() 
-            console.log(data)
-            location.reload();
-        } else {
-            alert("Error al eliminar los elementos seleccionados");
-        }
-
+  selectAll.addEventListener("change", (e) => {
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = selectAll.checked;
+    });
+    if (selectAll.checked) {
+      ids = Array.from(checkboxes).map((checkbox) => checkbox.id);
     } else {
-      if (ids.length === 0) {
-        alert("No hay elementos seleccionados");
-        return;
-      }
+      ids = [];
+    }
+  });
 
+  checkboxes.forEach((checkbox) =>
+    checkbox.addEventListener("change", (e) => {
+      if (checkbox.checked) {
+        ids.push(checkbox.id);
+      } else {
+        ids = ids.filter((id) => id !== checkbox.id);
+      }
+    })
+  );
+
+  deleteButtons.forEach((button) =>
+    button.addEventListener("click", async (e) => {
+      const id = button.getAttribute("data-idProp");
       const res = await fetch(`/api/favorites/1.json`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ids }),
+        body: JSON.stringify({ ids: [id] }),
       });
 
       if (res.ok) {
         location.reload();
       } else {
-        alert("Error al eliminar los elementos seleccionados");
+        alert("Error al eliminar la propiedad");
       }
+    })
+  );
+
+  btnDelete.addEventListener("click", async () => {
+    if (ids.length === 0) {
+      alert("No hay elementos seleccionados");
+      return;
+    }
+
+    const res = await fetch(`/api/favorites/1.json`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ids }),
+    });
+
+    if (res.ok) {
+      location.reload();
+    } else {
+      alert("Error al eliminar los elementos seleccionados");
     }
   });
+});
 </script>
