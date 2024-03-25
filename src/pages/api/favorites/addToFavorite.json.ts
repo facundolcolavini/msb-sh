@@ -21,7 +21,7 @@ export const POST: APIRoute = async ({ request }) => {
   // Verificar si la propiedad ya esta en favoritos y que no se pueda agregar dos veces
   // y verificar si el usuario existe en paralelo
   const [favorite, user] = await Promise.all([
-    db.select().from(Favorites).where(eq(Favorites.publicationId, publicationId)).at(0),
+    db.select().from(Favorites).where(eq(Favorites.publicationId, publicationId)),
     (await db.select().from(UserTAuths).where(eq(UserTAuths.id, userId))).at(0),
   ]);
 
