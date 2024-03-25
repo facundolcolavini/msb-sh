@@ -144,10 +144,10 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
     // Remove the favorite from the list  API SERVER
     const removeFavorite = async () => {
         try {
-            const response = await fetch(`/api/favorites/${props.propertyCode}.json`, {
+            const response = await fetch(`/api/favorites/1.json`, {
                 method: 'DELETE',
                 body: JSON.stringify({
-                    userId: 1, // userId 
+                    ids: props.propertyCode
                 }),
                 headers: {
                     'Content-Type': 'application/json'
