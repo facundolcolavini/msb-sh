@@ -1,3 +1,4 @@
+/** @jsx h */
 import { useEffect, useState } from "preact/hooks";
 import { createPortal, type FunctionComponent, type ReactNode } from "preact/compat";
 
