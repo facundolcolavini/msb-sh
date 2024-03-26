@@ -5,7 +5,7 @@ import PropertyPage from "@/components/preact/Property/PropertyPage";
 import Layout from "@/layouts/Layout.astro";
 import { min } from "astro:db";
 // Extraemos el ultimo segmento de la url
-export const prerender = false;
+
 const session = Astro.locals.session;
 const { propiedad } = Astro.params;
 const url = Astro.url;
