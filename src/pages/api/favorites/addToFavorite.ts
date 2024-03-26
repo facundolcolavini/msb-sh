@@ -1,10 +1,9 @@
 import type { APIRoute } from "astro";
 import { Favorites, User, db, eq } from "astro:db";
 
-export const POST: APIRoute = async ({ request ,cookies}) => {
+export const POST: APIRoute = async ({ request }) => {
   const data = await request.json();
   const { userId, publicationId, publicationSuc, isEntrepreneurshipPublic } = data;
-
   // Handler de los campos requeridos para el registro 
 
   if (!publicationId || !publicationSuc) {
@@ -18,7 +17,7 @@ export const POST: APIRoute = async ({ request ,cookies}) => {
       }
     );
   }
-
+  
   // Verificar si la propiedad ya esta en favoritos y que no se pueda agregar dos veces
   const favorite = (await db.select().from(Favorites).where(eq(Favorites.publicationId, publicationId))
 
@@ -36,7 +35,7 @@ export const POST: APIRoute = async ({ request ,cookies}) => {
   }
  
 
-  if (!userId ) {
+  if (userId === undefined ) {
     return new Response(
       JSON.stringify({
         message: "Por favor registrese para poder agregar la propiedad a favoritos.",
@@ -48,8 +47,20 @@ export const POST: APIRoute = async ({ request ,cookies}) => {
     );
   }
   const user = (await db.select().from(User).where(eq(User.id, userId ))).at(0);
-  try {
+  console.log(user)
 
+  try {
+    if(!user){
+      return new Response(
+        JSON.stringify({
+          message: "Por favor registrese para poder agregar la propiedad a favoritos.",
+          success: false,
+          status: 404
+          
+        }),
+       
+      )
+    }
     const res = await db.insert(Favorites).values({
       userId: userId,
       publicationId: publicationId,

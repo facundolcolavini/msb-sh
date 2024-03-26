@@ -6,6 +6,7 @@ import { useEffect, useState } from "preact/hooks";
 
 
 import { navigate } from "astro:transitions/client";
+import type { Session } from "lucia";
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import { capitalize } from '../../../utils/formats';
 import GalleryProperty from "../Gallery/GalleryProperty";
@@ -29,7 +30,6 @@ import DetailsList from "./DetailsList";
 import FeatureList from "./FeatureList";
 import ServiceList from "./ServiceList";
 import TabMenu from "./TabMenu";
-import type { Session, User } from "lucia";
 
 
 
@@ -37,11 +37,11 @@ interface Props {
     branchCode: string;
     propertyCode: string;
     breadCrumbChild?: string;
-    session:Session | null ;
+    session: Session | null;
 }
 
 const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
-   
+
     const [results, setResults] = useState<ResultPropertyDetails | null>()
     const [isFavorited, setIsFavorited] = useState(false);
     const [toastVisible, setToastVisible] = useState(false);
@@ -145,14 +145,18 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     'Content-Type': 'application/json'
                 }
             });
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
                 if (data.success) {
                     setToastMessage(data.message);
                     setToastVisible(true);
                     setTimeout(() => setToastVisible(false), 3000);
                 }
-                await fetchFavorites();
+            } else {
+                console.log(data)
+                setToastMessage(data.message);
+                setToastVisible(true);
+                setTimeout(() => setToastVisible(false), 3000);
             }
         } catch (error) {
             console.error(error);
@@ -174,14 +178,18 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     'Content-Type': 'application/json'
                 }
             });
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
                 if (data.success) {
                     setToastMessage(data.message);
                     setToastVisible(true);
                     setTimeout(() => setToastVisible(false), 3000);
                 }
-                await fetchFavorites();
+            } else {
+                console.log(data)
+                setToastMessage(data.message);
+                setToastVisible(true);
+                setTimeout(() => setToastVisible(false), 3000);
             }
         } catch (error) {
             console.error(error);
@@ -405,7 +413,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     <CardResultSkeleton />
                 </div>
             </section>
-            <Toast message={toastMessage} icon={<WarningAlertIcon />} isVisible={toastVisible} customStyles="flex gap-2 border  border-primary-msb  bg-[#EFF0F2]" duration={3000}/>
+            <Toast message={toastMessage} icon={<WarningAlertIcon />} isVisible={toastVisible} customStyles="flex gap-2 border  border-primary-msb  bg-[#EFF0F2]" duration={3000} />
 
 
         </article>

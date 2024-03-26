@@ -155,14 +155,18 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     'Content-Type': 'application/json'
                 }
             });
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
                 if (data.success) {
                     setToastMessage(data.message);
                     setToastVisible(true);
                     setTimeout(() => setToastVisible(false), 3000);
                 }
-                await fetchFavorites();
+            } else {
+                console.log(data)
+                setToastMessage(data.message);
+                setToastVisible(true);
+                setTimeout(() => setToastVisible(false), 3000);
             }
         } catch (error) {
             console.error(error);
@@ -184,14 +188,18 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     'Content-Type': 'application/json'
                 }
             });
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
                 if (data.success) {
                     setToastMessage(data.message);
                     setToastVisible(true);
                     setTimeout(() => setToastVisible(false), 3000);
                 }
-                await fetchFavorites();
+            } else {
+                console.log(data)
+                setToastMessage(data.message);
+                setToastVisible(true);
+                setTimeout(() => setToastVisible(false), 3000);
             }
         } catch (error) {
             console.error(error);
