@@ -41,7 +41,7 @@ const { resultado } = (await fetchData(
 const { resultado: resEmprendimientos } = (await fetchData(
   "resultados.emprendimientos",
 )) as APIResponseEntrepreneurship;
-export const prerender = false;
+
 const { emprendimiento: entrepreneurship, img } = resEmprendimientos as ResultEntrepreureShip;
 const { fichas } = resultado;
 
