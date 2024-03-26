@@ -8,7 +8,7 @@
     /* alias */
     "baseUrl": ".",
     "paths": {
-      "@/*" : ["src"],
+      "@/*" : ["./src/*"],
       
       "@/pages/*": ["src/pages/*"],
       "@/layouts/*": ["src/layouts/*"],
