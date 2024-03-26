@@ -6,7 +6,7 @@ import { lucia } from "../../auth";
 import { db, User } from "astro:db";
 ;
 
-export const prerender = false;
+
 export async function POST(context: APIContext): Promise<Response> {
   //Parse the form data
   const formData = await context.request.formData();
