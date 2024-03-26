@@ -1,4 +1,4 @@
-import type { Location, Neighborhood, Option, Value } from "@interfaces/selects.form.interfaces";
+import type { Location, Neighborhood, Option, Value } from "@/interfaces/selects.form.interfaces";
 import he from "he";
 
 // Función para capitalizar los strings de los selects Lujan y San Pedro

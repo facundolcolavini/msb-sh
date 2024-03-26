@@ -1,4 +1,4 @@
-import type { APIResponseResultsRecords, Datos as DatosResults, Result } from "@interfaces/results.records.interfaces";
+import type { APIResponseResultsRecords, Datos as DatosResults, Result } from "@/interfaces/results.records.interfaces";
 import { useEffect, useState } from "preact/hooks";
 import Button from "./ui/Buttons/Button";
 import { addFilterValue, filterItems, searchParamsStore } from "src/store/filterStore";

@@ -1,14 +1,16 @@
 ---
 // Import the navigation data and types
-import { navItems } from "@data/navItems";
+import { navItems } from "@/data/navItems";
 import { Image } from "astro:assets";
 import Icon from "node_modules/astro-icon/components/Icon.astro";
 import HeartIcon from "./preact/Icons/HeartIcon";
 import LogOutIcon from "./preact/Icons/LogOutIcon";
 import NavDropDown from "./preact/NavDropDown";
 import Link from "./ui/Link.astro";
+
+const {user} = Astro.props;
 const { pathname } = Astro.url;
-let session = true;
+let session = user ? true : false;
 // Combine all navigation items into one array for easier mapping
 ---
 
@@ -127,7 +129,7 @@ let session = true;
                 class="flex items-center py-2 justify-end h-10 gap-1 border-bg-2-msb px-2 bg-white text-bg-2-msb font-bold cursor-pointer rounded-md transition tracking-wide border "
               >
                 <Icon size={20} class="fill  fill-black" name="userDefault" />
-                José Armando
+                {user.username}
                 <Icon size={20} class="fill fill-black" name="chevron-down" />
               </div>
               <div slot="childrenDrop" class="flex w-full">
@@ -146,14 +148,18 @@ let session = true;
                     Mi cuenta
                   </Link>
                   <hr class="divide divide-x-2" />
+                  <form method="POST" action="/api/signout">
                   <Link
                     checkActive={false}
-                    class="p-3 text-base gap-2 hover:bg-gray-200 cursor-pointer transition-all transition-duration-400"
-                    href="/"
+                    class="p-3 text-base gap-2 hover:bg-gray-200 cursor-pointer transition-all transition-duration-400 pointer-events-none"
                   >
+                  
                     <Icon size={20} class="fill fill-black" name="logout" />
-                    Cerrar sesión
-                  </Link>
+                  
+                   
+                      <button class="underline">  Cerrar sesión</button>
+                      </Link>
+                      </form>
                 </div>
               </div>
             </NavDropDown>

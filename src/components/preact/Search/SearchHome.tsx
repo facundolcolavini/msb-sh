@@ -1,7 +1,7 @@
-import type { FilterDefault, FilterSelects, ResultLocation, Results } from '@interfaces/selects.form.interfaces';
-import { formatOptions, type OutputOption } from '@utils/formats';
+import type { FilterDefault, FilterSelects, ResultLocation, Results } from '@/interfaces/selects.form.interfaces';
+import { formatOptions, type OutputOption } from '@/utils/formats';
 
-import { useSearch } from '@hooks/useSearch.ts';
+import { useSearch } from '@/hooks/useSearch.ts';
 import { navigate } from 'astro:transitions/client';
 import { useEffect } from 'preact/hooks';
 import { resetFilter, searchParamsStore } from 'src/store/filterStore';
@@ -9,8 +9,8 @@ import SearchIcon from '../Icons/SearchIcon';
 import Button from "../ui/Buttons/Button";
 import SelectField from '../ui/Selects/SelectField';
 import SearchDebounce from './SearchDebounce';
-import { formatAndUseSearch } from '@utils/formatAndUseSearch';
-import { defaultsFilters, filterResultToFill, labelMappingResultForQuerys } from '@utils/filter-default';
+import { formatAndUseSearch } from '@/utils/formatAndUseSearch';
+import { defaultsFilters, filterResultToFill, labelMappingResultForQuerys } from '@/utils/filter-default';
 
 interface Props {
   selects: Results

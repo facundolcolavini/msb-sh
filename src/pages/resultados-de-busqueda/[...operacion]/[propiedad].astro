@@ -1,15 +1,15 @@
 ---
-import BreadCrumb from "@components/BreadCrumb.astro";
-import PropertyPage from "@components/preact/Property/PropertyPage";
+import BreadCrumb from "@/components/BreadCrumb.astro";
+import PropertyPage from "@/components/preact/Property/PropertyPage";
 
-import Layout from "@layouts/Layout.astro";
-import { capitalize } from "@utils/formats";
+import Layout from "@/layouts/Layout.astro";
+import { capitalize } from "@/utils/formats";
 
 const { propiedad } = Astro.params;
 const url = Astro.url;
 // Extraemos el ultimo segmento de la url
 let prop = url.toString().split("/").pop();
-
+const session = Astro.locals.session;
 let suc = prop?.split("-")[0] ?? "";
 let id = prop?.split("-")[1] ?? "";
 const response = await fetch(`${Astro.url.origin}/api/property.json?suc=${suc}&id=${id}`);
@@ -22,6 +22,7 @@ const {titulo,img_princ,in_tip, direccion,in_loc} = data.resultado.ficha[0]
 
       <PropertyPage
         client:only
+        session={session}
         propertyCode={id}
         branchCode={suc}
         breadCrumbChild=""

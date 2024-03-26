@@ -1,6 +1,6 @@
-import { fetchData } from "@utils/fetch-data";
+import { fetchData } from "@/utils/fetch-data";
 
-import type { APIResponsePropertyDetail, ResultPropertyDetails } from "@interfaces/detail.properties.interface";
+import type { APIResponsePropertyDetail, ResultPropertyDetails } from "@/interfaces/detail.properties.interface";
 
 const endpoint = 'fichas.propiedades';
 

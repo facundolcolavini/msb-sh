@@ -1,0 +1,128 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"src": "^/_astro/(.*)$",
+			"headers": {
+				"cache-control": "public, max-age=31536000, immutable"
+			},
+			"continue": true
+		},
+		{
+			"handle": "filesystem"
+		},
+		{
+			"src": "^\\/_image$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/404\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/addUser\\.json\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/consultationProperty\\.json\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/destacados\\.json\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/emprendimientos\\.json\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/emprendimientosById\\.json\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/emprendimientosUnidades\\.json\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/favorites\\/addToFavorite\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/favorites\\/([^/]+?)\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/property\\.json\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/results\\.json\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/selects\\.json\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/([^/]+?)\\.json\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/contacto\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/emprendimientos(?:\\/(.*?))?\\/unidad-disponible(?:\\/(.*?))?\\/([^/]+?)\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/emprendimientos(?:\\/(.*?))?\\/([^/]+?)\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/favoritos\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/invierta-en-usa\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/resultados-de-busqueda(?:\\/(.*?))?\\/([^/]+?)\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/resultados-de-busqueda\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/servicios\\/administracion\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/servicios\\/tasaciones\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/servicios\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/sumate\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/tasaciones\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/usuarios\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "/.*",
+			"dest": "_render",
+			"status": 404
+		}
+	]
+}

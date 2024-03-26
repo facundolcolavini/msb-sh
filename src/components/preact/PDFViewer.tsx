@@ -1,4 +1,3 @@
-import { h } from 'preact';
 
 interface PDFViewerProps {
   file: string;

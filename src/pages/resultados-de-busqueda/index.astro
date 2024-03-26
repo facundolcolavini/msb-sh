@@ -1,11 +1,13 @@
 ---
-import ResultsPage from "@components/preact/Results/ResultsPage";
+import ResultsPage from "@/components/preact/Results/ResultsPage";
 import type {
   ResultLocation,
   Results,
-} from "@interfaces/selects.form.interfaces";
-import Layout from "@layouts/Layout.astro";
-import { getAllSelects, getLocations } from "@services/get-selects-form";
+} from "@/interfaces/selects.form.interfaces";
+import Layout from "@/layouts/Layout.astro";
+import { getAllSelects, getLocations } from "@/services/get-selects-form";
+const session = Astro.locals.session
+
 /* Fetch selects */
 const selects = (await getAllSelects()) as Results;
 const locations = (await getLocations()) as ResultLocation;
@@ -15,7 +17,7 @@ const locations = (await getLocations()) as ResultLocation;
 <Layout title="Resultados de Busqueda" description="Busca tu propiedad">
   <article class="bg-secondary-bg-msb h-full">
     <div class="container mx-auto font-gotham">
-      <ResultsPage selects={selects} locations={locations} client:only transition:persist  />
+      <ResultsPage session={session  || null} selects={selects} locations={locations} client:only transition:persist  />
     </div>
   </article>
 </Layout>

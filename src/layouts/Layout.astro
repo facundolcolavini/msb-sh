@@ -1,16 +1,13 @@
 ---
 import { ViewTransitions } from "astro:transitions";
 
-import Navbar from "@components/Navbar.astro";
-import "@fontsource/cormorant";
-import Footer from "@layouts/Footer.astro";
+const user = Astro.locals.user;
 
-const user = {
-  name: "José",
-  lastname: "Perez",
-  email: "jose@example.com",
-  avatar: null,
-};
+import Navbar from "@/components/Navbar.astro";
+import Footer from "@/layouts/Footer.astro";
+import "@fontsource/cormorant";
+
+
 
 interface Props {
   title: string;

@@ -1,38 +1,41 @@
 ---
-import ButtonLink from "@components/ButtonLink.astro";
-import Chat from "@components/Chat.astro";
+const user = Astro.locals.user;
+console.log(user)
+import ButtonLink from "@/components/ButtonLink.astro";
+import Chat from "@/components/Chat.astro";
 import he from 'he';
-import HeroContainer from "@components/HeroContainer.astro";
-import SliderA from "@components/SliderA.astro";
-import TitleSections from "@components/TitleSections.astro";
-import BannerSlider from "@components/preact/BannerSlider";
-import HomeLocation from "@components/preact/Icons/HomeLocation";
-import HomeMortgageIcon from "@components/preact/Icons/HomeMortgageIcon";
-import UserIcon from "@components/preact/Icons/UserIcon";
-import SearchEntrepreneurship from "@components/preact/Search/SearchEntrepreneurship";
-import SearchHome from "@components/preact/Search/SearchHome";
+import HeroContainer from "@/components/HeroContainer.astro";
+import SliderA from "@/components/SliderA.astro";
+import TitleSections from "@/components/TitleSections.astro";
+import BannerSlider from "@/components/preact/BannerSlider";
+import HomeLocation from "@/components/preact/Icons/HomeLocation";
+import HomeMortgageIcon from "@/components/preact/Icons/HomeMortgageIcon";
+import UserIcon from "@/components/preact/Icons/UserIcon";
+import SearchEntrepreneurship from "@/components/preact/Search/SearchEntrepreneurship";
+import SearchHome from "@/components/preact/Search/SearchHome";
 
-import Button from "@components/preact/ui/Buttons/Button";
-import CardBranch from "@components/preact/ui/Cards/CardBranch";
-import CardEntrepreneurship from "@components/preact/ui/Cards/CardEntrepreneurship";
-import CardProperty from "@components/preact/ui/Cards/CardProperty";
+import Button from "@/components/preact/ui/Buttons/Button";
+import CardBranch from "@/components/preact/ui/Cards/CardBranch";
+import CardEntrepreneurship from "@/components/preact/ui/Cards/CardEntrepreneurship";
+import CardProperty from "@/components/preact/ui/Cards/CardProperty";
 import type {
   APIResponseEntrepreneurship,
   EntrePreneurShip,
   Results as ResultEntrepreureShip
-} from "@interfaces/entrepreneurship.interfaces";
+} from "@/interfaces/entrepreneurship.interfaces";
 import type {
   APIResponseResultsRecords,
   File,
-} from "@interfaces/results.records.interfaces";
+} from "@/interfaces/results.records.interfaces";
 import type {
   ResultLocation,
   Results,
-} from "@interfaces/selects.form.interfaces";
-import Layout from "@layouts/Layout.astro";
-import { getAllSelects, getAllSelectsEntrepreneurship, getLocations } from "@services/get-selects-form";
-import { fetchData } from "@utils/fetch-data";
-
+} from "@/interfaces/selects.form.interfaces";
+import Layout from "@/layouts/Layout.astro";
+import { getAllSelects, getAllSelectsEntrepreneurship, getLocations } from "@/services/get-selects-form";
+import { fetchData } from "@/utils/fetch-data";
+import { lucia } from "@/auth";
+ 
 const { resultado } = (await fetchData(
   "fichas.destacadas",
 )) as APIResponseResultsRecords;
@@ -42,7 +45,7 @@ const { resultado: resEmprendimientos } = (await fetchData(
 
 const { emprendimiento: entrepreneurship, img } = resEmprendimientos as ResultEntrepreureShip;
 const { fichas } = resultado;
-export const prerender = true;
+
 const cardData: File[] = fichas as File[]; // Update the type of cardData
 const titlePage = "Inicio - Matías Szpira Bienes Raíces";
 const description =

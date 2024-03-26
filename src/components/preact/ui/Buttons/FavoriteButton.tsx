@@ -1,4 +1,4 @@
-import HeartIcon from "@components/preact/Icons/HeartIcon";
+import HeartIcon from "@/components/preact/Icons/HeartIcon";
 import clsx from "clsx";
 import type { FunctionComponent } from "preact";
 import { useEffect, useState } from "preact/hooks";

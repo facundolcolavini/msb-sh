@@ -1,4 +1,4 @@
-import type { ResultEntrePreneurShipUnit } from "@interfaces/entrepreneurship.interfaces";
+import type { ResultEntrePreneurShipUnit } from "@/interfaces/entrepreneurship.interfaces";
 import CodeIcon from "../Icons/CodeIcon";
 import DoorOpen from "../Icons/DoorOpen";
 import ExchangeIcon from '../Icons/ExchangeIcon';

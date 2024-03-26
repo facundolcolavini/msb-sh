@@ -1,36 +1,31 @@
-import { column, defineDb, defineTable } from 'astro:db';
+import { defineDb, defineTable, column } from "astro:db";
 
-export interface DatabaseUser {
-	id: number;
-	username: string;
-	password: string;
-}
- 
+// https://astro.build/db/config
 
-const UserTAuths = defineTable({
-
-	columns: {
-		id: column.number({ primaryKey: true,optional: false, autoIncrement: true}),
-		username: column.text({ unique: true }),
-		password: column.text({ optional: false }),
-		firstName: column.text({ optional: false }),
-		lastName: column.text({ optional: false }),
-		email: column.text({ unique: true, required: false }),
-		phone: column.text({ optional: true }),
-		alternativePhone: column.text({ optional: true }),
-		creationDate: column.number(),
-		lastUpdate: column.number(),
-	},
+const User = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true, optional: false, unique: true }),
+    username: column.text({ unique: true, optional: false }),
+    password: column.text({ optional: true }),
+    github_id: column.text({ optional: true, unique: true }),
+  },
 });
-// Relacion de un usuarios a muchos Favoritos
-// Favorite 
+
+const Session = defineTable({
+  columns: {
+    id: column.text({ optional: false, unique: true }),
+    userId: column.text({ optional: false, references: () => User.columns.id }),
+    expiresAt: column.number({ optional: false }),
+  },
+});
+
 const Favorites = defineTable({
 	columns: {
 		id: column.number({ primaryKey: true,optional:false, autoIncrement: true}),
-		userId: column.number(
+		userId: column.text(
 			{
 				// Referencia al usuario  que tiene el favorito
-				references: () => UserTAuths.columns.id
+				references: () => User.columns.id
 			}
 		),
 		publicationId: column.text(),
@@ -40,8 +35,9 @@ const Favorites = defineTable({
 });
 
 export default defineDb({
-	tables: {
-		UserTAuths,
-		Favorites,
-	},
-})
+  tables: {
+    User,
+    Session,
+    Favorites
+  },
+});

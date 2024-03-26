@@ -1,4 +1,4 @@
-import type { ResultPropertyDetails } from "@interfaces/detail.properties.interface";
+import type { ResultPropertyDetails } from "@/interfaces/detail.properties.interface";
 import he from 'he';
 import type { FunctionComponent } from "preact";
 import type { PropsWithChildren } from "preact/compat";
@@ -29,6 +29,7 @@ import DetailsList from "./DetailsList";
 import FeatureList from "./FeatureList";
 import ServiceList from "./ServiceList";
 import TabMenu from "./TabMenu";
+import type { Session, User } from "lucia";
 
 
 
@@ -36,9 +37,11 @@ interface Props {
     branchCode: string;
     propertyCode: string;
     breadCrumbChild?: string;
+    session:Session | null ;
 }
 
 const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
+   
     const [results, setResults] = useState<ResultPropertyDetails | null>()
     const [isFavorited, setIsFavorited] = useState(false);
     const [toastVisible, setToastVisible] = useState(false);
@@ -113,7 +116,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     // Fetch Favprotes from API server
     const fetchFavorites = async () => {
         try {
-            const response = await fetch(`/api/favorites/1.json`);
+            const response = await fetch(`/api/favorites/${props?.session?.userId}`);
             const data = await response.json();
             if (response.ok) {
                 /* setFavorites(data); */
@@ -125,7 +128,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             console.error(error);
         }
     }
-
+    console.log(props?.session?.userId)
     useEffect(() => {
         fetchFavorites();
     }, [props.propertyCode]);
@@ -133,7 +136,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     // Remove the favorite from the list  API SERVER
     const removeFavorite = async () => {
         try {
-            const response = await fetch(`/api/favorites/1.json`, {
+            const response = await fetch(`/api/favorites/${props?.session?.userId}`, {
                 method: 'DELETE',
                 body: JSON.stringify({
                     ids: props.propertyCode
@@ -159,10 +162,10 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     // Add the favorite to the list API SERVER
     const addFavorite = async () => {
         try {
-            const response = await fetch(`/api/favorites/addToFavorite.json`, {
+            const response = await fetch(`/api/favorites/addToFavorite`, {
                 method: 'POST',
                 body: JSON.stringify({
-                    userId: 1,
+                    userId: props?.session?.userId,
                     publicationId: props.propertyCode,
                     publicationSuc: props.branchCode,
                     isEntrepreneurshipPublic: false

@@ -1,7 +1,3 @@
-import type { JSX } from "preact/jsx-runtime";
-
-/* interface Props extends JSX.HTMLAttributes<HTMLDivElement> {
-} */
 
 const Spinner = () => {
   return (
