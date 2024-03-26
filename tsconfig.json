@@ -1,13 +1,33 @@
 {
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "baseUrl": "F:/Mis cosas/Programacion/msb-sh",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+    /* alias */
+    "baseUrl": ".",
+    "paths": {
+      "@" : ["src"],
+      
+      "@/pages/*": ["src/pages/*"],
+      "@/layouts/*": ["src/layouts/*"],
+      "@/components/*": ["src/components/*"],
+      "@/assets/*": ["src/assets/*"],
+      "@/utils/*": ["src/utils/*"],
+      "@/data/*": ["src/data/*"],
+      "@/interfaces/*": ["src/interfaces/*"],
+      "@/scripts/*": ["src/scripts/*"],
+      "@/services/*": ["src/services/*"],
+      "@/hooks/*": ["src/hooks/*"],
+      "@/lib/*": ["src/lib/*"],
+    }
   },
-  "extends": "astro/tsconfigs/strict"
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.astro",
+    "src/**/*.tsx",
+  ]
+
 }
