@@ -1,5 +1,6 @@
 import type { NavI } from "@/interfaces/navbar.interfaces";
 
+
 export const buyNavItems: NavI[] = [
   {
     label: 'Comprar',

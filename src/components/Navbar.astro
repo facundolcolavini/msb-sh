@@ -53,7 +53,7 @@ let session = user ? true : false;
                             class={`absolute right-0  mt-2 px-1 lg:top-4 left-0 py-2 w-max rounded-md bg-secondary-msb shadow-lg z-20 animate-fadeIn `}
                           >
                             {item.dropdown &&
-                              item.dropdown?.map((item) =>
+                              item.dropdown?.map((item:any) =>
                                 item.href ? (
                                   <Link
                                     href={item.href ?? ""}
