@@ -5,6 +5,7 @@ import EntrepreneurshipDetail from "@/components/preact/Entrepreneurship/Entrepr
 import Layout from "@/layouts/Layout.astro";
 import { getEntrepreneurshipById } from "@/services/get-all-entrepreneurship";
 import { capitalize } from "@/utils/formats";
+export const prerender = true;
 const { propiedad } = Astro.params;
 const url = Astro.url;
 const session = Astro.locals.session;
