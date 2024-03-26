@@ -1,8 +1,8 @@
 
-import BathIcon from "@components/preact/Icons/BathIcon";
-import DoorOpen from "@components/preact/Icons/DoorOpen";
-import RuleIcon from "@components/preact/Icons/RuleIcon";
-import type { File } from "@interfaces/results.records.interfaces";
+import BathIcon from "@/components/preact/Icons/BathIcon";
+import DoorOpen from "@/components/preact/Icons/DoorOpen";
+import RuleIcon from "@/components/preact/Icons/RuleIcon";
+import type { File } from "@/interfaces/results.records.interfaces";
 import type { HTMLAttributes } from "astro/types";
 import clsx from 'clsx';
 import he from "he";

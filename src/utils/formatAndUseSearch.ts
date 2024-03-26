@@ -1,5 +1,5 @@
-import type { FilterDefault, FilterSelects, OutPutValuesFilter } from "@interfaces/selects.form.interfaces";
-import { formatOptions, type InputOption } from "./formats";
+import type { FilterDefault, FilterSelects, OutPutValuesFilter } from "@/interfaces/selects.form.interfaces";
+import { formatOptions, type InputOption } from "@/utils/formats";
 
 const formatAndUseSearch = (filters: FilterSelects, filterToFill: FilterDefault[], labelMapping: Record<string, string>): OutPutValuesFilter => {
   let filterValues: OutPutValuesFilter = {};

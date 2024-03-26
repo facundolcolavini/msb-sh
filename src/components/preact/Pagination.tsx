@@ -1,9 +1,11 @@
-import type { APIResponseResultsRecords, Datos as DatosResults, Result } from "@interfaces/results.records.interfaces";
+import type { APIResponseResultsRecords, Datos as DatosResults, Result } from "@/interfaces/results.records.interfaces";
 import { useEffect, useState } from "preact/hooks";
+
+import { addFilterValue, filterItems, searchParamsStore } from "@/store/filterStore";
 import Button from "./ui/Buttons/Button";
-import { addFilterValue, filterItems, searchParamsStore } from "src/store/filterStore";
-import ChevronRight from "./Icons/ChevronRight";
 import ChevronLeft from "./Icons/ChevronLeft";
+import ChevronRight from "./Icons/ChevronRight";
+
 
 interface Props {
   paginationData: DatosResults;

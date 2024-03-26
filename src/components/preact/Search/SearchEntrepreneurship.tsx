@@ -1,7 +1,7 @@
-import { useSearch } from '@hooks/useSearch.ts';
-import type { FilterDefault, FilterSelects, ResultLocation, Results } from '@interfaces/selects.form.interfaces';
-import { defaultsFilters, filterEntrePreneurshipToFillDefault, labelMappingEntrePreneurshipForQuerys } from '@utils/filter-default';
-import { formatAndUseSearch } from '@utils/formatAndUseSearch';
+import { useSearch } from '@/hooks/useSearch.ts';
+import type { FilterDefault, FilterSelects, ResultLocation, Results } from '@/interfaces/selects.form.interfaces';
+import { defaultsFilters, filterEntrePreneurshipToFillDefault, labelMappingEntrePreneurshipForQuerys } from '@/utils/filter-default';
+import { formatAndUseSearch } from '@/utils/formatAndUseSearch';
 import { navigate } from 'astro:transitions/client';
 import { useEffect } from 'preact/hooks';
 import type { JSXInternal } from 'preact/src/jsx';

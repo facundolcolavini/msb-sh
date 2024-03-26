@@ -1,4 +1,4 @@
-import type { UnitAvailable } from "./entrepreneurship.interfaces";
+import type { UnitAvailable } from "@/interfaces/entrepreneurship.interfaces";
 
 export interface APIResponsePropertyDetail  {
     resultado: ResultPropertyDetails;

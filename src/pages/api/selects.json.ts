@@ -1,4 +1,4 @@
-import { fetchData } from "@utils/fetch-data";
+import { fetchData } from "@/utils/fetch-data";
 import type { APIContext, APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ url }) => {

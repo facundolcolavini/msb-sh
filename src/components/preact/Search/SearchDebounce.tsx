@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import InputField from '../ui/Inputs/InputField';
 
-import { addFilterValue, filterItems, searchParamsStore } from '../../../store/filterStore';
+import { addFilterValue, filterItems, searchParamsStore } from '@/store/filterStore';
 import "../ui/Selects/selectsField.css";
 
 interface Props {

@@ -1,11 +1,11 @@
 ---
 // Import the navigation data and types
-import { navItems } from "@data/navItems";
+import { navItems } from "@/data/navItems";
 import { Image } from "astro:assets";
 import Icon from "node_modules/astro-icon/components/Icon.astro";
-import HeartIcon from "./preact/Icons/HeartIcon";
-import LogOutIcon from "./preact/Icons/LogOutIcon";
-import NavDropDown from "./preact/NavDropDown";
+import HeartIcon from "@/components/preact/Icons/HeartIcon";
+import LogOutIcon from "@/components/preact/Icons/LogOutIcon";
+import NavDropDown from "@/components/preact/NavDropDown";
 import Link from "./ui/Link.astro";
 const { pathname } = Astro.url;
 let session = true;
@@ -39,7 +39,7 @@ let session = true;
                         <span
                           slot="label"
                           class={`${
-                            item?.dropdown?.some((h) => h.href === pathname)
+                            item?.dropdown?.some((h:any) => h.href === pathname)
                               ? "rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb border-b-4 border-b-primary-msb border-primary-msb transition-all font-primary-font-msb uppercase font-gotham hover:text-primary-msb text-primary-msb "
                               : "rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb uppercase font-gotham hover:text-primary-msb  "
                           }`}
@@ -51,7 +51,7 @@ let session = true;
                             class={`absolute right-0  mt-2 px-1 lg:top-4 left-0 py-2 w-max rounded-md bg-secondary-msb shadow-lg z-20 animate-fadeIn `}
                           >
                             {item.dropdown &&
-                              item.dropdown?.map((item) =>
+                              item?.dropdown?.map((item:any) =>
                                 item.href ? (
                                   <Link
                                     href={item.href ?? ""}
@@ -276,7 +276,7 @@ let session = true;
                       <span
                         slot="label"
                         class={`${
-                          item?.dropdown?.some((h) => h.href === pathname)
+                          item?.dropdown?.some((h:any) => h.href === pathname)
                             ? "text-primary-msb font-primary-font-msb font-semibold text-xs border-b-4 border-b-primary-msb hover:text-primary-msb uppercase"
                             : "font-primary-font-msb font-semibold text-xs  hover:text-primary-msb uppercase text-gray-600"
                         }`}
@@ -288,7 +288,7 @@ let session = true;
                           class={`relative w-100 right-0  mt-2 px-1 lg:top-8 left-0 py-2 w-max rounded-md bg-secondary-msb  animate-fadeIn`}
                         >
                           {item.dropdown &&
-                            item.dropdown?.map((item) =>
+                            item.dropdown?.map((item:any) =>
                               item.href ? (
                                 <Link
                                   href={item.href ?? ""}

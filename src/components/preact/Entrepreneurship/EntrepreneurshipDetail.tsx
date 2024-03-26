@@ -4,9 +4,9 @@ import type { PropsWithChildren } from "preact/compat";
 import { useEffect, useState } from "preact/hooks";
 
 
-import type { APIResponseDetailEntrepreneurShip, APIResponseEntrepreneurShipUnit, DetailEntrepreneurship, ResultEntrePreneurShipUnit } from "@interfaces/entrepreneurship.interfaces";
-import { capitalize } from '@utils/formats';
-import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
+import type { APIResponseDetailEntrepreneurShip, APIResponseEntrepreneurShipUnit, DetailEntrepreneurship, ResultEntrePreneurShipUnit } from "@/interfaces/entrepreneurship.interfaces";
+import { capitalize } from '@/utils/formats';
+import { tabMenuPropertyStore } from "@/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
 import MapLocationIcon from '../Icons/MapLocationIcon';
 import PrintIcon from "../Icons/PrintIcon";

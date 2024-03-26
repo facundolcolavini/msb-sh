@@ -1,4 +1,4 @@
-import type { OutputOption } from "@utils/formats";
+import type { OutputOption } from "@/utils/formats";
 
 export interface APIResponseSelects {
     resultado: Results;

@@ -1,4 +1,4 @@
-import type { ResultPropertyDetails } from "@interfaces/detail.properties.interface";
+import type { ResultPropertyDetails } from "@/interfaces/detail.properties.interface";
 import he from 'he';
 import type { FunctionComponent } from "preact";
 import type { PropsWithChildren } from "preact/compat";
@@ -7,7 +7,7 @@ import { useEffect, useState } from "preact/hooks";
 
 import { navigate } from "astro:transitions/client";
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
-import { capitalize } from '../../../utils/formats';
+import { capitalize } from '@/utils/formats';
 import GalleryProperty from "../Gallery/GalleryProperty";
 import BathIcon from "../Icons/BathIcon";
 import MapLocationIcon from "../Icons/MapLocationIcon";

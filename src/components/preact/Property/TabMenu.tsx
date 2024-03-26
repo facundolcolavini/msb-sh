@@ -1,5 +1,5 @@
 import { useEffect } from 'preact/hooks';
-import { resetTabMenu, setTabMenu, tabMenuPropertyStore } from '../../../store/tabMenuPropertyStore';
+import { resetTabMenu, setTabMenu, tabMenuPropertyStore } from '@/store/tabMenuPropertyStore';
 
 import type { FunctionComponent, JSX } from 'preact';
 import BluePrintIcon from '../Icons/BluePrintIcon';

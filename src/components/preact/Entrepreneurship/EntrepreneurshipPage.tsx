@@ -1,12 +1,11 @@
-import { useSearch } from "@hooks/useSearch";
-import type { APIResponseEntrepreneurship, EntrePreneurShip, Results as ResultEntrepreneurship } from "@interfaces/entrepreneurship.interfaces";
-import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@interfaces/selects.form.interfaces";
-import { defaultsFilters, filterEntrePreneurshipToFillDefault, labelMappingEntrePreneurshipForQuerys } from "@utils/filter-default";
-import { formatAndUseSearch } from "@utils/formatAndUseSearch";
-import { type OutputOption } from "@utils/formats";
+import { useSearch } from "@/hooks/useSearch";
+import type { APIResponseEntrepreneurship, EntrePreneurShip, Results as ResultEntrepreneurship } from "@/interfaces/entrepreneurship.interfaces";
+import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@/interfaces/selects.form.interfaces";
+import { defaultsFilters, filterEntrePreneurshipToFillDefault, labelMappingEntrePreneurshipForQuerys } from "@/utils/filter-default";
+import { formatAndUseSearch } from "@/utils/formatAndUseSearch";
 import he from "he";
 import { useEffect, useState } from "preact/compat";
-import { filterItems, resetFilter, searchParamsStore } from "src/store/filterStore";
+import { filterItems, resetFilter, searchParamsStore } from "@/store/filterStore";
 import { ArrowSortIcon } from "../Icons/ArrowSortIcon";
 import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
 import Button from "../ui/Buttons/Button";

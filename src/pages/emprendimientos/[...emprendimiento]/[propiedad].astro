@@ -1,11 +1,11 @@
 ---
-import BreadCrumb from "@components/BreadCrumb.astro";
-import EntrepreneurshipDetail from "@components/preact/Entrepreneurship/EntrepreneurshipDetail";
-import PropertyPage from "@components/preact/Property/PropertyPage";
+import BreadCrumb from "@/components/BreadCrumb.astro";
+import EntrepreneurshipDetail from "@/components/preact/Entrepreneurship/EntrepreneurshipDetail";
+import PropertyPage from "@/components/preact/Property/PropertyPage";
 
-import Layout from "@layouts/Layout.astro";
-import { getEntrepreneurshipById } from "@services/get-all-entrepreneurship";
-import { capitalize } from "@utils/formats";
+import Layout from "@/layouts/Layout.astro";
+import { getEntrepreneurshipById } from "@/services/get-all-entrepreneurship";
+import { capitalize } from "@/utils/formats";
 const { propiedad } = Astro.params;
 const url = Astro.url;
 // Extraemos el ultimo segmento de la url
