@@ -6,9 +6,7 @@ export const POST: APIRoute = async ({ request ,cookies}) => {
   const { userId, publicationId, publicationSuc, isEntrepreneurshipPublic } = data;
 
   // Handler de los campos requeridos para el registro 
-  if(userId === undefined || publicationId === undefined || publicationSuc === undefined || isEntrepreneurshipPublic === undefined){
 
-  }
   if (!publicationId || !publicationSuc) {
     return new Response(
       JSON.stringify({
