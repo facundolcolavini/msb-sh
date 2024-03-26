@@ -142,14 +142,19 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     'Content-Type': 'application/json'
                 }
             });
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
                 if (data.success) {
                     setToastMessage(data.message);
                     setToastVisible(true);
                     setTimeout(() => setToastVisible(false), 3000);
+                    await fetchFavorites();
+                } else {
+                    setToastMessage(data.message);
+                    setToastVisible(true);
+                    setTimeout(() => setToastVisible(false), 3000);
+                    await fetchFavorites();
                 }
-                await fetchFavorites();
             }
         } catch (error) {
             console.error(error);
@@ -171,14 +176,19 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     'Content-Type': 'application/json'
                 }
             });
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
                 if (data.success) {
                     setToastMessage(data.message);
                     setToastVisible(true);
                     setTimeout(() => setToastVisible(false), 3000);
+                    await fetchFavorites();
+                } else {
+                    setToastMessage(data.message);
+                    setToastVisible(true);
+                    setTimeout(() => setToastVisible(false), 3000);
+                    await fetchFavorites();
                 }
-                await fetchFavorites();
             }
         } catch (error) {
             console.error(error);
@@ -402,9 +412,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     <CardResultSkeleton />
                 </div>
             </section>
-            <Toast message={toastMessage} icon={<WarningAlertIcon />} isVisible={toastVisible} customStyles="flex gap-2 border  border-primary-msb  bg-[#EFF0F2]" />
-
-
+            <Toast message={toastMessage} icon={<WarningAlertIcon />} isVisible={toastVisible} customStyles="flex gap-2 border  border-primary-msb  bg-[#EFF0F2]" duration={3000} />
         </article>
     )
 }

@@ -153,14 +153,19 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     'Content-Type': 'application/json'
                 }
             });
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
                 if (data.success) {
                     setToastMessage(data.message);
                     setToastVisible(true);
                     setTimeout(() => setToastVisible(false), 3000);
+                    await fetchFavorites();
+                } else {
+                    setToastMessage(data.message);
+                    setToastVisible(true);
+                    setTimeout(() => setToastVisible(false), 3000);
+                    await fetchFavorites();
                 }
-                await fetchFavorites();
             }
         } catch (error) {
             console.error(error);
@@ -182,14 +187,19 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     'Content-Type': 'application/json'
                 }
             });
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
                 if (data.success) {
                     setToastMessage(data.message);
                     setToastVisible(true);
                     setTimeout(() => setToastVisible(false), 3000);
+                    await fetchFavorites();
+                } else {
+                    setToastMessage(data.message);
+                    setToastVisible(true);
+                    setTimeout(() => setToastVisible(false), 3000);
+                    await fetchFavorites();
                 }
-                await fetchFavorites();
             }
         } catch (error) {
             console.error(error);
@@ -197,7 +207,6 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
     }
     return (
         <article className=" px-3 md:px-0 font-gotham">
-
             <section className="h-full md:px-5 lg:px-10">
                 <header className="container mx-auto lg:flex justify-between items-center px-0 transition-all">
                     {isLoading ? <BreadCrumbSkeleton /> : props.breadCrumbChild}
