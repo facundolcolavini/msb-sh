@@ -1,6 +1,5 @@
 ---
-const user = Astro.locals.user;
-console.log(user)
+
 import ButtonLink from "@/components/ButtonLink.astro";
 import Chat from "@/components/Chat.astro";
 import he from 'he';
@@ -34,7 +33,8 @@ import type {
 import Layout from "@/layouts/Layout.astro";
 import { getAllSelects, getAllSelectsEntrepreneurship, getLocations } from "@/services/get-selects-form";
 import { fetchData } from "@/utils/fetch-data";
-
+const user = Astro.locals.user;
+console.log(user)
 const { resultado } = (await fetchData(
   "fichas.destacadas",
 )) as APIResponseResultsRecords;
