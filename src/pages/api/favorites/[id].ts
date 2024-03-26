@@ -1,6 +1,6 @@
 
 import type { APIContext, APIRoute } from "astro";
-import { Favorites, User, and, db, eq, batch } from "astro:db";
+import { Favorites, User, and, db, eq } from "astro:db";
 
 export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
   const data = await request.json();
@@ -20,7 +20,7 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
       }
     );
   }
-  const user = (await db.select().from(User).where(eq(User.id, userId))).at(0);
+  const user = (await db.select().from(User).where(and(eq(User.id, userId!), eq(User.id, userId!))))[0];
 
   if (!userId || !user) {
     return new Response(
