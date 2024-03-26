@@ -2,7 +2,7 @@ import { lucia } from "@/auth";
 import type { APIContext } from "astro";
 import { db, eq, User } from "astro:db";
 import { Argon2id } from "oslo/password";
- export const prerender = false;
+
 export async function POST(context: APIContext): Promise<Response> {
   console.log(context.locals.session)
   //read the form data
