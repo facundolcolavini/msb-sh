@@ -56,13 +56,13 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
       
 
       // BATCH and delete in all array of ids to avoid problems 
-      const queries = [];
+      const queries = [] as any;
 
       for (let i = 0; i < ids.length; i++) {
         queries.push(db.delete(Favorites).where(and(eq(Favorites.publicationId, ids[i]), eq(Favorites.userId, userId))));
       }
 
-      await db.batch(queries)
+      await db.batch(queries);
 
       return new Response(
         JSON.stringify({
