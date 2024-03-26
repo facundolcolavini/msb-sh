@@ -1,6 +1,6 @@
 
 import type { APIContext, APIRoute } from "astro";
-import { Favorites, User, and, db, eq } from "astro:db";
+import { Favorites, UserTAuths, and, db, eq,batch } from "astro:db";
 
 export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
   const data = await request.json();
@@ -20,7 +20,7 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
       }
     );
   }
-  const user = (await db.select().from(User).where(and(eq(User.id, userId!), eq(User.id, userId!))))[0];
+  const user = (await db.select().from(UserTAuths).where(eq(UserTAuths.id, userId))).at(0);
 
   if (!userId || !user) {
     return new Response(
@@ -56,13 +56,13 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
       
 
       // BATCH and delete in all array of ids to avoid problems 
-      const queries = [] as any;
+      const queries = [];
 
       for (let i = 0; i < ids.length; i++) {
         queries.push(db.delete(Favorites).where(and(eq(Favorites.publicationId, ids[i]), eq(Favorites.userId, userId))));
       }
 
-      await db.batch(queries);
+      await db.batch(queries)
 
       return new Response(
         JSON.stringify({
@@ -114,14 +114,15 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
     id: string;
     title: string;
     image: string;
-  }[] = [];
+  }[] = []
   // Consultamos los favoritos de un usuario en particula y devolvemos sus favoritos
   const favorites = await db
     .select()
     .from(Favorites)
     .where(
-      eq(Favorites.userId, userId || ''), // Ensure userId is not undefined
-    );
+      eq(Favorites.userId, userId),
+
+    )
 
   // Una vez teniendo los ids lo consultamos a la api de xintel 
   /*   for (let i = 0; i < favorites.length; i++) {

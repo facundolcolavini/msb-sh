@@ -1,16 +1,33 @@
 {
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-/*     "moduleResolution": "node",
-    "resolveJsonModule": true, */
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
+    /* alias */
     "baseUrl": ".",
     "paths": {
-      "@/*":[
-        "./src/*"
-      ]
+      "@" : ["./src"],
+      
+      "@pages/*": ["./src/pages/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@components/*": ["./src/components/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@data/*": ["./src/data/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@scripts/*": ["./src/scripts/*"],
+      "@services/*": ["./src/services/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@lib/*": ["./src/lib/*"],
     }
   },
-  "extends": "astro/tsconfigs/strict",
-  
+  "include": [
+    "./src/**/*.d.ts",
+    "./src/**/*.ts",
+    "./src/**/*.astro",
+    "./src/**/*.tsx",
+  ]
+
 }

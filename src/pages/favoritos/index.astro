@@ -1,14 +1,14 @@
 ---
-import IconDelete from "@/components/preact/Icons/DeleteIcon";
-import type { APIResponsePropertyDetail } from "@/interfaces/detail.properties.interface";
-import Layout from "@/layouts/Layout.astro";
-import { getEntrepreneurshipById } from "@/services/get-all-entrepreneurship";
-import { fetchData } from "@/utils/fetch-data";
-import { capitalize } from "@/utils/formats";
+import IconDelete from "@components/preact/Icons/DeleteIcon";
+import type { APIResponsePropertyDetail } from "@interfaces/detail.properties.interface";
+import Layout from "@layouts/Layout.astro";
+import { getEntrepreneurshipById } from "@services/get-all-entrepreneurship";
+import { fetchData } from "@utils/fetch-data";
+import { capitalize } from "@utils/formats";
 import he from "he";
-const session = Astro.locals?.session
+
 // DB Astro
-const resFav = await fetch(`${Astro.url.origin}/api/favorites/${session?.userId}`); // Reemplazar el 1 por el id del usuario logeado
+const resFav = await fetch(`${Astro.url.origin}/api/favorites/1.json`); // Reemplazar el 1 por el id del usuario logeado
 const favoritesIds = await resFav.json();
 let favoritesUser: {
   id: string;
@@ -155,36 +155,32 @@ const description =
 }
 </style>
   
-<script define:vars={{ session }}>
+<script>
   /* Delete all selection and fetch API /api/favorites/idselected */
   document.addEventListener("astro:page-load", (event) => {
-  const btnDelete = document.getElementById("btn-delete") ;
-  const selectAll = document.getElementById("select-all") ;
+  const btnDelete = document.getElementById("btn-delete") as HTMLButtonElement;
+  const selectAll = document.getElementById("select-all") as HTMLInputElement;
   const checkboxes = document.querySelectorAll(
     "input[data-check-prop]"
-  ) 
+  ) as NodeListOf<HTMLInputElement>;
     const deleteButtons = document.querySelectorAll(
     "button[id=btn-delete-prop]"
-  ) 
+  ) as NodeListOf<HTMLButtonElement>;
 
 
   let ids = Array.from(checkboxes).map((checkbox) => checkbox.id);
 
-  if (selectAll) {
-    selectAll.addEventListener("change", (e) => {
-      checkboxes.forEach((checkbox) => {
-        checkbox.checked = selectAll.checked;
-      });
-      if (selectAll.checked) {
-        ids = Array.from(checkboxes).map((checkbox) => checkbox.id);
-      } else {
-        ids = [];
-      }
+  selectAll.addEventListener("change", (e) => {
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = selectAll.checked;
     });
-  } else {
-    console.error('selectAll element not found');
-  }
-  
+    if (selectAll.checked) {
+      ids = Array.from(checkboxes).map((checkbox) => checkbox.id);
+    } else {
+      ids = [];
+    }
+  });
+
   checkboxes.forEach((checkbox) =>
     checkbox.addEventListener("change", (e) => {
       if (checkbox.checked) {
@@ -198,7 +194,7 @@ const description =
   deleteButtons.forEach((button) =>
     button.addEventListener("click", async (e) => {
       const id = button.getAttribute("data-idProp");
-      const res = await fetch(`/api/favorites/${session?.userId}`, {
+      const res = await fetch(`/api/favorites/1.json`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -220,7 +216,7 @@ const description =
       return;
     }
 
-    const res = await fetch(`/api/favorites/${session?.userId}`, {
+    const res = await fetch(`/api/favorites/1.json`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

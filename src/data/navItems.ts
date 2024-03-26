@@ -1,5 +1,4 @@
-import type { NavI } from "@/interfaces/navbar.interfaces";
-
+import type { NavI } from "@interfaces/navbar.interfaces";
 
 export const buyNavItems: NavI[] = [
   {

@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useState, type FunctionComponent } from "preact/compat";
 import { twMerge } from 'tailwind-merge';
 import Button from "../Buttons/Button";
-import { WhatsAppIcon } from "@/components/preact/Icons/WhatsAppIcon";
+import { WhatsAppIcon } from "@components/preact/Icons/WhatsAppIcon";
 
 interface Props extends HTMLAttributes<"a"> {
     cardData: {

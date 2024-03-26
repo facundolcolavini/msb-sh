@@ -1,12 +1,9 @@
 // entrepreneurships.service.ts
-
-import type { APIResponseEntrepreneurship, Results } from "@/interfaces/entrepreneurship.interfaces";
-import { fetchData } from "@/utils/fetch-data";
-
-
+import { fetchData, type AdditionalParams } from '@utils/fetch-data';
+import type { APIResponseEntrepreneurship, Results as EntrepreneurshipResult } from '@interfaces/entrepreneurship.interfaces.ts';
 const endpoint = 'resultados.emprendimientos';
 
-export const getAllEntrepreneurships = async (): Promise<Results> => {
+export const getAllEntrepreneurships = async (): Promise<EntrepreneurshipResult> => {
   try {
     const res = await fetchData(endpoint) as APIResponseEntrepreneurship;
     return res.resultado;
@@ -17,7 +14,7 @@ export const getAllEntrepreneurships = async (): Promise<Results> => {
 };
 
 // Get by ID 
-export const getEntrepreneurshipById = async (id :string): Promise<Results> => {
+export const getEntrepreneurshipById = async (id :string): Promise<EntrepreneurshipResult> => {
   const queryParams = {
     ed_idl: id.toString(),
   };

@@ -1,6 +1,6 @@
 
-import type { APIResponseLocations, APIResponseSelects, ResultLocation, Results } from "@/interfaces/selects.form.interfaces";
-import { fetchData } from "@/utils/fetch-data";
+import type { APIResponseLocations, APIResponseSelects, ResultLocation, Results } from "@interfaces/selects.form.interfaces";
+import { fetchData } from "../utils/fetch-data";
 
 
 

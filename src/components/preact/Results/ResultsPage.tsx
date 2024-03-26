@@ -1,7 +1,7 @@
-import { useSearch } from "@/hooks/useSearch"
-import type { APIResponseResultsRecords, Datos, File, Result } from "@/interfaces/results.records.interfaces"
-import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@/interfaces/selects.form.interfaces"
-import { type OutputOption } from "@/utils/formats"
+import { useSearch } from "@hooks/useSearch"
+import type { APIResponseResultsRecords, Datos, File, Result } from "@interfaces/results.records.interfaces"
+import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@interfaces/selects.form.interfaces"
+import { type OutputOption } from "@utils/formats"
 import { useEffect, useState } from "preact/hooks"
 import { filterItems, resetFilter, searchParamsStore } from "src/store/filterStore"
 import { ArrowSortIcon } from "../Icons/ArrowSortIcon"
@@ -10,10 +10,9 @@ import CardResultSkeleton from "../Skeletons/CardResultSkeleton"
 import Button from "../ui/Buttons/Button"
 import CardProperty from "../ui/Cards/CardProperty"
 
-import Pagination from "@/components/preact/Pagination"
-import { defaultsFilters, filterResultToFill, labelMappingResultForQuerys } from "@/utils/filter-default"
-import { formatAndUseSearch } from "@/utils/formatAndUseSearch"
-import type { Session } from "lucia"
+import Pagination from "@components/preact/Pagination"
+import { defaultsFilters, filterResultToFill, labelMappingResultForQuerys } from "@utils/filter-default"
+import { formatAndUseSearch } from "@utils/formatAndUseSearch"
 import SearchDebounce from "../Search/SearchDebounce"
 import SelectField from "../ui/Selects/SelectField"
 
@@ -22,10 +21,9 @@ import SelectField from "../ui/Selects/SelectField"
 interface Props {
   selects: Results;
   locations: ResultLocation
-  session: Session | null;
 }
 
-const ResultsPage = ({ selects, locations, session }: Props) => {
+const ResultsPage = ({ selects, locations }: Props) => {
   const filterStore = filterItems.get();
   const searchPStore = searchParamsStore.get()
   const filters: FilterSelects = {
@@ -33,7 +31,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     locations,
     default: defaultsFilters,
   };
-  
+
   const filterToFill: FilterDefault[] = filterResultToFill;
   const filtersformatted = formatAndUseSearch(filters, filterToFill, labelMappingResultForQuerys);
 

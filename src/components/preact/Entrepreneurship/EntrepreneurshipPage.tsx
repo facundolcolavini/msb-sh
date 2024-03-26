@@ -1,9 +1,9 @@
-import { useSearch } from "@/hooks/useSearch";
-import type { APIResponseEntrepreneurship, EntrePreneurShip, Results as ResultEntrepreneurship } from "@/interfaces/entrepreneurship.interfaces";
-import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@/interfaces/selects.form.interfaces";
-import { defaultsFilters, filterEntrePreneurshipToFillDefault, labelMappingEntrePreneurshipForQuerys } from "@/utils/filter-default";
-import { formatAndUseSearch } from "@/utils/formatAndUseSearch";
-import { type OutputOption } from "@/utils/formats";
+import { useSearch } from "@hooks/useSearch";
+import type { APIResponseEntrepreneurship, EntrePreneurShip, Results as ResultEntrepreneurship } from "@interfaces/entrepreneurship.interfaces";
+import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@interfaces/selects.form.interfaces";
+import { defaultsFilters, filterEntrePreneurshipToFillDefault, labelMappingEntrePreneurshipForQuerys } from "@utils/filter-default";
+import { formatAndUseSearch } from "@utils/formatAndUseSearch";
+import { type OutputOption } from "@utils/formats";
 import he from "he";
 import { useEffect, useState } from "preact/compat";
 import { filterItems, resetFilter, searchParamsStore } from "src/store/filterStore";
@@ -12,16 +12,14 @@ import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
 import Button from "../ui/Buttons/Button";
 import CardEntrepreneurship from "../ui/Cards/CardEntrepreneurship";
 import SelectField from "../ui/Selects/SelectField";
-import type { Session } from "lucia";
 
 
 interface Props {
   selects: Results;
-  locations: ResultLocation;
-  session: Session | null;
+  locations: ResultLocation
 }
 
-const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
+const EntrepreneurshipPage = ({ selects, locations }: Props) => {
   const filterStore = filterItems.get();
   const searchPStore = searchParamsStore.get()
   const defaultOptions = {

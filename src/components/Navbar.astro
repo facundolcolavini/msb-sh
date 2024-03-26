@@ -1,16 +1,14 @@
 ---
 // Import the navigation data and types
-import { navItems } from "@/data/navItems";
+import { navItems } from "@data/navItems";
 import { Image } from "astro:assets";
-import { Icon } from 'astro-icon/components'
+import Icon from "node_modules/astro-icon/components/Icon.astro";
 import HeartIcon from "./preact/Icons/HeartIcon";
 import LogOutIcon from "./preact/Icons/LogOutIcon";
 import NavDropDown from "./preact/NavDropDown";
 import Link from "./ui/Link.astro";
-
-const {user} = Astro.props;
 const { pathname } = Astro.url;
-let session = user ? true : false;
+let session = true;
 // Combine all navigation items into one array for easier mapping
 ---
 
@@ -53,7 +51,7 @@ let session = user ? true : false;
                             class={`absolute right-0  mt-2 px-1 lg:top-4 left-0 py-2 w-max rounded-md bg-secondary-msb shadow-lg z-20 animate-fadeIn `}
                           >
                             {item.dropdown &&
-                              item.dropdown?.map((item:any) =>
+                              item.dropdown?.map((item) =>
                                 item.href ? (
                                   <Link
                                     href={item.href ?? ""}
@@ -129,7 +127,7 @@ let session = user ? true : false;
                 class="flex items-center py-2 justify-end h-10 gap-1 border-bg-2-msb px-2 bg-white text-bg-2-msb font-bold cursor-pointer rounded-md transition tracking-wide border "
               >
                 <Icon size={20} class="fill  fill-black" name="userDefault" />
-                {user.username}
+                José Armando
                 <Icon size={20} class="fill fill-black" name="chevron-down" />
               </div>
               <div slot="childrenDrop" class="flex w-full">
@@ -148,18 +146,14 @@ let session = user ? true : false;
                     Mi cuenta
                   </Link>
                   <hr class="divide divide-x-2" />
-                  <form method="POST" action="/api/signout">
                   <Link
                     checkActive={false}
                     class="p-3 text-base gap-2 hover:bg-gray-200 cursor-pointer transition-all transition-duration-400"
+                    href="/"
                   >
-                  
                     <Icon size={20} class="fill fill-black" name="logout" />
-                  
-                   
-                      <button class="underline">  Cerrar sesión</button>
-                      </Link>
-                      </form>
+                    Cerrar sesión
+                  </Link>
                 </div>
               </div>
             </NavDropDown>

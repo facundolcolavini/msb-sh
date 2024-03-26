@@ -1,4 +1,4 @@
-import type { Default } from "@/interfaces/selects.form.interfaces";
+import type { Default } from "@interfaces/selects.form.interfaces";
 
 /* B= Barrio Cerrado
 T= Country

@@ -1,5 +1,4 @@
-
-import { fetchData } from '@/utils/fetch-data';
+import { fetchData } from '@utils/fetch-data';
 import type { APIRoute } from 'astro';
 
 

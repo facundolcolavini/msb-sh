@@ -1,5 +1,5 @@
-import { useForm } from "@/hooks/useForm";
-import type { ApiResponseConsultationError } from "@/interfaces/consultation.property.interface";
+import { useForm } from "@hooks/useForm";
+import type { ApiResponseConsultationError } from "@interfaces/consultation.property.interface";
 import { useState } from "preact/hooks";
 import { initContactForm, type ContactFormProperty } from "src/models/contact/contact";
 import { formContactValidator } from "src/models/validations/forms.validations";

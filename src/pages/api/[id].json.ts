@@ -1,10 +1,10 @@
-/* import type { APIRoute } from "astro";
-import { User, db, eq } from "astro:db";
+import type { APIRoute } from "astro";
+import { UserTAuths, db, eq } from "astro:db";
 import bcrypt from 'bcrypt';
 import sanitize from "sanitize-html";
 
 export const DELETE: APIRoute = async ({ params }) => {
-  const id = params.id
+  const id = Number(params.id);
 
   if (!id) {
     return new Response(
@@ -19,7 +19,7 @@ export const DELETE: APIRoute = async ({ params }) => {
   }
 
   try {
-    const res = await db.delete(User).where(eq(User.id, id));
+    const res = await db.delete(UserTAuths).where(eq(UserTAuths.id, id));
     if (res) {
       return new Response(null, { status: 204 });
     } else {
@@ -40,7 +40,7 @@ export const DELETE: APIRoute = async ({ params }) => {
 };
 
 export const PATCH: APIRoute = async ({ params, request }) => {
-  const { username,name, lastName, password, email, phone, alternativePhone } = await request.json();
+  const { name, lastName, password, email, phone, alternativePhone } = await request.json();
   const id = Number(params.id);
   let newPassword: string;
   // Handler de los campos requeridos para el registro 
@@ -71,7 +71,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
   try {
 
     // Desencriptar la contraseña del usuario que esta en la base de datos para compararla con la que se esta enviando en el formulario
-    const user = await db.select().from(User).where(eq(User.id, id));
+    const user = await db.select().from(UserTAuths).where(eq(UserTAuths.id, id));
     if (!user) {
       throw new Error("User not found");
     }
@@ -86,16 +86,15 @@ export const PATCH: APIRoute = async ({ params, request }) => {
       newPassword = user[0].password;
     }
 
-    const res = await db.update(User).set({
+    const res = await db.update(UserTAuths).set({
       name,
-      username,
       lastName,
       password: newPassword,
       email,
       phone,
       alternativePhone,
       lastUpdate: Date.now()
-    }).where(eq(User.id, id));
+    }).where(eq(UserTAuths.id, id));
 
     if (res) {
       return new Response(
@@ -136,7 +135,7 @@ export const GET: APIRoute = async ({ params }) => {
   }
 
   try {
-    const res = await db.select().from(User).where(eq(User.id, id));
+    const res = await db.select().from(UserTAuths).where(eq(UserTAuths.id, id));
 
     if (res) {
       return new Response(JSON.stringify(res), {
@@ -158,4 +157,3 @@ export const GET: APIRoute = async ({ params }) => {
     );
   }
 };
- */

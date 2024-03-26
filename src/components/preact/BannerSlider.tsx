@@ -1,4 +1,4 @@
-import { type FunctionalComponent, type JSX } from "preact";
+import { type FunctionalComponent } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
 interface Props {

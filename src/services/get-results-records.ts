@@ -1,5 +1,5 @@
-import type { APIResponseResultsRecords, Result } from "@/interfaces/results.records.interfaces";
-import { fetchData } from "@/utils/fetch-data";
+import type { APIResponseResultsRecords, Result } from "@interfaces/results.records.interfaces";
+import { fetchData } from "@utils/fetch-data";
 
 const endpoint = 'resultados.fichas';
 

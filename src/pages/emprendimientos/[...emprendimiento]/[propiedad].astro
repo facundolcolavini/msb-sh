@@ -1,14 +1,13 @@
 ---
-import BreadCrumb from "@/components/BreadCrumb.astro";
-import EntrepreneurshipDetail from "@/components/preact/Entrepreneurship/EntrepreneurshipDetail";
+import BreadCrumb from "@components/BreadCrumb.astro";
+import EntrepreneurshipDetail from "@components/preact/Entrepreneurship/EntrepreneurshipDetail";
+import PropertyPage from "@components/preact/Property/PropertyPage";
 
-import Layout from "@/layouts/Layout.astro";
-import { getEntrepreneurshipById } from "@/services/get-all-entrepreneurship";
-import { capitalize } from "@/utils/formats";
-
+import Layout from "@layouts/Layout.astro";
+import { getEntrepreneurshipById } from "@services/get-all-entrepreneurship";
+import { capitalize } from "@utils/formats";
 const { propiedad } = Astro.params;
 const url = Astro.url;
-const session = Astro.locals.session;
 // Extraemos el ultimo segmento de la url
 let prop = url.toString().split("/").pop();
 let suc = prop?.split("-")[0] ?? "";
@@ -23,7 +22,6 @@ const image  = data.emprendimiento[0].img_princ;
 
       <EntrepreneurshipDetail
         client:only
-        session={session}
         propertyCode={id}
         branchCode={suc}
         breadCrumbChild=""

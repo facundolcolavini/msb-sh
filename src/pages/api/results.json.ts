@@ -1,8 +1,7 @@
-
-import type { APIResponseResultsRecords } from '@/interfaces/results.records.interfaces';
-import { fetchData } from '@/utils/fetch-data';
+import type { APIResponseResultsRecords } from '@interfaces/results.records.interfaces';
+import { fetchData } from '@utils/fetch-data';
 import type { APIRoute } from 'astro';
-export const  prerender = true;
+
 
 
 

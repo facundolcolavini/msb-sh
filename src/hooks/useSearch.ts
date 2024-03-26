@@ -1,10 +1,9 @@
 // useSearch.ts
 import type { JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
-
-
-import type { OutputOption } from '@/utils/formats';
 import { addFilterValue, resetFilter } from 'src/store/filterStore';
+
+import type { OutputOption } from '@utils/formats';
 
 interface UseSearchProps {
   [key: string]: OutputOption[];

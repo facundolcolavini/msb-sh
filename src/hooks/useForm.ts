@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
-import type { FormValidations, formCheckedValues } from '@/models/validations/forms.validations';
+import type { FormValidations, formCheckedValues } from 'src/models/validations/forms.validations';
 
 
 

@@ -1,14 +1,12 @@
 ---
-import BreadCrumb from "@/components/BreadCrumb.astro";
-import PropertyPage from "@/components/preact/Property/PropertyPage";
+import BreadCrumb from "@components/BreadCrumb.astro";
+import PropertyPage from "@components/preact/Property/PropertyPage";
 
-import Layout from "@/layouts/Layout.astro";
-import { min } from "astro:db";
-// Extraemos el ultimo segmento de la url
+import Layout from "@layouts/Layout.astro";
 
-const session = Astro.locals.session;
 const { propiedad } = Astro.params;
 const url = Astro.url;
+// Extraemos el ultimo segmento de la url
 let prop = url.toString().split("/").pop();
 
 let suc = prop?.split("-")[0] ?? "";
@@ -19,8 +17,7 @@ let id = prop?.split("-")[1] ?? "";
   <section class="bg-[#FFFBF4] h-full py-2">
 
       <PropertyPage
-      client:only
-      session={session  ?? null}
+        client:only
         propertyCode={id}
         branchCode={suc}
         breadCrumbChild=""
