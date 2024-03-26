@@ -44,11 +44,11 @@
 			"dest": "_render"
 		},
 		{
-			"src": "^\\/api\\/favorites\\/addToFavorite\\/?$",
+			"src": "^\\/api\\/favorites\\/addToFavorite\\.json\\/?$",
 			"dest": "_render"
 		},
 		{
-			"src": "^\\/api\\/favorites\\/([^/]+?)\\/?$",
+			"src": "^\\/api\\/favorites\\/([^/]+?)\\.json\\/?$",
 			"dest": "_render"
 		},
 		{
@@ -117,6 +117,10 @@
 		},
 		{
 			"src": "^\\/usuarios\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/$",
 			"dest": "_render"
 		},
 		{

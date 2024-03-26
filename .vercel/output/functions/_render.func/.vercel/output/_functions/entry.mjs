@@ -1,8 +1,8 @@
 import { renderers } from './renderers.mjs';
-import { l as levels, g as getEventPrefix, L as Logger, A as AstroIntegrationLogger, manifest } from './manifest_BkI0CbiT.mjs';
-import { A as AstroError, R as ResponseSentError, p as MiddlewareNoDataOrNextCalled, q as MiddlewareNotAResponse, t as ROUTE_TYPE_HEADER, v as REROUTE_DIRECTIVE_HEADER, G as GetStaticPathsRequired, w as InvalidGetStaticPathsReturn, x as InvalidGetStaticPathsEntry, y as GetStaticPathsExpectedParams, z as GetStaticPathsInvalidRouteParam, P as PageNumberParamNotFound, D as DEFAULT_404_COMPONENT, B as NoMatchingStaticPathFound, C as PrerenderDynamicEndpointPathCollide, H as ReservedSlotName, J as renderSlotToString, K as renderJSX, O as chunkToString, Q as LocalsNotAnObject, S as clientLocalsSymbol, T as clientAddressSymbol$1, V as ClientAddressNotAvailable, W as StaticClientAddressNotAvailable, X as ASTRO_VERSION, Y as responseSentSymbol$1, Z as AstroResponseHeadersReassigned, _ as renderEndpoint, $ as renderPage, a0 as REROUTABLE_STATUS_CODES } from './chunks/astro_CRwCSytW.mjs';
+import { l as levels, g as getEventPrefix, L as Logger, A as AstroIntegrationLogger, manifest } from './manifest_Dsc6n7Qj.mjs';
+import { A as AstroError, R as ResponseSentError, p as MiddlewareNoDataOrNextCalled, q as MiddlewareNotAResponse, t as ROUTE_TYPE_HEADER, v as REROUTE_DIRECTIVE_HEADER, G as GetStaticPathsRequired, w as InvalidGetStaticPathsReturn, x as InvalidGetStaticPathsEntry, y as GetStaticPathsExpectedParams, z as GetStaticPathsInvalidRouteParam, P as PageNumberParamNotFound, D as DEFAULT_404_COMPONENT, B as NoMatchingStaticPathFound, C as PrerenderDynamicEndpointPathCollide, H as ReservedSlotName, J as renderSlotToString, K as renderJSX, O as chunkToString, Q as LocalsNotAnObject, S as clientLocalsSymbol, T as clientAddressSymbol$1, V as ClientAddressNotAvailable, W as StaticClientAddressNotAvailable, X as ASTRO_VERSION, Y as responseSentSymbol$1, Z as AstroResponseHeadersReassigned, _ as renderEndpoint, $ as renderPage, a0 as REROUTABLE_STATUS_CODES } from './chunks/astro_qNTPyZ81.mjs';
 import { serialize, parse } from 'cookie';
-import { e as appendForwardSlash, j as joinPaths, t as trimSlashes, f as fileExtension, s as slash, p as prependForwardSlash, r as removeTrailingForwardSlash, g as collapseDuplicateSlashes } from './chunks/astro/assets-service_CE-8I0f5.mjs';
+import { e as appendForwardSlash, j as joinPaths, t as trimSlashes, f as fileExtension, s as slash, p as prependForwardSlash, r as removeTrailingForwardSlash, g as collapseDuplicateSlashes } from './chunks/astro/assets-service_BOKppE-B.mjs';
 import 'clsx';
 import 'kleur/colors';
 import 'fast-glob';
@@ -1996,35 +1996,35 @@ const createExports = (manifest, { middlewareSecret }) => {
   return { default: handler };
 };
 
-const _page0 = () => import('./chunks/generic_DL-F--a_.mjs');
-const _page1 = () => import('./chunks/404_DUOiBjqP.mjs');
-const _page2 = () => import('./chunks/addUser_CZqrcJEt.mjs');
-const _page3 = () => import('./chunks/consultationProperty_D_epEmEF.mjs');
-const _page4 = () => import('./chunks/destacados_vOgtNXYR.mjs');
-const _page5 = () => import('./chunks/emprendimientos_D00ClJC7.mjs');
-const _page6 = () => import('./chunks/emprendimientosById_42ICf1bt.mjs');
-const _page7 = () => import('./chunks/emprendimientosUnidades_3sGEru8-.mjs');
-const _page8 = () => import('./chunks/addToFavorite_DLcyhpK4.mjs');
-const _page9 = () => import('./chunks/_id__B11Wvz-k.mjs');
-const _page10 = () => import('./chunks/property_DFAoyrDK.mjs');
-const _page11 = () => import('./chunks/results_CXJIjJY0.mjs');
-const _page12 = () => import('./chunks/selects_CfKPtIF1.mjs');
-const _page13 = () => import('./chunks/_id__f_qZUV4V.mjs');
-const _page14 = () => import('./chunks/index_CONOzJ8-.mjs');
-const _page15 = () => import('./chunks/_propiedad__0_wY0Nac.mjs');
-const _page16 = () => import('./chunks/_propiedad__CDU-HFqu.mjs');
-const _page17 = () => import('./chunks/index_T-bV1SRJ.mjs');
-const _page18 = () => import('./chunks/index_CuJFp-wf.mjs');
-const _page19 = () => import('./chunks/index_DAFREAhm.mjs');
-const _page20 = () => import('./chunks/_propiedad__CM7zJJ-B.mjs');
-const _page21 = () => import('./chunks/index_CWINpTik.mjs');
-const _page22 = () => import('./chunks/index_0NK2KsZt.mjs');
-const _page23 = () => import('./chunks/index_Lf-knaTd.mjs');
-const _page24 = () => import('./chunks/index_JKW5g5XT.mjs');
-const _page25 = () => import('./chunks/index_8dxXlNI-.mjs');
-const _page26 = () => import('./chunks/index_BR64ncl5.mjs');
-const _page27 = () => import('./chunks/index_NwP76cR5.mjs');
-const _page28 = () => import('./chunks/index_lMhyvGiN.mjs');
+const _page0 = () => import('./chunks/generic_9DU0YAWS.mjs');
+const _page1 = () => import('./chunks/404_9pMlF5_s.mjs');
+const _page2 = () => import('./chunks/addUser_BDDMSYJ8.mjs');
+const _page3 = () => import('./chunks/consultationProperty_BEKh_-q-.mjs');
+const _page4 = () => import('./chunks/destacados_DX9GBK7O.mjs');
+const _page5 = () => import('./chunks/emprendimientos_BhJbXlm2.mjs');
+const _page6 = () => import('./chunks/emprendimientosById_C2zf-40q.mjs');
+const _page7 = () => import('./chunks/emprendimientosUnidades_BGWKg4lm.mjs');
+const _page8 = () => import('./chunks/addToFavorite_B9phRmDA.mjs');
+const _page9 = () => import('./chunks/_id__O-GUMsQg.mjs');
+const _page10 = () => import('./chunks/property_aaLyVpGd.mjs');
+const _page11 = () => import('./chunks/results_u_H-ACau.mjs');
+const _page12 = () => import('./chunks/selects_DbSrgiNG.mjs');
+const _page13 = () => import('./chunks/_id__DKP86FMZ.mjs');
+const _page14 = () => import('./chunks/index_3LJVqHYa.mjs');
+const _page15 = () => import('./chunks/_propiedad__DzJMu3Sv.mjs');
+const _page16 = () => import('./chunks/_propiedad__B477hPz7.mjs');
+const _page17 = () => import('./chunks/index_PKouMQI-.mjs');
+const _page18 = () => import('./chunks/index_4Kfcv7VO.mjs');
+const _page19 = () => import('./chunks/index_401r1RVj.mjs');
+const _page20 = () => import('./chunks/_propiedad__BwsFV5Fk.mjs');
+const _page21 = () => import('./chunks/index_CHbCCN2y.mjs');
+const _page22 = () => import('./chunks/index_Bmmf4IAh.mjs');
+const _page23 = () => import('./chunks/index_Bif7donb.mjs');
+const _page24 = () => import('./chunks/index_DA2RMHlo.mjs');
+const _page25 = () => import('./chunks/index_DFgpncx2.mjs');
+const _page26 = () => import('./chunks/index_yO-Q0U7o.mjs');
+const _page27 = () => import('./chunks/index_CrwupNIr.mjs');
+const _page28 = () => import('./chunks/index_CttN4z1c.mjs');
 const pageMap = new Map([
     ["node_modules/astro/dist/assets/endpoint/generic.js", _page0],
     ["src/pages/404.astro", _page1],
@@ -2034,8 +2034,8 @@ const pageMap = new Map([
     ["src/pages/api/emprendimientos.json.ts", _page5],
     ["src/pages/api/emprendimientosById.json.ts", _page6],
     ["src/pages/api/emprendimientosUnidades.json.ts", _page7],
-    ["src/pages/api/favorites/addToFavorite.ts", _page8],
-    ["src/pages/api/favorites/[id].ts", _page9],
+    ["src/pages/api/favorites/addToFavorite.json.ts", _page8],
+    ["src/pages/api/favorites/[id].json.ts", _page9],
     ["src/pages/api/property.json.ts", _page10],
     ["src/pages/api/results.json.ts", _page11],
     ["src/pages/api/selects.json.ts", _page12],
@@ -2063,7 +2063,7 @@ const _manifest = Object.assign(manifest, {
     middleware: onRequest
 });
 const _args = {
-    "middlewareSecret": "5286a2a7-2288-4576-a95e-80a7a59a80a7"
+    "middlewareSecret": "9231e8be-1f21-4076-ab03-528d4d5eded5"
 };
 const _exports = createExports(_manifest, _args);
 const __astrojsSsrVirtualEntry = _exports.default;
