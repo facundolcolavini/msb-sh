@@ -1,10 +1,10 @@
 
 import { verifyRequestOrigin } from "lucia";
-import { defineMiddleware } from "astro:middleware";
-import { lucia } from "./auth";
-import type { APIContext,MiddlewareNext } from "astro";
 
-export const onRequest = defineMiddleware(async (context:APIContext, next:MiddlewareNext) => {
+import { lucia } from "./auth";
+import type { APIContext,MiddlewareHandler,MiddlewareNext } from "astro";
+
+export const onRequest:MiddlewareHandler  = async (context:APIContext, next:MiddlewareNext) => {
   if (context.request.method !== "GET") {
     const originHeader = context.request.headers.get("Origin");
     const hostHeader = context.request.headers.get("Host");
@@ -46,4 +46,4 @@ export const onRequest = defineMiddleware(async (context:APIContext, next:Middle
   context.locals.session = session;
   context.locals.user = user;
   return next();
-});
+}
