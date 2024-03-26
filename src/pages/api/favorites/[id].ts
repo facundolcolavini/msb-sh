@@ -114,15 +114,14 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
     id: string;
     title: string;
     image: string;
-  }[] = []
+  }[] = [];
   // Consultamos los favoritos de un usuario en particula y devolvemos sus favoritos
   const favorites = await db
     .select()
     .from(Favorites)
     .where(
-      eq(Favorites.userId, userId),
-
-    )
+      eq(Favorites.userId, userId || ''), // Ensure userId is not undefined
+    );
 
   // Una vez teniendo los ids lo consultamos a la api de xintel 
   /*   for (let i = 0; i < favorites.length; i++) {
