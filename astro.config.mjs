@@ -8,9 +8,6 @@ import preact from "@astrojs/preact";
 
 // https://astro.build/config
 export default defineConfig({
-  prefetch: {
-    prefetchAll: true
-  },
   adapter: vercel({
     edgeMiddleware: true,
   }),
