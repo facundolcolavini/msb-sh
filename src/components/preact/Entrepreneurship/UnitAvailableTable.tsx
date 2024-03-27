@@ -1,4 +1,4 @@
-import type { ResultEntrePreneurShipUnit } from "@interfaces/entrepreneurship.interfaces";
+import type { ResultEntrePreneurShipUnit } from "@/interfaces/entrepreneurship.interfaces";
 import CodeIcon from "../Icons/CodeIcon";
 import DoorOpen from "../Icons/DoorOpen";
 import ExchangeIcon from '../Icons/ExchangeIcon';
@@ -20,7 +20,7 @@ const UnitAvailableTable = ({ unitAvailable }: Props) => {
         <table className="w-full h-fit text-center">
             <tbody>
                 {
-                    unitAvailable.unidadesDisponibles.map((unit, index) => {
+                    unitAvailable.unidadesDisponibles?.map((unit:any, index:number) => {
                         return (
                             <tr className="shadow-lg h-[109px]" key={index}>
                                 <td className="p-2 whitespace-nowrap">

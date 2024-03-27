@@ -4,9 +4,10 @@ import { defaultsFilters, filterEntrePreneurshipToFillDefault, labelMappingEntre
 import { formatAndUseSearch } from '@/utils/formatAndUseSearch';
 import { navigate } from 'astro:transitions/client';
 import { useEffect } from 'preact/hooks';
-import type { JSXInternal } from 'preact/src/jsx';
+
 import { resetFilter, searchParamsStore } from 'src/store/filterStore';
 import Button from "../ui/Buttons/Button";
+import type { JSXInternal } from 'preact/src/jsx';
 
 interface Props {
   selects: Results

@@ -1,11 +1,11 @@
 
 import type { APIContext, APIRoute } from "astro";
-import { Favorites, UserTAuths, and, db, eq,batch } from "astro:db";
+import { Favorites, UserTAuths, and, db, eq } from "astro:db";
 
 export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
   const data = await request.json();
   const { ids } = data;
-  const { id:userId } = params;
+  const { id: userId } = params;
 
   // Handler de los campos requeridos para el registro 
 
@@ -20,7 +20,7 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
       }
     );
   }
-  const user = (await db.select().from(UserTAuths).where(eq(UserTAuths.id, userId))).at(0);
+  const user = (await db.select().from(UserTAuths).where(eq(UserTAuths?.id, Number(userId)))).at(0);
 
   if (!userId || !user) {
     return new Response(
@@ -35,44 +35,42 @@ export const DELETE: APIRoute = async ({ params, request }: APIContext) => {
   }
 
   try {
- 
+
     // if id is and array of ids  
     if (Array.isArray(ids)) {
-      
-        if(ids[0] === 'all') {
-          // delete all favorites of user
-          const res = await db.delete(Favorites).where(eq(Favorites.userId, userId));
-          if (res) {
-            return new Response(
-              JSON.stringify({
-                message: "Eliminados todos de favoritos.",
-                success: true,
-              })
-            );
-          } else {
-            throw new Error("Ocurrio un problema al eliminar la propiedad de favoritos.");
-          }
+
+      if (ids[0] === 'all') {
+        // delete all favorites of user
+        const res = await db.delete(Favorites).where(eq(Favorites.userId, Number(userId)));
+        if (res) {
+          return new Response(
+            JSON.stringify({
+              message: "Eliminados todos de favoritos.",
+              success: true,
+            })
+          );
+        } else {
+          throw new Error("Ocurrio un problema al eliminar la propiedad de favoritos.");
         }
-      
-
-      // BATCH and delete in all array of ids to avoid problems 
-      const queries = [];
-
-      for (let i = 0; i < ids.length; i++) {
-        queries.push(db.delete(Favorites).where(and(eq(Favorites.publicationId, ids[i]), eq(Favorites.userId, userId))));
       }
 
-      await db.batch(queries)
 
-      return new Response(
-        JSON.stringify({
-          message: "Eliminados de favoritos.",
-          success: true,
-        })
-      );
+      // delete in all array of ids to avoid problems 
+      const res = await db.delete(Favorites).where(and(eq(Favorites.publicationId as any, ids as any), eq(Favorites.userId as any, userId as any)) as any);
+
+      if (res) {
+        return new Response(
+          JSON.stringify({
+            message: "Eliminado de favoritos.",
+            success: true,
+          })
+        );
+      } else {
+        throw new Error("Ocurrio un problema al eliminar la propiedad de favoritos.");
+      }
     } else {
       // Remover la propiedad de favoritos para el usuario 
-      const res = await db.delete(Favorites).where(and(eq(Favorites.publicationId, ids), eq(Favorites.userId, userId)));
+      const res = await db.delete(Favorites).where(and(eq(Favorites.publicationId as any, ids as any), eq(Favorites.userId as any, userId as any)));
 
       if (res) {
         return new Response(
@@ -120,8 +118,7 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
     .select()
     .from(Favorites)
     .where(
-      eq(Favorites?.userId, userId),
-
+      eq(Favorites?.userId, Number(userId)),
     )
 
   // Una vez teniendo los ids lo consultamos a la api de xintel 
