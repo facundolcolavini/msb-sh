@@ -40,14 +40,14 @@ export const DELETE: APIRoute = async ({ params }) => {
 };
 
 export const PATCH: APIRoute = async ({ params, request }) => {
-  const {   username, firstName, lastName, password, email, phone, alternativePhone } = await request.json();
+  const { name, lastName, password, email, phone, alternativePhone } = await request.json();
   const id = Number(params.id);
   let newPassword: string;
   // Handler de los campos requeridos para el registro 
-  if ( !username|| !firstName || !lastName || !email || !password) {
+  if (!name || !lastName || !email || !password) {
     return new Response(
       JSON.stringify({
-        message: `${!firstName ? "firstName, " : ""}${!username ? "username, " : ""}${!lastName ? "lastName, " : ""}${!email ? "email, " : ""}${!password ? "password, " : ""} son campos requeridos.`,
+        message: `${!name ? "name, " : ""}${!lastName ? "lastName, " : ""}${!email ? "email, " : ""}${!password ? "password, " : ""} son campos requeridos.`,
         success: false,
       }),
       {
@@ -87,8 +87,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
     }
 
     const res = await db.update(UserTAuths).set({
-
-      username, firstName,
+      name,
       lastName,
       password: newPassword,
       email,
