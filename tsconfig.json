@@ -1,19 +1,10 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
     /* alias */
     "baseUrl": ".",
     "paths": {
       "@/*" : ["./src/*"],
     }
   },
-  "include": [
-    "./src/**/*.d.ts",
-    "./src/**/*.ts",
-    "./src/**/*.astro",
-    "./src/**/*.tsx",
-  ]
-
 }

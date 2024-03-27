@@ -7,7 +7,7 @@ import { useEffect } from 'preact/hooks';
 
 import { resetFilter, searchParamsStore } from 'src/store/filterStore';
 import Button from "../ui/Buttons/Button";
-import type { JSXInternal } from 'preact/src/jsx';
+import type { JSX } from 'preact';
 
 interface Props {
   selects: Results
@@ -38,7 +38,7 @@ const SearchEntrepreneurship = ({ selects, locations }: Props) => {
     resetFilter({})
     resetSelect(defaultOptions)
   }, [])
-  const navigateToPage = (e: JSXInternal.TargetedMouseEvent<HTMLButtonElement>) => {
+  const navigateToPage = (e: JSX.TargetedMouseEvent<HTMLButtonElement>) => {
     handleSelect(e)
     navigate(`/emprendimientos${searchPStore.length > 0 ? `?${searchPStore}` : ''}`);
   }
