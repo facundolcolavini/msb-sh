@@ -8,9 +8,14 @@
     /* alias */
     "baseUrl": ".",
     "paths": {
-      "@/*" : ["./src/*"],
+      "@/*" : [ "./src/*" ],
     }
   },
-  
+  "include": [
+    "./src/**/*.d.ts",
+    "./src/**/*.ts",
+    "./src/**/*.astro",
+    "./src/**/*.tsx",
+  ]
 
 }
