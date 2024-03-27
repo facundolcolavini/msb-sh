@@ -120,7 +120,7 @@ export const GET: APIRoute = async ({ params }: APIContext) => {
     .select()
     .from(Favorites)
     .where(
-      eq(Favorites.userId, userId),
+      eq(Favorites?.userId, userId),
 
     )
 
