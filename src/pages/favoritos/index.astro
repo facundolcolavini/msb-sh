@@ -6,7 +6,7 @@ import { getEntrepreneurshipById } from "@/services/get-all-entrepreneurship";
 import { fetchData } from "@/utils/fetch-data";
 import { capitalize } from "@/utils/formats";
 import he from "he";
-
+export const prerender = true;
 // DB Astro
 const resFav = await fetch(`${Astro.url.origin}/api/favorites/1.json`); // Reemplazar el 1 por el id del usuario logeado
 const favoritesIds = await resFav.json();
