@@ -1,8 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
     /* alias */
