@@ -11,7 +11,7 @@ export default defineConfig({
   integrations: [tailwind(), preact({
     include: ["**/preact/*"]
   }), icon(), db()],
-  output: 'server',
+  output: 'hybrid',
   adapter: vercel(),
   image: {
     service: squooshImageService()
