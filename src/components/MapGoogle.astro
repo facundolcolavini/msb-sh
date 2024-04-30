@@ -1,0 +1,53 @@
+---
+interface Props {
+  center: {
+    lat?: number;
+    lng?: number;
+  };
+  label: string;
+}
+const { center, label } = Astro.props as Props;
+const center2 = center;
+const label2 = label;
+---
+
+<div class="map" id="map"></div>
+
+<script async define:vars={{ center2, label2 }}>
+  window.initMap = function () {
+    const mapElement = document.getElementById("map");
+
+    const map = new google.maps.Map(mapElement, {
+      zoom: 19,
+      center: center2,
+    });
+
+    const iconSize = new google.maps.Size(45, 40); // Tamaño del icono
+    const redIcon = {
+      url: "/src/icons/map-pin.svg",
+      scaledSize: iconSize,
+      labelOrigin: new google.maps.Point(iconSize.width / 2, 0), // Punto de origen de la etiqueta
+    };
+    const marker = new google.maps.Marker({
+      position: center2,
+      map: map,
+      
+      icon: redIcon,
+      label: {
+        text: label2,
+        color: "#000000",
+        fontWeight: "bold",
+        fontSize: "14px",
+      },
+      animation: google.maps.Animation.DROP,
+      optimized: true,
+    });
+  };
+</script>
+
+<style>
+  #map {
+    height: 400px;
+    width: 100%;
+  }
+</style>

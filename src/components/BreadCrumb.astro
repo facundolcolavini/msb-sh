@@ -1,0 +1,115 @@
+---
+import { capitalize, formatearString } from "@/utils/formats";
+import he from "he";
+import { Icon } from 'astro-icon/components'
+import Link from "./ui/Link.astro";
+
+interface BreadcrumbItem {
+  name: string | any;
+  url: string;
+}
+
+//Utilizar Astro url para poder sacar las urls
+const urlsObjtAstro = Astro.url;
+const currentURL = urlsObjtAstro; // Este objeto contiene la información de la URL actual
+
+// Obtenemos las partes de la URL que deseamos mostrar en el breadcrumb
+const { pathname, origin, searchParams } = currentURL;
+
+// Dividir la ruta en partes separadas
+const pathParts = pathname.split("/").filter((part) => part !== ""); // Eliminar partes vacías
+
+// Crear un array de objetos para cada elemento del breadcrumb
+const breadcrumbItems = pathParts.map((part, index) => {
+  // Construir la URL acumulativa para cada elemento del breadcrumb
+  const breadcrumbURL = `${origin}/${pathParts.slice(0, index + 1).join("/")}`;
+
+  // Retornar el objeto para cada elemento del breadcrumb
+  return {
+    name: part, // Nombre del elemento del breadcrumb
+    url: breadcrumbURL, // URL del elemento del breadcrumb
+  };
+});
+// Agregar el enlace "Home" al principio de breadcrumbItems
+const breadcrumbWithHome = [
+  {
+    name: "Home",
+    // Nombre del enlace "Home"
+    url: `${origin}`, // URL de la página principal
+  },
+  /* /pathname/id */
+  ...breadcrumbItems?.map((item, index) => {
+    // Formatea el nombre del elemento del breadcrumb cuando son parámetros de consulta
+    const name = item.name.includes("?")
+      ? formatearString(he.decode(item.name))
+      : formatearString(he.decode(item.name));
+    return {
+      ...item,
+      name: he.decode(name),
+    };
+  }),
+];
+// Eliminar el último elemento del breadcrumb
+---
+
+<nav class="flex p-5 px-0 lg:px-0 md:px-0" aria-label="Breadcrumb">
+  <ol class="flex flex-wrap items-center">
+    {
+      breadcrumbWithHome?.map((item: BreadcrumbItem, index: number) => {
+        const lastItemName = item.name.split("?")[ 
+          item.name.split("?").length - 1
+        ]
+
+        return (
+          <li class="inline-flex items-center">
+            <div class="flex items-center">
+              {index === 0 ||
+              item.name === "resultados de busqueda" ||
+              item.name === "emprendimientos" ? (
+                <Link
+                  href={item.url}
+                  class={` ${
+                    item.url === `${origin}${pathname}`
+                      ? "text-primary-msb font-semibold tracking-wide "
+                      : "ms-1 text-sm font-semibold text-primary-text-msb capitalize hover:text-tertiary-bg-msb tracking-wide underline"
+                  }`}
+                >
+                  {item.name === "Home" ? (
+                    <p class="pr-1">
+                      <Icon name="home-2" size={20} />
+                    </p>
+                  ) : (
+                 
+                    <p class="px-1 capitalize">{he.decode(item.name)}</p>
+                  )}
+                </Link>
+              ) : (
+
+              /* IF THE LAST ITEM OF BREADCRUMB CHANGE TE TEXT COLOR TO GREEN */
+                <Link
+                  href={""}
+                  class={` ${
+                    item.url === `${origin}${pathname}`
+                      ? "text-primary-msb font-semibold tracking-wide pointer-events-none"
+                      : "ms-1 text-sm font-semibold text-primary-text-msb capitalize hover:text-tertiary-bg-msb tracking-wide  pointer-events-none"
+                  }`}
+                >
+                  {item.name === "Home" ? (
+                    <p class="pr-1">
+                      <Icon name="home-2" size={20} />
+                    </p>
+                  ) : (
+                    <p class="px-1 capitalize">{capitalize(he.decode(item.name))}</p>
+                  )}
+                </Link>
+              )}
+              {index !== breadcrumbWithHome.length - 1 && (
+                <span class="text-primary-text-msb font-light">/</span>
+              )}
+            </div>
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>

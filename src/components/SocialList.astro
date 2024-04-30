@@ -1,0 +1,26 @@
+---
+import EmailIcon from "./preact/Icons/EmailIcon";
+import FacebookIcon from "./preact/Icons/FacebookIcon";
+import InstagramIcon from "./preact/Icons/InstagramIcon";
+import LinkedInIcon from "./preact/Icons/LinkedInIcon";
+import WhatsAppIcon from "./preact/Icons/WhatsAppIcon";
+import Link from "./ui/Link.astro";
+---
+
+<ul class="flex flex-col space-y-7 justify-center font-gotham">
+    <li class="">
+        <Link target="_blank" href={'https://api.whatsapp.com/send/?phone=5491144161700&text=Hola%2C+me+contactaba+desde+https://msb-sh.vercel.app+para+consultarles&type=phone_number&app_absent=0'} class="space-x-2 text-primary-text-msb"><WhatsAppIcon class="fill-primary-text-msb h-9 w-9"/><span>Escribinos por Whatsapp</span></Link>
+    </li>
+    <li>
+        <Link target="_blank" href={'mailto:info@matiasszpira.com.ar'} class="space-x-2 text-primary-text-msb"><EmailIcon class="fill-primary-text-msb h-9 w-9"/><span>info@matiasszpira.com.ar</span></Link>
+    </li>
+    <li>
+        <Link target="_blank" href={'https://www.facebook.com/matiasszpirabienesraices/'} class="space-x-2 text-primary-text-msb"><FacebookIcon class="fill-primary-text-msb h-9 w-9"/><span>/matiasszpirabienesraices</span> </Link>
+    </li>
+    <li>
+        <Link target="_blank" href={'https://www.instagram.com/matiasszpira/'} class="space-x-2 text-primary-text-msb"><InstagramIcon class="fill-primary-text-msb h-9 w-9"/><span>/matiasszpira</span></Link>
+    </li>
+    <li>
+        <Link target="_blank" href={'https://www.linkedin.com/company/mat%C3%ADas-szpira-bienes-ra%C3%ADces/about/'} class="space-x-2 text-primary-text-msb"><LinkedInIcon class="fill-primary-text-msb h-9 w-9"/><span>/matias-szpira-bienes-raíces</span></Link>
+    </li>
+</ul>

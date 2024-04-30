@@ -1,0 +1,58 @@
+---
+import HeroContainer from "@/components/HeroContainer.astro";
+import FormContact from "@/components/preact/Administration/FormContact";
+
+import Layout from "@/layouts/Layout.astro";
+
+const title = "Administración - Matías Szpira Bienes Raíces";
+const description =
+  "Administración de propiedades en Matías Szpira Bienes Raíces. Nos encargamos de la administración de tu propiedad, para que no tengas que preocuparte por nada.";
+---
+
+<Layout title={title} description={description}>
+  <article>
+    <HeroContainer
+      transition:animate={"fade"}
+      img="/images/building-background.webp"
+    >
+      <div
+        class="drop-shadow-md container px-8 mx-auto w-full h-full grid grid-cols-1 lg:grid-cols gap-14 place-content-center place-items-center md:place-items-center lg:place-items-start text-white text-start md:text-center lg:text-start text-pretty self-center lg:self-start font-gotham"
+      >
+        <h1
+          class={"text-center lg:text-start text-white font-normal h-fit  w-100 text-6xl md:text-7xl lg:text-9xl self-center font-cormorant  text-shadow-pretty text-wrap lg:w-100"}
+        >
+          Administración
+        </h1>
+        <p
+          class="text-white text-center lg:text-start text-pretty self-center text-2xl md:text-3xl lg:text-4xl w-full font-gotham"
+        >
+          de Propiedades.
+        </p>
+      </div>
+    </HeroContainer>
+    <section class="bg-secondary-bg-msb">
+      <div
+        class="md:px-22 py-12 md:py-22 lg:py-24 w-100 text-center md:text-start lg:text-start lg:text-2xl md:text-xl container mx-auto px-8"
+      >
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-10">
+          En <b class="text-bold"> Matías Szpira Bienes Raíces</b>, ofrecemos un
+          servicio con valor agregado en la administración de sus bienes raíces,
+          llevando adelante lo concerniente a la funcionalidad del inmueble,
+          como así también a pagos, cobros, depósitos y presupuestos derivados
+          del manejo del mismo.
+        </p>
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-20">
+          Nos ocupamos garantizándole la resolución de problemas, otorgando a
+          nuestros clientes la garantía del cuidado integral de su propiedad y
+          de los recursos que deriven de la misma. Confíenos su propiedad,
+          nosotros nos encargamos del resto.
+        </p>
+      </div>
+    </section>
+    <section class="bg-secondary-bg-msb">
+      <div class="container mx-auto py-10 px-8">
+        <FormContact client:load />
+      </div>
+    </section>
+  </article>
+</Layout>

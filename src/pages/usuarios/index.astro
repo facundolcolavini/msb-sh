@@ -1,0 +1,324 @@
+---
+import Layout from "@/layouts/Layout.astro";
+/* import { Users, db } from "astro:db"; */
+
+const titlePage = "Usuarios";
+const description = "CRUD de usuarios";
+/* const users = await fetch(`${Astro.url.origin}/api/getUsers.json`);
+const usersData = await users.json(); */
+/* const usersData = await db.select().from(Users); */
+---
+
+<Layout title={titlePage} description={description}>
+  <div class="container mx-auto">
+    <h1 class="text-gray-450 text-2xl">{titlePage}</h1>
+    <div class="grid lg:grid-cols-2 place-content-between">
+      <div class="overflow-x-auto">
+        <!-- Table  -->
+        <table class="table-auto w-full">
+          <thead>
+            <tr>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold truncate">Id</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Nombre</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Apellido</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Email</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Telefono</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Alt Tel</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Creado</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Ult Actualización</th>
+              <th class="px-4 py-2 text-gray-700 text-sm font-bold">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+           /*    usersData.map((user) => (
+                <tr>
+                  <td class="border px-4 py-2">{user.id}</td>
+                  <td class="border px-4 py-2">{user.name}</td>
+                  <td class="border px-4 py-2">{user.lastName}</td>
+                  <td class="border px-4 py-2">{user.email}</td>
+                  <td class="border px-4 py-2">{user.phone}</td>
+                  <td class="border px-4 py-2">{user.alternativePhone}</td>
+                  <td class="border px-4 py-2">{`${new Date(user.creationDate).toLocaleDateString()} ${new Date(user.creationDate).toLocaleTimeString()}`}</td>
+                  <td class="border px-4 py-2">{`${new Date(user.lastUpdate).toLocaleDateString()} ${new Date(user.lastUpdate).toLocaleTimeString()}`}</td>
+                  <td class="border px-4 py-2 ">
+                    <div class="flex gap-2">
+                      <button
+                      id="btnEdit"
+                      data-edit={user.id}
+                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      id={String(user.id)}
+                      data-delete={user.id}
+                      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                      Eliminar
+                    </button>
+                      </div>
+                 
+                  </td>
+                </tr>
+              )) */
+            }
+          </tbody>
+        </table>
+    </div>
+
+      <div class="flex justify-center">
+        <form
+          id="add-form"
+          class="grid grid-cols-2 gap-x-2 fixed justify-center"
+        >
+          <div class="mb-4">
+            <label for="firstName" class="block text-gray-700 text-sm font-bold mb-2"
+              >Nombre</label
+            >
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="lastName"
+              class="block text-gray-700 text-sm font-bold mb-2">Apellido</label
+            >
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="username" class="block text-gray-700 text-sm font-bold mb-2"
+              >Usuario</label
+            >
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="email"
+              class="block text-gray-700 text-sm font-bold mb-2">Email</label
+            >
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="password"
+              class="block text-gray-700 text-sm font-bold mb-2">Password</label
+            >
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="password"
+              class="block text-gray-700 text-sm font-bold mb-2">Telefono</label
+            >
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="password"
+              class="block text-gray-700 text-sm font-bold mb-2">Tel Alternativo</label
+            >
+            <input
+              type="text"
+              id="alternativePhone"
+              name="alternativePhone"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div class="mb-4">
+            <button
+              id="addBtn"
+              data-add="addBtn"
+              type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >Agregar</button
+            >
+            <button
+              id="updateBtn"
+              data-update="updateBtn"
+              type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden"
+              >Guardar</button
+            >
+            <button
+              id="backBtn"
+              data-update="backBtn"
+              type="button"
+              class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden"
+              >Volver</button
+            >
+          </div>
+        </form>
+        <!-- Edit Form -->
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { navigate } from "astro:transitions/client";
+
+  document.addEventListener("astro:page-load", (event) => {
+    const Form = document.querySelector("#add-form") as HTMLFormElement;
+
+    let email = document.querySelector("#email") as HTMLInputElement;
+    let username = document.querySelector("#username") as HTMLInputElement;
+    let firstName = document.querySelector("#firstName") as HTMLInputElement;
+    let lastName = document.querySelector("#lastName") as HTMLInputElement;
+    let password = document.querySelector("#password") as HTMLInputElement;
+    let phone = document.querySelector("#phone") as HTMLInputElement;
+    let alternativePhone = document.querySelector("#alternativePhone") as HTMLInputElement;
+    let idUserRow = "";
+    const addBtn = document.getElementById("addBtn") as HTMLButtonElement;
+    const updateBtn = document.getElementById("updateBtn") as HTMLButtonElement;
+    const backBtn = document.getElementById("backBtn") as HTMLButtonElement;
+
+    addBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(Form);
+      const values = Object.fromEntries(formData);
+      console.log(values)
+      try {
+        // Call to endpoint POST user
+        const res = await fetch("/api/addUser.json/", {
+          method: "POST",
+          body: JSON.stringify(values),
+        });
+        const data = await res.json();
+        /* Refresh */
+        if (!res.ok) {
+          throw new Error(data);
+        }
+        navigate("/usuarios");
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    });
+
+    // Delete button
+    const deleteBtns = document.querySelectorAll(
+      "[data-delete]"
+    ) as NodeListOf<HTMLButtonElement>;
+    deleteBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        idUserRow = (e.target as HTMLInputElement)?.id;
+        if (!idUserRow) return console.log("No se encontro el id");
+
+        fetch(`/api/${idUserRow}.json/`, {
+          method: "DELETE",
+        }).then((res) => {
+          if (!res.ok) {
+            throw new Error("No se pudo realizar la peticion a la DB");
+          }
+          navigate("/usuarios");
+        });
+      });
+    });
+
+    // Edit 
+    // When user clicked on the edit button change into edit form and charge the inputs of edit form with data of row
+    const btnEdit = document.querySelectorAll("#btnEdit");
+
+    btnEdit.forEach((btn) => {
+      btn.addEventListener("click", async (e) => {
+        // if clic on edit button hide the add button form and show the edit form
+        addBtn.classList.add("hidden");
+        updateBtn.classList.remove("hidden");
+        backBtn.classList.remove("hidden");
+        idUserRow = (e.target as HTMLButtonElement)?.dataset.edit ?? "";
+        if (!idUserRow) return console.log("No se encontro el id");
+
+        try {
+          // Call to endpoint POST user
+          const res = await fetch(`/api/${idUserRow}.json/`, {
+            method: "GET",
+          });
+          const userData = await res.json();
+
+          // Charge the inputs of edit form with data of row
+          firstName.value = userData[0].firstName;
+          lastName.value = userData[0].lastName;
+          username.value = userData[0].username;
+          email.value = userData[0].email;
+          password.value = userData[0].password;
+          phone.value = userData[0].phone;
+          alternativePhone.value = userData[0].alternativePhone;
+
+          // Refresh
+          if (!res.ok) {
+            throw new Error("No se pudo realizar la peticion a la DB");
+          }
+          //  navigate("/usuarios");
+        } catch (err) {
+          console.log(err);
+        }
+      });
+    });
+    // When user clicked on the back button hide the edit form and show the add button form and clean the inputs of edit form
+    backBtn.addEventListener("click", (e) => {
+      addBtn.classList.remove("hidden");
+      updateBtn.classList.add("hidden");
+      backBtn.classList.add("hidden");
+      firstName.value = "";
+      lastName.value = "";
+      username.value = "";
+      email.value = "";
+      password.value = "";
+      phone.value = "";
+      alternativePhone.value = "";
+    });
+    // Listen to inputs change on edit form
+    updateBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(Form);
+      const values = Object.fromEntries(formData);
+ 
+      try {
+        // Call to endpoint POST user
+        const res = await fetch(`/api/${idUserRow}.json/`, {
+          method: "PATCH",
+          body: JSON.stringify(values),
+        });
+        // Refresh
+        if (!res.ok) {
+          throw new Error("No se pudo realizar la peticion a la DB");
+        }
+        navigate("/usuarios");
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  });
+</script>

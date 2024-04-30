@@ -1,0 +1,56 @@
+---
+import HeroContainer from "@/components/HeroContainer.astro";
+import FormContact from "@/components/preact/Appraisals/FormContact";
+import Layout from "@/layouts/Layout.astro";
+
+const title = "Tasaciones - Matías Szpira Bienes Raíces ";
+const description =
+  "Tasaciones de propiedades en Buenos Aires, Argentina. Matías Szpira Bienes Raíces. ";
+---
+
+<Layout title={title} description={description}>
+  <article>
+    <HeroContainer
+      transition:animate={"fade"}
+      img="/images/background-garden.webp"
+    >
+      <div
+        class="drop-shadow-md container px-8 mx-auto w-full h-full grid grid-cols-1 lg:grid-cols gap-14 place-content-center place-items-center md:place-items-center lg:place-items-start text-white text-start md:text-center lg:text-start text-pretty self-center lg:self-start font-gotham"
+      >
+        <h1
+          class={"text-center lg:text-start text-white font-normal h-fit  w-100 text-6xl md:text-7xl lg:text-9xl self-center font-cormorant  text-shadow-pretty text-wrap lg:w-100"}
+        >
+          Tasaciones
+        </h1>
+        <p
+          class="text-white text-center lg:text-start text-pretty self-center text-2xl md:text-3xl lg:text-4xl w-full font-gotham"
+        >
+          Tasá con nosotros, no dudes en consultarnos.
+        </p>
+      </div>
+    </HeroContainer>
+    <section class="bg-secondary-bg-msb">
+      <div
+        class="md:px-22 py-12 md:py-22 lg:py-24 w-100 text-center md:text-start lg:text-start lg:text-2xl md:text-xl container mx-auto px-8"
+      >
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-10">
+          En <b class="text-bold"> Matías Szpira Bienes Raíces</b>, logramos a
+          través de nuestra gestión y experiencia, que el cliente conozca el
+          valor exacto de su propiedad, y que a partir del mismo pueda proyectar
+          y decidir la mejor e ideal transacción.
+        </p>
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-20">
+          Al elegir nuestra inmobiliaria para comercializar su propiedad,
+          tendrás como cliente el beneficio de publicar y publicitar en
+          distintas páginas y revistas de Bienes Raíces, agilizando de esta
+          forma la operación que necesites y planees realizar en un futuro.
+        </p>
+      </div>
+    </section>
+    <section class="bg-secondary-bg-msb">
+      <div class="container mx-auto py-10 px-8">
+        <FormContact client:load />
+      </div>
+    </section>
+  </article>
+</Layout>

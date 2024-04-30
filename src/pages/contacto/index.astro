@@ -1,0 +1,176 @@
+---
+import SocialList from "@/components/SocialList.astro";
+import TitleSections from "@/components/TitleSections.astro";
+import ContactForm from "@/components/preact/Contact/ContactForm";
+import MapLocationIcon from "@/components/preact/Icons/MapLocationIcon";
+import  PaperLocationIcon  from "@/components/preact/Icons/PaperLocationIcon";
+import WhatsAppIcon from "@/components/preact/Icons/WhatsAppIcon";
+import { officesMock } from "@/data/offices";
+import Layout from "@/layouts/Layout.astro";
+
+const title = "Contacto - Matías Szpira Bienes Raíces";
+const description =
+  "Contactanos para ayudarte a encontrar tu próximo hogar o inversión.";
+---
+
+<Layout title={title} description={description}>
+  <section class="bg-secondary-bg-msb font-gotham">
+    <div class="container mx-auto">
+      <div class="pt-10 pb-5">
+        <h1
+          class="font-bold text-center tracking-normal pb-5 text-xl md:text-2xl lg:text-3xl uppercase"
+        >
+          Contacto
+        </h1>
+        <p class="text-lg text-primary-text-msb text-center pb-10">
+          Envianos tu consulta y te responderemos a la brevedad
+        </p>
+      </div>
+      <div
+        class="grid lg:grid-cols-2 lg:gap-15 md:grid-cols-2 md:px-0 grid-cols p-8"
+      >
+        <div class="text-center lg:mx-16 py-20 bg-[#D9D9D9] px-4">
+          <ContactForm client:load />
+        </div>
+        <div class="mx-auto  py-20">
+          <h1
+            class={"font-bold text-center pb-5 tracking-normal text-base md:text-md lg:text-lg"}
+          >
+            OTRAS VÍAS DE CONTACTO
+          </h1>
+
+          <SocialList />
+        </div>
+      </div>
+    </div>
+    <section class="bg-primary-msb">
+      <div class="container mx-auto px-3 md:px-0 lg:px-0 py-20">
+        <TitleSections
+          class="drop-shadow-2xl text-white font-base font-medium font-cormorant text-pretty text-center"
+        >
+          Nuestras Sucursales
+        </TitleSections>
+        <p
+          class="font-extralight text-white text-center text-md md:text-lg lg:text-2xl"
+        >
+          Invertí en bienes raíces, nosotros te asesoramos
+        </p>
+      </div>
+    </section>
+    <section class="bg-secondary-bg-msb py-10">
+      <div
+        class="grid grid-cols justify-center md:grid-cols-2 md:px-0 gap-5 lg:gap-2 lg:grid-cols-4 container mx-auto"
+      >
+        {
+          officesMock.map((suc, index) => (
+            <button
+              class="shadow rounded-lg transition-all"
+              data-officeId={`card-${index + 1}`}
+              id={`cardOffice`}
+            >
+              <div class="bg-secondary-msb rounded">
+                <img
+                  class="w-full object-cover rounded-t-lg"
+                  src={suc.suc_img}
+                  alt={suc.suc_name}
+                />
+                <div class="p-5">
+                  <div class="text-xl font-medium text-nowrap text-start capitalize">
+                    <span class="font-extrabold  capitalize">
+                      {suc.suc_name}
+                    </span>
+                  </div>
+                  <p class="text-bg-2-msb text-start text-md font-bold">
+                    {suc.suc_loc}
+                  </p>
+                  <div class="flex justify-between">
+                    <div>
+                      <span class="flex items-center text-sm font-semibold text-gray-700 mr-2 mb-1 ">
+                        {suc.suc_dir}
+                      </span>
+                      <span class="flex items-center text-xs font-semibold text-gray-700 mr-2 mb-2 gap-1">
+                        {suc.suc_phone}
+                      </span>
+                    </div>
+
+                    <div class="flex items-end justify-end gap-1 ">
+                      <a href={suc.href} target="_blank">
+                        <PaperLocationIcon  class={' h-4 w-4 md:h-5 md:w-5 lg:h-5 lg:w-5 stroke-gray-700'}/>
+                      </a>
+                      <a
+                        href={`https://api.whatsapp.com/send?phone=${suc.whatsAppPhone}`}
+                        class={" "}
+                        target="_blank"
+                      >
+                        <WhatsAppIcon class={'h-4 w-4 md:h-5 md:w-5 lg:h-5 lg:w-5  fill-gray-700'} />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </button>
+          ))
+        }
+      </div>
+      <div class="mx-auto container my-10">
+        <div id="location-label" class="hidden items-end gap-1 w-fit">
+          <MapLocationIcon />
+          <span
+            class="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold"
+          ></span>
+        </div>
+        <!-- Current map iframe match for id buttonclicked -->
+        <iframe
+          id="currentMap"
+          data-map="map"
+          src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY}`}
+          width="100%"
+          height="450"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"></iframe>
+      </div>
+    </section>
+  </section>
+</Layout>
+
+<script is:inline define:vars={{ officesMock }}>
+  // List of cardoffice online one get clicked and then the border style painted
+  const cardOffice = document.querySelectorAll("#cardOffice");
+  const currentMap = document.querySelector("#currentMap");
+  const locationLabel = document.querySelector("#location-label");
+  let currentCardClicked = "";
+
+  // Almacena la URL base del iframe en una variable separada
+  const baseIframeSrc = currentMap.getAttribute("src");
+  currentMap.classList.add("hidden");
+
+  cardOffice.forEach((card) => {
+    card.addEventListener("click", (e) => {
+      currentCardClicked = card.getAttribute("data-officeId");
+
+      cardOffice.forEach((card) => {
+        card.classList.remove("border-4");
+        card.classList.remove("border-primary-msb");
+      });
+      card.classList.add("border-4");
+      card.classList.add("border-primary-msb");
+      card.classList.add("rounded-lg");
+
+      // set to data-map div the iframe with the map
+
+      const officeMock = officesMock?.find(
+        (office) => office.id === currentCardClicked?.split("-")[1]
+      );
+
+      // Agrega el parámetro q a la URL base del iframe
+      const newIframeSrc = baseIframeSrc + "&q=" + officeMock?.suc_dir;
+      currentMap.setAttribute("src", newIframeSrc);
+      // Agregar al label la dirección de la sucursal
+      locationLabel.querySelector("span").textContent = officeMock?.suc_dir;
+      locationLabel.classList.remove("hidden");
+      locationLabel.classList.add("flex");
+      currentMap.classList.remove("hidden");
+    });
+  });
+</script>

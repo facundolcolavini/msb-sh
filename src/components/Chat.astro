@@ -1,0 +1,12 @@
+---
+import { Icon } from 'astro-icon/components'
+import Link from "./ui/Link.astro";
+
+---
+
+<Link class="fixed right-0 bottom-0 m-2 md:m-5 lg:m-5 z-50" target="_blank"  href=`https://api.whatsapp.com/send/?phone=5491144161700&text=Hola%2C+me+contactaba+desde+https://msb-sh.vercel.app+para+consultarles&type=phone_number&app_absent=0`>
+    <div class="bg-tertiary-bg-hover-msb flex items-center gap-4 p-4 mx-0 md:mx-5 lg:mx-3 md:p-5 lg:p-5 lg:px-4 rounded-full text-white hover:bg-bg-3-hover-msb transition ease-in-out duration-200 ">
+        <Icon class="text-white" size={35} name="brand-wechat" />
+        <span class="font-bold text-sm md:text-md lg:text-lg">Envianos un Whatsapp</span>
+    </div>
+</Link>

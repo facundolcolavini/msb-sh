@@ -1,0 +1,36 @@
+---
+import BreadCrumb from "@/components/BreadCrumb.astro";
+import PropertyPage from "@/components/preact/Property/PropertyPage";
+
+import Layout from "@/layouts/Layout.astro";
+import { capitalize } from "@/utils/formats";
+
+
+const { propiedad } = Astro.params;
+const url = Astro.url;
+// Extraemos el ultimo segmento de la url
+let prop = url.toString().split("/").pop();
+const session = Astro.locals.session;
+let suc = prop?.split("-")[0] ?? "";
+let id = prop?.split("-")[1] ?? "";
+const response = await fetch(`${Astro.url.origin}/api/property.json?suc=${suc}&id=${id}`);
+const data = await response.json();
+const {titulo,img_princ,in_tip, direccion,in_loc} = data.resultado.ficha[0] 
+---
+
+<Layout title=`${capitalize(in_tip)} - ${capitalize(direccion)} en ${capitalize(in_loc)}` description={titulo} img={img_princ}>
+  <section class="bg-[#FFFBF4] h-full py-2">
+
+      <PropertyPage
+        client:only
+        session={session}
+        propertyCode={id}
+        branchCode={suc}
+        breadCrumbChild=""
+      >
+        <BreadCrumb slot="breadCrumbChild" url={propiedad} transition:persist />
+   
+      </PropertyPage>
+   
+  </section>
+</Layout>

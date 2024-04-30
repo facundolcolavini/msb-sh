@@ -1,0 +1,321 @@
+---
+import IconCheckCircle from "@/components/preact/Icons/CheckIcon";
+import IconDelete from "@/components/preact/Icons/DeleteIcon";
+import FavHomeIcon from "@/components/preact/Icons/FavHomeIcon";
+import CardEntrepreneurship from "@/components/preact/ui/Cards/CardEntrepreneurship";
+import CardProperty from "@/components/preact/ui/Cards/CardProperty";
+import type { APIResponsePropertyDetail } from "@/interfaces/detail.properties.interface";
+import type { File } from "@/interfaces/results.records.interfaces";
+import Layout from "@/layouts/Layout.astro";
+import { getEntrepreneurshipById } from "@/services/get-all-entrepreneurship";
+import { fetchData } from "@/utils/fetch-data";
+import { capitalize } from "@/utils/formats";
+import he from "he";
+
+const session = Astro.locals?.session;
+
+if (!session) {
+  return Astro.redirect("/");
+}
+// DB Astro
+const resFav = await fetch(
+  `${Astro.url.origin}/api/favorites/${session?.userId}`
+); // Reemplazar el 1 por el id del usuario logeado
+const favoritesIds = await resFav.json();
+
+let favoritesEntrepreneurship: {
+  id: string;
+  cardData: { [key: string]: string };
+  /*     addStyles?: string; */
+  href: string;
+}[] = [];
+let favoriteProperty: {
+  id: string;
+  cardData: { [key: string]: string };
+  href: string;
+}[] = [];
+
+// Separar los favoritos en dos arrays, uno para emprendimientos y otro para propiedades
+for (let i = 0; i < favoritesIds.data.length; i++) {
+  if (favoritesIds.data[i].isEntrepreneurshipPublic) {
+    // Fetchea al endpoint de emprendimientos y lo une a mi array de favoritos
+    const data = await getEntrepreneurshipById(
+      favoritesIds.data[i].publicationId
+    );
+
+    favoritesEntrepreneurship.push({
+      id: data.emprendimiento[0].ed_idl,
+      cardData: {
+        ed_nom: capitalize(data.emprendimiento[0].titulo),
+        ed_pos: data.emprendimiento[0].ed_pos,
+        img_princ: data.emprendimiento[0].img_princ,
+        ed_est: data.emprendimiento[0].ed_est,
+        codsuc: data.emprendimiento[0].codsuc,
+      },
+      href: `/emprendimientos/${data.emprendimiento[0]?.ed_est}/${he.decode(data.emprendimiento[0]?.ed_loc)}/${he.decode(data.emprendimiento[0]?.ed_nom)}/${data.emprendimiento[0]?.codsuc}-${data.emprendimiento[0]?.ed_idl}`,
+    });
+  } else {
+    // Obtiene la propiedad del endpoint de propiedades y la une a mi array de favoritos
+    const data = await fetchData<APIResponsePropertyDetail>(
+      "fichas.propiedades",
+      {
+        id: favoritesIds.data[i].publicationId,
+        suc: favoritesIds.data[i].publicationSuc,
+      }
+    );
+
+    const { ficha } = data?.resultado;
+
+    favoriteProperty.push({
+      id: ficha[0]?.in_fic,
+      cardData: ficha[0],
+      href: `/resultados-de-busqueda/${ficha[0]?.in_tip}/${ficha[0]?.in_loc}/${ficha[0]?.in_bar}/${ficha[0]?.in_cal}-${ficha[0]?.in_nro}-${ficha[0]?.in_fic}`,
+    });
+  }
+}
+
+let favoritesUser: {
+  id: string;
+  title: string;
+  image: string;
+}[] = [];
+
+for (let i = 0; i < favoritesIds.data.length; i++) {
+  if (favoritesIds.data[i].isEntrepreneurshipPublic) {
+    // Fetchea al endpoint de emprendimientos y lo une a mi array de favoritos
+    const data = await getEntrepreneurshipById(
+      favoritesIds.data[i].publicationId
+    );
+
+    favoritesUser.push({
+      id: data.emprendimiento[0].ed_idl,
+      title: capitalize(data.emprendimiento[0].titulo),
+      image: data.emprendimiento[0].img_princ,
+    });
+  } else {
+    // Obtiene la propiedad del endpoint de propiedades y la une a mi array de favoritos
+    const data = await fetchData<APIResponsePropertyDetail>(
+      "fichas.propiedades",
+      {
+        id: favoritesIds.data[i].publicationId,
+        suc: favoritesIds.data[i].publicationSuc,
+      }
+    );
+
+    favoritesUser.push({
+      id: data.resultado?.ficha[0].in_fic,
+      title: capitalize(
+        he.decode(
+          `${data.resultado.ficha[0]?.in_cal} ${data.resultado?.ficha[0].in_nro} - ${data.resultado?.ficha[0].in_tip} en ${data.resultado?.ficha[0].in_loc} ${data.resultado?.ficha[0].in_bar}`
+        )
+      ),
+      image: data.resultado?.ficha[0].img_princ,
+    });
+  }
+}
+
+const title = "Favoritos - Matías Szpira Bienes Raíces ";
+const description =
+  "Tus propiedades favoritas en un solo lugar. Matías Szpira Bienes Raíces te ofrece la posibilidad de guardar tus propiedades favoritas para que puedas verlas cuando quieras. No te pierdas esta oportunidad de invertir en USA con Matías Szpira Bienes Raíces";
+---
+
+<Layout title={title} description={description}>
+  <article class="bg-secondary-bg-msb h-full font-gotham">
+    <section class="container mx-auto py-5 px-8">
+      <div class="py-12">
+        <h1 class="text-lg text-black font-bold text-center uppercase">
+          Favoritos
+        </h1>
+        <p
+        class="text-primary-text-msb text-center text-pretty font-gotham font-thin text-xl md:text-2xl lg:text-2xl w-full"
+      >Administrá tus propiedades guardadas</p>
+      </div>
+    </section>
+    <section class="container mx-auto flex justify-between py-5 px-8">
+      <!-- Checkbox Selecionar todos  -->
+      <div class="flex items-center">
+        <input
+          type="checkbox"
+          class="custom-checkbox form-checkbox h-5 w-5 text-primary-msb"
+          id="select-all"
+        />
+        <label for="select-all" class="ml-2 text-black">Seleccionar todos</label
+        >
+      </div>
+      <!-- Botone Eliminar -->
+      <button
+        id="btn-delete"
+        disabled={favoritesUser.length === 0}
+        class="bg-primary-msb text-white px-4 py-2 rounded-lg flex items-center gap-2 font-semibold"
+      >
+        <IconDelete class={"size-6"} />
+        Eliminar
+      </button>
+    </section>
+    <section class="py-5 px-8">
+      {
+        favoritesUser.length == 0 ? (
+          <div class="container mx-auto flex flex-col justify-center items-center h-96">
+            <p class="text-black text-center font-bold py-10 font-gotham text-2xl">
+            {favoritesUser.length} propiedades agregadas
+          </p>
+            <img src="/images/fav.png" alt=""/>
+          </div>
+        ) : (
+          <p class="text-black text-center font-bold py-3 font-gotham text-2xl">
+            {favoritesUser.length} propiedades agregadas
+          </p>
+        )
+      }
+    </section>
+    <section>
+      <!-- List of map User card of properti with check and delete btn -->
+      <div
+        class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-10"
+      >
+        {
+          favoritesEntrepreneurship.map((card) => (
+            <div class="relative">
+              <input
+                type="checkbox"
+                data-check-prop="checked-prop"
+                class="absolute top-2 left-2 form-checkbox h-5 w-5 text-primary-msb custom-checkbox z-10"
+                id={card.id}
+              />
+              <button
+                id={`btn-delete-prop`}
+                data-idProp={card.id}
+                class="absolute top-2 right-2 bg-white text-black px-2 py-1 rounded-lg z-10"
+              >
+                <IconDelete class={"size-6"} />
+              </button>
+
+              <CardEntrepreneurship
+                cardData={{
+                  ed_nom: card.cardData.ed_nom,
+                  img_princ: card.cardData.img_princ,
+                  ed_est: card.cardData.ed_est,
+                  ed_pos: card.cardData.ed_pos,
+                }}
+                key={`${card.cardData?.codemp}${card.cardData.codsuc}-${card.cardData.ed_nro}-${card.cardData.ed_dir}`}
+                href={card.href}
+              />
+            </div>
+          ))
+        }
+        {
+          Array.isArray(favoriteProperty) &&
+            favoriteProperty.map((card) => (
+              <div class="relative">
+                <input
+                  type="checkbox"
+                  data-check-prop="checked-prop"
+                  class="absolute top-2 left-2 form-checkbox h-5 w-5 text-primary-msb custom-checkbox z-10"
+                  id={card.id}
+                />
+                <button
+                  id={`btn-delete-prop`}
+                  data-idProp={card.id}
+                  class="absolute top-2 right-2 bg-white text-black px-2 py-1 rounded-lg z-10"
+                >
+                  <IconDelete class={"size-6"} />
+                </button>
+                <CardProperty
+                  cardData={card.cardData as unknown as File}
+                  key={`${card.cardData.id}${card.cardData.in_suc}-${card.cardData.in_num}-${card.cardData.direccion_completa}`}
+                  href={`resultados-de-busqueda/${card.cardData.operacion}/${card.cardData.in_loc}/${card.cardData.direccion_completa}/${card.cardData.in_suc}-${card.cardData.in_num}`}
+                />
+              </div>
+            ))
+        }
+      </div>
+
+    </section>
+  </article>
+</Layout>
+
+<style>
+  .custom-checkbox:checked {
+    background-color: #10b981 !important; /* Este es el color verde-500 en Tailwind */
+    border-color: #10b981 !important; /* Este es el color verde-500 en Tailwind */
+  }
+</style>
+
+<script is:inline define:vars={{ session }}>
+  /* Delete all selection and fetch API /api/favorites/idselected */
+  document.addEventListener("astro:page-load", (event) => {
+    const btnDelete = document.getElementById("btn-delete");
+    const selectAll = document.getElementById("select-all");
+    const checkboxes = document.querySelectorAll("input[data-check-prop]");
+    const deleteButtons = document.querySelectorAll(
+      "button[id=btn-delete-prop]"
+    );
+
+    let ids = [];
+
+    selectAll.addEventListener("change", (e) => {
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = selectAll.checked;
+        if (selectAll.checked) {
+          ids.push(checkbox.id);
+        } else {
+          ids = [];
+        }
+      });
+    });
+
+    checkboxes.forEach((checkbox) =>
+      checkbox.addEventListener("change", (e) => {
+        if (checkbox.checked && !ids.includes(checkbox.id)) {
+          ids.push(checkbox.id);
+        } else {
+          ids = ids.filter((id) => id !== checkbox.id);
+        }
+      })
+    );
+
+    if (session && session.userId) {
+      deleteButtons.forEach((button) =>
+        button.addEventListener("click", async (e) => {
+          const id = button.getAttribute("data-idProp");
+          const res = await fetch(`/api/favorites/${session?.userId}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ids: [id] }),
+          });
+
+          if (res.ok) {
+            window.location.reload();
+          } else {
+            alert("Error al eliminar la propiedad");
+          }
+        })
+      );
+
+      btnDelete.addEventListener("click", async () => {
+        if (ids.length === 0) {
+          alert("No hay elementos seleccionados");
+          return;
+        }
+
+        const res = await fetch(`/api/favorites/${session?.userId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ids }),
+        });
+
+        if (res.ok) {
+          window.location.href = "/favoritos";
+        } else {
+          alert("Error al eliminar los elementos seleccionados");
+        }
+      });
+    } else {
+      window.location.reload();
+    }
+  });
+</script>

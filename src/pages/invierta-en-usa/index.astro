@@ -1,0 +1,170 @@
+---
+import HeroContainer from "@/components/HeroContainer.astro";
+import SliderA from "@/components/SliderA.astro";
+
+import TitleSections from "@/components/TitleSections.astro";
+import PDFViewer from "@/components/preact/PDFViewer";
+import CardProperty from "@/components/preact/ui/Cards/CardProperty";
+import Link from "@/components/ui/Link.astro";
+import type { APIResponseResultsRecords } from "@/interfaces/results.records.interfaces";
+
+import Layout from "@/layouts/Layout.astro";
+
+const response = await fetch(
+  `${Astro.url.origin}/api/results.json?sellocalidades=miami`
+);
+const data: APIResponseResultsRecords = await response.json();
+const { fichas } = data.resultado;
+
+const title = "Invertir en USA  |  Inversiones en Estados Unidos";
+const description =
+  "Invertir en USA es una excelente opción para diversificar tu portafolio de inversiones. Conoce las mejores opciones para invertir en Estados Unidos.";
+---
+
+<Layout title={title} description={description}>
+  <article>
+    <HeroContainer
+      transition:animate={"fade"}
+      img="/images/panorama-noche-chicago.webp"
+    >
+      <div
+        class="drop-shadow-md container px-8 mx-auto w-full h-full grid grid-cols-1 lg:grid-cols gap-14 place-content-center place-items-center md:place-items-center lg:place-items-start text-white text-start md:text-center lg:text-start text-pretty self-center lg:self-start font-gotham"
+      >
+        <h1
+          class={"text-center lg:text-start text-white font-normal h-fit  w-100 text-5xl md:text-7xl lg:text-9xl self-center font-cormorant  text-shadow-pretty text-wrap lg:w-100"}
+        >
+          Invierta en USA
+        </h1>
+        <p
+          class="text-white text-center lg:text-start text-pretty self-center text-2xl md:text-3xl lg:text-4xl w-full font-gotham"
+        >
+          Amplia gama de oportunidades de inversión del mercado inmobiliario en
+          Estados Unidos
+        </p>
+      </div>
+    </HeroContainer>
+    <section class="bg-secondary-bg-msb">
+      <div
+        class="md:px-22 py-12 md:py-22 lg:py-24 w-100 text-center md:text-start lg:text-start lg:text-2xl md:text-xl container mx-auto px-8"
+      >
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-10">
+          Contamos con alianzas estratégicas con los principales bróker del
+          mercado inmobiliario en <b class="text-bold">Estados Unidos</b>,
+          quienes brindan asesoramiento integral y personalizado para inversores
+          y compradores tanto en el área residencial como comercial.
+        </p>
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-20">
+          Conocé más acerca de la amplia gama de oportunidades de inversión,
+          desde nuevos y lujosos emprendimientos en <b class="text-bold"
+            >Downtown Miami</b
+          >.
+        </p>
+        <p
+          class="secondary-bg-msb font-gotham font-thin flex flex-col lg:flex-row md:flex-row gap-1"
+        >
+          Para más información comunicarse a <Link
+            href="mailto:info@matiasszpira.com.ar"
+            class="text-primary-msb text-center self-center lg:text-2xl md:text-xl md:self-end font-semibold"
+            >info@matiasszpira.com.ar</Link
+          >
+        </p>
+      </div>
+    </section>
+    <HeroContainer transition:animate={"fade"} img="/images/miami-city.jpg" />
+    <section class="bg-secondary-bg-msb">
+      <div
+        class="md:px-22 py-12 md:py-22 lg:py-24 w-100 text-center md:text-start lg:text-start lg:text-2xl md:text-xl container mx-auto px-8"
+      >
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-20">
+          <b class="text-bold">Miami</b> es una <b class="text-bold"
+            >Ciudad-Puerto ubicada en el sureste de Florida, Estados Unidos</b
+          >, alrededor del río Miami, entre los Everglades y el Océano
+          Atlántico.
+          <br />
+          Es la sede del condado de <b class="text-bold">Miami-Dade</b>, por lo
+          tanto, la principal, más céntrica y poblada ciudad del <b
+            class="text-bold">Área Metropolitana de Miami</b
+          >.
+          <br />
+          Es considerada una ciudad global de importancia en las <b
+            class="text-bold"
+            >finanzas, comercio, los medios de comunicación, entretenimiento,
+            artes y comercio internacional</b
+          >. Además, la ciudad tiene la mayor concentración de bancos
+          internacionales en todos los Estados Unidos de América.
+        </p>
+        <div class="flex justify-center items-center">
+          <Link 
+            href={'https://matiasszpira.com.ar/oasis.pdf'}
+            target="_blank"
+           
+            class="bg-primary-msb text-white border-primary-msb hover:bg-primary-hover-msb border-primary-hover-msb border px-16 text-lg py-2 rounded"
+            >Ver más
+          </Link>
+         
+        </div>
+      </div>
+    </section>
+    <section class="bg-primary-msb">
+      <div class="container mx-auto px-3 md:px-0 lg:px-0 py-20">
+        <TitleSections
+          class="drop-shadow-2xl text-white font-base font-medium font-cormorant text-pretty text-center"
+        >
+          Propiedades en Miami
+        </TitleSections>
+        <p
+          class="text-white text-center text-md md:text-lg lg:text-2xl font-extralight p-10 pt-4 pb-16"
+        >
+          La mejor selección de inmuebles en las zonas que estás buscando.
+        </p>
+        
+        <SliderA colsNr={3} height={10} width={10} classSlide="slider1" >
+          {
+            Array.isArray(fichas) &&
+              fichas.map((result) => (
+    
+                <CardProperty
+                 data-astro-prefetch="false"
+                  client:load
+                  cardData={result}
+                  addStyles={"card my-3"}
+                  key={`unique-key`}
+                  href={`resultados-de-busqueda/${result?.operacion}/${result?.in_loc}/${result?.direccion_completa}/${result?.in_suc}-${result?.in_num}`}
+                />
+
+              ))
+          }
+        </SliderA>
+      </div>
+    </section>
+  </article>
+</Layout>
+
+<script>
+  /* Modal */
+// Obtén los elementos del DOM
+const openModalButton = document.getElementById('openModal');
+const modal = document.getElementById('modal');
+const closeModalButton = modal?.querySelector('button');
+
+// Función para abrir el modal
+function openModal() {
+  if (modal) {
+    (modal as HTMLDialogElement).showModal();
+  }
+}
+
+// Función para cerrar el modal
+function closeModal() {
+  modal?.closest('dialog')?.close();
+}
+
+// Agrega los controladores de eventos
+if (openModalButton) {
+  openModalButton.addEventListener('click', openModal);
+}
+if (closeModalButton) {
+  closeModalButton.addEventListener('click', closeModal);
+}
+
+</script>

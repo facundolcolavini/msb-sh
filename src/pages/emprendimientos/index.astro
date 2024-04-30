@@ -1,0 +1,68 @@
+---
+import BannerSlider from "@/components/preact/BannerSlider";
+import EntrepreneurshipPage from "@/components/preact/Entrepreneurship/EntrepreneurshipPage";
+import type {
+APIResponseEntrepreneurship,
+Results as ResultEntrepreneurship,
+} from "@/interfaces/entrepreneurship.interfaces";
+import type {
+ResultLocation,
+Results
+} from "@/interfaces/selects.form.interfaces";
+import Layout from "@/layouts/Layout.astro";
+import { getAllSelects, getAllSelectsEntrepreneurship, getLocations } from "@/services/get-selects-form";
+import { fetchData } from "@/utils/fetch-data";
+const title = "Emprendimientos  | Matías Szpira Bienes Raíces";
+const description =
+  "Emprendimientos Invertí en bienes raíces, nosotros te asesoramos.";
+ 
+const { resultado: resEmprendimientos } = (await fetchData(
+  "resultados.emprendimientos",
+  { amaira: "true" },
+)) as APIResponseEntrepreneurship;
+const { emprendimiento: entrepreneurship, img } =
+  resEmprendimientos as ResultEntrepreneurship;
+const session = Astro.locals.session;
+/* Fetch selects */
+let selectsVal = (await getAllSelects()) as Results;
+let selectEntrepreneurship = (await getAllSelectsEntrepreneurship()) as Results;
+let selects = {
+  ...selectsVal, 
+  ...selectEntrepreneurship,
+  ambientes: [
+  ...selectEntrepreneurship?.ambientes ,
+  ...selectEntrepreneurship?.ambientes2,
+  ...selectEntrepreneurship?.ambientes3,
+  ...selectEntrepreneurship?.ambientes4,
+  ...selectEntrepreneurship?.ambientes5,
+  ]?.filter((v, i, a) => a.findIndex((t) => t.value === v.value) === i),
+}
+const locations = (await getLocations({ ed_int: "True" })) as ResultLocation;
+---
+
+<Layout title={title} description={description}>
+  <BannerSlider
+    slides={img[2]}
+    sliderTime={8000}
+    client:visible
+    transition:animate="fade"
+  >
+    <div
+      class="drop-shadow-md container mx-auto w-full h-full grid grid-cols-1 lg:grid-cols gap-14 place-content-center place-items-center md:place-items-center lg:place-items-start text-white text-start md:text-center lg:text-start text-pretty self-center lg:self-start font-gotham"
+    >
+      <h1
+        class={"text-center lg:text-start text-white font-normal h-fit  w-100 text-5xl md:text-7xl lg:text-9xl self-center font-cormorant  text-shadow-pretty text-wrap lg:w-40"}
+      >
+        Nuestros Emprendimientos
+      </h1>
+      <p
+        class="text-white text-center lg:text-start text-pretty self-center text-2xl md:text-3xl lg:text-4xl w-full font-gotham"
+      >
+        Invertí en bienes raíces, nosotros te asesoramos
+      </p>
+    </div>
+  </BannerSlider>
+  <section class=" py-10 bg-[#FFFBF4]">
+    <EntrepreneurshipPage session={session} client:only selects={selects} locations={locations} />
+  </section>
+</Layout>

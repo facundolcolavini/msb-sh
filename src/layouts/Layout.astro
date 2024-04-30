@@ -1,0 +1,123 @@
+---
+import { ViewTransitions } from "astro:transitions";
+
+const user = Astro.locals.user;
+
+import Navbar from "@/components/Navbar.astro";
+import Footer from "@/layouts/Footer.astro";
+import "@fontsource/cormorant";
+
+
+
+interface Props {
+  title: string;
+  description: string;
+  img?: string;
+}
+
+const { title, description , img } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Img -->
+    <meta property="og:image" content={img ?? "/images/logo.png"} />
+    <meta property="og:image:url" content={img ?? "/images/logo.png"} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="view-transition" content="same-origin" />
+    <link rel="image_src" href={img ?? "/images/logo.png"}>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <ViewTransitions />
+  </head>
+  <body>
+
+    <div id="app" class="relative h-screen">
+      <header class="[grid-area:header]">
+        <Navbar user={user} />
+      </header>
+      <main class="[grid-area:main] font-gotham ">
+          <slot />
+      </main>
+      <footer class="[grid-area:footer]">
+        <Footer />
+      </footer>
+    </div>
+    <style is:global>
+      @font-face {
+        font-family: "Gotham";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 130%; /* 26px */
+        src: url("/fonts/Gotham-Light.otf") format("otf");
+      }
+
+      * {
+        box-sizing: border-box;
+        min-width: 0;
+      }
+
+      body {
+        background-color: #f3f4f6;
+        font-family: "Gotham", sans-serif;
+        min-height: 100vh;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        text-wrap: balance;
+      }
+
+      p {
+        text-wrap: pretty;
+      }
+
+      #app {
+        display: grid;
+        grid-template-areas:
+          "header"
+          "main"
+          "footer";
+        grid-template-rows: auto 1fr auto;
+      }
+
+      /* Estilos para el scrollbar */
+.scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent; /* thumb and track color */
+  overflow-y: auto;
+}
+
+/* Para navegadores basados en WebKit como Chrome, Safari, etc. */
+.scrollbar::-webkit-scrollbar {
+  display: flex;
+  width: 9px;
+  height: 9px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  height: 9px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #1b1b1b;
+  border-radius: 3px;
+
+  height: 9px;
+  border: 3px solid #1b1b1b;
+}
+
+    </style>
+  </body>
+</html>

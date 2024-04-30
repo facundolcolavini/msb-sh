@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+interface Props extends HTMLAttributes<"h1">	 {
+    class?: string;
+}
+
+const { class:className} = Astro.props as Props;
+const styles = twMerge(clsx("text-white text-2xl md:text-4xl lg:text-5xl font-base font-semibold font-cormorant text-pretty text-center ", className));
+---
+
+<h1 class:list={[ styles ]}>
+    <slot/>
+</h1>

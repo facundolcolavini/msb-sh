@@ -1,0 +1,367 @@
+---
+// Import the navigation data and types
+import { navItems } from "@/data/navItems";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import AuthPage from "./preact/Auth/AuthPage";
+import HeartIcon from "./preact/Icons/HeartIcon";
+import LogOutIcon from "./preact/Icons/LogOutIcon";
+import NavDropDown from "./preact/NavDropDown";
+import Link from "./ui/Link.astro";
+
+const { user } = Astro.props;
+
+const { pathname } = Astro.url;
+let session = user ? true : false;
+---
+
+<!-- Menú de navegación para pantallas grandes --><!-- Navbar para pantallas grandes -->
+<nav
+  class="relative hidden lg:block bg-secondary-msb shadow-lg border-t-8 border-primary-msb lg:px-10"
+>
+  <div class="container mx-auto flex justify-between items-center py-4">
+    <!-- Logo y enlace principal -->
+    <Link href="/" checkActive={false} class="flex items-center space-x-3">
+      <Image width={180} height={70} src={"/images/logo.png"} alt="Logo" />
+    </Link>
+
+    <!-- Menú de navegación para pantallas grandes -->
+    <div class="flex gap-4">
+      <ul
+        class="flex flex-col font-semibold p-4 lg:p-0 rtl:space-x-reverse lg:flex-row-reverse lg:mt-0 md:border-0 gap-4"
+      >
+        <!-- Elementos del menú aquí -->
+        {
+          navItems.map((item) => {
+            return (
+              <li class="flex items-center ">
+                <Link class="flex justify-between mt-1 items-start gap-5 font-gotham ">
+                  {item.dropdown ? (
+                    <Link class="rounded-none hover:border-b-4 text-xs font-gotham hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb ">
+                      <NavDropDown client:load>
+                        <span
+                          slot="label"
+                          class={`${
+                            item?.dropdown?.some((h) => h.href === pathname)
+                              ? "rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb border-b-4 border-b-primary-msb border-primary-msb transition-all font-primary-font-msb uppercase font-gotham hover:text-primary-msb text-primary-msb "
+                              : "rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb uppercase font-gotham hover:text-primary-msb  "
+                          }`}
+                        >
+                          {item.label}
+                        </span>
+                        <div slot="childrenDrop">
+                          <div
+                            class={`absolute right-0  mt-2 px-1 lg:top-4 left-0 py-2 w-max rounded-md bg-secondary-msb shadow-lg z-20 animate-fadeIn `}
+                          >
+                            {item.dropdown &&
+                              item.dropdown?.map((item: any) =>
+                                item.href ? (
+                                  <Link
+                                    checkActive={item.href === pathname}
+                                    href={item.href ?? ""}
+                                    class:list="block px-3 py-2  font-primary-font-msb text-xs border border-none uppercase"
+                                  >
+                                    <span class:list="font-primary-font-msb text-gray-600 font-semibold text-xs  hover:text-primary-msb hover:border-b-primary-msb uppercase ">
+                                      {item.label}
+                                    </span>
+                                  </Link>
+                                ) : (
+                                  <span class="block px-3 py-2  font-semibold font-primary-font-msb   text-xs  text-primary-msb   ">
+                                    {item.label}
+                                  </span>
+                                )
+                              )}
+                          </div>
+                        </div>
+                      </NavDropDown>
+                      <Icon
+                        slot="after"
+                        class=" ml-2 w-4 h-4"
+                        name="chevron-down"
+                      />
+                    </Link>
+                  ) : item.label === "Contacto" ? (
+                    <Link
+                      checkActive={false}
+                      href={item.dropdown ? "" : item.href}
+                      class="flex flex-row items-center rounded-none hover:border-b-4 px-0"
+                    >
+                      <span class=" flex items-center justify-end h-10 font-gotham text-xs border border-tertiary-msb px-2 bg-white text-gray-600 uppercase font-bold hover:bg-tertiary-bg-msb hover:text-white cursor-pointer rounded-md hover:border-tertiary-msb transition hover:transition-all tracking-wide">
+                        {item.label}
+                      </span>
+                    </Link>
+                  ) : (
+                    <Link
+                      checkActive={item.href === pathname}
+                      href={item.dropdown ? "" : item.href}
+                      class="rounded-none hover:border-b-4 font-gotham uppercase font-semibold text-xs hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb transition-all"
+                    >
+                      <span
+                        class={`${
+                          item.href !== pathname &&
+                          "rounded-none font-gotham  hover:text-primary-msb uppercase hover:border-b-primary-msb hover:border-primary-msb hover:border-b-4 hover:transition-all"
+                        }`}
+                      >
+                        {item.label}
+                      </span>
+                    </Link>
+                  )}
+                </Link>
+              </li>
+            );
+          })
+        }
+      </ul>
+
+      <!-- Botón de iniciar sesión -->
+      {
+        session ? (
+          <div class="flex flex-row gap-1 items-center">
+            <Link
+              id="ButtonFav"
+              href={"/favoritos"}
+              checkActive={false}
+              class="flex items-center justify-center h-10 px-4 border rounded bg-tertiary-msb hover:bg-[#696863] cursor-pointer font-medium font-primary-font-msb border-text-primary-msb transition"
+            >
+              <HeartIcon addStyles="stroke-white hover:fill-white animate-duration-500 animate-fill-forwards transition-all" />
+            </Link>
+            <NavDropDown client:load>
+              <div
+                slot="label"
+                class="flex items-center py-2 justify-end h-10 gap-1 border-bg-2-msb px-2 bg-white text-bg-2-msb font-bold cursor-pointer rounded-md transition tracking-wide border "
+              >
+                <Icon size={20} class="fill  fill-black" name="userDefault" />
+                {user?.firstName} {user?.lastName}
+                <Icon size={20} class="fill fill-black" name="chevron-down" />
+              </div>
+              <div slot="childrenDrop" class="flex w-full">
+                <div
+                  class={`absolute h-fit w-full top-0 left-0 bg-white shadow-lg z-20 animate-fadeIn rounded-b-md rounded-br-md rounded-bl-md`}
+                >
+                  <Link
+                    class="p-3 text-base gap-2 hover:bg-gray-200 cursor-pointer transition-all transition-duration-400"
+                    href="/cuenta"
+                  >
+                    <Icon
+                      size={20}
+                      class="fill fill-black"
+                      name="userDefault"
+                    />
+                    Mi cuenta
+                  </Link>
+                  <hr class="divide divide-x-2" />
+                  <form method="POST" action="/api/auth/signout">
+                    <Link
+                      checkActive={false}
+                      class="p-3 text-base gap-2 hover:bg-gray-200 cursor-pointer transition-all transition-duration-400 "
+                    >
+                      <Icon size={20} class="fill fill-black" name="logout" />
+
+                      <button class="underline"> Cerrar sesión</button>
+                    </Link>
+                  </form>
+                </div>
+              </div>
+            </NavDropDown>
+          </div>
+        ) : (
+          <AuthPage client:load>
+            <Link
+              id="ButtonLogin"
+              class="flex items-center justify-end h-10 px-8 border rounded bg-primary-msb text-tertiary-text-msb hover:bg-primary-bg-hover-msb cursor-pointer font-medium font-primary-font-msb border-text-primary-msb transition"
+            >
+              Iniciar sesión
+            </Link>
+          </AuthPage>
+        )
+      }
+    </div>
+  </div>
+</nav>
+
+<!-- Navbar para pantallas móviles -->
+<nav class="relative lg:hidden bg-secondary-msb shadow-md">
+  <div class="py-5 px-8 flex justify-between items-center">
+    <!-- Logo y enlace principal -->
+    <div>
+      <Link href="/" checkActive={false} class="flex justify-center">
+        <Image
+          width={150}
+          height={20}
+          src={"/images/logo.png"}
+          alt="Logo"
+          class="h-8 text-center items-center"
+        />
+      </Link>
+    </div>
+    <!-- Botón de menú para pantallas pequeñas -->
+    <button
+      type="button"
+      data-collapse-toggle="mobile-menu"
+      class="inline-flex items-center justify-center w-10 h-10 p-2 text-sm rounded-lg hover:bg-primary-bg-hover-msb focus:outline-none focus:ring"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+    >
+      <Icon name="menu" />
+    </button>
+  </div>
+
+  <!-- Menú de navegación móvil para pantallas pequeñas -->
+  <div
+    class="hidden w-full absolute top-13 bg-secondary-msb z-10 shadow-sm animate-dropDown"
+    id="mobile-menu"
+  >
+    <div class="shadow-md rounded-b-lg w-full">
+      {
+        session ? (
+          <NavDropDown client:load>
+            <div
+              slot="label"
+              class="flex justify-start gap-5 items-end px-6 py-3 border-b w-screen"
+            >
+              <Icon size={40} scale={20} name="userDefault" />
+              <div>
+                <h2 class="text-lg">Usuario</h2>
+                <p class="text-gray-600">{user?.firstName} {user?.lastName}</p>
+              </div>
+              <Icon size={20} class="fill fill-black" name="chevron-down" />
+            </div>
+            <div slot="childrenDrop">
+              <div
+                class={`absolute  h-fit w-full top-0 left-0  rounded-md bg-white shadow-lg z-9 animate-fadeIn`}
+              >
+                <Link
+                  class="py-3  px-6  text-base gap-2 hover:bg-gray-200 hover:rouded-lg cursor-pointer transition-all transition-duration-400 "
+                  href="/favoritos"
+                >
+                  <Icon
+                    size={28}
+                    class="fill fill-black"
+                    name="heart-default"
+                  />
+                  Favoritos
+                </Link>
+                <Link
+                  class="py-3  px-6  text-base gap-2 hover:bg-gray-200 hover:rouded-lg cursor-pointer transition-all transition-duration-400 "
+                  href="/cuenta"
+                >
+                  <Icon size={28} class="fill fill-black" name="userDefault" />
+                  Mi cuenta
+                </Link>
+                <hr class="divide divide-x-2" />
+                <form method="POST" action="/api/auth/signout">
+                  <Link
+                    class="py-3 relative px-6 text-base gap-2 hover:bg-gray-200  cursor-pointer transition-all transition-duration-400"
+                    checkActive={false}
+                  >
+                    <LogOutIcon addStyles="fill-[#494949] stroke-[#494949]" />
+                    <button> Cerrar sesión </button>
+                  </Link>
+                </form>
+                <hr class="divide divide-x-2 border-b-2 shadow-current" />
+              </div>
+            </div>
+          </NavDropDown>
+        ) : (
+          <div class="flex justify-start gap-5 items-end px-6 py-3 border-b">
+            <AuthPage client:load>
+              <div class="flex items-center  px-6   w-fit justify-end h-10 border rounded bg-primary-msb text-tertiary-text-msb hover:bg-primary-bg-hover-msb cursor-pointer font-medium font-primary-font-msb border-text-primary-msb transition ">
+                Iniciar sesión
+              </div>
+            </AuthPage>
+          </div>
+        )
+      }
+
+      <ul class="text-gray-700">
+        {
+          navItems.map((item) => (
+            <li class="flex  items-center justify-between w-100 flex-row  px-6 py-3 border-b ">
+              {item.dropdown ? (
+                <div class="relative flex justify-between place-items-start gap-2  z-0  hover:border-primary-msb">
+                  {item.icon && <Icon size={28} scale={1} name={item?.icon} />}
+                  <Link class="flex  justify-start">
+                    <NavDropDown client:load>
+                      <span
+                        slot="label"
+                        class:list={`${
+                          item?.dropdown?.some((h) => h.href === pathname)
+                            ? "text-primary-msb font-primary-font-msb font-semibold text-xs border-b-4 border-b-primary-msb hover:text-primary-msb uppercase"
+                            : "font-primary-font-msb font-semibold text-xs  hover:text-primary-msb uppercase text-gray-600"
+                        }`}
+                      >
+                        {item.label}
+                      </span>
+                      <div slot="childrenDrop">
+                        <div
+                          class={`relative w-100 right-0  mt-2 px-1 lg:top-8 left-0 py-2 w-max rounded-md bg-secondary-msb  animate-fadeIn`}
+                        >
+                          {item.dropdown &&
+                            item.dropdown?.map((item) =>
+                              item.href ? (
+                                <Link
+                                  checkActive={item.href === pathname}
+                                  href={item.href ?? ""}
+                                  class:list="block px-3 py-2  font-primary-font-msb text-sm border border-none "
+                                >
+                                  <span class:list="font-primary-font-msb  font-semibold text-xs  hover:text-primary-msb hover:border-b-primary-msb uppercase text-gray-600 ">
+                                    {item.label}
+                                  </span>
+                                </Link>
+                              ) : (
+                                <span class="block px-3 py-2  font-semibold   font-primary-font-msb text-xs text-primary-msb uppercase ">
+                                  {item.label}
+                                </span>
+                              )
+                            )}
+                        </div>
+                      </div>
+                    </NavDropDown>
+
+                    <Icon
+                      slot="after"
+                      class=" ml-2 w-4 h-4 flex self-start items-end"
+                      name="chevron-down"
+                    />
+                  </Link>
+                </div>
+              ) : (
+                <div class="flex justify-between items-center gap-2 ">
+                  {item.icon && <Icon size={28} scale={1} name={item?.icon} />}
+                  <Link
+                    href={item.dropdown ? "" : item.href}
+                    class="text-lg flex flex-row items-center hover:transition-all font-primary-font-msb px-0 "
+                  >
+                    <span class=" font-primary-font-msb font-semibold text-xs hover:text-primary-msb uppercase ">
+                      {item.label}
+                    </span>
+                  </Link>
+                </div>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const toggleButtons = document.querySelectorAll(
+      '[data-collapse-toggle="mobile-menu"]'
+    );
+
+    toggleButtons.forEach((button) => {
+      const targetId = button.getAttribute("data-collapse-toggle");
+      const targetElement = document.getElementById(targetId!);
+
+      button.addEventListener("click", () => {
+        if (targetElement) {
+          targetElement.classList.toggle("hidden");
+          targetElement.classList.toggle("block");
+        }
+      });
+    });
+  });
+</script>

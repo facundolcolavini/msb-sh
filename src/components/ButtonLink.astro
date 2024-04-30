@@ -1,0 +1,15 @@
+---
+import { navigate } from "astro:transitions/client";
+import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
+
+const { href, class:className} = Astro.props;
+const handleClick = () => {
+  navigate(href);
+};
+
+
+const styles = twMerge( clsx("w-100 h-100", className));
+---
+
+<a class={styles} href={href ?? ''}> <slot /></a>

@@ -1,0 +1,40 @@
+---
+// Import statements if you have any components like Icon or Link
+// import Icon from '../components/Icon.astro';
+// import Link from '../components/Link.astro';
+import Icon from 'node_modules/astro-icon/components/Icon.astro';
+import Link from './ui/Link.astro';
+import type { NavI } from '@/interfaces/navbar.interfaces';
+
+
+const { item } = Astro.props as { item: NavI };
+---
+
+
+    <li class="flex items-center px-6 py-3 border-b">
+      {item.dropdown ? (
+        <div class="flex justify-between items-center gap-2 hover:border-primary-msb">
+          {/* Icon component might be a custom component you need to define */}
+          {item.icon && <Icon size={28} scale={1} name={item?.icon} />}
+          {/* Link component might be a custom component you need to define */}
+          <Link class="text-gray-600 rounded-none items-center hover:border-primary-msb hover:transition-all font-primary-font-msb uppercase">
+            {/* Recursive call for the dropdown */}
+            {item.label}
+            {item.dropdown.map((subItem :NavI) => (
+                <NavItem item={subItem} />
+            ))}
+          </Link>
+        </div>
+      ) : (
+        <div class="flex justify-between items-center gap-2">
+          {item.icon && <Icon size={28} scale={1} name={item?.icon} />}
+          <Link href={item.href} class="text-lg flex flex-row items-center hover:transition-all font-primary-font-msb px-0">
+            {item.label}
+          </Link>
+        </div>
+      )}
+    </li>
+
+
+
+

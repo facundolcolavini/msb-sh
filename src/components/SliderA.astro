@@ -1,0 +1,299 @@
+---
+type SliderProps = {
+  colsNr?: number;
+  height: number;
+  width: number;
+  classSlide: string;
+};
+
+const {
+  colsNr,
+  height = 90,
+  width = 100,
+  classSlide,
+} = Astro.props as SliderProps;
+---
+
+<div
+  class={`w-full relative  h-[${height}vh] max-w-[${width}vw] flex justify-center items-center ${classSlide}`}
+>
+  <div class="wrapper flex justify-center items-center">
+    {/* Botón Izquierdo */}
+    <button
+      id="left"
+      class="btn btn-left rounded-full bg-gray-100 hover:bg-gray-300 text-black p-2 cursor-pointer"
+      aria-label="Previous slide"
+    >
+      &#10094;
+    </button>
+    <ul class={"carousel"}  data-astro-prefetch="false">
+      <slot />
+    </ul>
+    <button
+      id="right"
+      class="btn btn-right rounded-full bg-gray-100 hover:bg-gray-300 text-black p-2 cursor-pointer"
+      aria-label="Next slide"
+    >
+      &#10095;
+    </button>
+  </div>
+</div>
+
+<style define:vars={{ colsNr }}>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .slider-container {
+    /* Body */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: #dfdfdf;
+    padding: 0 35px;
+  }
+  .wrapper {
+    width: 100%;
+    position: relative;
+  }
+  .wrapper .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    z-index: 3;
+    position: absolute;
+    line-height: 50px;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+  .wrapper .btn-left:first-child {
+    left: 0;
+  }
+  .wrapper .btn-right:last-child {
+    right: 0;
+  }
+  .wrapper .carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% / var(--colsNr)) - 20px);
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: 0;
+  }
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+  .carouse :where(.card, .img) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .carousel.no-transition {
+    scroll-behavior: auto;
+  }
+  .carousel.dragging {
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+  .carousel.dragging .card {
+    cursor: grab;
+    user-select: none;
+  }
+  .carousel .card {
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    list-style: none;
+    border-radius: 8px;
+    display: flex;
+    cursor: pointer;
+
+    flex-direction: column;
+  }
+  .card .img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+  .card .img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Media queries */
+
+  @media screen and (max-width: 1100px) {
+    .slider-container {
+      /* Body */
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      background-color: #dfdfdf;
+      padding: 0 35px;
+    }
+    .wrapper .carousel {
+      display: grid;
+      grid-auto-columns: calc((100% / 2) - 12px);
+    }
+  }
+  @media screen and (max-width: 900px) {
+    .slider-container {
+      /* Body */
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      background-color: #dfdfdf;
+      padding: 0 35px;
+    }
+    .wrapper .carousel {
+      grid-auto-columns: calc((100% / 2) - 9px);
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    .slider-container {
+      /* Body */
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      background-color: #dfdfdf;
+      padding: 0 35px;
+    }
+    .wrapper .carousel {
+      grid-auto-columns: calc((100% / 2) - 9px);
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .slider-container {
+      /* Body */
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      background-color: #dfdfdf;
+      padding: 0 35px;
+    }
+    .wrapper .carousel {
+      grid-auto-columns: 100%;
+    }
+  }
+</style>
+
+<script  define:vars={{ classSlide }}>
+  document.addEventListener("astro:page-load", (event) => {
+  const sliders = document.querySelectorAll(`.${classSlide}`);
+  sliders.forEach((slider) => {
+    const wrapper = slider;
+    const carousel = wrapper?.querySelector(".carousel");
+    const arrowBtns = wrapper?.querySelectorAll(".btn");
+    const card = carousel?.querySelector(".card");
+    const firstCardWidth = card ? card.offsetWidth : null;
+
+    if (carousel && arrowBtns && firstCardWidth) {
+        const carouselChildrens = [...carousel.children];
+    
+        let isDraggin = false,
+          startX,
+          startScrollLeft,
+          timeoutId;
+        let cardPerView = Math.round(carousel.offsetWidth / firstCardWidth);
+    
+        carouselChildrens
+          .slice(-cardPerView)
+          .reverse()
+          .forEach((card) => {
+            carousel.insertAdjacentHTML("afterbegin", card.outerHTML);
+          });
+    
+        carouselChildrens.slice(0, cardPerView).forEach((card) => {
+          carousel.insertAdjacentHTML("beforeend", card.outerHTML);
+        });
+    
+        arrowBtns.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            carousel.scrollLeft +=
+              btn.id === "left" ? -firstCardWidth : firstCardWidth;
+          });
+        });
+    
+        const dragStart = (e) => {
+          isDraggin = true;
+          carousel.classList.add("dragging");
+          startX = e.pageX;
+          startScrollLeft = carousel.scrollLeft;
+        };
+    
+        const dragging = (e) => {
+          if (!isDraggin) return;
+          carousel.scrollLeft = startScrollLeft - (e.pageX - startX);
+        };
+    
+        const dragStop = () => {
+          isDraggin = false;
+          carousel.classList.remove("dragging");
+        };
+    
+        const autoPlay = () => {
+          if (window.innerWidth < 800) return;
+          timeoutId = setTimeout(
+            () => (carousel.scrollLeft += firstCardWidth),
+            2500,
+          );
+        };
+    
+        autoPlay();
+    
+        const infiniteScroll = () => {
+          if (carousel.scrollLeft === 0) {
+            carousel.classList.add("no-transition");
+            carousel.scrollLeft = carousel.scrollWidth - 2 * carousel.offsetWidth;
+            carousel.classList.remove("no-transition");
+          } else if (
+            Math.ceil(carousel.scrollLeft) ===
+            carousel.scrollWidth - carousel.offsetWidth
+          ) {
+            carousel.classList.add("no-transition");
+            carousel.scrollLeft = carousel.offsetWidth;
+            carousel.classList.remove("no-transition");
+          }
+          clearTimeout(timeoutId);
+          if (!wrapper.matches(":hover")) autoPlay();
+        };
+    
+        carousel.addEventListener("mousedown", dragStart);
+        carousel.addEventListener("mousemove", dragging);
+        document.addEventListener("mouseup", dragStop);
+        carousel.addEventListener("scroll", infiniteScroll);
+        carousel.addEventListener("mouseenter", () => clearTimeout(timeoutId));
+        carousel.addEventListener("mouseleave", autoPlay);
+      } else {
+        return;
+      }
+    
+    });
+
+  })
+
+</script>

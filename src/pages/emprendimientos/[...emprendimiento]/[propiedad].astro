@@ -1,0 +1,36 @@
+---
+import BreadCrumb from "@/components/BreadCrumb.astro";
+import EntrepreneurshipDetail from "@/components/preact/Entrepreneurship/EntrepreneurshipDetail";
+
+import Layout from "@/layouts/Layout.astro";
+import { getEntrepreneurshipById } from "@/services/get-all-entrepreneurship";
+import { capitalize } from "@/utils/formats";
+
+const { propiedad } = Astro.params;
+const url = Astro.url;
+const session = Astro.locals.session;
+// Extraemos el ultimo segmento de la url
+let prop = url.toString().split("/").pop();
+let suc = prop?.split("-")[0] ?? "";
+let id = prop?.split("-")[1] ?? "";
+const data = await getEntrepreneurshipById(id)
+const amig = capitalize(data.emprendimiento[0].amigable.replaceAll("-" , " "))
+const image  = data.emprendimiento[0].img_princ;
+---
+
+<Layout title={data?.emprendimiento[0]?.titulo} description={amig} img={image}>
+  <section class="bg-[#FFFBF4] h-full py-2">
+
+      <EntrepreneurshipDetail
+        client:only
+        session={session}
+        propertyCode={id}
+        branchCode={suc}
+        breadCrumbChild=""
+      >
+        <BreadCrumb slot="breadCrumbChild" url={propiedad} transition:persist />
+   
+      </EntrepreneurshipDetail>
+   
+  </section>
+</Layout>

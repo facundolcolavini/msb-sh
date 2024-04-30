@@ -1,0 +1,165 @@
+---
+
+import Link from "@/components/ui/Link.astro";
+import { Image } from "astro:assets";
+import { Icon } from 'astro-icon/components'
+---
+
+<footer
+  class="bg-secondary-msb text-black shadow-inner flex justify-between items-center"
+>
+  <div
+    class="mx-auto py-20 container grid grid-col lg:grid-col-2 gap-5 lg:gap-0 md:gap-5"
+  >
+    <div class="flex flex-col lg:col-starts-1 lg:col-ends-2">
+      <h2
+        class="text-3xl font-bold mb-4 flex justify-center md:justify-center lg:justify-start"
+      >
+        <Link
+          href="/"
+          checkActive={false}
+          class="flex flex-shrink items-center justify-center"
+        >
+          <Image
+            width={300}
+            height={82}
+            class="object-contain px-1 aspect-auto flex flex-shrink items-center justify-center"
+            src={"/images/logo.png"}
+            alt="Logo"
+          />
+        </Link>
+      </h2>
+      <div
+        class="flex justify-center col-start-2 col-end-12 md:justify-center lg:justify-start align-middle mb-4"
+      >
+        <a
+          href="https://www.facebook.com/matiasszpirabienesraices/"
+          target="_blank"
+          class="mr-2"><Icon size={24} name="social-facebook" /></a
+        >
+        <a
+          href="https://www.instagram.com/matiasszpira/"
+          target="_blank"
+          class="mr-2"><Icon size={24} name="social-instagram" /></a
+        >
+        <a
+          href="https://www.youtube.com/channel/UCZVVcBSiVjsJGdzUw_tAfEw"
+          target="_blank"
+          class="mr-2"><Icon size={24} name="social-youtube" /></a
+        >
+        <a
+          href=`https://api.whatsapp.com/send/?phone=5491144161700&text=Hola%2C+me+contactaba+desde+https://msb-sh.vercel.app+para+consultarles&type=phone_number&app_absent=0`
+          target="_blank"
+          class="mr-2"><Icon size={24} name="social-whatsapp" /></a
+        >
+        <a
+          href="https://www.linkedin.com/company/mat%C3%ADas-szpira-bienes-ra%C3%ADces/about/"
+          target="_blank"
+          class="mr-2 text-bg-2-msb"><Icon size={24} name="brand-linkedin" /></a
+        >
+      </div>
+      <div
+        class="mb-4 flex align-center justify-center md:justify-center lg:justify-start gap-2"
+      >
+        <Icon size={24} class="self-center" name="mail-green" />
+        <a
+          href="mailto:info@matiasszpira.com.ar"
+          class="self-center text-sm text-center font-semibold"
+          >info@matiasszpira.com.ar</a
+        >
+      </div>
+    </div>
+    <div class="lg:col-start-3 lg:col-end-4 mb-6 sm:mb-0">
+      <h3
+        class="text-sm text-center md:text-center lg:text-start font-semibold mb-4 text-[#4E5A2B]"
+      >
+        QUÉ QUIERO
+      </h3>
+      <ul class="w-100 text-center md:text-center lg:text-start">
+        <li class="mb-1">
+          <button value="V" id="btnOp" class="text-sm">Venta</button>
+        </li>
+        <li class="mb-1">
+          <button value={"A"} id="btnOp" class="text-sm">Alquiler</button>
+        </li>
+        <li class="mb-1">
+          <button value={"T"} id="btnOp" class="text-sm"
+            >Alquiler Temporario</button
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="lg:col-start-5 lg:col-end-6 mb-6 sm:mb-0">
+      <h3
+        class="text-sm text-center md:text-center lg:text-start font-semibold mb-4 text-[#4E5A2B]"
+      >
+        EMPRENDIMIENTOS
+      </h3>
+      <ul class="w-100 text-center md:text-center lg:text-start">
+        <li class="mb-1">
+          <a href={"/emprendimientos?&ed_est=En+Pozo"} class="text-sm"
+            >En Pozo</a
+          >
+        </li>
+        <li class="mb-1">
+          <a href="/emprendimientos?&ed_est=En+Construccion" class="text-sm"
+            >En Construcción</a
+          >
+        </li>
+        <li class="mb-1">
+          <a href="/emprendimientos?&ed_est=Terminado" class="text-sm"
+            >Terminado</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="lg:col-start-6 lg:col-end-7 mb-6 sm:mb-0">
+      <h3
+        class="text-sm text-center md:text-center lg:text-start font-semibold mb-4 text-nowrap text-[#4E5A2B]"
+      >
+        NUESTROS SERVICIOS
+      </h3>
+      <ul class="w-100 text-center md:text-center lg:text-start grid ">
+        <li class="mb-1"><a href="#" class="text-sm">Tasaciones</a></li>
+        <li class="mb-1"><a href="#" class="text-sm">Administración</a></li>
+      </ul>
+    </div>
+    <div class="lg:col-start-7 lg:col-end-8 mb-6 sm:mb-0">
+      <h3
+        class="text-sm text-center md:text-center lg:text-start font-semibold mb-4 text-nowrap text-[#4E5A2B]"
+      >
+        SUCURSALES
+      </h3>
+      <ul class="w-100 text-center md:text-center lg:text-start">
+        <li class="mb-1">
+          <a href="#" class="text-sm font-semibold mb-2 text-[#4E5A2B]"
+            >NOSOTROS</a
+          >
+        </li>
+        <li class="mb-1">
+          <a href="#" class="text-sm font-semibold mb-2 text-[#4E5A2B]"
+            >CONTACTO</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Script para obtener los btnOps y hacer una navegacion con el valor de cada boton a /resultados-de-busqueda?tipo_operacion=valorDelBoton
+  document.addEventListener("astro:page-load", (event) => {
+    const btnOps = document.querySelectorAll("#btnOp");
+    btnOps.forEach((btnOp) => {
+      btnOp.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        // Dejar la viewtransition
+        btnOp.scrollIntoView({ behavior: "smooth" });
+        window.location.href = `/resultados-de-busqueda?tipo_operacion=${
+          (e.target as HTMLButtonElement).value
+        }`;
+      });
+    });
+  });
+</script>

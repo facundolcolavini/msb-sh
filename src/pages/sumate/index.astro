@@ -1,0 +1,61 @@
+---
+import HeroContainer from "@/components/HeroContainer.astro";
+import FormContact from "@/components/preact/Join/FormContact";
+import Layout from "@/layouts/Layout.astro";
+const title = "Sumate";
+const description = "Sumate a nuestro equipo";
+---
+
+<Layout title={title} description={description}>
+  <article>
+    <HeroContainer transition:animate={"fade"} img="/images/people-meet.webp">
+      <div
+        class="drop-shadow-md container px-8 mx-auto w-full h-full grid grid-cols-1 lg:grid-cols gap-14 place-content-center place-items-center md:place-items-center lg:place-items-start text-white text-start md:text-center lg:text-start text-pretty self-center lg:self-start font-gotham"
+      >
+        <h1
+          class={"text-center lg:text-start text-white font-normal h-fit  w-100 text-6xl md:text-7xl lg:text-9xl self-center font-cormorant  text-shadow-pretty text-wrap lg:w-100"}
+        >
+          ¿Querés sumarte?
+        </h1>
+        <p
+          class="text-white text-center lg:text-start text-pretty self-center text-2xl md:text-3xl lg:text-4xl w-full font-gotham"
+        >
+          Formá parte de nuestro Equipo de Ventas.
+        </p>
+      </div>
+    </HeroContainer>
+    <section class="bg-secondary-bg-msb">
+      <div
+        class="md:px-22 py-12 md:py-22 lg:py-24 w-100 text-center md:text-start lg:text-start lg:text-2xl md:text-xl container mx-auto px-8"
+      >
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-10">
+          Si tenés un perfil proactivo con espíritu comercial, responsable y con
+          vocación de servicio podés incorporarte a nuestro equipo comercial
+          como <b class="text-bold">Asesor Inmobiliario</b> con alta proyección profesional.
+        </p>
+        <h2 class={'font-bold text-center md:text-start lg:text-start mt-20 tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>
+          REQUISITOS
+        </h2>
+        <ul class="lg:list-disc list-none md:list-disc px-12">
+            <li class="font-gotham font-thin leading-loose pb-5">
+              Experiencia comercial en el rubro (excluyente).</p>
+            </li>
+            <li class="font-gotham font-thin leading-loose pb-5">
+                Disponibilidad full time.
+            </li>
+            <li class="font-gotham font-thin leading-loose pb-5">
+                Residencia en la zona.
+            </li>
+            <li class="font-gotham font-thin leading-loose pb-5">
+                Movilidad propia.
+            </li>
+        </ul>
+      </div>
+    </section>
+    <section class="bg-secondary-bg-msb">
+        <div class="container mx-auto py-10 px-8">
+          <FormContact client:load />
+        </div>
+      </section>
+  </article>
+</Layout>

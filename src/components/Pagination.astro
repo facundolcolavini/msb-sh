@@ -1,0 +1,60 @@
+---
+import type { Datos } from "@/interfaces/results.records.interfaces";
+
+// Define your props
+interface Props {
+  datos: Datos ;
+}
+
+const { datos }: Props = Astro.props;
+
+// Get the current URL and search parameters
+const url = new URL(Astro.request.url);
+const params = url.searchParams;
+
+// Get the current page number
+const currentPage = Number(params.get('page')) || 1;
+
+// Calculate the start and end page numbers
+let startPage = Math.max(1, currentPage - 4);
+let endPage = Math.min(datos?.paginas, startPage + 9);
+startPage = Math.max(1, Math.min(startPage, datos?.paginas - 9));
+
+// Create a copy of the current search parameters for each page link
+let prevPageParams = new URLSearchParams(params.toString());
+prevPageParams.set('page', (currentPage - 1).toString());
+
+let nextPageParams = new URLSearchParams(params.toString());
+nextPageParams.set('page', (currentPage + 1).toString());
+
+let pageParams = Array.from({ length: endPage - startPage + 1 }, (_, i) => {
+  let paramsCopy = new URLSearchParams(params.toString());
+  paramsCopy.set('page', (startPage + i).toString());
+  return paramsCopy;
+});
+---
+
+<nav>
+  <ul class="flex flex-wrap justify-center my-5 gap-1">
+    <!-- Previous Page Link -->
+    {currentPage > 1 && (
+      <li>
+        <a data-astro-prefetch="hover" href={`${url.pathname.replace(/\/?$/, '/')}?${prevPageParams.toString()}`} class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition-colors">Anterior</a>
+      </li>
+    )}
+
+    <!-- Page Number Links -->
+    {pageParams.map((params, i) => (
+      <li>
+        <a data-astro-prefetch="hover" href={`${url.pathname.replace(/\/?$/, '/')}?${params.toString()}`} class={`px-4 py-2 ${currentPage === startPage + i ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'} rounded hover:bg-blue-700 hover:text-white transition-colors`}>{startPage + i}</a>
+      </li>
+    ))}
+
+    <!-- Next Page Link -->
+    {currentPage < datos?.paginas && (
+      <li>
+        <a data-astro-prefetch="hover" href={`${url.pathname.replace(/\/?$/, '/')}?${nextPageParams}`} class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition-colors">Siguiente</a>
+      </li>
+    )}
+  </ul>
+</nav>

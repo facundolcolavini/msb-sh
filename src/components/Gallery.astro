@@ -1,0 +1,215 @@
+---
+import { Image } from "astro:assets";
+import "photoswipe/style.css";
+
+interface Props {
+  imagesGallery: string[];
+  qImages: number;
+}
+const { imagesGallery, qImages } = Astro.props as Props;
+---
+
+<div class="grid grid-cols  lg:grid-cols-2 gap-5" id="gallery" transition:animate="fade">
+  {
+    imagesGallery[0]  &&  (
+      <div class="col-span-1 h-100">
+        <a
+          class="group rounded-xl hover:scale-105 transition-all relative aspect-squeare"
+          href={imagesGallery[0] && imagesGallery[0]}
+          target="_blank"
+          data-cropped="true"
+          data-pswp-width="2000"
+          data-pswp-height="1600"
+        >
+          <Image
+            width={1600}
+            height={900}
+            src={imagesGallery[0] && imagesGallery[0]}
+            alt="Imagen 1"
+            loading="lazy"
+            class="rounded-xl aspect-square object-cover"
+          />
+          <Image
+            width={1600}
+            height={900}
+            src={imagesGallery[0] && imagesGallery[0]}
+            alt="Imagen 1"
+            loading="lazy"
+            class=" rounded-xl aspect-square object-cover absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 "
+          />
+        </a>
+      </div>
+    ) /* : (
+      <div class="col-span-1 h-100">
+        <div class="h-full bg-gray-200 rounded-xl aspect-square"></div>
+      </div>
+    ) */
+  }
+
+  <div class="grid grid-cols-2 gap-5">
+    {
+      imagesGallery[1] && (
+        <div class="col-span-1">
+          <a
+            class="group rounded-xl hover:scale-105 transition-all relative aspect-squeare"
+            target="_blank"
+            href={imagesGallery[1]}
+            data-cropped="true"
+            data-pswp-width="2000"
+            data-pswp-height="1600"
+          >
+            <Image
+              width={500}
+              height={500}
+              src={imagesGallery[1] && imagesGallery[1]}
+              alt="Imagen 1"
+              loading="lazy"
+              class="rounded-xl aspect-square object-cover"
+            />
+            <Image
+              width={500}
+              height={500}
+              src={imagesGallery[1] && imagesGallery[1]}
+              alt="Imagen 1"
+              loading="lazy"
+              class="blur-lg absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 rounded object-cover"
+            />
+          </a>
+        </div>
+      )
+    }
+    {
+      imagesGallery[2] && (
+        <div class="col-span-1">
+          <a
+            class="group rounded-xl hover:scale-105 transition-all relative aspect-squeare"
+            target="_blank"
+            href={imagesGallery[2]}
+            data-cropped="true"
+            data-pswp-width="2000"
+            data-pswp-height="1600"
+          >
+            <Image
+              width={500}
+              height={500}
+              src={imagesGallery[2] && imagesGallery[2]}
+              alt="Imagen 1"
+              loading="lazy"
+              class="rounded-xl aspect-square object-cover"
+            />
+            <Image
+              width={500}
+              height={500}
+              src={imagesGallery[2] && imagesGallery[2]}
+              alt="Imagen 1"
+              loading="lazy"
+              class="blur-lg absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 rounded object-cover"
+            />
+          </a>
+        </div>
+      )
+    }
+    {
+      imagesGallery[3] && (
+        <div class="col-span-1">
+          <a
+            class="group rounded-xl hover:scale-105 transition-all relative aspect-squeare"
+            target="_blank"
+            href={imagesGallery[3]}
+            data-cropped="true"
+            data-pswp-width="2000"
+            data-pswp-height="1600"
+          >
+            <Image
+              width={500}
+              height={500}
+              src={imagesGallery[3] && imagesGallery[3]}
+              alt="Imagen 1"
+              loading="lazy"
+              class="rounded-xl aspect-square object-cover"
+            />
+            <Image
+              width={500}
+              height={500}
+              src={imagesGallery[3] && imagesGallery[3]}
+              alt="Imagen 1"
+              loading="lazy"
+              class="blur-lg absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 rounded object-cover"
+            />
+          </a>
+        </div>
+      )
+    }
+
+    {
+      imagesGallery[4] && (
+        <div class="col-span-1">
+          <a
+            class="group rounded-xl hover:scale-105 transition-all relative aspect-squeare"
+            target="_blank"
+            href={imagesGallery[4]}
+            data-cropped="true"
+            data-pswp-width="2000"
+            data-pswp-height="1600"
+          >
+            <Image
+              width={500}
+              height={500}
+              src={imagesGallery[4] && imagesGallery[4]}
+              alt="Imagen 1"
+              loading="lazy"
+              class="rounded-xl aspect-square object-cover"
+            />
+            <Image
+              width={500}
+              height={500}
+              src={imagesGallery[4] && imagesGallery[4]}
+              alt="Imagen 1"
+              loading="lazy"
+              class="blur-lg absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 rounded object-cover"
+            />
+          </a>
+        </div>
+      )
+    }
+
+    {
+      imagesGallery?.length >= 5 && (
+        <div class="hidden">
+          {imagesGallery.slice(5)?.map((image, index) => (
+            <a
+              class="group rounded-xl hover:scale-105 transition-all relative aspect-squeare"
+              href={imagesGallery[index + 5]}
+              data-pswp-width="2000"
+              data-pswp-height="1600"
+              class="h-full aspect-video"
+              data-cropped="true"
+            >
+              <img
+                loading="lazy"
+                src={image}
+                alt="Imagen"
+                class="blur-lg absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 rounded object-cover"
+              />
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<script>
+  import PhotoSwipeLightbox from "photoswipe/lightbox";
+  document.addEventListener("astro:page-load", (event) => {
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: "#gallery",
+      children: "a",
+      arrowKeys: true,
+      indexIndicatorSep: " de ",
+      preload: [1, 5],
+      pswpModule: () => import("photoswipe"),
+    });
+    lightbox.init();
+  });
+</script>

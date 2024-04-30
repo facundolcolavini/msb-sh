@@ -1,0 +1,27 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<"a">	 {
+    class?: string;
+    checkActive?: boolean;
+}
+// Destructure the classStyle from the props
+const { class:className, checkActive=true, ...anchorProps } = Astro.props as Props;
+
+
+const currentPath = Astro.url.pathname
+const isActive =   checkActive && currentPath === anchorProps.href;
+---
+
+<a
+class:list={[
+            className,
+        "flex items-center justify-start  border border-transparent rounded-medium text-sm font-medium  ",
+        isActive ? " text-primary-msb rounded-none border-b-4 border-b-primary-msb" : "border-none text-gray-600 ",
+]}
+    {...anchorProps}
+>   
+    <slot name="before"/>
+    <slot/>
+    <slot name="after"/>
+</a>
