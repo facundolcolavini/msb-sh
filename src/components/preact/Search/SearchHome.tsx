@@ -19,11 +19,11 @@ const SearchHome = ({ selects }: Props) => {
   const [locations,setLocations] = useState()
   const searchPStore = searchParamsStore.get()
 
-/*   const fetchLocations = async () => {
+  const fetchLocations = async () => {
     const dataLocation = await fetch(`/api/location.json/`)  
     const  locations = await dataLocation.json() 
     setLocations(locations)
-  } */
+  }
 /*   let tipo_inmueble = [] as OutputOption[];
   let tipo_operacion = [] as OutputOption[];
   let in_iub = [] as OutputOption[];
@@ -83,12 +83,12 @@ const SearchHome = ({ selects }: Props) => {
     }
   };
   useEffect(()=>{
-   /*  fetchLocations() */
+    fetchLocations()
   },[])
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
-   /*  fetchLocations() */
+    fetchLocations()
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [searchParams]);
 
