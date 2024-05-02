@@ -53,11 +53,11 @@ export interface Value {
 /* Ubicaciones */
 
 export interface APIResponseLocations {
-    resultado: ResultLocation;
+    resultado: ResultLocation | null;
 }
 
 export interface ResultLocation {
-    ubicaciones: Location[];
+    ubicaciones: Location[] ;
 }
 
 export interface Location {
@@ -69,7 +69,7 @@ export interface Location {
 export type Default = Record<string, OutputOption[]>;
 export interface FilterSelects {
     selects: Results;
-    locations?:  ResultLocation | null;
+    locations:  ResultLocation | null;
     default: Default;
   }
 

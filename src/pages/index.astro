@@ -36,6 +36,7 @@ import {
   getLocations,
 } from "@/services/get-selects-form";
 import { fetchData } from "@/utils/fetch-data";
+import type { APIResponseLocations } from "@/interfaces/selects.form.interfaces";
 const session = Astro.locals.session;
 
 const { resultado } = (await fetchData(
@@ -57,7 +58,9 @@ const description =
 const bgUsaImage = "/images/panorama-noche-chicago.webp";
 const selects = (await getAllSelects()) as Results;
 /* let selectEntrepreneurship = (await getAllSelectsEntrepreneurship()) as Results; */
-const locations = (await getLocations()) as ResultLocation;
+const dataLocation = await fetch(`${Astro.url.origin}/api/location.json/`)  
+const  locations = await dataLocation.json() 
+
 ---
 
 <Layout title={titlePage} description={description}>
@@ -196,6 +199,7 @@ const locations = (await getLocations()) as ResultLocation;
         <SearchEntrepreneurship
           client:visible
           selects={[] as never}
+          locations={null}
         
         />
         <!-- Slider de emprendimientos -->

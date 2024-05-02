@@ -136,7 +136,7 @@ const SearchDebounce = ({ filterOptsLocations, propIdRef }: Props) => {
                         listOpts.map(location => (
                             <li
                                 key={`${location.label}-${location.value}`}
-                                className={`py-2 px-4 relative z-10 hover:bg-gray-200 cursor-pointer`}
+                                className={`py-2 px-4 h-full relative z-10 hover:bg-gray-200 cursor-pointer`}
                                 onClick={(e) => handleOptionSelect(location)}
 
                             >

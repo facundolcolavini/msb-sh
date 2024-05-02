@@ -1,5 +1,5 @@
 import { useSearch } from '@/hooks/useSearch.ts';
-import type { FilterDefault, FilterSelects, ResultLocation, Results } from '@/interfaces/selects.form.interfaces';
+import type { APIResponseLocations, FilterDefault, FilterSelects, ResultLocation, Results } from '@/interfaces/selects.form.interfaces';
 import { defaultsFilters, filterEntrePreneurshipToFillDefault, labelMappingEntrePreneurshipForQuerys } from '@/utils/filter-default';
 import { formatAndUseSearch } from '@/utils/formatAndUseSearch';
 import { navigate } from 'astro:transitions/client';
@@ -11,8 +11,9 @@ import type { JSXInternal } from 'node_modules/preact/src/jsx';
 
 interface Props {
   selects: Results
+  locations: APIResponseLocations  | null
 }
-const SearchEntrepreneurship = ({ selects }: Props) => {
+const SearchEntrepreneurship = ({ selects,locations }: Props) => {
   const searchPStore = searchParamsStore.get()
 
 
@@ -24,7 +25,7 @@ const SearchEntrepreneurship = ({ selects }: Props) => {
 
   const filters: FilterSelects = {
     selects,
-    locations: null,
+    locations :null,
     default: defaultsFilters,
   };
   const filterToFill: FilterDefault[] = filterEntrePreneurshipToFillDefault;

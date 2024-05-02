@@ -1,4 +1,4 @@
-import type { FilterDefault, FilterSelects, ResultLocation, Results } from '@/interfaces/selects.form.interfaces';
+import type { APIResponseLocations, FilterDefault, FilterSelects, ResultLocation, Results } from '@/interfaces/selects.form.interfaces';
 
 import { useSearch } from '@/hooks/useSearch.ts';
 import { defaultsFilters, filterResultToFill, labelMappingResultForQuerys } from '@/utils/filter-default';
@@ -13,7 +13,7 @@ import SearchDebounce from './SearchDebounce';
 
 interface Props {
   selects: Results
-  locations: ResultLocation
+  locations: APIResponseLocations
 }
 const SearchHome = ({ selects, locations }: Props) => {
   const searchPStore = searchParamsStore.get()
@@ -33,7 +33,7 @@ const SearchHome = ({ selects, locations }: Props) => {
   ] */
   const filters: FilterSelects = {
     selects,
-    locations,
+    locations:locations!.resultado,
     default: defaultsFilters,
   };
   const filterToFill: FilterDefault[] = filterResultToFill;
