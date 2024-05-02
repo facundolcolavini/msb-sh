@@ -1,8 +1,16 @@
 ---
+import Layout from "@/layouts/Layout.astro";
+import Link from "@/components/ui/Link.astro";
+const title = ' 404 - página no encontrada'
+const description = 'Página no encontrada'
 ---
-
-<div>
-    <h1>404</h1>
-    <p>Page not found</p>
-    <p><a href="{{ site.baseurl }}">Go back to the home page</a></p>
+<Layout title={title} description={description}>
+<section transition:animate={'fade'} class=" bg-secondary-bg-msb font-gotham py-10 ">
+    <h1 class="text-8xl text-secondary-text-msb text-center font-bold">404</h1>
+    <img class="mx-auto" src="/images/404.webp"/>
+    <p class="text-secondary-text-msb font-semibold text-center py-5">
+       ¡UPS! Parece que la página que buscas no existe.
+    </p>
+    <Link href="/"  class="flex items-center justify-center w-fit mx-auto h-10 px-8 border rounded bg-primary-msb text-tertiary-text-msb hover:bg-primary-bg-hover-msb cursor-pointer font-medium font-primary-font-msb border-text-primary-msb transition">Volver al inicio</Link>
 </div>
+</Layout>
