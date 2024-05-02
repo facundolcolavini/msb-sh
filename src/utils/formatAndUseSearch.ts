@@ -9,7 +9,7 @@ const formatAndUseSearch = (filters: FilterSelects, filterToFill: FilterDefault[
 
     if (filter.isLocation) {
       // Encuentra la ubicación correspondiente en el array de ubicaciones
-      filterValues[label] = formatOptions(filters!.locations!.ubicaciones);
+      filterValues[label] = formatOptions(filters!?.locations!?.ubicaciones);
     } else if (filter.isDefault) {
       filterValues[filter.label] = filters.default[filter.label];
     } else {

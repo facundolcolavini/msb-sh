@@ -1,10 +1,10 @@
-import type { APIResponseLocations, FilterDefault, FilterSelects, ResultLocation, Results } from '@/interfaces/selects.form.interfaces';
+import type { APIResponseLocations, FilterDefault, FilterSelects, Location, ResultLocation, Results } from '@/interfaces/selects.form.interfaces';
 
 import { useSearch } from '@/hooks/useSearch.ts';
 import { defaultsFilters, filterResultToFill, labelMappingResultForQuerys } from '@/utils/filter-default';
 import { formatAndUseSearch } from '@/utils/formatAndUseSearch';
 import { navigate } from 'astro:transitions/client';
-import { useEffect } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { resetFilter, searchParamsStore } from 'src/store/filterStore';
 import SearchIcon from '../Icons/SearchIcon';
 import Button from "../ui/Buttons/Button";
@@ -13,11 +13,17 @@ import SearchDebounce from './SearchDebounce';
 
 interface Props {
   selects: Results
-  locations: APIResponseLocations
+/*   locations: APIResponseLocations */
 }
-const SearchHome = ({ selects, locations }: Props) => {
+const SearchHome = ({ selects }: Props) => {
+  const [locations,setLocations] = useState()
   const searchPStore = searchParamsStore.get()
 
+  const fetchLocations = async () => {
+    const dataLocation = await fetch(`/api/location.json/`)  
+    const  locations = await dataLocation.json() 
+    setLocations(locations)
+  }
 /*   let tipo_inmueble = [] as OutputOption[];
   let tipo_operacion = [] as OutputOption[];
   let in_iub = [] as OutputOption[];
@@ -31,9 +37,10 @@ const SearchHome = ({ selects, locations }: Props) => {
       label: 'Barrios Cerrados y Countries'
     }
   ] */
+  console.log(locations)
   const filters: FilterSelects = {
     selects,
-    locations:locations!.resultado,
+    locations: locations !== undefined ? (locations as APIResponseLocations).resultado : null,
     default: defaultsFilters,
   };
   const filterToFill: FilterDefault[] = filterResultToFill;
@@ -75,9 +82,13 @@ const SearchHome = ({ selects, locations }: Props) => {
       send(e);
     }
   };
+  useEffect(()=>{
+    fetchLocations()
+  },[])
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
+    fetchLocations()
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [searchParams]);
 
