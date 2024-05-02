@@ -24,6 +24,7 @@ const SearchEntrepreneurship = ({ selects }: Props) => {
 
   const filters: FilterSelects = {
     selects,
+    locations: null,
     default: defaultsFilters,
   };
   const filterToFill: FilterDefault[] = filterEntrePreneurshipToFillDefault;

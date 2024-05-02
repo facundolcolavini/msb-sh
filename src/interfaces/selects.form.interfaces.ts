@@ -69,7 +69,7 @@ export interface Location {
 export type Default = Record<string, OutputOption[]>;
 export interface FilterSelects {
     selects: Results;
-    locations?:  ResultLocation;
+    locations?:  ResultLocation | null;
     default: Default;
   }
 
