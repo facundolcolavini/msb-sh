@@ -36,7 +36,6 @@ import {
   getLocations,
 } from "@/services/get-selects-form";
 import { fetchData } from "@/utils/fetch-data";
-const session = Astro.locals.session;
 
 const { resultado } = (await fetchData(
   "fichas.destacadas"
@@ -55,9 +54,9 @@ const description =
   "Propiedades en alquiler y venta - Matías Szpira Bienes Raíces";
 
 const bgUsaImage = "/images/panorama-noche-chicago.webp";
-/* const selects = (await getAllSelects()) as Results; */
+const selects = (await getAllSelects()) as Results;
 let selectEntrepreneurship = (await getAllSelectsEntrepreneurship()) as Results;
-/* const locations = (await getLocations()) as ResultLocation; */
+const locations = (await getLocations()) as ResultLocation;
 ---
 
 <Layout title={titlePage} description={description}>
@@ -66,7 +65,7 @@ let selectEntrepreneurship = (await getAllSelectsEntrepreneurship()) as Results;
       class="absolute inset-0 flex flex-col pb-20 justify-end items-center w-100 mx-auto container"
     >
       <div class="bg-[#D9D9D9] bg-opacity-40 p-6 min-w-full">
-        <SearchHome client:load selects={[] as never} locations={[] as never} />
+        <SearchHome client:load selects={selects} locations={locations} />
       </div>
     </div>
   </HeroContainer>
@@ -196,7 +195,7 @@ let selectEntrepreneurship = (await getAllSelectsEntrepreneurship()) as Results;
         <SearchEntrepreneurship
           client:load
           selects={selectEntrepreneurship}
-          locations={[] as never}
+          locations={locations}
         />
         <!-- Slider de emprendimientos -->
         <SliderA colsNr={3} height={10} width={0} classSlide="slider2">
@@ -213,7 +212,7 @@ let selectEntrepreneurship = (await getAllSelectsEntrepreneurship()) as Results;
                 ed_dir,
               }: EntrePreneurShip) => (
                 <CardEntrepreneurship
-                  client:visible
+                  client:load
                   href={`emprendimientos/${ed_est}/${he.decode(ed_loc)}/${he.decode(ed_nom)}/${codsuc}-${ed_idl}`}
                   addStyles={"card my-20"}
                   cardData={{
