@@ -38,18 +38,18 @@ import {
 import { fetchData } from "@/utils/fetch-data";
 const session = Astro.locals.session;
 
-const { resultado } = (await fetchData(
+/* const { resultado } = (await fetchData(
   "fichas.destacadas"
-)) as APIResponseResultsRecords;
-const { resultado: resEmprendimientos } = (await fetchData(
+)) as APIResponseResultsRecords; */
+/* const { resultado: resEmprendimientos } = (await fetchData(
   "resultados.emprendimientos"
-)) as APIResponseEntrepreneurship;
+)) as APIResponseEntrepreneurship; */
 
-const { emprendimiento: entrepreneurship, img } =
+/* const { emprendimiento: entrepreneurship, img } =
   resEmprendimientos as ResultEntrepreureShip;
-const { fichas } = resultado;
+const { fichas } = resultado; */
 
-const cardData: File[] = fichas as File[]; // Update the type of cardData
+/* const cardData: File[] = fichas as File[]; // Update the type of cardData */
 const titlePage = "Inicio - Matías Szpira Bienes Raíces";
 const description =
   "Propiedades en alquiler y venta - Matías Szpira Bienes Raíces";
@@ -163,11 +163,11 @@ const locations = (await getLocations()) as ResultLocation; */
 
       <SliderA colsNr={3} height={10} width={10} classSlide="slider1">
         {
-          cardData.map((card) => (
+          [].map((card) => (
             <CardProperty
               client:load
               key="unique-key"
-              href={`/resultados-de-busqueda/${card.operacion}/${card.in_loc}/${card.direccion_completa}/${card.in_suc}-${card.in_num}`}
+              href={`/resultados-de-busqueda/`}
               addStyles={"card my-3"}
               cardData={card as File}
             />
@@ -201,7 +201,7 @@ const locations = (await getLocations()) as ResultLocation; */
         <!-- Slider de emprendimientos -->
         <SliderA colsNr={3} height={10} width={0} classSlide="slider2">
           {
-            entrepreneurship.map(
+            [].map(
               ({
                 ed_nom,
                 ed_pos,
@@ -231,7 +231,7 @@ const locations = (await getLocations()) as ResultLocation; */
     </div>
   </section>
   <section class="" transition:animate={"fade"}>
-    <BannerSlider slides={img[3]} sliderTime={8000} client:visible>
+    <BannerSlider slides={[]} sliderTime={8000} client:visible>
       <div
         class="grid h-full items-center justify-center lg:justify-center self-end place-content-center text-center lg:text-center container mx-auto relative"
       >
