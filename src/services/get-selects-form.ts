@@ -15,11 +15,11 @@ export const getAllSelects = async (queryParams?:Record<string, string>): Promis
     }
 }
 
-export const getLocations = async (queryParams?:Record<string, string>): Promise<ResultLocation> => {
+export const getLocations = async (queryParams?:Record<string, string>): Promise<ResultLocation | null> => {
     const endpoint = 'fichas.ubicaciones';
     try{
         const res = await fetchData(endpoint,queryParams) as APIResponseLocations;
-        return res.resultado;
+        return res?.resultado ?? null;
     } catch (error) {
         console.error('Error fetching selects data:', error);
         throw error;
