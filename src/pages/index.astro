@@ -56,7 +56,7 @@ const description =
 
 const bgUsaImage = "/images/panorama-noche-chicago.webp";
 const selects = (await getAllSelects()) as Results;
-let selectEntrepreneurship = (await getAllSelectsEntrepreneurship()) as Results;
+/* let selectEntrepreneurship = (await getAllSelectsEntrepreneurship()) as Results; */
 /* const locations = (await getLocations()) as ResultLocation; */
 ---
 
@@ -195,7 +195,7 @@ let selectEntrepreneurship = (await getAllSelectsEntrepreneurship()) as Results;
       <div class="">
         <SearchEntrepreneurship
           client:visible
-          selects={selectEntrepreneurship}
+          selects={[] as never}
           locations={[] as never}
         />
         <!-- Slider de emprendimientos -->
