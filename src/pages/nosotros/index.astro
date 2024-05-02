@@ -1,0 +1,211 @@
+---
+import HeroContainer from "@/components/HeroContainer.astro";
+import TitleSections from "@/components/TitleSections.astro";
+import Layout from "@/layouts/Layout.astro";
+
+const title = "Nosotros - Matías Szpira Bienes Raíces";
+const description =
+  "Matías Szpira Bienes Raíces es una empresa dedicada a la compra, venta y alquiler de propiedades en la ciudad de Rosario y alrededores.";
+---
+
+<Layout title={title} description={description}>
+  <article>
+    <HeroContainer transition:animate={"fade"} img="/images/us-background.webp">
+      <div
+        class="drop-shadow-md container px-8 mx-auto w-full h-full grid grid-cols-1 lg:grid-cols gap-14 place-content-center place-items-center md:place-items-center lg:place-items-start text-white text-start md:text-center lg:text-start text-pretty self-center lg:self-start font-gotham"
+      >
+        <h1
+          class={"text-center lg:text-start text-white font-normal h-fit  w-100 text-6xl md:text-7xl lg:text-9xl self-center font-cormorant  text-shadow-pretty text-wrap lg:w-100"}
+        >
+          Nosotros
+        </h1>
+      </div>
+    </HeroContainer>
+    <section transition:animate="fade" class="bg-secondary-bg-msb">
+      <div
+        class="md:px-22 py-12 md:py-22 lg:py-24 w-100 text-center md:text-start lg:text-start lg:text-2xl md:text-xl container mx-auto px-8"
+      >
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-10">
+          Nuestra historia en <b class="text-bold">Bienes Raíces</b> es un viaje
+          que comenzó con la visión y pasión de nuestros antepasados, auténticos
+          amantes de los hogares y la comunidad. Desde nuestros primeros días en
+          Capital Federal hasta la expansión a la Zona Oeste, nos hemos dedicado
+          con entusiasmo a la <b class="text-bold"
+            >comercialización y administración de propiedades</b
+          > durante más de diez años.
+        </p>
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-20">
+          El deseo de ofrecer hogares en entornos naturales nos llevó a abrir
+          oficinas en <b class="text-bold">Francisco Álvarez</b> y Parque Leloir
+          en 2018, y continuamos creciendo en 2019 con una presencia sólida en <b
+            class="text-bold">Buenos Aires</b
+          > y la creación de nuestra <b class="text-bold"
+            >Desarrolladora de Inversiones</b
+          >.
+        </p>
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-20">
+          Nos apasiona <b class="text-bold"
+            >brindar soluciones transparentes y rentables</b
+          > para las necesidades habitacionales de aquellos que confían en nosotros.
+          Nuestra misión es superar las expectativas, construyendo <b
+            class="text-bold">relaciones sólidas</b
+          > y manteniendo una <b class="text-bold">reputación impecable</b>.
+        </p>
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-20">
+          Estamos <b class="text-bold">comprometidos</b> a ser referentes en bienes
+          raíces, ofreciendo un rango integral de servicios para hacer de cada experiencia
+          la mejor posible. <b class="text-bold"
+            >¡Bienvenidos a nuestro mundo de hogares y sueños cumplidos!</b
+          >
+        </p>
+      </div>
+    </section>
+    <section class="bg-secondary-bg-msb">
+      <div
+        class="grid grid-cols gap-5 md:grid-cols lg:grid-cols-2 container px-8 mx-auto"
+      >
+        <div class="">
+          <img
+            class="w-full h-full aspect-video"
+            src="/images/team-background.webp"
+            alt="Matías Szpira Bienes Raíces"
+          />
+        </div>
+        <div class="grid grid-col md:grid-cols-2 lg:grid-cols-2 gap-4 w-full">
+          <ul class="text-sm text-pretty">
+            <li
+              class="secondary-bg-msb font-gotham font-thin leading-loose pb-5"
+            >
+              <div>
+                <h2 class="font-bold">Matías Szpira</h2>
+                <p class="font-normal">Director</p>
+              </div>
+            </li>
+            <li
+              class="secondary-bg-msb font-gotham font-thin leading-loose pb-5"
+            >
+              <div>
+                <h2 class="font-bold">María Silvia Rodriguez Dávila</h2>
+                <p class="font-normal">Gerente General</p>
+              </div>
+            </li>
+            <li
+              class="secondary-bg-msb font-gotham font-thin leading-loose pb-5"
+            >
+              <div>
+                <h2 class="font-bold">María Inés Rodriguez Dávila</h2>
+                <p class="font-normal">
+                  Gerente de Recursos Humanos e Institucionales
+                </p>
+              </div>
+            </li>
+            <li
+              class="secondary-bg-msb font-gotham font-thin leading-loose pb-5"
+            >
+              <div>
+                <h2 class="font-bold">Natalia Gitel</h2>
+                <p class="font-normal">Respnsable de Sucursal K41</p>
+              </div>
+            </li>
+            <li
+              class="secondary-bg-msb font-gotham font-thin leading-loose pb-5"
+            >
+              <div>
+                <h2 class="font-bold">Andrés Castalgo</h2>
+                <p class="font-normal">
+                  Respnsable de Sucursal Leloir - Jefe de Ventas
+                </p>
+              </div>
+            </li>
+          </ul>
+          <ul class="text-sm text-pretty">
+            <li
+              class="secondary-bg-msb font-gotham font-thin leading-loose pb-5"
+            >
+              <div>
+                <h2 class="font-bold">Leticia Gagliano</h2>
+                <p class="font-normal">Respnsable de Departamento de Legales</p>
+              </div>
+            </li>
+            <li
+              class="secondary-bg-msb font-gotham font-thin leading-loose pb-5"
+            >
+              <div>
+                <h2 class="font-bold">Sebastián Szpira</h2>
+                <p class="font-normal">Asesor Inmobiliario Sucursal Belgrano</p>
+              </div>
+            </li>
+            <li
+              class="secondary-bg-msb font-gotham font-thin leading-loose pb-5"
+            >
+              <div>
+                <h2 class="font-bold">Karen Mullet</h2>
+                <p class="font-normal">Asistente General</p>
+              </div>
+            </li>
+            <li
+              class="secondary-bg-msb font-gotham font-thin leading-loose pb-5"
+            >
+              <div>
+                <h2 class="font-bold">Sebastián Ferry</h2>
+                <p class="font-normal">Diseñador Gráfico</p>
+              </div>
+            </li>
+            <li
+              class="secondary-bg-msb font-gotham font-thin leading-loose pb-5"
+            >
+              <div>
+                <h2 class="font-bold">Romina Iglesias</h2>
+                <p class="font-normal">
+                  Responsable de Comunicación y Marketing
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section transition:animate="initial" class="bg-secondary-bg-msb">
+      <img
+        src="/images/msz-logo.webp"
+        alt="logo"
+        class="w-100 h-100 object-cover object-center mx-auto pt-40"
+      />
+      <div
+        class="md:px-22 py-12 md:py-10 lg:py-10 w-100 text-center md:text-start lg:text-start lg:text-2xl md:text-xl container mx-auto px-8"
+      >
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-10">
+          Es una desarrolladora inmobiliaria integral, dedicada a la <b
+            class="text-bold"
+            >búsqueda, gerenciamiento, comercialización y puesta en marcha</b
+          > de proyectos de inversión inmobiliarios, caracterizados por <b
+            class="text-bold">la calidad y el compromiso</b
+          >.
+        </p>
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-10">
+          Los desarrollos inmobiliarios tendrán como <b class="text-bold"
+            >principal objetivo la optimización del rendimiento del capital</b
+          >, contando para tal fin, con <b class="text-bold"
+            >asesoramiento profesional permanente</b
+          >, en materia notarial, legal, contable y especialistas en
+          comercialización.
+        </p>
+        <p class="secondary-bg-msb font-gotham font-thin leading-loose pb-10">
+          Nuestro propósito será brindarles <b class="text-bold"
+          >confianza y solidez</b>, ofreciéndoles las
+          mejores oportunidades de inversión en bienes raíces, a todos aquellos
+          socios y clientes que decidan acompañarnos.
+        </p>
+      </div>
+    </section>
+    <section class="bg-primary-msb">
+      <div class="container mx-auto px-3 md:px-0 lg:px-0 py-20">
+        <TitleSections
+          class="drop-shadow-2xl text-white font-base font-medium font-cormorant text-pretty text-center"
+        >
+        Desarrollos
+        </TitleSections>
+      </div>
+    </section>
+  </article>
+</Layout>
