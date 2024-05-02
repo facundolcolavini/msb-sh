@@ -11,9 +11,8 @@ import type { JSXInternal } from 'node_modules/preact/src/jsx';
 
 interface Props {
   selects: Results
-  locations: ResultLocation
 }
-const SearchEntrepreneurship = ({ selects, locations }: Props) => {
+const SearchEntrepreneurship = ({ selects }: Props) => {
   const searchPStore = searchParamsStore.get()
 
 
@@ -25,7 +24,6 @@ const SearchEntrepreneurship = ({ selects, locations }: Props) => {
 
   const filters: FilterSelects = {
     selects,
-    locations,
     default: defaultsFilters,
   };
   const filterToFill: FilterDefault[] = filterEntrePreneurshipToFillDefault;

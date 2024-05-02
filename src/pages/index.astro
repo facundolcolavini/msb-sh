@@ -57,7 +57,7 @@ const description =
 const bgUsaImage = "/images/panorama-noche-chicago.webp";
 const selects = (await getAllSelects()) as Results;
 /* let selectEntrepreneurship = (await getAllSelectsEntrepreneurship()) as Results; */
-/* const locations = (await getLocations()) as ResultLocation; */
+const locations = (await getLocations()) as ResultLocation;
 ---
 
 <Layout title={titlePage} description={description}>
@@ -66,7 +66,7 @@ const selects = (await getAllSelects()) as Results;
       class="absolute inset-0 flex flex-col pb-20 justify-end items-center w-100 mx-auto container"
     >
       <div class="bg-[#D9D9D9] bg-opacity-40 p-6 min-w-full">
-        <SearchHome client:visible selects={selects} locations={[] as never} />
+        <SearchHome client:visible selects={selects} locations={locations} />
       </div>
     </div>
   </HeroContainer>
@@ -196,7 +196,7 @@ const selects = (await getAllSelects()) as Results;
         <SearchEntrepreneurship
           client:visible
           selects={[] as never}
-          locations={[] as never}
+        
         />
         <!-- Slider de emprendimientos -->
         <SliderA colsNr={3} height={10} width={0} classSlide="slider2">
