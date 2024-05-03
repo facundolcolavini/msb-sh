@@ -194,18 +194,21 @@ const selects = (await getAllSelects()) as Results;
           class="flex md:flex-row lg:flex-row flex-col justify-center w-100 gap-4 p-6 lg:px-2 md:px-6"
         >
           <Link
+            data-astro-prefetch="load"
             class="bg-primary-msb text-white border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
             href="emprendimientos?ed_est=En+Pozo"
           >
             En Pozo</Link
           >
           <Link
+          data-astro-prefetch="load"
             href="emprendimientos?ed_est=En+Construccion"
             class="bg-primary-msb text-white border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
           >
             En Construcción</Link
           >
           <Link
+          data-astro-prefetch="load"
             href="emprendimientos?ed_est=Terminado"
             class="bg-primary-msb text-white border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
           >
