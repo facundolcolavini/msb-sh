@@ -63,6 +63,6 @@ const locations = (await getLocations({ ed_int: "True" })) as ResultLocation;
     </div>
   </BannerSlider>
   <section class=" py-10 bg-[#FFFBF4]">
-    <EntrepreneurshipPage session={session} client:only selects={selects} locations={locations} />
+    <EntrepreneurshipPage session={session} client:visible selects={selects} locations={locations} />
   </section>
 </Layout>
