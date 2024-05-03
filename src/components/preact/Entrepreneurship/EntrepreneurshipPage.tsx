@@ -13,23 +13,20 @@ import Button from "../ui/Buttons/Button";
 import CardEntrepreneurship from "../ui/Cards/CardEntrepreneurship";
 import SelectField from "../ui/Selects/SelectField";
 import type { Session } from "lucia";
-import { createBrowserHistory, createMemoryHistory } from 'history';
+
 
 interface Props {
   selects: Results;
   locations: ResultLocation;
   session: Session | null;
 }
-const isSSR = typeof window === 'undefined';
-const history = isSSR ? createMemoryHistory() : createBrowserHistory();
 
 const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
   const filterStore = filterItems.get();
   const searchPStore = searchParamsStore.get()
- 
   const defaultOptions = {
     ed_est: {
-      value: history.location.search?.includes('Pozo') ? 'En Pozo' : history.location.search?.includes('Construccion') ? 'En Construccion' : history.location.search?.includes('Terminado') ? 'Terminado' : filterStore.ed_est?.value ?? 'En Pozo'
+      value: window.location.search?.includes('Pozo') ? 'En Pozo' : window.location.search?.includes('Construccion') ? 'En Construccion' : window.location.search?.includes('Terminado') ? 'Terminado' : filterStore.ed_est?.value ?? 'En Pozo'
       , label: 'Estado'
     }, // En pozo , En construccion , Terminado
     /*  tipo:{ label: 'tipo', isLocation: false, isDefault: false }, */
@@ -58,7 +55,7 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
     ...defaultOptions,
     ...filterStore,
     ed_est: {
-      value: history.location.search?.includes('Pozo') ? 'En Pozo' : history.location.search?.includes('Construccion') ? 'En Construccion' : history.location.search?.includes('Terminado') ? 'Terminado' : filterStore.ed_est?.value ?? 'En Pozo',
+      value: window.location.search?.includes('Pozo') ? 'En Pozo' : window.location.search?.includes('Construccion') ? 'En Construccion' : window.location.search?.includes('Terminado') ? 'Terminado' : filterStore.ed_est?.value ?? 'En Pozo',
       label: "Estado"
     }
   })
@@ -68,9 +65,10 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
   }, [])
 
   useEffect(() => {
-    fetchResults();
-    const newUrl = `${history.location.pathname}${searchPStore.length > 0 ? `?${searchPStore}` : ''}`;
-    history.push(newUrl);
+    fetchResults()
+    const currentUrl = window.location.pathname;
+    const newUrl = `${currentUrl}${searchPStore.length > 0 ? `?${searchPStore}` : ''}`;
+    window.history.pushState({}, '', newUrl);
   }, [searchPStore])
 
   const fetchResults = async () => {
