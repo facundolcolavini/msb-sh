@@ -13,31 +13,18 @@ import SearchDebounce from './SearchDebounce';
 
 interface Props {
   selects: Results
-/*   locations: APIResponseLocations */
+  /*   locations: APIResponseLocations */
 }
 const SearchHome = ({ selects }: Props) => {
-  const [locations,setLocations] = useState()
+  const [locations, setLocations] = useState()
   const searchPStore = searchParamsStore.get()
 
   const fetchLocations = async () => {
-    const dataLocation = await fetch(`/api/location.json/`)  
-    const  locations = await dataLocation.json() 
+    const dataLocation = await fetch(`/api/location.json/`)
+    const locations = await dataLocation.json()
     setLocations(locations)
   }
-/*   let tipo_inmueble = [] as OutputOption[];
-  let tipo_operacion = [] as OutputOption[];
-  let in_iub = [] as OutputOption[];
-  let in_tpr = [] as OutputOption[];
-  tipo_inmueble = formatOptions(selects?.tipo);
-  tipo_operacion = formatOptions(selects.operacion);
-  in_iub = formatOptions(locations?.ubicaciones);
-  in_tpr = [
-    {
-      value: 'COUNTRY',
-      label: 'Barrios Cerrados y Countries'
-    }
-  ] */
-  console.log(locations)
+
   const filters: FilterSelects = {
     selects,
     locations: locations !== undefined ? (locations as APIResponseLocations).resultado : null,
@@ -82,9 +69,9 @@ const SearchHome = ({ selects }: Props) => {
       send(e);
     }
   };
-  useEffect(()=>{
+  useEffect(() => {
     fetchLocations()
-  },[])
+  }, [])
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
@@ -127,7 +114,7 @@ const SearchHome = ({ selects }: Props) => {
               addStyles={`sm:text-sm md:text-md lg:text-lg  text-ellipsis overflow-hidden ... w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
               id="tipo_operacion"
             >
-               Temporiario
+              Temporiario
             </Button>
           </div>
           <div className="lg:col-start-9 lg:col-end-13 flex col-start-1 col-end-4  md:grid-col-start-2 md:grid-col-end-4 gap-4">
@@ -143,7 +130,7 @@ const SearchHome = ({ selects }: Props) => {
           </div>
           {/* Selector e input de la fila inferior */}
           <div className="lg:col-start-1   lg:col-end-3 col-start-1 col-end-4 flex  h-full  ">
-            <SelectField addStyles='h-fit md:h-fit lg:h-full' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble}/>
+            <SelectField addStyles='h-fit md:h-fit lg:h-full' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
           </div>
           <div className="md:col-1 lg:col-start-3 col-span-3  lg:col-end-13 md:col-start-1 md:col-end-4 flex gap-4  w-full flex-grow ">
             <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />
@@ -155,15 +142,15 @@ const SearchHome = ({ selects }: Props) => {
                 addStyles="sm:text-sm md:text-md lg:text-lg border-2 border-gray-300 rounded-md  flex w-full justify-center items-center"
               >
                 <div className={'flex gap-2 justify-center items-center lg:pr-3'}>
-                <SearchIcon className={'size-7'} /> 
-                <span className={'hidden md:hidden lg:flex '}>BUSCAR</span>
+                  <SearchIcon className={'size-7'} />
+                  <span className={'hidden md:hidden lg:flex '}>BUSCAR</span>
                 </div>
-               
+
               </Button>
             </div>
           </div>
           {/* Botón de búsqueda de la fila inferior */}
-         {/*  <div className=" md:hidden lg:flex lg:col-start-11  lg:col-end-13 flex  gap-4">
+          {/*  <div className=" md:hidden lg:flex lg:col-start-11  lg:col-end-13 flex  gap-4">
             <Button
               variant="primary"
               onClick={send}

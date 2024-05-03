@@ -29,6 +29,7 @@ import FavoriteButton from '../ui/Buttons/FavoriteButton';
 import WarningAlertIcon from '../Icons/WarningAlertIcon';
 import { Toast } from '../ui/Toast/Toast';
 import type { Session } from 'lucia';
+import { navigate } from 'astro:transitions/client';
 
 
 
@@ -101,6 +102,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 setResults(data?.resultado);
             }
         } catch (error) {
+            navigate('/404');
             console.log(error, 'ERROR');
         }
     };

@@ -9,13 +9,18 @@ import { capitalize } from "@/utils/formats";
 const { propiedad } = Astro.params;
 const url = Astro.url;
 const session = Astro.locals.session;
+
 // Extraemos el ultimo segmento de la url
 let prop = url.toString().split("/").pop();
 let suc = prop?.split("-")[0] ?? "";
 let id = prop?.split("-")[1] ?? "";
 const data = await getEntrepreneurshipById(id)
-const amig = capitalize(data.emprendimiento[0].amigable.replaceAll("-" , " "))
-const image  = data.emprendimiento[0].img_princ;
+if(!data?.emprendimiento[0]){
+  return Astro.redirect("/404");
+}
+const amig = capitalize(data?.emprendimiento[0]?.amigable.replaceAll("-" , " "))
+const image  = data?.emprendimiento[0].img_princ;
+
 ---
 
 <Layout title={data?.emprendimiento[0]?.titulo} description={amig} img={image}>

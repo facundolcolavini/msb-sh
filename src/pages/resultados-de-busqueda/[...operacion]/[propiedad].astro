@@ -15,7 +15,11 @@ let suc = prop?.split("-")[0] ?? "";
 let id = prop?.split("-")[1] ?? "";
 const response = await fetch(`${Astro.url.origin}/api/property.json?suc=${suc}&id=${id}`);
 const data = await response.json();
-const {titulo,img_princ,in_tip, direccion,in_loc} = data.resultado.ficha[0] 
+
+if(! data.resultado?.ficha[0] ){
+  return Astro.redirect("/404");
+}
+const {titulo,img_princ,in_tip, direccion,in_loc} = data.resultado?.ficha[0] 
 ---
 
 <Layout title=`${capitalize(in_tip)} - ${capitalize(direccion)} en ${capitalize(in_loc)}` description={titulo} img={img_princ}>

@@ -27,7 +27,6 @@ const DangeForm = ({ userData }: Props) => {
 
         const formData = new FormData(e.target as HTMLFormElement);
         const values = Object.fromEntries(formData);
-        console.log(values)
         try {
             setFormSubmitted(false);
             const response = await fetch(`/api/account/${userData?.id}.json/`,

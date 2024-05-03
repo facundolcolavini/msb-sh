@@ -90,6 +90,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             if (data?.hasOwnProperty("error")) {
                 setResults(null);
                 setIsLoading(false);
+                navigate('/404');
                 throw data;
             } else if (response?.ok) {
                 setIsLoading(false);
@@ -109,7 +110,8 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                 }
             }
         } catch (error) {
-            console.log(error);
+            navigate('/404');
+
         }
     };
 
@@ -203,6 +205,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             await fetchFavorites();
 
         } catch (error) {
+
             console.error(error);
         }
     }
