@@ -48,17 +48,13 @@ const { title, description , img } = Astro.props;
       </footer>
     </div>
     <style is:global>
-      @font-face {
-        font-family: "Gotham";
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 130%; /* 26px */
-        src: url("/fonts/Gotham-Light.otf") format("otf");
-      }
+       @font-face {
+    font-family: "Gotham";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/Gotham-Light.otf") format("opentype");
+  }
 
       * {
         box-sizing: border-box;
