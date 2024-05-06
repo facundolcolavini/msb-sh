@@ -6,6 +6,7 @@ export const officesMock = [
         suc_name:"Castelar",
         suc_loc:"Casa Central",
         suc_img:"/images/sucursal-castelar.webp",
+        highlight: true,
         suc_dir:"Avellaneda 976, Castelar",
         suc_phone:"4627-8034 / 7548-6846"
     },
@@ -15,6 +16,7 @@ export const officesMock = [
         whatsAppPhone:"5491124610859",
         suc_name:"Belgrano",
         suc_loc:"Capital Federal",
+        highlight: true,
         suc_img:"/images/sucursal-belgrano.webp",
         suc_dir:"Av. Juramento 1475, Piso 3 Of. 4",
         suc_phone:"112461-0859"

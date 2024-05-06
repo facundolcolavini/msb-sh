@@ -1,5 +1,5 @@
 
-import  PaperLocationIcon  from '@/components/preact/Icons/PaperLocationIcon';
+import PaperLocationIcon from '@/components/preact/Icons/PaperLocationIcon';
 import WhatsAppIcon from "@/components/preact/Icons/WhatsAppIcon";
 import type { HTMLAttributes } from "astro/types";
 import clsx from "clsx";
@@ -14,15 +14,21 @@ interface Props extends HTMLAttributes<"div"> {
     suc_dir: string;
     suc_phone: string;
     addStyles?: string;
+    highlight?: boolean;
     href?: string;
     whatsAppPhone: string;
 }
 
-const CardOffice: FunctionComponent<Props> = ({ href, suc_name, suc_loc, suc_img, suc_dir, suc_phone, whatsAppPhone, addStyles }) => {
-    const styles = twMerge(clsx(" rounded-lg  mx-auto w-full overflow-hidden shadow-lg", addStyles));
+const CardOffice: FunctionComponent<Props> = ({ href, suc_name, suc_loc, suc_img, suc_dir, suc_phone, whatsAppPhone, addStyles, highlight = false }) => {
+    const styles = twMerge(clsx(" rounded-lg  mx-auto w-full overflow-hidden shadow-lg relative", addStyles));
     return (
         <div className={styles}>
             <div class="bg-secondary-msb">
+                {highlight
+                    && (
+                        <p className=" absolute  right-3  top-3 text-md font-bold rounded-full px-3 py-2 bg-secondary-bg-hover-msb hover:bg-bg-1-msb hover:animate-twice text-white   text-sm uppercase">
+                            {suc_loc}
+                        </p>)}
                 <img className="w-full object-cover" src={suc_img} alt={suc_name} />
                 <div className="p-5 ">
                     <div className="text-xl font-medium text-nowrap capitalize"><span className="font-extrabold capitalize">{suc_name}</span></div>

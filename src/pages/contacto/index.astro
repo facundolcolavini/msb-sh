@@ -43,7 +43,7 @@ const description =
         </div>
       </div>
     </div>
-    <section class="bg-primary-msb">
+    <section id="branchs" class="bg-primary-msb">
       <div class="container mx-auto px-3 md:px-0 lg:px-0 py-20">
         <TitleSections
           class="drop-shadow-2xl text-white font-base font-medium font-cormorant text-pretty text-center"
@@ -68,7 +68,12 @@ const description =
               data-officeId={`card-${index + 1}`}
               id={`cardOffice`}
             >
-              <div class="bg-secondary-msb rounded">
+              <div class="bg-secondary-msb rounded relative">
+                {suc?.highlight && (
+                  <p class=" absolute  right-3  top-3 text-md font-bold rounded-full px-3 py-2 bg-secondary-bg-hover-msb hover:bg-bg-1-msb hover:animate-twice text-white   text-sm uppercase">
+                    {suc.suc_loc}
+                  </p>
+                )}
                 <img
                   class="w-full object-cover rounded-t-lg"
                   src={suc.suc_img}
