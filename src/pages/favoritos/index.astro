@@ -136,7 +136,7 @@ const description =
       <div class="flex items-center">
         <input
           type="checkbox"
-          class="custom-checkbox form-checkbox h-5 w-5 text-primary-msb"
+          class="custom-checkbox form-checkbox h-5 w-5 text-primary-msb accent-primary-msb "
           id="select-all"
         />
         <label for="select-all" class="ml-2 text-black">Seleccionar todos</label
@@ -179,7 +179,7 @@ const description =
               <input
                 type="checkbox"
                 data-check-prop="checked-prop"
-                class="absolute top-2 left-2 form-checkbox h-5 w-5 text-primary-msb custom-checkbox z-10"
+                class="absolute top-2 left-2 form-checkbox h-5 w-5 text-primary-msb custom-checkbox z-10 accent-primary-msb"
                 id={card.id}
               />
               <button
@@ -210,7 +210,7 @@ const description =
                 <input
                   type="checkbox"
                   data-check-prop="checked-prop"
-                  class="absolute top-2 left-2 form-checkbox h-5 w-5 text-primary-msb custom-checkbox z-10"
+                  class="absolute top-2 left-2 form-checkbox h-5 w-5 text-primary-msb custom-checkbox z-10 accent-primary-msb"
                   id={card.id}
                 />
                 <button
@@ -258,8 +258,6 @@ const description =
         checkbox.checked = selectAll.checked;
         if (selectAll.checked) {
           ids.push(checkbox.id);
-          selectAll.classList.add("accent-primary-msb");
-          checkbox.classList.add("accent-primary-msb");
         } else {
           ids = [];
         }
@@ -270,7 +268,6 @@ const description =
       checkbox.addEventListener("change", (e) => {
         if (checkbox.checked && !ids.includes(checkbox.id)) {
           ids.push(checkbox.id);
-          checkbox.classList.add("accent-primary-msb");
         } else {
           ids = ids.filter((id) => id !== checkbox.id);
         }
