@@ -41,7 +41,9 @@ const { title, description , img } = Astro.props;
         <Navbar user={user} />
       </header>
       <main class="[grid-area:main] font-gotham">
+        <div id="loading">  </div>
           <slot />
+       
       </main>
       <footer class="[grid-area:footer]">
         <Footer />
@@ -117,3 +119,27 @@ const { title, description , img } = Astro.props;
     </style>
   </body>
 </html>
+
+<script is:inline>
+  document.addEventListener('astro:before-preparation', () => {
+    document.querySelector('#loading').classList.add('show');
+    /* SPINNER */
+    const spinner = document.createElement('div');
+    spinner.id = 'loading';
+    spinner.innerHTML = `
+    <div class="fixed top-0 left-0 w-full h-full bg-white bg-opacity-90 z-50 flex justify-center items-center">
+      <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-primary-msb"></div>
+    </div>
+
+    `;
+    document.body.appendChild(spinner);
+
+  });
+  document.addEventListener('astro:after-preparation', () => {
+    document.querySelector('#loading').classList.remove('show');
+    /* SPINNER */
+    const spinner = document.querySelector('#loading');
+    spinner.remove();
+
+  });
+</script>
