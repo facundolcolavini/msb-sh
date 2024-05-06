@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { Session, User, db, eq } from "astro:db";
+import { Favorites, Session, User, db, eq } from "astro:db";
 
 export const PATCH: APIRoute = async ({ params, request }) => {
   const { firstName, lastName, /* password */ phone, phoneAlternative, street, addressNumber, location } = await request.json();
@@ -86,26 +86,26 @@ export const DELETE: APIRoute = async ({ params }) => {
       }
     );
   }
-
   try {
-    const userSession = await db.delete(Session).where(eq(Session.userId, id));
-    const user = await db.delete(User).where(eq(User.id, id));
-    if (user && userSession) {
+    // Primero, elimina todas las sesiones asociadas al usuario
+    await db.delete(Session).where(eq(Session.userId, id));
+
+    // Luego, elimina todos los favoritos asociados al usuario
+    await db.delete(Favorites).where(eq(Favorites.userId, id));
+
+    // Finalmente, elimina el usuario
+    const res = await db.delete(User).where(eq(User.id, id));
+
+    if (res) {
       return new Response(
         JSON.stringify({
-          message: "Cuenta eliminada correctamente.",
+          message: "Usuario eliminado con éxito.",
           success: true,
         }),
         { status: 200 }
       );
     } else {
-      return new Response(
-        JSON.stringify({
-          message: "No se pudo eliminar la cuenta.",
-          success: false
-        }),
-        { status: 404 }
-      )
+      throw new Error("No se pudo eliminar el usuario.");
     }
   } catch (e) {
     console.error(e);
