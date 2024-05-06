@@ -243,7 +243,7 @@ const description =
   }
 </style>
 
-<script is:inline define:vars={{ session }}>
+<script  define:vars={{ session }}>
   /* Delete all selection and fetch API /api/favorites/idselected */
   document.addEventListener("astro:page-load", (event) => {
     const btnDelete = document.getElementById("btn-delete");
@@ -255,7 +255,7 @@ const description =
 
     let ids = [];
 
-    selectAll.addEventListener("change", (e) => {
+    selectAll?.addEventListener("change", (e) => {
       checkboxes.forEach((checkbox) => {
         checkbox.checked = selectAll.checked;
         if (selectAll.checked) {
@@ -267,7 +267,7 @@ const description =
     });
 
     checkboxes.forEach((checkbox) =>
-      checkbox.addEventListener("change", (e) => {
+      checkbox?.addEventListener("change", (e) => {
         if (checkbox.checked && !ids.includes(checkbox.id)) {
           ids.push(checkbox.id);
         } else {
@@ -278,7 +278,7 @@ const description =
 
     if (session && session.userId) {
       deleteButtons.forEach((button) =>
-        button.addEventListener("click", async (e) => {
+        button?.addEventListener("click", async (e) => {
           const id = button.getAttribute("data-idProp");
           const res = await fetch(`/api/favorites/${session?.userId}`, {
             method: "DELETE",
@@ -296,7 +296,7 @@ const description =
         })
       );
 
-      btnDelete.addEventListener("click", async () => {
+      btnDelete?.addEventListener("click", async () => {
         if (ids.length === 0) {
           alert("No hay elementos seleccionados");
           return;
