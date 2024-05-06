@@ -37,3 +37,21 @@ export const reviewsMock: Reviews[] = [
             review: "“Excelente atención personalizada. Muy buena Gente. Sin dudas marcan la Diferencia los recomiendo 100%.”"
         }
     ]
+
+    export const reviewsMockIndexPage =[
+        {
+            id: "1",
+            userFullName: "Juan Perez",
+            review: "“Muy buena atención y gran apoyo post venta.”"
+        },
+        {
+            id: "2",
+            userFullName: "Maria Rodriguez",
+            review: "“Una inmobiliaria todo servicio, profesionales siempre dispuestos a hacer posible la operación.”"
+        },
+        {
+            id: "3",
+            userFullName: "Pedro Gomez",
+            review: "“Un gran trabajo, muy contentos por toda la atención, gracias.”"
+        }
+    ]
