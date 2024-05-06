@@ -12,13 +12,15 @@ import SquareMeterIcon from '@/components/preact/Icons/SquareMeterIcon';
 import WhatsAppIcon from "@/components/preact/Icons/WhatsAppIcon";
 
 
+
 interface Props extends HTMLAttributes<"a"> {
     cardData: File
     addStyles?: string;
+    defaultImgeProperty?: string;
     href: string;
     key: string;
 }
-const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key }: Props) => {
+const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key, defaultImgeProperty }: Props) => {
 
     const styles = twMerge(clsx("rounded relative overflow-hidden shadow-lg h-100 animate-fade", addStyles));
 
@@ -28,7 +30,7 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key
     return (
         <div className={'shadow-lg'}>
             <a href={href} className={styles} key={key}>
-                <img className="w-full h-[248px]  text-balance object-cover" loading="eager" width={408} height={248} src={cardData.img_princ} alt="Imagen del interior de la vivienda" />
+                <img className={`w-full h-[248px]  text-balance ${cardData.img_princ === "" ?  "object-contain" : "object-cover"}`} loading="eager" width={408} height={248} src={cardData.img_princ === "" ? 'public/images/msz-logo.webp' : cardData.img_princ  } alt="Imagen del interior de la vivienda" />
             </a>
             <div class="bg-secondary-msb relative h-[210px] md:px-3 p-3 md:py-3 lg:px-3 lg:py-3">
                 <div className="">
