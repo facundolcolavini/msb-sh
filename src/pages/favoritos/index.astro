@@ -258,6 +258,8 @@ const description =
         checkbox.checked = selectAll.checked;
         if (selectAll.checked) {
           ids.push(checkbox.id);
+          selectAll.classList.add("accent-primary-msb");
+          checkbox.classList.add("accent-primary-msb");
         } else {
           ids = [];
         }
@@ -268,6 +270,7 @@ const description =
       checkbox.addEventListener("change", (e) => {
         if (checkbox.checked && !ids.includes(checkbox.id)) {
           ids.push(checkbox.id);
+          checkbox.classList.add("accent-primary-msb");
         } else {
           ids = ids.filter((id) => id !== checkbox.id);
         }
