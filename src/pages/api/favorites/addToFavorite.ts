@@ -21,11 +21,28 @@ export const POST: APIRoute = async ({ request ,cookies}) => {
     );
   }
 
-  // Verificar si la propiedad ya esta en favoritos y que no se pueda agregar dos veces
-  const favorite = (await db.select().from(Favorites).where(eq(Favorites.publicationId, publicationId))
+  // Obtener el listado de favoritos del usuario 
+  const favorites = await db.select().from(Favorites).where(eq(Favorites.userId, userId));
 
-  ).at(0);
+  // Verificar si la propiedad ya esta en favoritos y si la propiedad existe eliminarla
+  const favorite = favorites.find((fav) => fav.publicationId === publicationId);
+
   if (favorite) {
+    const res = await db.delete(Favorites).where(eq(Favorites.publicationId, publicationId));
+    if (res) {
+      return new Response(
+        JSON.stringify({
+          message: "Eliminado de favoritos.",
+          success: true,
+        })
+      );
+    } else {
+      throw new Error("Ocurrio un problema al eliminar la propiedad de favoritos.");
+    }
+  }
+  
+
+/*   if (favorite) {
     return new Response(
       JSON.stringify({
         message: "La propiedad ya esta en favoritos.",
@@ -37,7 +54,7 @@ export const POST: APIRoute = async ({ request ,cookies}) => {
     );
   }
  
-
+ */
   if (!userId ) {
     return new Response(
       JSON.stringify({
@@ -49,7 +66,7 @@ export const POST: APIRoute = async ({ request ,cookies}) => {
       }
     );
   }
-  const user = (await db.select().from(User).where(eq(User.id, userId ))).at(0);
+ 
   try {
 
     const res = await db.insert(Favorites).values({
