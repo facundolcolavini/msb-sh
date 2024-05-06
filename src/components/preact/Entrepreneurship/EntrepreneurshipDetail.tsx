@@ -102,7 +102,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 setResults(data?.resultado);
             }
         } catch (error) {
-            navigate('/404');
+        /*     navigate('/404'); */
             console.log(error, 'ERROR');
         }
     };

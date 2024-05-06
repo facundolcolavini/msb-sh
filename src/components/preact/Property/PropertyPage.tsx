@@ -110,8 +110,8 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                 }
             }
         } catch (error) {
-            navigate('/404');
-
+           /*  navigate('/404'); */
+            console.log(error)
         }
     };
 
