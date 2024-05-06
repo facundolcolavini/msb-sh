@@ -3,7 +3,7 @@ import SocialList from "@/components/SocialList.astro";
 import TitleSections from "@/components/TitleSections.astro";
 import ContactForm from "@/components/preact/Contact/ContactForm";
 import MapLocationIcon from "@/components/preact/Icons/MapLocationIcon";
-import  PaperLocationIcon  from "@/components/preact/Icons/PaperLocationIcon";
+import PaperLocationIcon from "@/components/preact/Icons/PaperLocationIcon";
 import WhatsAppIcon from "@/components/preact/Icons/WhatsAppIcon";
 import { officesMock } from "@/data/offices";
 import Layout from "@/layouts/Layout.astro";
@@ -32,7 +32,7 @@ const description =
         <div class="text-center lg:mx-16 py-20 bg-[#D9D9D9] px-4">
           <ContactForm client:load />
         </div>
-        <div class="mx-auto  py-20">
+        <div class="mx-auto py-20">
           <h1
             class={"font-bold text-center pb-5 tracking-normal text-base md:text-md lg:text-lg"}
           >
@@ -95,14 +95,22 @@ const description =
 
                     <div class="flex items-end justify-end gap-1 ">
                       <a href={suc.href} target="_blank">
-                        <PaperLocationIcon  class={' h-4 w-4 md:h-5 md:w-5 lg:h-5 lg:w-5 stroke-gray-700'}/>
+                        <PaperLocationIcon
+                          class={
+                            " h-4 w-4 md:h-5 md:w-5 lg:h-5 lg:w-5 stroke-gray-700"
+                          }
+                        />
                       </a>
                       <a
                         href={`https://api.whatsapp.com/send?phone=${suc.whatsAppPhone}`}
                         class={" "}
                         target="_blank"
                       >
-                        <WhatsAppIcon class={'h-4 w-4 md:h-5 md:w-5 lg:h-5 lg:w-5  fill-gray-700'} />
+                        <WhatsAppIcon
+                          class={
+                            "h-4 w-4 md:h-5 md:w-5 lg:h-5 lg:w-5  fill-gray-700"
+                          }
+                        />
                       </a>
                     </div>
                   </div>
@@ -135,42 +143,44 @@ const description =
 </Layout>
 
 <script is:inline define:vars={{ officesMock }}>
-  // List of cardoffice online one get clicked and then the border style painted
-  const cardOffice = document.querySelectorAll("#cardOffice");
-  const currentMap = document.querySelector("#currentMap");
-  const locationLabel = document.querySelector("#location-label");
-  let currentCardClicked = "";
+  document.addEventListener("astro:page-load", (event) => {
+    // List of cardoffice online one get clicked and then the border style painted
+    const cardOffice = document.querySelectorAll("#cardOffice");
+    const currentMap = document.querySelector("#currentMap");
+    const locationLabel = document.querySelector("#location-label");
+    let currentCardClicked = "";
 
-  // Almacena la URL base del iframe en una variable separada
-  const baseIframeSrc = currentMap.getAttribute("src");
-  currentMap.classList.add("hidden");
+    // Almacena la URL base del iframe en una variable separada
+    const baseIframeSrc = currentMap.getAttribute("src");
+    currentMap.classList.add("hidden");
 
-  cardOffice.forEach((card) => {
-    card.addEventListener("click", (e) => {
-      currentCardClicked = card.getAttribute("data-officeId");
+    cardOffice.forEach((card) => {
+      card.addEventListener("click", (e) => {
+        currentCardClicked = card.getAttribute("data-officeId");
 
-      cardOffice.forEach((card) => {
-        card.classList.remove("border-4");
-        card.classList.remove("border-primary-msb");
+        cardOffice.forEach((card) => {
+          card.classList.remove("border-4");
+          card.classList.remove("border-primary-msb");
+        });
+        card.classList.add("border-4");
+        card.classList.add("border-primary-msb");
+        card.classList.add("rounded-lg");
+
+        // set to data-map div the iframe with the map
+
+        const officeMock = officesMock?.find(
+          (office) => office.id === currentCardClicked?.split("-")[1]
+        );
+
+        // Agrega el parámetro q a la URL base del iframe
+        const newIframeSrc = baseIframeSrc + "&q=" + officeMock?.suc_dir;
+        currentMap.setAttribute("src", newIframeSrc);
+        // Agregar al label la dirección de la sucursal
+        locationLabel.querySelector("span").textContent = officeMock?.suc_dir;
+        locationLabel.classList.remove("hidden");
+        locationLabel.classList.add("flex");
+        currentMap.classList.remove("hidden");
       });
-      card.classList.add("border-4");
-      card.classList.add("border-primary-msb");
-      card.classList.add("rounded-lg");
-
-      // set to data-map div the iframe with the map
-
-      const officeMock = officesMock?.find(
-        (office) => office.id === currentCardClicked?.split("-")[1]
-      );
-
-      // Agrega el parámetro q a la URL base del iframe
-      const newIframeSrc = baseIframeSrc + "&q=" + officeMock?.suc_dir;
-      currentMap.setAttribute("src", newIframeSrc);
-      // Agregar al label la dirección de la sucursal
-      locationLabel.querySelector("span").textContent = officeMock?.suc_dir;
-      locationLabel.classList.remove("hidden");
-      locationLabel.classList.add("flex");
-      currentMap.classList.remove("hidden");
     });
   });
 </script>
