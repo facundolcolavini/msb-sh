@@ -23,7 +23,7 @@ interface Props extends HTMLAttributes<"a"> {
         case "EN POZO":
             return "bg-secondary-bg-hover-msb hover:bg-bg-1-hover-msb"
         case "TERMINADO":
-            return "bg-tertiary-bg-msb  hover:bg-tertiary-hover-msb "
+            return "bg-tertiary-bg-msb  hover:bg-tertiary-hover-msb"
         default:
             return "bg-secondary-bg-hover-msb"
 
@@ -60,7 +60,7 @@ const CardEntrepreneurship: FunctionComponent<Props> = ({ cardData, addStyles, h
                         {cardData?.ed_est.replace("&oacute;", "ó")}
                     </button>
                     <div class="flex items-center justify-center gap-1 ">
-                        <a href={`https://api.whatsapp.com/send/?phone=5491144161700&text=Hola%2C+me+contactaba+desde+http%3A%2F%2Fmatiasszpira.com.ar%2F+para+consultarles&type=phone_number&app_absent=0`} target="_blank"><WhatsAppIcon className={'h-6 w-6 fill-gray-700'}/></a>
+                        <a href={`https://api.whatsapp.com/send/?phone=5491144161700&text=Hola%2C+me+contactaba+desde+http%3A%2F%2Fmatiasszpira.com.ar%2F+para+consultarles&type=phone_number&app_absent=0`} target="_blank"><WhatsAppIcon className={'h-6 w-6 fill-gray-700'} /></a>
                     </div>
                 </div>
             </div>

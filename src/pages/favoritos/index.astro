@@ -2,6 +2,7 @@
 import IconCheckCircle from "@/components/preact/Icons/CheckIcon";
 import IconDelete from "@/components/preact/Icons/DeleteIcon";
 import FavHomeIcon from "@/components/preact/Icons/FavHomeIcon";
+import Button from "@/components/preact/ui/Buttons/Button";
 import CardEntrepreneurship from "@/components/preact/ui/Cards/CardEntrepreneurship";
 import CardProperty from "@/components/preact/ui/Cards/CardProperty";
 import type { APIResponsePropertyDetail } from "@/interfaces/detail.properties.interface";
@@ -123,12 +124,12 @@ const description =
   <article class="bg-secondary-bg-msb h-full font-gotham">
     <section class="container mx-auto py-5 px-8">
       <div class="py-12">
-        <h1 class="text-lg text-black font-bold text-center uppercase">
+        <h1 class="font-bold text-center tracking-normal pb-5 text-xl md:text-2xl lg:text-3xl uppercase">
           Favoritos
         </h1>
         <p
-        class="text-primary-text-msb text-center text-pretty font-gotham font-thin text-xl md:text-2xl lg:text-2xl w-full"
-      >Administrá tus propiedades guardadas</p>
+        class="text-lg text-primary-text-msb text-center pb-10"
+      >Administrá tus propiedades guardadas</>
       </div>
     </section>
     <section class="container mx-auto flex justify-between py-5 px-8">
@@ -136,28 +137,29 @@ const description =
       <div class="flex items-center">
         <input
           type="checkbox"
-          class="custom-checkbox form-checkbox h-5 w-5 text-primary-msb accent-primary-msb "
+          class="custom-checkbox form-checkbox h-5 w-5 text-primary-msb accent-primary-msb focus:text-white "
           id="select-all"
         />
         <label for="select-all" class="ml-2 text-black">Seleccionar todos</label
         >
       </div>
       <!-- Botone Eliminar -->
-      <button
+      <Button
         id="btn-delete"
-        disabled={favoritesUser.length === 0}
-        class="bg-primary-msb text-white px-4 py-2 rounded-lg flex items-center gap-2 font-semibold"
+        variant={favoritesUser.length === 0 ? "disabled" : "primary"}
+        
+        addStyles="flex gap-2 items-center justify-center" 
       >
         <IconDelete class={"size-6"} />
         Eliminar
-      </button>
+      </Button>
     </section>
     <section class="py-5 px-8">
       {
         favoritesUser.length == 0 ? (
-          <div class="container mx-auto flex flex-col justify-center items-center h-96">
+          <div class="container mx-auto flex flex-col justify-center items-center h-100">
             <p class="text-black text-center font-bold py-10 font-gotham text-2xl">
-            {favoritesUser.length} propiedades agregadas
+            No hay propiedades agregadas
           </p>
             <img src="/images/fav.png" alt=""/>
           </div>
@@ -179,7 +181,7 @@ const description =
               <input
                 type="checkbox"
                 data-check-prop="checked-prop"
-                class="absolute top-2 left-2 form-checkbox h-5 w-5 text-primary-msb custom-checkbox z-10 accent-primary-msb"
+                class="absolute top-2 left-2 form-checkbox h-5 w-5 text-primary-msb custom-checkbox z-10 accent-primary-msb focus:text-white"
                 id={card.id}
               />
               <button
@@ -210,7 +212,7 @@ const description =
                 <input
                   type="checkbox"
                   data-check-prop="checked-prop"
-                  class="absolute top-2 left-2 form-checkbox h-5 w-5 text-primary-msb custom-checkbox z-10 accent-primary-msb"
+                  class="absolute top-2 left-2 form-checkbox h-5 w-5 text-primary-msb custom-checkbox z-10 accent-primary-msb focus:text-white"
                   id={card.id}
                 />
                 <button

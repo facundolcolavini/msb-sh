@@ -14,20 +14,29 @@ interface Props extends HTMLAttributes<"div"> {
     suc_phone: string;
     addStyles?: string;
     href: string;
+    highlight?: boolean;
     whatsAppPhone: string;
 }
 
-const CardBranch: FunctionComponent<Props> = ({ href, suc_name, suc_loc, suc_img, suc_dir, suc_phone, whatsAppPhone, addStyles }) => {
-    const styles = twMerge(clsx(" rounded-lg  mx-auto w-full overflow-hidden shadow-lg", addStyles));
+const CardBranch: FunctionComponent<Props> = ({ href, suc_name, suc_loc, suc_img, suc_dir, suc_phone, whatsAppPhone, addStyles, highlight = false }) => {
+    const styles = twMerge(clsx(" rounded-lg  mx-auto w-full overflow-hidden shadow-lg relative", addStyles));
     return (
         <div className={styles}>
-            <div class="bg-secondary-msb">
+            
+            <div class="bg-secondary-msb ">
+            {highlight 
+                        && (
+                             <p className=" absolute  right-3  top-3 text-md font-bold rounded-full px-3 py-2 bg-secondary-bg-hover-msb hover:bg-bg-1-msb hover:animate-twice text-white   text-sm uppercase">
+                        {suc_loc}
+                    </p>) }
                 <img className="w-full object-cover" src={suc_img} alt={suc_name} />
                 <div className="p-5 ">
                     <div className="text-xl font-medium text-nowrap capitalize"><span className="font-extrabold capitalize">{suc_name}</span></div>
                     <p className="text-bg-2-msb  text-md font-bold">
                         {suc_loc}
                     </p>
+
+
                     <div class="flex justify-between">
                         <div>
                             <span className="flex items-center text-sm font-semibold text-gray-700 mr-2 mb-1 ">{suc_dir}</span>

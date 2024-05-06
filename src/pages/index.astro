@@ -61,10 +61,10 @@ const selects = (await getAllSelects()) as Results;
       </div>
     </div>
   </HeroContainer>
-  <!-- <div class="fixed right-0 z-50"> -->
+
   <Chat />
-  <!--  </div> -->
-  <section class="bg-secondary-bg-msb py-10">
+
+ <!--  <section class="bg-secondary-bg-msb py-10">
     <div class="container mx-auto px-3 md:px-0 lg:px-0">
       <TitleSections
         class="text-primary-text-msb font-medium font-cormorant text-center"
@@ -138,7 +138,7 @@ const selects = (await getAllSelects()) as Results;
         </ButtonLink>
       </div>
     </div>
-  </section>
+  </section> -->
   <section class="bg-primary-msb">
     <div class="container mx-auto px-3 md:px-0 lg:px-0 py-20">
       <TitleSections
@@ -183,7 +183,7 @@ const selects = (await getAllSelects()) as Results;
           Invertí en bienes raíces, nosotros te asesoramos
         </p>
       </div>
-      <div class="">
+      <div>
         <!--         <SearchEntrepreneurship
           client:idle
           selects={selects}
@@ -326,17 +326,19 @@ const selects = (await getAllSelects()) as Results;
         href="https://maps.app.goo.gl/PdCXedJ3XriKhkeD6"
         whatsAppPhone="5491144161700"
         suc_name="Castelar"
+        highlight={true}
         suc_loc="Casa Central"
         suc_img="/images/sucursal-castelar.webp"
         suc_dir="Avellaneda 976, Castelar"
         suc_phone="4627-8034 / 7548-6846"
-        addStyles={"border-[#A4A4A4]  border-2 hover:border-primary-border-msb hover:border-2 h-100 transition duration-500 ease-in-out  transform hover:-translate-y-1"}
+        addStyles={"border-[#A4A4A4]  hover:bg-bg-1-msb border-2 hover:border-primary-border-msb hover:border-3 h-100 transition duration-500 ease-in-out  transform hover:-translate-y-1"}
       />
       <CardBranch
         href="https://maps.app.goo.gl/tctkkMnT39ZuecvY6"
         whatsAppPhone="5491124610859"
         suc_name="Belgrano"
         suc_loc="Capital Federal"
+        highlight={true}
         suc_img="/images/sucursal-belgrano.webp"
         suc_dir="Av. Juramento 1475, Piso 3 Of. 4"
         suc_phone="112461-0859"
