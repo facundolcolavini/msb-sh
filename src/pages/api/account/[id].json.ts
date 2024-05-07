@@ -32,7 +32,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
 
   try {
     const user = await db.select().from(User).where(eq(User.id, id));
-    console.log(user)
+
     if (!user) {
       throw new Error("El usuario no existe, por favor verifique la información.");
     }
