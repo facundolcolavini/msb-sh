@@ -6,6 +6,7 @@ const user = Astro.locals.user;
 import Navbar from "@/components/Navbar.astro";
 import Footer from "@/layouts/Footer.astro";
 import "@fontsource/cormorant";
+import LoadingLayout from "./LoadingLayout.astro";
 
 interface Props {
   title: string;
@@ -37,79 +38,148 @@ const { title, description, img } = Astro.props;
         <Navbar user={user} />
       </header>
       <main class="[grid-area:main] font-gotham">
+        <!--  <LoadingLayout > -->
+
         <slot id="main-content" />
+        <!-- </LoadingLayout> -->
       </main>
       <footer class="[grid-area:footer]">
         <Footer />
       </footer>
     </div>
-  </body>
-</html>
-<style is:global>
-  @font-face {
-    font-family: "Gotham";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url("/fonts/Gotham-Light.otf") format("opentype");
-  }
+  </body><style is:global>
+    @font-face {
+      font-family: "Gotham";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("/fonts/Gotham-Light.otf") format("opentype");
+    }
 
-  * {
-    box-sizing: border-box;
-    min-width: 0;
-    scroll-behavior: smooth;
-  }
+    * {
+      box-sizing: border-box;
+      min-width: 0;
+      scroll-behavior: smooth;
+    }
 
-  body {
-    background-color: #f3f4f6;
-    font-family: "Gotham", sans-serif;
-    min-height: 100vh;
-  }
+    body {
+      background-color: #f3f4f6;
+      font-family: "Gotham", sans-serif;
+      min-height: 100vh;
+    }
 
-  h1,
-  h2,
-  h3,
-  h4 {
-    text-wrap: balance;
-  }
+    h1,
+    h2,
+    h3,
+    h4 {
+      text-wrap: balance;
+    }
 
-  p {
-    text-wrap: pretty;
-  }
+    p {
+      text-wrap: pretty;
+    }
 
-  #app {
-    display: grid;
-    grid-template-areas:
-      "header"
-      "main"
-      "footer";
-    grid-template-rows: auto 1fr auto;
-  }
+    #app {
+      display: grid;
+      grid-template-areas:
+        "header"
+        "main"
+        "footer";
+      grid-template-rows: auto 1fr auto;
+    }
 
-  /* Estilos para el scrollbar */
-  .scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: transparent; /* thumb and track color */
-    overflow-y: auto;
-  }
+    /* Estilos para el scrollbar */
+    .scrollbar {
+      scrollbar-width: thin;
+      scrollbar-color: transparent; /* thumb and track color */
+      overflow-y: auto;
+    }
 
-  /* Para navegadores basados en WebKit como Chrome, Safari, etc. */
-  .scrollbar::-webkit-scrollbar {
+    /* Para navegadores basados en WebKit como Chrome, Safari, etc. */
+    .scrollbar::-webkit-scrollbar {
+      display: flex;
+      width: 9px;
+      height: 9px;
+    }
+
+    .scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+      height: 9px;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+      background-color: #1b1b1b;
+      border-radius: 3px;
+
+      height: 9px;
+      border: 3px solid #1b1b1b;
+    }
+    .spinner-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
     display: flex;
-    width: 9px;
-    height: 9px;
-  }
+    justify-content: center;
+    align-items: center;
+}
 
-  .scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-    height: 9px;
-  }
+.spinner {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #939B41;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
 
-  .scrollbar::-webkit-scrollbar-thumb {
-    background-color: #1b1b1b;
-    border-radius: 3px;
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 
-    height: 9px;
-    border: 3px solid #1b1b1b;
-  }
-</style>
+  <script is:inline>
+    document.addEventListener("astro:before-preparation", (ev) => {
+      const originalLoader = ev.loader;
+      ev.loader = async function () {
+        function startSpinner() {
+          // Create a new div element for the spinner container
+          const spinnerContainer = document.createElement("div");
+          spinnerContainer.className = "spinner-container";
+
+          // Create a new div element for the spinner
+          const spinner = document.createElement("div");
+          spinner.className = "spinner";
+
+          // Add the spinner to the container
+          spinnerContainer.appendChild(spinner);
+
+          // Add the container to the body of the document
+          document.body.appendChild(spinnerContainer);
+        }
+        function stopSpinner() {
+          const spinnerContainer = document.querySelector(".spinner-container");
+
+          // Remove the container from the document
+          if (spinnerContainer) {
+            spinnerContainer.parentNode.removeChild(spinnerContainer);
+          } else {
+            // If the spinner doesn't exist, log a warning
+            console.warn("Tried to stop spinner, but no spinner was found");
+          }
+        }
+        startSpinner();
+        await originalLoader();
+
+        stopSpinner();
+      };
+    });
+  </script>
+</html>
