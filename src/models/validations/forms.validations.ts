@@ -179,23 +179,23 @@ export const formUserValidator = {
     'El apellido es requerido '
   ],
   phone: [
-    (value: string): boolean => /^\d{7,15}$/.test(value?.trim()),
+    (value: string): boolean =>  value?.trim().length === 0 || /^\d{7,15}$/.test(value?.trim()),
     'El teléfono es requerido y debe contener entre 7 y 15 dígitos'
   ],
   phoneAlternative: [
-    (value: string): boolean => /^\d{7,15}$/.test(value?.trim()),
+    (value: string): boolean => value?.trim().length === 0 || /^\d{7,15}$/.test(value?.trim()),
     'El teléfono es requerido y debe contener entre 7 y 15 dígitos'
   ],
   street: [
-    (value: string): boolean => /^[a-zA-Z\s]+$/.test(value?.trim()),
+    (value: string): boolean => value?.trim().length === 0 || /^[a-zA-Z\s]+$/.test(value?.trim()),
     'La calle es requerida '
   ],
   addressNumber: [
-    (value: string): boolean => /^\d{1,5}$/.test(value?.trim()),
+    (value: string): boolean => value?.trim().length === 0 || /^\d{1,5}$/.test(value?.trim()),
     'El número de dirección es requerido '
   ],
   location: [
-    (value: string): boolean => /^[a-zA-Z\s]+$/.test(value?.trim()),
+    (value: string): boolean => value?.trim().length === 0 || /^[a-zA-Z\s]+$/.test(value?.trim()),
     'La localidad es requerida '
   ],
 } 
