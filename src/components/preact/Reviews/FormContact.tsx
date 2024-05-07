@@ -1,3 +1,4 @@
+import EmailIcon from '@/components/preact/Icons/EmailIcon';
 import { useForm } from "@/hooks/useForm";
 import { initContactReviewForm, type ContactReviewForm } from "@/models/reviews/reviews";
 import { formContactReviewValidator } from "@/models/validations/forms.validations";
@@ -5,12 +6,11 @@ import { navigate } from "astro/virtual-modules/transitions-router.js";
 import { useState } from "preact/hooks";
 import IconCheckCircle from "../Icons/CheckIcon";
 import ErrorIcon from "../Icons/ErrorIcon";
+import PhoneIcon from "../Icons/PhoneIcon";
 import UserIcon from "../Icons/UserIcon";
 import Spinner from "../Spinner";
 import Button from "../ui/Buttons/Button";
 import InputField from "../ui/Inputs/InputField";
-import PhoneIcon from "../Icons/PhoneIcon";
-import EmailIcon from '@/components/preact/Icons/EmailIcon';
 
 const FormContact = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -38,32 +38,25 @@ const FormContact = () => {
 
     const formData = new FormData(e.target as HTMLFormElement);
     const values = Object.fromEntries(formData);
-
+    formData.append('tipo', '');
+    formData.append('desde', 'pagweb');
+    formData.append('codsuc', 'MSB');
     try {
       setFormSubmitted(true);
-      const response = true /* await fetch(`/api/signin.json/`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-
-          body: JSON.stringify(values)
-        }
-      ) */
-      const data = { success: true, message: 'Comentario enviado' } /* await response.json() */
-      if (!data.success) {
+      const response = await fetch(`/api/webQuery.json?method=POST&telefono=${formData.get("contactPhone")}&comentario=${formData.get("contactMessage")}&nombre=${formData.get("contactName")}&apellido=${formData.get("contactLastName")}&email=${formData.get("contactEmail")}&tipo=${''}&codsuc=${'MSB'}&desde=${'pagweb'}}`,
+      )
+      const data = await response.json()
+      if (data.hasOwnProperty('error')) {
         setFormSubmitted(false)
         setFormError(true);
         throw data
       } else {
-        setTimeout(() => {  
+        setTimeout(() => {
+          setFormSubmitted(false);
           navigate('/comentarios');
           onResetForm();
-          setFormSubmitted(false);
         }, 3000)
       }
-
     } catch (e) {
       setToastMsg((e as Error).message);
       setFormSubmitted(false);
@@ -77,12 +70,12 @@ const FormContact = () => {
           ? (
             <div className="flex flex-col text-center gap-2 py-3 px-3 my-20">
               <h1 class={'font-bold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>GRACIAS POR TU COMENTARIO</h1>
-              <p  class="text-primary-text-msb text-pretty font-gotham font-normal text-2xl md:text-2xl lg:text-2xl w-full">
+              <p class="text-primary-text-msb text-pretty font-gotham font-normal text-2xl md:text-2xl lg:text-2xl w-full">
                 ¡Comentario enviado con éxito!
               </p>
               <IconCheckCircle className={'size-12 my-5 self-center fill-primary-hover-msb'} />
             </div>
-            )
+          )
           : (
             <div>
               <h1 class={'font-bold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>ENVIANOS TUS COMENTARIOS</h1>
@@ -109,7 +102,7 @@ const FormContact = () => {
                 <div className={'space-y-5'}>
                   <InputField label="E-mail" type="email" value={contactEmail} onChange={onInputChange} icon={contactEmailValid === null
                     ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                    : changeFields?.contactEmail === true ? <ErrorIcon addStyles="stroke-red-500" /> : <EmailIcon className={'flex size-5 mx-2 justify-center fill-secondary-text-msb items-center h-100 self-center place-content-center'}/>} success={contactEmailValid === null} error={changeFields?.password} addStyles="h-12" name="contactEmail" id="contactEmail" />
+                    : changeFields?.contactEmail === true ? <ErrorIcon addStyles="stroke-red-500" /> : <EmailIcon className={'flex size-5 mx-2 justify-center fill-secondary-text-msb items-center h-100 self-center place-content-center'} />} success={contactEmailValid === null} error={changeFields?.password} addStyles="h-12" name="contactEmail" id="contactEmail" />
                   {(changeFields?.contactEmail && contactEmailValid)
                     && <label htmlFor="contactEmail" className="text-xs px-2  mx-2 font-thin text-red-700">{contactEmailValid}</label>}
 
@@ -117,7 +110,7 @@ const FormContact = () => {
                 <div>
                   <InputField label="Teléfono" type="text" value={contactPhone} onChange={onInputChange} icon={contactPhoneValid === null
                     ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                    : changeFields?.contactPhone === true ? <ErrorIcon addStyles="stroke-red-500" /> : <PhoneIcon className={'flex size-5 mx-2 justify-center items-center fill-secondary-text-msb h-100 self-center place-content-center'}/>} success={contactPhoneValid === null} error={changeFields?.password} addStyles="h-12" name="contactPhone" id="contactPhone" />
+                    : changeFields?.contactPhone === true ? <ErrorIcon addStyles="stroke-red-500" /> : <PhoneIcon className={'flex size-5 mx-2 justify-center items-center fill-secondary-text-msb h-100 self-center place-content-center'} />} success={contactPhoneValid === null} error={changeFields?.password} addStyles="h-12" name="contactPhone" id="contactPhone" />
                   {(changeFields?.contactPhone && contactPhoneValid)
                     && <label htmlFor="contactPhone" className="text-xs px-2  mx-2 font-thin text-red-700">{contactPhoneValid}</label>}
                 </div>

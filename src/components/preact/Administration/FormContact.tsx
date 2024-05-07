@@ -1,7 +1,7 @@
 import EmailIcon from '@/components/preact/Icons/EmailIcon';
 import { useForm } from "@/hooks/useForm";
-import { initContactAppraisalsForm, type ContactAppraisalsForm } from "@/models/appraisals/appraisals";
-import { formContactAdministrationValidator, formContactAppraisalsValidator } from "@/models/validations/forms.validations";
+import { initContactAdministrationForm, type ContactAdministrationForm } from '@/models/administration/administration';
+import { formContactAdministrationValidator } from "@/models/validations/forms.validations";
 import { navigate } from "astro/virtual-modules/transitions-router.js";
 import { useState } from "preact/hooks";
 import IconCheckCircle from "../Icons/CheckIcon";
@@ -11,7 +11,6 @@ import UserIcon from "../Icons/UserIcon";
 import Spinner from "../Spinner";
 import Button from "../ui/Buttons/Button";
 import InputField from "../ui/Inputs/InputField";
-import { initContactAdministrationForm, type ContactAdministrationForm } from '@/models/administration/administration';
 
 const FormContact = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -44,13 +43,13 @@ const FormContact = () => {
     formData.append('codsuc', 'MSB');
     try {
       setFormSubmitted(true);
-      const response = await fetch(`/api/webQuery.json?method=POST&telefono=${formData.get("contactPhone")}&comentario=${formData.get("contactMessage")}&nombre=${formData.get("contactName")}&email=${formData.get("contactEmail")}&tipo=${''}&codsuc=${'MSB'}&desde=${'pagweb'}}`,
-      )
+      const response = await fetch(`/api/webQuery.json?method=POST&telefono=${formData.get("contactPhone")}&comentario=${formData.get("contactMessage")}&nombre=${formData.get("contactName")}&apellido=${formData.get("contactLastName")}&email=${formData.get("contactEmail")}&tipo=${''}&codsuc=${'MSB'}&desde=${'pagweb'}}`)
+
       const data = await response.json()
       if (data.hasOwnProperty('error')) {
-          setFormSubmitted(false)
-          setFormError(true);
-          throw data
+        setFormSubmitted(false)
+        setFormError(true);
+        throw data
       } else {
         setTimeout(() => {
           setFormSubmitted(false);
