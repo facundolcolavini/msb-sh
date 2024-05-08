@@ -13,6 +13,7 @@ const { user } = Astro.props;
 
 const { pathname } = Astro.url;
 let session = user ? true : false;
+
 ---
 
 <!-- Menú de navegación para pantallas grandes --><!-- Navbar para pantallas grandes -->
@@ -150,16 +151,16 @@ let session = user ? true : false;
                     Mi cuenta
                   </Link>
                   <hr class="divide divide-x-2" />
-                  <form method="POST" action="/api/auth/signout">
                     <Link
                       checkActive={false}
                       class="p-3 text-base gap-2 hover:bg-gray-200 cursor-pointer transition-all transition-duration-400 "
                     >
                       <Icon size={20} class="fill fill-black" name="logout" />
+                  <form method="POST" action="/api/auth/signout.json">
 
                       <button class="underline"> Cerrar sesión</button>
-                    </Link>
                   </form>
+                    </Link>
                 </div>
               </div>
             </NavDropDown>
@@ -249,12 +250,12 @@ let session = user ? true : false;
                   Mi cuenta
                 </Link>
                 <hr class="divide divide-x-2" />
-                <form method="POST" action="/api/auth/signout">
                   <Link
                     class="py-3 relative px-6 text-base gap-2 hover:bg-gray-200  cursor-pointer transition-all transition-duration-400"
                     checkActive={false}
                   >
-                    <LogOutIcon addStyles="fill-[#494949] stroke-[#494949]" />
+                    <Icon size={20} class="fill-[#494949] stroke-[#494949]" name="logout" />
+                <form method="POST" action="/api/auth/signout.json">
                     <button> Cerrar sesión </button>
                   </Link>
                 </form>

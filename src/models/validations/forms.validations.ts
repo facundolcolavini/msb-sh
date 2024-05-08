@@ -219,6 +219,13 @@ export const formChangePasswordValidator = {
   ]
 }
 
+export const formResetPasswordValidator = {
+  email: [
+    (value: string): boolean => /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value.trim()),
+    'El correo debe tener un formato válido'
+  ],
+
+}
 
 export function isValidEmail(email: string): boolean {
 	return /.+@.+/.test(email);

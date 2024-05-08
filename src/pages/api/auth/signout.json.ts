@@ -17,6 +17,6 @@ export async function POST(context: APIContext): Promise<Response> {
     sessionCookie.value,
     sessionCookie.attributes
   );
-
+  
   return context.redirect("/");
 }

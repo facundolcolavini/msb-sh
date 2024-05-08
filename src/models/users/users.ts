@@ -57,8 +57,8 @@ export interface UserRegister {
     lastName?: string;
     lastUpdate?: number;
     creationDate?: number;
-
 }
+
 export const initLoginForm: UserLogin = {
     email: '',
     password: '',
@@ -73,9 +73,20 @@ export const initRegisterForm: UserRegister = {
     lastUpdate: 0,
 }
 
+/* ACCOUNT */ 
 
 export const initUserChangePassword: UserChangePassword = {
     currentPassword: '',
     password: '',
     confirmPassword: '',
+}
+
+/* FORGET PASSWORD */
+
+export interface ForgetPassword {
+    email: string;
+}
+
+export const initForgetPassword: ForgetPassword = {
+    email: '',
 }

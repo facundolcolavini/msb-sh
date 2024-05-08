@@ -93,7 +93,7 @@ export async function POST(context: APIContext): Promise<Response> {
   return new Response(
     JSON.stringify({
       success: true,
-      message: "Creación de cuenta exitosa",
+      message: "Gracias por registrarte, revisa tu correo para confirmar tu cuenta.",
     }),
     {
       status: 200,
