@@ -44,7 +44,7 @@ const RegisterForm = ({ onSwitchToLogin }: Props) => {
         formData.append('lastUpdate', Date.now().toString());
         formData.append('url', window.location.href);
         const values = Object.fromEntries(formData);
-        console.log(values)
+
         try {
             
             setFormSubmitted(true);
