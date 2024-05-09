@@ -25,9 +25,9 @@ export async function POST(context: APIContext): Promise<Response> {
   }
   const emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   //If password is not valid
-  const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\!@#\$%\^&*()_+<>?-])[A-Za-z\d@\$!%*?-]{8,}$/;
+  const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\!@#$%^&*()_+<>?])[A-Za-z\d@$!%*?&]{8,}$/
 
-  if (!regexPassword.test(password.trim())) {
+  if (!regexPassword.test(password)) {
     return new Response(
       JSON.stringify({
         success: false,
