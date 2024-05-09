@@ -2,15 +2,17 @@ import generator from 'generate-password';
 
 export function generatePassword(): string {
     let password = '';
+    // La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial.
     while (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\!@#$%^&*()_+<>?])[A-Za-z\d@$!%*?&]{8,}$/.test(password)) {
+        // Debe tener al menos 8 caracteres de largo 
         password = generator.generate({
-            length: 10,
+            length: 20,
             numbers: true,
             symbols: true,
             uppercase: true,
             lowercase: true,
-            strict: true
         });
+        
     }
     return password;
 }
