@@ -1,13 +1,17 @@
 import EmailIcon from '@/components/preact/Icons/EmailIcon';
+
 import { useForm } from "@/hooks/useForm";
 import { initForgetPassword, type ForgetPassword } from '@/models/users/users';
 import { formResetPasswordValidator } from "@/models/validations/forms.validations";
+import { navigate } from 'astro/virtual-modules/transitions-router.js';
 import { useState } from "preact/hooks";
 import IconCheckCircle from "../Icons/CheckIcon";
 import ErrorIcon from "../Icons/ErrorIcon";
+import WarningAlertIcon from '../Icons/WarningAlertIcon';
 import Spinner from "../Spinner";
 import Button from "../ui/Buttons/Button";
 import InputField from "../ui/Inputs/InputField";
+import { Toast } from '../ui/Toast/Toast';
 
 const ResetPasswordForm = () => {
     const [formSubmitted, setFormSubmitted] = useState(false);
@@ -30,27 +34,27 @@ const ResetPasswordForm = () => {
 
         try {
             setFormSubmitted(true);
-            const response = true /* await fetch(`/api/signin.json/`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+            const response = await fetch(`/api/send/reset-password.json/`,
+                {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
 
-          body: JSON.stringify(values)
-        }
-      ) */
-            const data = { success: true, message: 'Comentario enviado' } /* await response.json() */
+                    body: JSON.stringify(values)
+                }
+            )
+            const data = await response.json()
             if (!data.success) {
                 setFormSubmitted(false)
                 setFormError(true);
                 throw data
             } else {
+                setToastMsg(data.message);
                 setTimeout(() => {
-                    /*    navigate('/servicios/tasaciones'); */
-                    onResetForm();
-                    setFormSubmitted(false);
-                }, 3000)
+                    navigate('/');
+                }, 4000)
+
             }
 
         } catch (e) {
@@ -62,13 +66,13 @@ const ResetPasswordForm = () => {
     return (
         <>
             <div className={'p-4 md:px-6 lg:px-5 h-fit'}>
-                {isFormValid && !formError && formSubmitted
+                {isFormValid && formSubmitted
                     ? (
                         <div className="flex flex-col text-center gap-2 py-3 px-3 my-20">
-                            <h1 class={'font-bold text-center tracking-normal transition-opacity animate-fadeIn duration-200 pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>
+                            <h1 className={'font-bold text-center tracking-normal transition-opacity animate-fadeIn duration-200 pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>
                                 ¡GRACIAS!
                             </h1>
-                            <p class="text-primary-text-msb text-pretty font-gotham font-normal  lg:text-2xl md:text-xl w-full">
+                            <p className="text-primary-text-msb text-pretty font-gotham font-normal  lg:text-2xl md:text-xl w-full">
                                 Te hemos enviado un correo con los pasos a seguir
                             </p>
                             <IconCheckCircle className={'size-12 my-5 self-center fill-primary-hover-msb'} />
@@ -76,11 +80,11 @@ const ResetPasswordForm = () => {
                     )
                     : (
                         <div>
-                            <h1 class={'font-bold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>
+                            <h1 className={'font-bold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>
                                 OLVIDE MI CONTRASEÑA
                             </h1>
                             <p
-                                class="text-primary-text-msb text-center text-pretty font-gotham font-normal lg:text-2xl md:text-xl w-full pb-6"
+                                className="text-primary-text-msb text-center text-pretty font-gotham font-normal lg:text-2xl md:text-xl w-full pb-6"
                             >
                                 Ingresa tu correo electrónico y te enviaremos un correo con los pasos a seguir
                             </p>
@@ -97,9 +101,7 @@ const ResetPasswordForm = () => {
                                 </div>
                                 {(changeFields?.email && emailValid)
                                     && <label htmlFor="E-mail" className="text-xs text-start font-thin text-red-700">{emailValid}</label>}
-                                {formError && <div className="flex gap-2  py-3 px-3 text-sm z-10 h-fit border border-red-500 rounded bg-red-200 ">{toastMsg}</div>}
-
-
+                                {formError && <Toast message={toastMsg} isVisible={formError} icon={<WarningAlertIcon />} customStyles="flex gap-2  z-10  border-2 border-primary-border-msb bg-[#EFF0F2]" duration={4000} />}
                             </form>
                         </div>
                     )

@@ -42,9 +42,11 @@ const RegisterForm = ({ onSwitchToLogin }: Props) => {
         // Add create and update date user to the form 
         formData.append('creationDate', Date.now().toString());
         formData.append('lastUpdate', Date.now().toString());
+        formData.append('url', window.location.href);
         const values = Object.fromEntries(formData);
-
+        console.log(values)
         try {
+            
             setFormSubmitted(true);
 
             const response = await fetch(`/api/auth/register.json/`,
