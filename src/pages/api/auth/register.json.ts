@@ -107,7 +107,7 @@ export async function POST(context: APIContext): Promise<Response> {
     );
 
     if (res) {
-     /*  const send = await resend.emails.send({
+      const send = await resend.emails.send({
         from: 'Matias Szpira - Bienvenida  <onboarding@resend.dev>',
         to: [`${email}`],
         subject: 'Bienvenido a la plataforma',
@@ -147,17 +147,7 @@ export async function POST(context: APIContext): Promise<Response> {
 
           })
         )
-      } */
-      return new Response(
-        JSON.stringify({
-          message: "Gracias por registrarte, revisa tu correo para confirmar tu cuenta.",
-          success: true,
-        }),
-        {
-          status: 200,
-        }
-      );
-
+      }
     } else {
       throw new Error("Hubo un problema al registrar tu cuenta, por favor intenta de nuevo.");
     }
