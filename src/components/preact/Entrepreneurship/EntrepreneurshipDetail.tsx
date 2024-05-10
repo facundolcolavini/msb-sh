@@ -183,7 +183,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
     // Add the favorite to the list API SERVER
     const addFavorite = async () => {
         try {
-            const response = await fetch(`/api/favorites/addToFavorite`, {
+            const response = await fetch(`/api/favorites/addToFavorite.json/`, {
                 method: 'POST',
                 body: JSON.stringify({
                     userId: props?.session?.userId,
@@ -215,6 +215,9 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
 
         } catch (error) {
             console.error(error);
+            setToastMessage((error as Error).message);
+            setToastVisible(true);
+            setTimeout(() => setToastVisible(false), 3000);
         }
     }
     return (
