@@ -6,9 +6,18 @@ export const POST: APIRoute = async ({ request ,cookies}) => {
   const { userId, publicationId, publicationSuc, isEntrepreneurshipPublic } = data;
 
   // Handler de los campos requeridos para el registro 
-  if(userId === undefined || publicationId === undefined || publicationSuc === undefined || isEntrepreneurshipPublic === undefined){
-
+  if (!userId ) {
+    return new Response(
+      JSON.stringify({
+        message: "Por favor registrese para poder agregar la propiedad a favoritos.",
+        success: false,
+      }),
+      {
+        status: 404,
+      }
+    );
   }
+  
   if (!publicationId || !publicationSuc) {
     return new Response(
       JSON.stringify({
@@ -55,17 +64,7 @@ export const POST: APIRoute = async ({ request ,cookies}) => {
   }
  
  */
-  if (!userId ) {
-    return new Response(
-      JSON.stringify({
-        message: "Por favor registrese para poder agregar la propiedad a favoritos.",
-        success: false,
-      }),
-      {
-        status: 404,
-      }
-    );
-  }
+
  
   try {
 

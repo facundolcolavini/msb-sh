@@ -80,14 +80,16 @@ const LoginForm = ({ onSwitchToRegister }: Props) => {
                         ? <label htmlFor="email" className="text-xs px-2 mx-2 font-thin text-red-700">{emailValid}</label>
                         : <label htmlFor="email" className="text-xs px-2 mx-2 text-gray-400">Ingresá tu email</label>}
                     <InputField label="Contraseña" type="password" value={password} onChange={onInputChange} icon={passwordValid === null ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} /> : changeFields?.password === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={passwordValid === null} error={changeFields?.password} addStyles="h-12" name="password" id="password" />
-             
-                        {(changeFields?.password && passwordValid)
-                            ? <label htmlFor="password" className="text-xs px-2  mx-2 font-thin text-red-700">{passwordValid}</label>
-                            : <label htmlFor="password" className="text-xs px-2 mx-2 text-gray-400">Ingresá tu contraseña</label>}
-                   
+
+                    {(changeFields?.password && passwordValid)
+                        ? <label htmlFor="password" className="text-xs px-2  mx-2 font-thin text-red-700">{passwordValid}</label>
+                        : <label htmlFor="password" className="text-xs px-2 mx-2 text-gray-400">Ingresá tu contraseña</label>}
+
 
                     <hr className={'divide-x-2 divide-slate-800 mx-2'} />
-                    <a href="/restablecer-clave" className="text-xs px-2  text-end text-primary-msb font-thin">Olvidé mi contraseña</a>
+                    <div className="flex justify-end">
+                        <a href="/restablecer-clave" className="text-xs px-2 hover:text-bg-2-msb w-fit text-start text-primary-msb font-thin">Olvidé mi contraseña</a>
+                    </div>
                     {formError && <div className="flex gap-2  py-3 px-3 text-sm z-10 border border-red-500 rounded bg-red-200 ">{toastMsg}</div>}
                     <div className={'flex justify-center items-center gap-2'}>
                         <Button variant="outline" addStyles="w-full py-1 px-5  hover:bg-bg-2-msb hover:text-white" type="button" onClick={onSwitchToRegister}> Crear cuenta</Button>

@@ -152,8 +152,8 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                 throw response;
             } else {
 
-                if (data.success) {
-                    setToastMessage(data.message);
+                if (data?.success) {
+                    setToastMessage(data?.message);
                     setToastVisible(true);
                     setTimeout(() => setToastVisible(false), 3000);
                 } else {
@@ -174,12 +174,12 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     // Add the favorite to the list API SERVER
     const addFavorite = async () => {
         try {
-            const response = await fetch(`/api/favorites/addToFavorite`, {
+            const response = await fetch(`/api/favorites/addToFavorite.json/`, {
                 method: 'POST',
                 body: JSON.stringify({
                     userId: props?.session?.userId,
-                    publicationId: props.propertyCode,
-                    publicationSuc: props.branchCode,
+                    publicationId: props?.propertyCode,
+                    publicationSuc: props?.branchCode,
                     isEntrepreneurshipPublic: false
                 }),
                 headers: {
@@ -189,7 +189,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             const data = await response.json();
 
             if (data.success) {
-                setToastMessage(data.message);
+                setToastMessage(data?.message);
                 setToastVisible(true);
                 setTimeout(() => setToastVisible(false), 3000);
             } else {
@@ -205,8 +205,9 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             await fetchFavorites();
 
         } catch (error) {
-
-            console.error(error);
+            setToastMessage((error as Error).message);
+            setToastVisible(true);
+            setTimeout(() => setToastVisible(false), 3000);
         }
     }
 
