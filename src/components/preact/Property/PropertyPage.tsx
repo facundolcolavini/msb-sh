@@ -5,6 +5,7 @@ import type { PropsWithChildren } from "preact/compat";
 import { useEffect, useState } from "preact/hooks";
 
 
+import type { APIResponseResultsRecords, Result } from "@/interfaces/results.records.interfaces";
 import { navigate } from "astro:transitions/client";
 import type { Session } from "lucia";
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
@@ -28,6 +29,7 @@ import ContactForm from "./ContactForm";
 import Description from "./Description";
 import DetailsList from "./DetailsList";
 import FeatureList from "./FeatureList";
+import ListPublications from "./ListPublications";
 import ServiceList from "./ServiceList";
 import TabMenu from "./TabMenu";
 
@@ -43,6 +45,7 @@ interface Props {
 const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
     const [results, setResults] = useState<ResultPropertyDetails | null>()
+    const [listPublications, setListPublications] = useState<Result | null>()
     const [isFavorited, setIsFavorited] = useState(false);
     const [toastVisible, setToastVisible] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
@@ -72,6 +75,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
         const unsubscribe = tabMenuPropertyStore.subscribe(setTabMenuProperty);
 
         fetchResults();
+
         // Limpiar la suscripción al desmontar
         return () => unsubscribe();
     }, []);
@@ -86,15 +90,18 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             setIsLoading(true);
             const response = await fetch(`/api/property.json?suc=${props.branchCode}&id=${props.propertyCode}&amaira=false${window.location.pathname.includes('emprendimiento') ? '&emprendimiento=True' : ''}`);
             const data = await response.json();
-
+            const resPub = await fetch(`/api/results.json?sellocalidades=${data.resultado?.ficha[0]?.in_loc ?? ''}&Ambientes=${data.resultado?.ficha[0]?.in_amb}&tipo_operacion=${data.resultado?.ficha[0]?.in_ope}`);
+            const dataPub: APIResponseResultsRecords = await resPub.json();
             if (data?.hasOwnProperty("error")) {
                 setResults(null);
+                setListPublications(null);
                 setIsLoading(false);
                 navigate('/404');
                 throw data;
             } else if (response?.ok) {
                 setIsLoading(false);
                 setResults(data?.resultado);
+                setListPublications(dataPub.resultado);
                 if (data.resultado?.ficha[0]?.in_vid) {
                     // Obtener el valor del parámetro 'v' de la URL del video
                     const videoUrl = data.resultado?.ficha[0]?.in_vid;
@@ -110,7 +117,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                 }
             }
         } catch (error) {
-           /*  navigate('/404'); */
+            /*  navigate('/404'); */
             console.log(error)
         }
     };
@@ -133,6 +140,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
     useEffect(() => {
         fetchFavorites();
+
     }, [props.propertyCode]);
 
     // Remove the favorite from the list  API SERVER
@@ -358,9 +366,9 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                                     pet_accepted={Boolean(results?.ficha[0]?.acepta_mascota?.toLocaleLowerCase()) ?? false}
                                 />
 
-                                <hr className={'border-secondary-text-msb '} />
-                                <div className={'flex flex-col gap-5 py-5'}>
-                                    <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb'}>Descripción</h2>
+                                <hr className={'border-secondary-text-msb w-100 relative '} />
+                                <div className={'flex flex-col gap-5 py-5 relative text-pretty'}>
+                                    <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl   md:text-start text-start  font-bold text-primary-text-msb'}>Descripción</h2>
 
                                     <Description htmlText={results?.ficha[0]?.in_obs} />
                                 </div>
@@ -417,16 +425,22 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                 </div>
 
             </section>
-            <section className={'container mx-auto  my-30 md:px-5 lg:px-10'}>
+            <section className={'container mx-auto  my-30 md:px-5 lg:px-10 animate-fadeIn duration-300'} >
+                {!isLoading ? (
+                    <ListPublications cardList={listPublications?.fichas} />
+                ) : (
+                    <div className="container mx-auto py-16">
+                        <BreadCrumbSkeleton />
+                        <div className={' grid grid-copls md:grid-cols-2 lg:grid-cols-4 gap-5'}>
+                            <CardResultSkeleton />
+                            <CardResultSkeleton />
+                            <CardResultSkeleton />
+                            <CardResultSkeleton />
+                        </div>
+                    </div>
+                )
+                }
 
-                <BreadCrumbSkeleton />
-                <BreadCrumbSkeleton />
-                <div className={'grid grid-cols-2 md:grid-cols-2  gap-5  my-10 w-100'}>
-                    <CardResultSkeleton />
-                    <CardResultSkeleton />
-                    <CardResultSkeleton />
-                    <CardResultSkeleton />
-                </div>
             </section>
             <Toast message={toastMessage} icon={<WarningAlertIcon />} isVisible={toastVisible} customStyles="flex gap-2 border  border-primary-msb  bg-[#EFF0F2]" duration={3000} />
 
