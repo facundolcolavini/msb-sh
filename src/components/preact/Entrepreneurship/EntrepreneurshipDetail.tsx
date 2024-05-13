@@ -4,7 +4,7 @@ import type { PropsWithChildren } from "preact/compat";
 import { useEffect, useState } from "preact/hooks";
 
 
-import type { APIResponseDetailEntrepreneurShip, APIResponseEntrepreneurShipUnit, DetailEntrepreneurship, ResultEntrePreneurShipUnit } from "@/interfaces/entrepreneurship.interfaces";
+import type { APIResponseDetailEntrepreneurShip, APIResponseEntrepreneurShipUnit, APIResponseEntrepreneurship, DetailEntrepreneurship, EntrePreneurShip, ResultEntrePreneurShipUnit } from "@/interfaces/entrepreneurship.interfaces";
 import { capitalize } from '@/utils/formats';
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
@@ -30,6 +30,8 @@ import WarningAlertIcon from '../Icons/WarningAlertIcon';
 import { Toast } from '../ui/Toast/Toast';
 import type { Session } from 'lucia';
 import { navigate } from 'astro:transitions/client';
+import ListPublications from './ListPublications';
+
 
 
 
@@ -44,6 +46,7 @@ interface Props {
 const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const [results, setResults] = useState<DetailEntrepreneurship | null>()
     const [resultsUnit, setResultsUnit] = useState<ResultEntrePreneurShipUnit | null>()
+    const [resultPub, setResultPub] = useState<EntrePreneurShip[] | null>(null);
     const [isFavorited, setIsFavorited] = useState(false);
     const [toastVisible, setToastVisible] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
@@ -92,21 +95,24 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
             setIsLoading(true);
             const response = await fetch(`/api/emprendimientosById.json?id=${props.propertyCode}`);
             const data: APIResponseDetailEntrepreneurShip = await response.json();
-
-            if (data?.hasOwnProperty("error")) {
+            const responsePub = await fetch(`/api/emprendimientos.json?ed_est=${data?.resultado?.emprendimiento[0]?.ed_est}`);
+            const dataPub = await responsePub.json() as APIResponseEntrepreneurship;
+  
+            if (data?.hasOwnProperty("error") ) {
                 setResults(null);
                 setIsLoading(false);
                 throw data;
-            } else if (response?.ok) {
+            }else if (response?.ok) {
                 setIsLoading(false);
-                setResults(data?.resultado);
+                setResults(data?.resultado );
+                setResultPub(dataPub.resultado.emprendimiento )
             }
         } catch (error) {
         /*     navigate('/404'); */
             console.log(error, 'ERROR');
         }
     };
-
+  
     const fetchUnits = async () => {
         try {
             setIsLoading(true);
@@ -328,7 +334,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 {/* Google map iframe */}
                 <div className={'col-start-1 cold-end-7'}>
                     {isLoading || !results?.emprendimiento[0]?.ed_coo
-                        ? <div className="h-[208px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100 animate-pulse">
+                        ? <div className="h-[400px] w-full aspect-video bg-gray-300 rounded-xl container mx-auto h-100 animate-pulse">
                             <span className="flex justify-center items-center h-full font-bold"></span>
                         </div>
                         : (
@@ -377,14 +383,21 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 </div>
             </section>
             <section className={'container mx-auto  my-30 md:px-5 lg:px-10'}>
-                <BreadCrumbSkeleton />
-                <BreadCrumbSkeleton />
-                <div className={'grid grid-cols md:grid-cols-2 lg:grid-cols-4 gap-5 my-10 w-100'}>
-                    <CardResultSkeleton />
-                    <CardResultSkeleton />
-                    <CardResultSkeleton />
-                    <CardResultSkeleton />
-                </div>
+            {!isLoading ? (
+                    <ListPublications cardList={ (resultPub as EntrePreneurShip[])?.filter(pub => pub.ed_idl !== props.propertyCode) as EntrePreneurShip[] } />
+                ) : (
+                    <div className="container mx-auto py-16">
+                        <BreadCrumbSkeleton />
+                        <div className={' grid grid-cols md:grid-cols-2 lg:grid-cols-4 gap-5'}>
+                            <CardResultSkeleton />
+                            <CardResultSkeleton />
+                            <CardResultSkeleton />
+                            <CardResultSkeleton />
+                        </div>
+                    </div>
+                )
+                }
+
             </section>
             <Toast message={toastMessage} icon={<WarningAlertIcon />} isVisible={toastVisible} customStyles="flex gap-2 border  border-primary-msb  bg-[#EFF0F2]" duration={3000} />
         </article>

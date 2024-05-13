@@ -1,33 +1,32 @@
-import type { File, hasErrorResult } from "@/interfaces/results.records.interfaces";
-import CardProperty from "../ui/Cards/CardProperty";
+import type { EntrePreneurShip } from "@/interfaces/entrepreneurship.interfaces";
+import CardEntrepreneurship from "../ui/Cards/CardEntrepreneurship";
 
 interface Props {
-    cardList: File[] | hasErrorResult
+    cardList: EntrePreneurShip[] ;
 }
 
 
 const ListPublications = ({ cardList }: Props) => {
-    // Max 4 cards per row 
     const max = 4;
-    const maxCarList = Array.isArray(cardList) && cardList?.length > max ? cardList.slice(0, max) : cardList;
+    const maxCarList =  Array.isArray(cardList) && cardList?.length > max ? cardList?.slice(0, max) : cardList;
     return (
         <>
-
             {Array.isArray(maxCarList) && maxCarList.length > 0 && (
                 <>
                     <h2 className={'font-gotham pt-20 text-xl md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pb-3'}>Publicaciones de tu interés</h2>
                     <p className={'text-sm md:text-md lg:text-lg font-base pb-8'}>Te mostramos otros anuncios relacionados con tu búsqueda</p>
                 </>
             )}
-
-
-            <div className={`grid  pb-20 gap-5 grid-cols md:grid-cols-2 lg:grid-cols-${Array.isArray(maxCarList) && maxCarList?.length && maxCarList.length > 3 ? 4 : 3}`} >
+            <div className={`grid pb-20 gap-5 grid-cols md:grid-cols-2 lg:grid-cols-${Array.isArray(maxCarList) && maxCarList?.length && maxCarList.length > 3 ? 4 : 3}`} >
                 {
                     Array.isArray(maxCarList) && maxCarList.length > 0
-                        ? maxCarList?.map((cardData: File) => (
+                        ? maxCarList?.map((cardData: EntrePreneurShip) => (
 
                             <div >
-                                <CardProperty cardData={cardData} href={`${window.location.pathname.includes('resultados-de-busqueda') ? '/resultados-de-busqueda' : '/emprendimientos'}/${cardData?.operacion}/${cardData?.in_loc}/${cardData?.direccion_completa}/${cardData?.in_suc}-${cardData?.in_num}`} key={cardData.id} />
+                                <CardEntrepreneurship
+                                    key={cardData.ed_idl}
+                                    cardData={cardData}
+                                    href={`/emprendimientos/${cardData?.ed_est}/${cardData?.ed_loc}/${cardData.ed_bar}/${cardData.codsuc}-${cardData.ed_idl}`} />
                             </div>
                         ))
                         : <>

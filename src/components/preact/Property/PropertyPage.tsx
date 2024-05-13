@@ -5,7 +5,7 @@ import type { PropsWithChildren } from "preact/compat";
 import { useEffect, useState } from "preact/hooks";
 
 
-import type { APIResponseResultsRecords, Result } from "@/interfaces/results.records.interfaces";
+import type { APIResponseResultsRecords, File, Result } from "@/interfaces/results.records.interfaces";
 import { navigate } from "astro:transitions/client";
 import type { Session } from "lucia";
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
@@ -85,6 +85,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     const handlePrint = () => {
         window.print();
     };
+
     const fetchResults = async () => {
         try {
             setIsLoading(true);
@@ -92,6 +93,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             const data = await response.json();
             const resPub = await fetch(`/api/results.json?sellocalidades=${data.resultado?.ficha[0]?.in_loc ?? ''}&Ambientes=${data.resultado?.ficha[0]?.in_amb}&tipo_operacion=${data.resultado?.ficha[0]?.in_ope}`);
             const dataPub: APIResponseResultsRecords = await resPub.json();
+
             if (data?.hasOwnProperty("error")) {
                 setResults(null);
                 setListPublications(null);
@@ -218,7 +220,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             setTimeout(() => setToastVisible(false), 3000);
         }
     }
-
+    
     return (
         <article className=" px-3 md:px-0 lg:px-0 font-gotham">
             <section className="h-full md:px-5 lg:px-10">
@@ -320,7 +322,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             </section>
             <section className="container mx-auto flex justify-between gap-2 pt-16 pb-5 md:px-5 lg:px-10">
 
-                {isLoading ? (<div className="container mx-auto pb-16"><BreadCrumbSkeleton /> </div>) : (
+                {isLoading ? (<div className="container mx-auto"><BreadCrumbSkeleton /> </div>) : (
                     <div className="flex items-end gap-1 w-fit">
                         <MapLocationIcon />
                         <span className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold">{capitalize(he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`))}</span>
@@ -337,9 +339,9 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             </section>
             <section className="container mx-auto grid grid-cols md:gap-5 lg:gap-7 md:px-5 lg:px-10">
                 {/* Google map iframe */}
-                <div className={'col-start-1 cold-end-7'}>
+                <div className={'col-start-1 cold-end-7 w-full'}>
                     {isLoading || !results?.ficha[0]?.direccion
-                        ? <div className="h-[350px] w-full bg-gray-300 rounded-xl aspect-square container mx-auto h-100 animate-pulse">
+                        ? <div className="h-[400px] w-full aspect-video bg-gray-300 rounded-xl container mx-auto h-100 animate-pulse">
                             <span className="flex justify-center items-center h-full font-bold"></span>
                         </div>
                         : (
@@ -411,7 +413,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                                         <span className="text-sm md:text-md lg:text-lg">{he.decode(results?.superficie?.dato[0])}</span>
                                     </li>) : null}
                                 </ul>
-                                {results?.caracteristicas_generales_personalizadas && (
+                                {results!?.caracteristicas_generales_personalizadas && results!?.caracteristicas_generales_personalizadas.length > 0 && (
                                     <>
                                         <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Servicios:</h2>
                                         <hr className={'border-secondary-text-msb my-3'} />
@@ -427,7 +429,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             </section>
             <section className={'container mx-auto  my-30 md:px-5 lg:px-10 animate-fadeIn duration-300'} >
                 {!isLoading ? (
-                    <ListPublications cardList={listPublications?.fichas} />
+                    <ListPublications cardList={Array.isArray(listPublications!?.fichas) ? (listPublications!?.fichas as File[]).filter(pub => pub.in_fic !== props.propertyCode) as File[] : []} />
                 ) : (
                     <div className="container mx-auto py-16">
                         <BreadCrumbSkeleton />
