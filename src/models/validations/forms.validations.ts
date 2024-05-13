@@ -96,23 +96,24 @@ export const formContactReviewValidator = {
 
 export const formContactAppraisalsValidator = {
   contactName: [
-    (value: string): boolean => /^[a-zA-Z\s]+$/.test(value.trim()),
-    'El nombre es requerido y solo puede contener letras y espacios'
+    (value: string): boolean => isValidName(value.trim()),
+    'El nombre es requerido y solo puede contener letras'
   ],
   contactLastName: [
-    (value: string): boolean => /^[a-zA-Z\s]+$/.test(value.trim()),
-    'El nombre es requerido y solo puede contener letras y espacios'
+    (value: string):  boolean =>  isValidName(value.trim()),
+    'El apellido es requerido y solo puede contener letras'
   ],
   contactEmail: [
-    (value: string): boolean => /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value.trim()),
+    (value: string): boolean => isValidEmail(value.trim()),
     'El correo debe tener un formato válido'
   ],
   contactPhone: [
-    (value: string): boolean => /^\d{7,15}$/.test(value.trim()),
+    (value: string): boolean => isValidPhone(value.trim()),
     'El teléfono es requerido y debe contener entre 7 y 15 dígitos'
   ],
   contactMessage: [
-    (value: string): boolean => value.trim().length >= 1,
+    (value: string): boolean => isValidMessage(value.trim()),
+    'El mensaje es requerido y debe contener entre 100 y 500 caracteres no permite caracteres especiales ni números'
   ],
 };
 
@@ -227,6 +228,46 @@ export const formResetPasswordValidator = {
 
 }
 
+
 export function isValidEmail(email: string): boolean {
-	return /.+@.+/.test(email);
+  let minLength = 5; // Define your minimum length here
+  let maxLength = 255; // Define your maximum length here
+
+  if (email.length < minLength || email.length > maxLength) {
+    return false;
+  }
+
+  let re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+}
+
+export function isValidName(name: string): boolean {
+  // Requisitos del regex 
+  // Debe tener 3 caracteres como mínimo
+  // Debe tener 15 caracteres como máximo
+  // Debe tener solo letras
+  // No puede tener espacios
+  // No puede tener caracteres especiales
+  // No puede tener números
+ 
+  return  /^[a-zA-Z]{3,15}$/.test(name);
+}
+
+export function isValidMessage(message: string): boolean {
+  // Requisitos del regex 
+  // Debe tener como minimo 100 caracteres
+  // Debe poder admitir hasta 500 caracteres
+  // No puede  enviar  caracteres especiales
+  // Debe tener solo letras
+  // No puede estar vacio
+
+  return /^[a-zA-Z\s]{100,500}$/.test(message);
+}
+
+export function isValidPhone(phone: string): boolean {
+  // Requisitos del regex 
+  // Debe tener 7 caracteres como mínimo
+  // Debe tener 15 caracteres como máximo
+  // Debe tener solo números
+  return /^\d{7,15}$/.test(phone);
 }
