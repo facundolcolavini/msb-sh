@@ -88,7 +88,7 @@ const SelectField = ({ opts, id, onChange, defaultOption, addStyles, variant = '
 
       {isOpen && (
 
-        <div className="absolute w-full z-10 mt-1 bg-white rounded-md shadow-lg max-h-56 ring-1 ring-black ring-opacity-2 overflow-auto font-semibold animate-fade-down animate-duration-300 scrollbar scrollbar-thumb-color scrollbar-track-color">
+        <div className="absolute w-full z-10 mt-1 bg-white rounded-md shadow-lg max-h-48 ring-1 ring-black ring-opacity-2 overflow-auto font-semibold animate-fade-down animate-duration-300 scrollbar scrollbar-thumb-color scrollbar-track-color">
           {opts?.map((option, index) => (
             <div className="bg-fixed " // Utiliza las clases de Tailwind para el scrollbar
             >
