@@ -18,8 +18,8 @@ interface Props {
 const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSubmitting }: Props) => {
   const searchPStore = searchParamsStore.get()
   const filterStore = filterItems.get();
-  console.log(filterStore)
   const [currentPage, setCurrentPage] = useState(Number(filterStore?.page?.value) ? Number(filterStore?.page?.value) : 0);
+  
   useEffect(() => {
     setCurrentPage(Number(filterStore?.page?.value) ? Number(filterStore?.page?.value) : 0);
   }, [resetPagination, isSubmitting]);
