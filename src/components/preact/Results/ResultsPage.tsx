@@ -3,7 +3,7 @@ import type { APIResponseResultsRecords, Datos, File, Result } from "@/interface
 import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@/interfaces/selects.form.interfaces"
 import { type OutputOption } from "@/utils/formats"
 import { useEffect, useState } from "preact/hooks"
-import { filterItems, resetFilter, searchParamsStore } from "src/store/filterStore"
+import { addFilterValue, filterItems, resetFilter, searchParamsStore } from "src/store/filterStore"
 import { ArrowSortIcon } from "../Icons/ArrowSortIcon"
 import SearchIcon from "../Icons/SearchIcon"
 import CardResultSkeleton from "../Skeletons/CardResultSkeleton"
@@ -51,7 +51,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     calles: { value: 'All', label: 'Calle' },
     sellocalidades: { value: 'All', label: 'Localidad' },
     barrios1: { value: 'All', label: 'Barrio' },
-    moneda: { value: 'D', label: 'U$D' },
+    moneda: { value: '0', label: 'U$D' },
     valor_minimo: { value: 'All', label: 'Desde' },
     valor_maximo: { value: 'All', label: 'Hasta' },
     rppagina: { value: '15', label: '15' },
@@ -66,12 +66,11 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [monedaSeleccionada, setMonedaSeleccionada] = useState<OutputOption>(defaultOptions?.moneda);
-
   const { handleSelect, resetSelect, handleCheckboxChange, filtersSelected } = useSearch(filtersformatted, {
     ...defaultOptions, moneda:
       monedaSeleccionada
     , ...filterStore,
-
+ 
     tipo_operacion: {
       value: window.location.search?.includes('tipo_operacion') ?
         window.location.search?.includes('tipo_operacion=A') ? 'A' :
@@ -79,12 +78,12 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
             window.location.search?.includes('tipo_operacion=V') ? 'V' : '' :
         filterStore?.tipo_operacion?.value,
       label: ""
-    }
+    },
+  
   })
 
   useEffect(() => {
     fetchResults()
-
     setIsSubmitting(false)
   }, [searchPStore])
 
@@ -293,12 +292,12 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
                       type="checkbox"
                       className="hidden"
                       id="moneda"
-                      value="D"
-                      checked={filterStore.moneda?.value === 'D'}
-                      onChange={() => handleCheckbox("moneda", "D")}
+                      value="0"
+                      checked={filterStore.moneda?.value === '0'}
+                      onChange={() => handleCheckbox("moneda", "0")}
                     />
-                    <div className={`rounded-full border bg-tertiary-bg-msb w-5 h-5 flex items-center justify-center ${filterStore.moneda?.value === 'D' ? 'bg-tertiary-bg-msb' : 'bg-white border-5 border-separate'}`}>
-                      {filterStore.moneda?.value === 'D' && <div className="w-4 h-4 border-2 rounded-full"></div>}
+                    <div className={`rounded-full border bg-tertiary-bg-msb w-5 h-5 flex items-center justify-center ${filterStore.moneda?.value === '0' ? 'bg-tertiary-bg-msb' : 'bg-white border-5 border-separate'}`}>
+                      {filterStore.moneda?.value === '0' && <div className="w-4 h-4 border-2 rounded-full"></div>}
                     </div>
                     <span className={"text-secondary-text-msb font-base  text-sm md:text-md lg:text-lg"}>U$D</span>
                   </label>

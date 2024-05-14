@@ -25,7 +25,7 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
   }, [resetPagination, isSubmitting]);
 
   const handlePageChange = (newPage: number) => {
-    if (newPage >= 0 && newPage <= paginationData?.paginas - 1) {
+    if (newPage >= 0 && newPage <= paginationData?.paginas ) {
       setCurrentPage(newPage);
       addFilterValue(
         {
@@ -57,14 +57,12 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     fetchResults();
   }, [currentPage]);
 
-  if (paginationData?.cantidad <= 0 || paginationData?.paginas <= 1) {
-    return null; // No mostrar la paginación si no hay resultados o solo hay una página.
-  }
+
 
   const renderPageButtons = () => {
     let pagesToDisplay: number[] = [];
@@ -90,7 +88,7 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
         addStyles={`hover:bg-[#E9ECEF] py-4 px-6 w-100 border-2 border-gray-200 rounded focus:outline-none  ${page === currentPage ? 'relative z-1 border-gray-200 bg-gray-200 hover:bg-gray-200 active:bg-gray-300 focus:outline-none focus:ring focus:ring-[#939B41] border-[#939B41] ' : 'py-4 px-6'} `}
         variant={"secondary"}
         onClick={() => handlePageChange(page)}
-        disabled={page >= paginationData?.paginas - 1}
+        disabled={currentPage >= paginationData?.paginas}
         id="page"
       >
         {page + 1}
@@ -126,7 +124,7 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
         variant="secondary"
         addStyles={`hidden md:flex hover:bg-[#E9ECEF]  p-5 border-2 border-gray-200 rounded-full focus:outline-none  } `}
         onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage + 3 >= paginationData?.paginas - 1}
+        disabled={currentPage + 3 >= paginationData?.paginas }
         id="page"
       >
         <ChevronRight/>
@@ -134,7 +132,7 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
       <Button
        variant="secondary"
        addStyles={`hidden md:flex hover:bg-[#E9ECEF] p-5 border-2 border-gray-200  rounded-full focus:outline-none  } `}
-       onClick={() => handlePageChange(paginationData.paginas - 1)}
+       onClick={() => handlePageChange(paginationData.paginas)}
       >
         <ArrowDobleRight   className={'size-6'}/>
       </Button>
@@ -160,7 +158,7 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
     <Button
        variant="secondary"
        addStyles={` hover:bg-[#E9ECEF]  h-fit p-4 border-2 border-gray-200  rounded-full focus:outline-none  } `}
-       onClick={() => handlePageChange(paginationData.paginas - 1)}
+       onClick={() => handlePageChange(paginationData.paginas)}
       >
         <ArrowDobleRight   className={'size-4'}/>
       </Button>
@@ -168,7 +166,7 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
         variant="secondary"
         addStyles={`hover:bg-[#E9ECEF]  h-fit p-4  border-2 border-gray-200 rounded-full focus:outline-none  } `}
         onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage + 3 >= paginationData?.paginas - 1}
+        disabled={currentPage + 3 >= paginationData?.paginas }
         id="page"
       >
         <ChevronRight  className={'size-4'}/>
