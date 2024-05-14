@@ -75,7 +75,7 @@ const SelectField = ({ opts, id, onChange, defaultOption, addStyles, variant = '
         {children ? children : (
 
           <svg
-            className={`w-4 h-4 ml-2 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+            className={`w-4 h-4 relative -right-2 transition-transform ${isOpen ? 'rotate-180' : ''}`}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 20 20"
