@@ -1,6 +1,8 @@
+import type { JSX } from 'preact'
+interface Props extends JSX.SVGAttributes<SVGSVGElement> {
+}
 
-
-function AttachmentIcon(props: React.SVGProps<SVGSVGElement>) {
+function AttachmentIcon(props:Props) {
   return (
     <svg fill="none" viewBox="0 0 24 24" height="1em" width="1em" {...props}>
       <path

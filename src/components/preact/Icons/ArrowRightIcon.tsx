@@ -1,6 +1,8 @@
 
-
-function ArrowRightIcon(props: React.SVGProps<SVGSVGElement>) {
+import type { JSX } from 'preact'
+interface Props extends JSX.SVGAttributes<SVGSVGElement> {
+}
+function ArrowRightIcon(props: Props) {
   return (
     <svg
       fill="currentColor"
