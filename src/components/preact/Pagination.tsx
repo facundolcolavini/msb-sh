@@ -57,7 +57,7 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
       console.log(error);
     }
   };
-  console.log(paginationData)
+  
   useEffect(() => {
     fetchResults();
   }, [currentPage]);
