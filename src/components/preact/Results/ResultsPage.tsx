@@ -92,7 +92,6 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     try {
       setIsLoading(true);
       const response = await fetch(`/api/results.json?${searchParamsStore.get()}`);
-      console.log(`/api/results.json?${searchParamsStore.get()}`)
       const data: APIResponseResultsRecords = await response.json();
 
       if (data.resultado.fichas?.hasOwnProperty("error")) {
