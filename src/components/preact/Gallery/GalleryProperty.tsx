@@ -55,7 +55,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
         images[0] ? (
           <div className="col-span-1 h-100 animate-fadeIn">
             <a
-              className=""
+              className="group rounded-xl hover:scale-105 hover:contrast-[110%] transition-all relative"
               href={images[0] && images[0]}
               target="_blank"
               key={galleryID + '-' + 0}
@@ -71,9 +71,19 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 width={1600}
                 height={900}
                 src={images[0] && images[0]}
-                alt="Imagen 1"
-                loading="eager"
-                className="aspect-square object-cover relative  rounded-xl inset-0 transition groud-hover:contrast-150   "
+                alt={`image-gallery-${0}`}
+                loading="lazy"
+                className="rounded-xl object-cover w-full  h-full"
+
+
+              />
+              <img
+                width={1600}
+                height={900}
+                src={images[0] && images[0]}
+                alt={`image-gallery-${0}`}
+                loading="lazy"
+                className="blur-md opacity-0 group-hover:opacity-100 absolute inset-0 transition contrast-150 -z-10 object-cover rounded-xl w-full h-full"
 
               />
             </a>
@@ -90,7 +100,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
           images[1] ? (
             <div className="col-span-1 animate-fadeIn">
               <a
-
+                className="group rounded-xl hover:scale-105 hover:contrast-[110%] transition-all relative"
                 target="_blank"
                 href={images[1] && images[1]}
                 key={galleryID + '-' + 1}
@@ -106,9 +116,20 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                   width={500}
                   height={500}
                   src={images[1] && images[1]}
-                  alt="Imagen 1"
-                  loading="eager"
+                  alt={`image-gallery-${1}`}
+                  loading="lazy"
                   className="rounded-xl aspect-square object-cover"
+
+
+                />
+                <img
+                  width={500}
+                  height={500}
+                  src={images[1] && images[1]}
+                  alt={`image-gallery-${1}`}
+                  loading="lazy"
+                  className="blur-md opacity-0 group-hover:opacity-100 absolute inset-0 transition contrast-150 -z-10 object-cover rounded-xl w-full h-full"
+
                 />
               </a>
             </div>
@@ -120,6 +141,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
           images[2] ? (
             <div className="col-span-1 animate-fadeIn">
               <a
+                className="group rounded-xl hover:scale-105 hover:contrast-[110%] transition-all relative"
                 target="_blank"
                 href={images[1] && images[2]}
                 key={galleryID + '-' + 1}
@@ -135,9 +157,20 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                   width={500}
                   height={500}
                   src={images[2] && images[2]}
-                  alt="Imagen 1"
-                  loading="eager"
+                  alt={`image-gallery-${2}`}
+                  loading="lazy"
                   className="rounded-xl aspect-square object-cover"
+
+
+                />
+                <img
+                  width={500}
+                  height={500}
+                  src={images[2] && images[2]}
+                  alt={`image-gallery-${2}`}
+                  loading="lazy"
+                  className="blur-md opacity-0 group-hover:opacity-100 absolute inset-0 transition contrast-150 -z-10 object-cover rounded-xl w-full h-full"
+
                 />
               </a>
             </div>
@@ -149,6 +182,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
           images[3] ? (
             <div className="col-span-1 animate-fadeIn">
               <a
+                className="group rounded-xl hover:scale-105 hover:contrast-[110%] transition-all relative"
                 target="_blank"
                 href={images[3]}
                 key={galleryID + '-' + 3}
@@ -164,9 +198,20 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                   width={500}
                   height={500}
                   src={images[3] && images[3]}
-                  alt="Imagen 1"
-                  loading="eager"
+                  alt={`image-gallery-${3}`}
+                  loading="lazy"
                   className="rounded-xl aspect-square object-cover"
+
+
+                />
+                <img
+                  width={500}
+                  height={500}
+                  src={images[3] && images[3]}
+                  alt={`image-gallery-${3}`}
+                  loading="lazy"
+                  className="blur-md opacity-0 group-hover:opacity-100 absolute inset-0 transition contrast-150 -z-10 object-cover rounded-xl w-full h-full"
+
                 />
               </a>
             </div>
@@ -179,7 +224,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
           images[4] ? (
             <div className="col-span-1 animate-fadeIn">
               <a
-               
+                className="group rounded-xl hover:scale-105 hover:contrast-[110%] transition-all relative"
                 target="_blank"
                 href={images[4]}
                 key={galleryID + '-' + 4}
@@ -195,11 +240,22 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                   width={500}
                   height={500}
                   src={images[4] && images[4]}
-                  alt="Imagen 1"
-                  loading="eager"
+                  alt={`image-gallery-${4}`}
+                  loading="lazy"
                   className="rounded-xl aspect-square object-cover"
+
+
                 />
-            
+                <img
+                  width={500}
+                  height={500}
+                  src={images[4] && images[4]}
+                  alt={`image-gallery-${4}`}
+                  loading="lazy"
+                  className="blur-md opacity-0 group-hover:opacity-100 absolute inset-0 transition contrast-150 -z-10 object-contain rounded-xl w-full h-full"
+
+                />
+
               </a>
             </div>
           ) : (<div className="col-span-1">
@@ -212,7 +268,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
             <div className="hidden">
               {images.slice(5)?.map((image, index) => (
                 <a
-                
+
                   href={images[index + 5]}
                   key={galleryID + '-' + index + 5}
                   data-pswp-width={imageDimensions[index + 5]?.width}
