@@ -52,7 +52,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     sellocalidades: { value: 'All', label: 'Localidad' },
     barrios1: { value: 'All', label: 'Barrio' },
     moneda: { value: '0', label: 'U$D' },
-    valor_minimo: { value: filtersformatted?.valor_minimo[0]?.value, label: 'Desde' },
+    valor_minimo: { value: '', label: 'Desde' },
     valor_maximo: { value: '', label: 'Hasta' },
     rppagina: { value: '15', label: '15' },
     in_iub: { value: '', label: '' },
@@ -109,6 +109,24 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
       console.log(error);
     }
   };
+  const handleMonedaChange = (newMoneda:OutputOption) => {
+    setMonedaSeleccionada(newMoneda);
+  
+    if (newMoneda.value === 'P') {
+      if (!filtersSelected?.valor_minimo?.value) {
+        // Establecer el valor mínimo en 10000 o en el primer valor que venga de la API
+        const valorMinimo = filtersformatted.valor_minimo[0]?.value /* || '10000' */;
+        addFilterValue({'valor_minimo': { value: valorMinimo, label: 'Desde' }});
+      }
+    } else {
+      if (!filtersSelected.valor_minimo?.value) {
+        // Establecer el valor mínimo en 0 si el usuario no ha seleccionado nada
+        addFilterValue({'valor_minimo': { value: '0', label: 'Desde' }});
+      }
+      
+      addFilterValue({'moneda': newMoneda});
+    }
+  }
 
   const handleCheckbox = (id: string, value: string) => {
     const updatedMonedaSeleccionada: OutputOption = {
@@ -116,6 +134,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
       label: id,
     };
     setMonedaSeleccionada(updatedMonedaSeleccionada);
+    handleMonedaChange(updatedMonedaSeleccionada);
     handleCheckboxChange(id, value);
   };
 
