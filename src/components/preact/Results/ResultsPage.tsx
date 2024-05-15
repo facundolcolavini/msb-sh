@@ -54,7 +54,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     moneda: { value: '0', label: 'U$D' },
     valor_minimo: { value: '', label: 'Desde' },
     valor_maximo: { value: '', label: 'Hasta' },
-    rppagina: { value: '15', label: '15' },
+    rppagina: { value: '', label: '' },
     in_iub: { value: '', label: '' },
     ordenar: { value: 'preciomenor', label: 'Ordenar' },
     in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
@@ -93,7 +93,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
       setIsLoading(true);
       const response = await fetch(`/api/results.json?${searchParamsStore.get()}`);
       const data: APIResponseResultsRecords = await response.json();
-
+      console.log(data,'data')
       if (data.resultado.fichas?.hasOwnProperty("error")) {
         setResults(null);
         setIsLoading(false);
@@ -114,7 +114,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     if (newMoneda.value === 'P') {
       if (!filtersSelected?.valor_minimo?.value) {
         // Establecer el valor mínimo en 10000 o en el primer valor que venga de la API
-        const valorMinimo = /* filtersformatted.valor_minimo[0]?.value || */ '1';
+        const valorMinimo = filtersformatted.valor_minimo[0]?.value ||  '1';
         addFilterValue({'valor_minimo': { value: valorMinimo, label: 'Desde' }});
       }
     } else {
@@ -180,7 +180,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [searchPStore]);
-
+  console.log(results?.datos)
   return (
     <article className="py-10">
       {/* Buscador */}
@@ -266,7 +266,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 md:px-0 px-3">
           <div class="lg:col-start-4 lg:col-end-13 md:hidden hidden lg:flex  items-end justify-between w-full">
-            <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.datos?.cantidadFichas : 0}</span> resultados con tu búsqueda</p>
+            <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.datos?.cantidad : 0}</span> resultados con tu búsqueda</p>
             <SelectField id="ordenar" variant="secondary" addStyles="bg-transparent relative w-full h-[56px] transition-all flex justify-between items'end h-fit py-0 w-fit gap-8" onChange={handleSelect} defaultOption={filterStore.ordenar} opts={filtersformatted.ordenar}><ArrowSortIcon /></SelectField>
 
           </div>
@@ -343,7 +343,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
                 </Button>
               </div>
               <div class="lg:col-start-4 lg:col-end-13 lg:hidden flex items-end justify-between w-full mt-4">
-                <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.datos?.cantidadFichas : 0}</span> resultados con tu búsqueda</p>
+                <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.datos?.cantidad : 0}</span> resultados con tu búsqueda</p>
                 <SelectField id="ordenar" variant="secondary" addStyles="bg-transparent relative w-full h-[56px] transition-all flex justify-between items'end h-fit py-0 w-fit" onChange={handleSelect} defaultOption={filterStore.ordenar} opts={filtersformatted.ordenar}><ArrowSortIcon /></SelectField>
               </div>
             </div>

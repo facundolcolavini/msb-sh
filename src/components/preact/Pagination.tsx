@@ -87,7 +87,7 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
         key={page}
         addStyles={`hover:bg-[#E9ECEF] py-4 px-6 w-100 border-2 border-gray-200 rounded focus:outline-none  ${page === currentPage ? 'relative z-1 border-gray-200 bg-gray-200 hover:bg-gray-200 active:bg-gray-300 focus:outline-none focus:ring focus:ring-[#939B41] border-[#939B41] ' : 'py-4 px-6'} `}
         variant={"secondary"}
-        onClick={() => handlePageChange(totalPages - 1)}
+        onClick={() => handlePageChange(page)}
         disabled={currentPage >= totalPages}
         id="page"
       >
