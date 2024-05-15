@@ -153,8 +153,8 @@ const selects = (await getAllSelects()) as Results;
       >
         La mejor selección de inmuebles en las zonas que estás buscando.
       </p>
-
-      <SliderA colsNr={3} height={10} width={10} classSlide="slider1">
+      <article  style="view-transition-name: image">
+      <SliderA colsNr={3} height={10} width={10} classSlide="slider1" >
         {
           cardData.map((card) => (
             <CardProperty
@@ -167,6 +167,7 @@ const selects = (await getAllSelects()) as Results;
           ))
         }
       </SliderA>
+      </article>
     </div>
   </section>
   <section class="bg-secondary-bg-msb px-3 md:px-0 lg:px-0 py-20">
@@ -218,6 +219,7 @@ const selects = (await getAllSelects()) as Results;
           >
         </div>
         <!-- Slider de emprendimientos -->
+        <article  style="view-transition-name: image-empre">
         <SliderA colsNr={3} height={10} width={0} classSlide="slider2">
           {
             entrepreneurship.map(
@@ -246,6 +248,7 @@ const selects = (await getAllSelects()) as Results;
             )
           }
         </SliderA>
+        </article>
       </div>
     </div>
   </section>

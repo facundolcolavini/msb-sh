@@ -25,7 +25,7 @@ const image  = data?.emprendimiento[0].img_princ;
 
 <Layout title={data?.emprendimiento[0]?.titulo} description={amig} img={image}>
   <section class="bg-[#FFFBF4] h-full py-2">
-
+    <article  style="view-transition-name: image-empre">
       <EntrepreneurshipDetail
         client:only
         session={session}
@@ -36,6 +36,6 @@ const image  = data?.emprendimiento[0].img_princ;
         <BreadCrumb slot="breadCrumbChild" url={propiedad} transition:persist />
    
       </EntrepreneurshipDetail>
-   
+    </article>
   </section>
 </Layout>

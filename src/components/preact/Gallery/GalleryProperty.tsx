@@ -62,10 +62,6 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
               data-cropped={true}
               data-pswp-width={imageDimensions[0]?.width}
               data-pswp-height={imageDimensions[0]?.height}
-              style={{
-                width: 'fit-content',
-                objectFit: 'contain'
-              }}
             >
               <img
                 width={1600}
@@ -97,10 +93,6 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 data-cropped="true"
                 data-pswp-width={imageDimensions[1]?.width}
                 data-pswp-height={imageDimensions[1]?.height}
-                style={{
-                  width: 'fit-content',
-                  objectFit: 'contain'
-                }}
               >
                 <img
                   width={500}
@@ -126,10 +118,6 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 data-cropped="true"
                 data-pswp-width={imageDimensions[2]?.width}
                 data-pswp-height={imageDimensions[2]?.height}
-                style={{
-                  width: 'fit-content',
-                  objectFit: 'contain'
-                }}
               >
                 <img
                   width={500}
@@ -163,10 +151,6 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 data-cropped="true"
                 data-pswp-width={imageDimensions[3]?.width}
                 data-pswp-height={imageDimensions[3]?.height}
-                style={{
-                  width: 'fit-content',
-                  objectFit: 'contain'
-                }}
               >
                 <img
                   width={500}
@@ -194,10 +178,6 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 data-cropped="true"
                 data-pswp-width={imageDimensions[4]?.width}
                 data-pswp-height={imageDimensions[4]?.height}
-                style={{
-                  width: 'fit-content',
-                  objectFit: 'contain'
-                }}
               >
                 <img
                   width={500}

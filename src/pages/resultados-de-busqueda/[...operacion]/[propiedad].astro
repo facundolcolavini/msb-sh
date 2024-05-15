@@ -23,18 +23,18 @@ const {titulo,img_princ,in_tip, direccion,in_loc} = data.resultado?.ficha[0]
 ---
 
 <Layout title=`${capitalize(in_tip)} - ${capitalize(direccion)} en ${capitalize(in_loc)}` description={titulo} img={img_princ}>
-  <section class="bg-[#FFFBF4] h-full py-2">
-
-      <PropertyPage
+  <section class="bg-[#FFFBF4] h-full py-2 ">
+    <article  style="view-transition-name: image">
+      <PropertyPage 
         client:only
         session={session}
         propertyCode={id}
         branchCode={suc}
         breadCrumbChild=""
+        
       >
         <BreadCrumb slot="breadCrumbChild" url={propiedad} transition:persist />
-   
       </PropertyPage>
-   
+    </article>
   </section>
 </Layout>

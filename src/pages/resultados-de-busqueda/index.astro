@@ -17,7 +17,7 @@ const locations = (await getLocations()) as ResultLocation;
 
 <Layout title="Resultados de Busqueda" description="Busca tu propiedad">
   <article class="bg-secondary-bg-msb h-full">
-    <div class="container mx-auto font-gotham">
+    <div class="container mx-auto font-gotham" style="view-transition-name: image">
       <ResultsPage session={session  || null} selects={selects} locations={locations} client:only transition:persist  />
     </div>
   </article>
