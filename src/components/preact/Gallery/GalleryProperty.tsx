@@ -73,7 +73,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 src={images[0] && images[0]}
                 alt={`image-gallery-${0}`}
                 loading="lazy"
-                className="rounded-xl object-cover w-full  h-full"
+                className="rounded-xl aspect-square object-cover"
 
 
               />
