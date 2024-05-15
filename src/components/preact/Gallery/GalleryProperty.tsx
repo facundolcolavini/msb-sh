@@ -48,7 +48,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
   useEffect(() => {
     images.forEach(loadImageCallback);
   }, [images, loadImageCallback]);
-  
+
   return (
     <div className={styles} id={galleryID}>
       {
@@ -90,13 +90,17 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
           images[1] ? (
             <div className="col-span-1 animate-fadeIn">
               <a
-                className="group rounded-xl hover:scale-105 transition-all relative aspect-squeare"
+
                 target="_blank"
                 href={images[1] && images[1]}
                 key={galleryID + '-' + 1}
                 data-cropped="true"
                 data-pswp-width={imageDimensions[1]?.width}
                 data-pswp-height={imageDimensions[1]?.height}
+                style={{
+                  width: 'fit-content',
+                  objectFit: 'contain'
+                }}
               >
                 <img
                   width={500}
@@ -116,13 +120,16 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
           images[2] ? (
             <div className="col-span-1 animate-fadeIn">
               <a
-                className="group rounded-xl hover:scale-105 transition-all relative aspect-squeare"
                 target="_blank"
                 href={images[1] && images[2]}
                 key={galleryID + '-' + 1}
                 data-cropped="true"
                 data-pswp-width={imageDimensions[2]?.width}
                 data-pswp-height={imageDimensions[2]?.height}
+                style={{
+                  width: 'fit-content',
+                  objectFit: 'contain'
+                }}
               >
                 <img
                   width={500}
@@ -150,13 +157,16 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
           images[3] ? (
             <div className="col-span-1 animate-fadeIn">
               <a
-                className="group rounded-xl hover:scale-105 transition-all relative aspect-squeare"
                 target="_blank"
                 href={images[3]}
                 key={galleryID + '-' + 3}
                 data-cropped="true"
                 data-pswp-width={imageDimensions[3]?.width}
                 data-pswp-height={imageDimensions[3]?.height}
+                style={{
+                  width: 'fit-content',
+                  objectFit: 'contain'
+                }}
               >
                 <img
                   width={500}
@@ -166,14 +176,6 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                   loading="eager"
                   className="rounded-xl aspect-square object-cover"
                 />
-                {/*     <img
-              width={500}
-              height={500}
-              src={images[3] && images[3]}
-              alt="Imagen 1"
-              loading="eager"
-              className="blur-lg absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 rounded object-cover"
-            /> */}
               </a>
             </div>
           ) : (<div className="col-span-1">
@@ -185,13 +187,17 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
           images[4] ? (
             <div className="col-span-1 animate-fadeIn">
               <a
-                className="group rounded-xl hover:scale-105 transition-all relative aspect-squeare"
+               
                 target="_blank"
                 href={images[4]}
                 key={galleryID + '-' + 4}
                 data-cropped="true"
                 data-pswp-width={imageDimensions[4]?.width}
                 data-pswp-height={imageDimensions[4]?.height}
+                style={{
+                  width: 'fit-content',
+                  objectFit: 'contain'
+                }}
               >
                 <img
                   width={500}
@@ -201,14 +207,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                   loading="eager"
                   className="rounded-xl aspect-square object-cover"
                 />
-                {/*   <img
-              width={500}
-              height={500}
-              src={images[4] && images[4]}
-              alt="Imagen 1"
-              loading="eager"
-              className="blur-lg absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 rounded object-cover"
-            /> */}
+            
               </a>
             </div>
           ) : (<div className="col-span-1">
@@ -221,12 +220,16 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
             <div className="hidden">
               {images.slice(5)?.map((image, index) => (
                 <a
-                  className="group rounded-xl hover:scale-105 object-contain transition-all relative aspect-square"
+                
                   href={images[index + 5]}
                   key={galleryID + '-' + index + 5}
-                  data-pswp-width="2000"
-                  data-pswp-height="1600"
+                  data-pswp-width={imageDimensions[index + 5]?.width}
+                  data-pswp-height={imageDimensions[index + 5]?.height}
                   data-cropped="true"
+                  style={{
+                    width: 'fit-content',
+                    objectFit: 'contain'
+                  }}
                 >
                   <img
                     loading="lazy"
