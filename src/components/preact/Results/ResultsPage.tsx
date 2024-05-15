@@ -54,7 +54,8 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     moneda: { value: '0', label: 'U$D' },
     valor_minimo: { value: '', label: 'Desde' },
     valor_maximo: { value: '', label: 'Hasta' },
-    rppagina: { value: '', label: '' },
+    rppagina: { value: '15', label: '15' },
+    page: { value: '0', label: '0' },
     in_iub: { value: '', label: '' },
     ordenar: { value: 'preciomenor', label: 'Ordenar' },
     in_tpr: { value: '', label: 'Barrios Cerrados y Countries' },
@@ -93,7 +94,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
       setIsLoading(true);
       const response = await fetch(`/api/results.json?${searchParamsStore.get()}`);
       const data: APIResponseResultsRecords = await response.json();
-      console.log(data,'data')
+   
       if (data.resultado.fichas?.hasOwnProperty("error")) {
         setResults(null);
         setIsLoading(false);
@@ -114,7 +115,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     if (newMoneda.value === 'P') {
       if (!filtersSelected?.valor_minimo?.value) {
         // Establecer el valor mínimo en 10000 o en el primer valor que venga de la API
-        const valorMinimo = filtersformatted.valor_minimo[0]?.value ||  '1';
+        const valorMinimo = /* filtersformatted.valor_minimo[0]?.value ||  */ '1';
         addFilterValue({'valor_minimo': { value: valorMinimo, label: 'Desde' }});
       }
     } else {
@@ -180,7 +181,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     document.addEventListener('keydown', handleKeyPress);
     return () => document.removeEventListener('keydown', handleKeyPress);
   }, [searchPStore]);
-  console.log(results?.datos)
+
   return (
     <article className="py-10">
       {/* Buscador */}
