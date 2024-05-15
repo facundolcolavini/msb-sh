@@ -26,6 +26,7 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
 
   const handlePageChange = (newPage: number) => {
     if (newPage >= 0 && newPage < totalPages) {
+      // Establecer la página actual en la nueva página
       setCurrentPage(newPage);
       addFilterValue(
         {
@@ -124,7 +125,8 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
           variant="secondary"
           addStyles={`hidden md:flex hover:bg-[#E9ECEF]  p-5 border-2 border-gray-200 rounded-full focus:outline-none  } `}
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage + 3 >= paginationData?.paginas}
+          disabled={currentPage + 1 >= paginationData?.paginas}
+
           id="page"
         >
           <ChevronRight />
@@ -132,7 +134,7 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
         <Button
           variant="secondary"
           addStyles={`hidden md:flex hover:bg-[#E9ECEF] p-5 border-2 border-gray-200  rounded-full focus:outline-none  } `}
-          onClick={() => handlePageChange(paginationData.paginas)}
+          onClick={() => handlePageChange(paginationData.paginas - 1)}
         >
           <ArrowDobleRight className={'size-6'} />
         </Button>
@@ -158,7 +160,8 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
         <Button
           variant="secondary"
           addStyles={` hover:bg-[#E9ECEF]  h-fit p-4 border-2 border-gray-200  rounded-full focus:outline-none  } `}
-          onClick={() => handlePageChange(paginationData.paginas)}
+          onClick={() => handlePageChange(paginationData?.paginas - 1)}
+          disabled={currentPage > paginationData?.paginas - 1} // Aquí está la corrección
         >
           <ArrowDobleRight className={'size-4'} />
         </Button>
@@ -166,7 +169,7 @@ const Pagination = ({ paginationData, setData, setLoading, resetPagination, isSu
           variant="secondary"
           addStyles={`hover:bg-[#E9ECEF]  h-fit p-4  border-2 border-gray-200 rounded-full focus:outline-none  } `}
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage + 3 >= paginationData?.paginas}
+          disabled={currentPage + 1 >= paginationData?.paginas}
           id="page"
         >
           <ChevronRight className={'size-4'} />
