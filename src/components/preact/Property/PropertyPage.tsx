@@ -220,7 +220,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             setTimeout(() => setToastVisible(false), 3000);
         }
     }
-    
+
     return (
         <article className=" px-3 md:px-0 lg:px-0 font-gotham">
             <section className="h-full md:px-5 lg:px-10">
