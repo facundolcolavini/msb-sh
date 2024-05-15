@@ -25,6 +25,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
   useEffect(() => {
     let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
       gallery: '#' + galleryID,
+      preload: [1, 5],
       children: 'a',
       pswpModule: () => import('photoswipe'),
     });
