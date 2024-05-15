@@ -114,7 +114,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     if (newMoneda.value === 'P') {
       if (!filtersSelected?.valor_minimo?.value) {
         // Establecer el valor mínimo en 10000 o en el primer valor que venga de la API
-        const valorMinimo = filtersformatted.valor_minimo[0]?.value /* || '10000' */;
+        const valorMinimo = /* filtersformatted.valor_minimo[0]?.value || */ '1';
         addFilterValue({'valor_minimo': { value: valorMinimo, label: 'Desde' }});
       }
     } else {
