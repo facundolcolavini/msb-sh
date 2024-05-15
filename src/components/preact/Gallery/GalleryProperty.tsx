@@ -58,9 +58,8 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
               className=""
               href={images[0] && images[0]}
               target="_blank"
-              loading="lazy"
               key={galleryID + '-' + 0}
-              data-cropped={true}
+              data-cropped="true"
               data-pswp-width={imageDimensions[0]?.width}
               data-pswp-height={imageDimensions[0]?.height}
               style={{
@@ -98,6 +97,10 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 data-cropped="true"
                 data-pswp-width={imageDimensions[1]?.width}
                 data-pswp-height={imageDimensions[1]?.height}
+                style={{
+                  width: 'fit-content',
+                  objectFit: 'cover'
+                }}
               >
                 <img
                   width={500}
@@ -123,6 +126,10 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 data-cropped="true"
                 data-pswp-width={imageDimensions[2]?.width}
                 data-pswp-height={imageDimensions[2]?.height}
+                style={{
+                  width: 'fit-content',
+                  objectFit: 'cover'
+                }}
               >
                 <img
                   width={500}
@@ -132,14 +139,6 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                   loading="eager"
                   className="rounded-xl aspect-square object-cover"
                 />
-                {/*  <img
-              width={500}
-              height={500}
-              src={images[2] && images[2]}
-              alt="Imagen 1"
-              loading="eager"
-              className="blur-lg absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 rounded object-cover"
-            /> */}
               </a>
             </div>
           ) : (<div className="col-span-1">
@@ -156,6 +155,10 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 data-cropped="true"
                 data-pswp-width={imageDimensions[3]?.width}
                 data-pswp-height={imageDimensions[3]?.height}
+                style={{
+                  width: 'fit-content',
+                  objectFit: 'cover'
+                }}
               >
                 <img
                   width={500}
@@ -183,6 +186,10 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 data-cropped="true"
                 data-pswp-width={imageDimensions[4]?.width}
                 data-pswp-height={imageDimensions[4]?.height}
+                style={{
+                  width: 'fit-content',
+                  objectFit: 'cover'
+                }}
               >
                 <img
                   width={500}
