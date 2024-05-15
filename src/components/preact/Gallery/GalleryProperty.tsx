@@ -58,10 +58,15 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
               className=""
               href={images[0] && images[0]}
               target="_blank"
+              loading="lazy"
               key={galleryID + '-' + 0}
               data-cropped={true}
               data-pswp-width={imageDimensions[0]?.width}
               data-pswp-height={imageDimensions[0]?.height}
+              style={{
+                width: 'fit-content',
+                objectFit: 'cover'
+              }}
             >
               <img
                 width={1600}
