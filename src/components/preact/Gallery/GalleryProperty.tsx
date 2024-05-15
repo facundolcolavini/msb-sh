@@ -14,6 +14,7 @@ interface Props {
 const loadImage = (image: string, setImageDimensions: (dimensions: { width: number; height: number }) => void) => {
   const img = new Image();
   img.onload = function () {
+    // need a intrisic width and height
     setImageDimensions({ width: img.width, height: img.height });
   };
   img.src = image;
@@ -22,11 +23,13 @@ const loadImage = (image: string, setImageDimensions: (dimensions: { width: numb
 
 export default function GalleryProperty({ addStyles, galleryID, images }: Props) {
   const baseStyles = 'pswp-gallery';
+  const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number }[]>([]);
+ 
   useEffect(() => {
     let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
       gallery: '#' + galleryID,
-      preload: [1, 5],
       children: 'a',
+      initialZoomLevel: 'fit',
       pswpModule: () => import('photoswipe'),
     });
     lightbox.init();
@@ -38,7 +41,6 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
   }, []);
 
   const styles = twMerge(clsx(baseStyles, addStyles));
-  const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number }[]>([]);
 
   const loadImageCallback = useCallback((image: string) => {
     loadImage(image, (dimensions) => {
@@ -47,8 +49,12 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
   }, []);
 
   useEffect(() => {
-    images.forEach(loadImageCallback);
-  }, [images, loadImageCallback]);
+    images.forEach((image) => {
+      loadImage(image, (dimensions) => {
+        setImageDimensions((prevDimensions) => [...prevDimensions, dimensions]);
+      });
+    });
+  }, [images]);
 
   return (
     <div className={styles} id={galleryID}>
@@ -65,12 +71,12 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
               data-pswp-height={imageDimensions[0]?.height}
               style={{
                 width: 'fit-content',
-                objectFit: 'cover'
+                objectFit: 'contain'
               }}
             >
               <img
-                width={1600}
-                height={900}
+                   width={1600}
+                   height={900}
                 src={images[0] && images[0]}
                 alt={`image-gallery-${0}`}
                 loading="lazy"
@@ -110,7 +116,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 data-pswp-height={imageDimensions[1]?.height}
                 style={{
                   width: 'fit-content',
-                  objectFit: 'cover'
+                  objectFit: 'contain'
                 }}
               >
                 <img
@@ -151,7 +157,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 data-pswp-height={imageDimensions[2]?.height}
                 style={{
                   width: 'fit-content',
-                  objectFit: 'cover'
+                  objectFit: 'contain'
                 }}
               >
                 <img
@@ -192,7 +198,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 data-pswp-height={imageDimensions[3]?.height}
                 style={{
                   width: 'fit-content',
-                  objectFit: 'cover'
+                  objectFit: 'contain'
                 }}
               >
                 <img
@@ -234,7 +240,8 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                 data-pswp-height={imageDimensions[4]?.height}
                 style={{
                   width: 'fit-content',
-                  objectFit: 'cover'
+                  objectFit: 'contain'
+                  
                 }}
               >
                 <img
@@ -277,14 +284,18 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
                   data-cropped="true"
                   style={{
                     width: 'fit-content',
-                    objectFit: 'contain'
+                    objectFit: 'contain',
+                    aspectRatio: `auto`
+                    
                   }}
                 >
                   <img
                     loading="lazy"
                     src={image}
+                    data-pswp-width={imageDimensions[index + 5]?.width}
+                    data-pswp-height={imageDimensions[index + 5]?.height}
                     alt="Imagen"
-                    className="blur-lg absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 rounded object-cover"
+                    className="blur-lg absolute inset-0 transition groud-hover:contrast-150 opacity-70 -z-10 rounded object-contain"
                   />
                 </a>
               ))}
