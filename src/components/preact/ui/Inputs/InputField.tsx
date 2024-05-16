@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import type { FunctionComponent, JSX } from 'preact';
-import { useState } from 'preact/hooks';
+import { useRef, useState } from 'preact/hooks';
 import { twMerge } from 'tailwind-merge';
 import IconEyeInvisible from '../../Icons/EyeInvisibleIcon';
 import IconEye from '../../Icons/EyeIcon';
@@ -35,7 +35,7 @@ const InputField: FunctionComponent<InputFieldProps> = ({
   const [isFocused, setIsFocused] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false); // New state variable
   const hasValue = value && value.length > 0;
-
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const labelPositionY = isFocused || hasValue ? '-2' : 'top-1';
 
   const labelClasses = clsx(
@@ -53,7 +53,7 @@ const InputField: FunctionComponent<InputFieldProps> = ({
   );
 
   const inputClasses = clsx(
-    `w-full h-full rounded-md transition-all duration-200 focus:outline-none focus:ring-0 ${icon ? 'pr-10' : ''}`,
+    `w-full  h-full rounded-md transition-all duration-200 focus:outline-none focus:ring-0 ${icon ? 'pr-10' : ''}`,
     {
       'border ': isFocused || hasValue,
       'border-gray-300': !error && !success && !isFocused,
@@ -62,32 +62,44 @@ const InputField: FunctionComponent<InputFieldProps> = ({
       'ring-0': true,
       'p-4': type !== 'textarea',
       'p-3': type === 'textarea',
-      'input-file-upload' : type === 'file',
-    }
+      'hidden' : type === 'file',
+    },
+     type === 'file' && {
+     'input-file-upload curso-pointer p-0 w-100 h-full': true,
+     
+        'border border-red-500': error && !success,
+        'border-primary-border-msb cursor-pointer p-10 w-100 h-full': success && !error,
+     
+  }
   );
 
   return (
     <div className={inputContainerClasses}>
       {label && (
         <label htmlFor={id} className={labelClasses}>
-          {label}
+          {
+            // max caracter 20 else show 20 and rest ...
+           label
+          }
         </label>
       )}
       {
         type === 'file' ? (
-          <div className='input-file-upload'>
-          <label className="input-file-icon" htmlFor={id}>
+          <div      className={inputClasses}>
+          <label className="input-file-icon mx-4" htmlFor={id}>
             {icon}
           </label>
           <input
             id={id}
             type={type}
-            className={inputClasses}
+       
+            ref={fileInputRef}
             onChange={onChange as JSX.GenericEventHandler<HTMLInputElement>}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             {...inputProps}
           />
+         
         </div>
         ):
       
