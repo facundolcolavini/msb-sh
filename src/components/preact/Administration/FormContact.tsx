@@ -74,7 +74,6 @@ const FormContact = () => {
       onResetForm();
     }
   };
-  console.log({formError:formError,isFormValid :isFormValid})
 
   return (
     <>
