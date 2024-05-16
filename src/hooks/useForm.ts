@@ -13,7 +13,7 @@ export const useForm = <T>(initialValues: T, formValidations: FormValidations = 
     const [formState, setFormState] = useState<typeof initialValues>(initialValues);//{email: '', password: '', displayName: '',} RegisterUser = T
     const [formValidation, setValidations] = useState({} as formCheckedValues);
     const [changeFields, setChangeFields] = useState<Record<string, boolean>>({});
-
+   
     useEffect(() => {
         createValidators()
     }, [formState])

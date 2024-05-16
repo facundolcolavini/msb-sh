@@ -11,6 +11,8 @@ import UserIcon from "../Icons/UserIcon";
 import Spinner from "../Spinner";
 import Button from "../ui/Buttons/Button";
 import InputField from "../ui/Inputs/InputField";
+import { Toast } from '../ui/Toast/Toast';
+import WarningAlertIcon from '../Icons/WarningAlertIcon';
 
 const FormContact = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -57,6 +59,7 @@ const FormContact = () => {
         setFormError(true);
         throw data
       } else {
+        setToastMsg(data.message);
         setTimeout(() => {
           navigate('/servicios/tasaciones');
           onResetForm();
@@ -102,14 +105,14 @@ const FormContact = () => {
                 <div>
                   <InputField label="Apellido" type="text" value={contactLastName} onChange={onInputChange} icon={contactLastNameValid === null
                     ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                    : changeFields?.contactLastName === true ? <ErrorIcon addStyles="stroke-red-500" /> : <UserIcon className={'flex size-5 mx-2 justify-center items-center fill-secondary-text-msb h-100 self-center place-content-center'} />} success={contactLastNameValid === null} error={changeFields?.password} addStyles="h-12" name="contactLastName" id="contactLastName" />
+                    : changeFields?.contactLastName === true ? <ErrorIcon addStyles="stroke-red-500" /> : <UserIcon className={'flex size-5 mx-2 justify-center items-center fill-secondary-text-msb h-100 self-center place-content-center'} />} success={contactLastNameValid === null} error={changeFields?.contactLastName} addStyles="h-12" name="contactLastName" id="contactLastName" />
                   {(changeFields?.contactLastName && contactLastNameValid)
                     && <label htmlFor="contactLastName" className="text-xs px-2  mx-2 font-thin text-red-700">{contactLastNameValid}</label>}
                 </div>
                 <div className={'space-y-5'}>
                   <InputField label="E-mail" type="email" value={contactEmail} onChange={onInputChange} icon={contactEmailValid === null
                     ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                    : changeFields?.contactEmail === true ? <ErrorIcon addStyles="stroke-red-500" /> : <EmailIcon className={'flex size-5 mx-2 justify-center fill-secondary-text-msb items-center h-100 self-center place-content-center'} />} success={contactEmailValid === null} error={changeFields?.password} addStyles="h-12" name="contactEmail" id="contactEmail" />
+                    : changeFields?.contactEmail === true ? <ErrorIcon addStyles="stroke-red-500" /> : <EmailIcon className={'flex size-5 mx-2 justify-center fill-secondary-text-msb items-center h-100 self-center place-content-center'} />} success={contactEmailValid === null} error={changeFields?.contactEmail} addStyles="h-12" name="contactEmail" id="contactEmail" />
                   {(changeFields?.contactEmail && contactEmailValid)
                     && <label htmlFor="contactEmail" className="text-xs px-2  mx-2 font-thin text-red-700">{contactEmailValid}</label>}
 
@@ -117,7 +120,7 @@ const FormContact = () => {
                 <div>
                   <InputField label="Teléfono" type="text" value={contactPhone} onChange={onInputChange} icon={contactPhoneValid === null
                     ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                    : changeFields?.contactPhone === true ? <ErrorIcon addStyles="stroke-red-500" /> : <PhoneIcon className={'flex size-5 mx-2 justify-center items-center fill-secondary-text-msb h-100 self-center place-content-center'} />} success={contactPhoneValid === null} error={changeFields?.password} addStyles="h-12" name="contactPhone" id="contactPhone" />
+                    : changeFields?.contactPhone === true ? <ErrorIcon addStyles="stroke-red-500" /> : <PhoneIcon className={'flex size-5 mx-2 justify-center items-center fill-secondary-text-msb h-100 self-center place-content-center'} />} success={contactPhoneValid === null} error={changeFields?.contactPhone} addStyles="h-12" name="contactPhone" id="contactPhone" />
                   {(changeFields?.contactPhone && contactPhoneValid)
                     && <label htmlFor="contactPhone" className="text-xs px-2  mx-2 font-thin text-red-700">{contactPhoneValid}</label>}
                 </div>
@@ -125,11 +128,10 @@ const FormContact = () => {
                 <div className={'md:col-span-2 lg:col-span-2'}>
                   <InputField label="Dejanos tu mensaje..." type="textarea" value={contactMessage} onChange={onInputChange} icon={contactMessageValid === null
                     ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                    : changeFields?.contactMessage === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={contactMessageValid === null} error={changeFields?.password} addStyles="place-content-start h-[8rem]" name="contactMessage" id="contactMessage" />
+                    : changeFields?.contactMessage === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={contactMessageValid === null} error={changeFields?.contactMessage} addStyles="place-content-start h-[8rem]" name="contactMessage" id="contactMessage" />
                   {(changeFields?.contactMessage && contactMessageValid)
                     && <label htmlFor="contactMessage" className="text-xs px-2  mx-2 font-thin text-red-700">{contactMessageValid}</label>}
                 </div>
-                {formError && <div className="flex gap-2  py-3 px-3 text-sm z-10 h-fit border border-red-500 rounded bg-red-200 ">{toastMsg}</div>}
                 <div className={'md:col-start-2 lg:col-start-2'}>
                   <div className={'flex justify-end items-center gap-2 '}>
                     <Button variant={`${isFormValid ? "primary" : "disabled"}`} addStyles="flex w-full py-4 text-lg  lg:px-32 md:px-32 md:w-fit lg:w-fit gap-2 justify-center text-white border border-gray-400" type="submit"><span>Enviar</span> {formSubmitted && isFormValid && <Spinner />}</Button>
@@ -137,7 +139,8 @@ const FormContact = () => {
                 </div>
 
               </form>
-            </div>
+              {!formError && <Toast message={toastMsg} isVisible={formSubmitted} icon={<WarningAlertIcon />} customStyles="flex   z-10 gap-2 border-2 border-primary-border-msb bg-[#EFF0F2]" duration={3000} />}
+            {formError && <Toast message={toastMsg} isVisible={formError} icon={<WarningAlertIcon />} customStyles="flex gap-2  z-10  border-2 border-primary-border-msb bg-[#EFF0F2]" duration={3000} />}            </div>
           )
         }
 

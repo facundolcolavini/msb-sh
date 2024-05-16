@@ -10,7 +10,7 @@ export const GET: APIRoute = async ({ url }) => {
     url.searchParams.forEach((value, key) => {
         queryParams[key] = value;
     });
-
+    
     try {
         const data = await fetchData('consultas_web', queryParams);
        
