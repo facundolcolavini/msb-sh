@@ -77,7 +77,7 @@ const FormContact = () => {
       setFormSubmitted(false);
     }
   };
-  console.log(contactFile)
+
   return (
     <>
       <div className={'p-4 md:px-6 lg:px-5 h-fit'}>
