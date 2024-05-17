@@ -54,7 +54,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
         setImageDimensions((prevDimensions) => [...prevDimensions, dimensions]);
       });
     });
-  }, [images]);
+  }, [images, galleryID, loadImageCallback]);
 
   return (
     <div className={styles} id={galleryID}>
