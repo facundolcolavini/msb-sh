@@ -141,9 +141,7 @@ const FormContact = () => {
                     <Button variant={`${isFormValid ? "primary" : "disabled"}`} addStyles="flex w-full py-4 text-lg  lg:px-32 md:px-32 md:w-fit lg:w-fit gap-2 justify-center text-white border border-gray-400" type="submit"><span>Enviar</span> {formSubmitted && isFormValid && <Spinner />}</Button>
                   </div>
                 </div>
-
-              </form>
-            
+              </form>        
             {formError && <Toast message={toastMsg} isVisible={formError} icon={<WarningAlertIcon />} customStyles="flex gap-2  z-10  border-2 border-red-500 bg-[#EFF0F2]" duration={4000} />}
             </div>
           )
