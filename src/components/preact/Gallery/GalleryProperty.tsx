@@ -29,7 +29,7 @@ export default function GalleryProperty({ addStyles, galleryID, images }: Props)
     let lightbox: PhotoSwipeLightbox | null = new PhotoSwipeLightbox({
       gallery: '#' + galleryID,
       children: 'a',
-      initialZoomLevel: 'fit',
+      preload: [1, 5],
       pswpModule: () => import('photoswipe'),
     });
     lightbox.init();
