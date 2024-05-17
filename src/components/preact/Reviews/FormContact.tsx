@@ -75,7 +75,7 @@ const FormContact = () => {
   return (
     <>
       <div className={'p-4 md:px-6 lg:px-5 h-fit'}>
-        {isFormValid && !formError && formSubmitted
+        {!formError && formSubmitted
           ? (
             <div className="flex flex-col text-center gap-2 py-3 px-3 my-20">
               <h1 class={'font-bold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>GRACIAS POR TU COMENTARIO</h1>
