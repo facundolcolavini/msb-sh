@@ -6,11 +6,9 @@ import { navigate } from "astro:transitions/client";
 import { useState } from "preact/hooks";
 import IconCheckCircle from "../Icons/CheckIcon";
 import ErrorIcon from "../Icons/ErrorIcon";
-import WarningAlertIcon from "../Icons/WarningAlertIcon";
 import Spinner from "../Spinner";
 import Button from "../ui/Buttons/Button";
 import InputField from "../ui/Inputs/InputField";
-import { Toast } from "../ui/Toast/Toast";
 
 interface Props {
     onSwitchToLogin: (event: Event) => void;
@@ -19,6 +17,7 @@ interface Props {
 const RegisterForm = ({ onSwitchToLogin }: Props) => {
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [formError, setFormError] = useState(false);
+    const [resDataStatus, setResDataStatus] = useState(false);
     const [toastMsg, setToastMsg] = useState('');
     const {
         isFormValid,
@@ -46,7 +45,7 @@ const RegisterForm = ({ onSwitchToLogin }: Props) => {
         const values = Object.fromEntries(formData);
 
         try {
-            
+
             setFormSubmitted(true);
 
             const response = await fetch(`/api/auth/register.json/`,
@@ -59,30 +58,30 @@ const RegisterForm = ({ onSwitchToLogin }: Props) => {
                     body: JSON.stringify(values)
                 }
             )
-            const data = await response.json()
 
+            const data = await response.json()
+            await fetch(`/api/auth/signout.json`,
+                {
+                    method: 'POST',
+                    redirect: 'follow',
+                }
+            );
             if (!data.success) {
+                console.log('AAA')
+                setResDataStatus(false)
                 setFormSubmitted(false)
                 setFormError(true);
                 throw data
             } else {
-                await fetch(`/api/auth/signout.json`,
-                    {
-                        method: 'POST',
-                    }
-                );
-
+                setResDataStatus(true)
                 setToastMsg(data.message);
                 setTimeout(() => {
                     setFormSubmitted(false);
+                    setResDataStatus(false)
+                    setModalAuth({ changeToLogin: false, changeToRegister: false });
                     navigate(window.location.pathname);
                     onResetForm();
-                    setModalAuth({ changeToLogin: false, changeToRegister: false });
-
                 }, 4000)
-
-
-
             }
 
         } catch (e) {
@@ -94,45 +93,64 @@ const RegisterForm = ({ onSwitchToLogin }: Props) => {
     return (
         <>
 
-            <h1 className={'font-bold  relative text-center mx-auto px-6 pt-5'}>CREAR CUENTA</h1>
-            <div className={'p-4 md:px-6 lg:px-5 h-fit'}>
-                <form className="grid grid-cols text-start gap-3 h-fit font-thin font-gotham" noValidate onSubmit={register}>
-                    <div className="flex gap-2">
-                        <InputField label="Nombre" value={firstName} onChange={onInputChange} icon={firstNameValid === null
-                            ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                            : changeFields?.firstName === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={firstNameValid === null} error={changeFields?.firstName} addStyles="h-12" name="firstName" id="firstName" type="text" />
-
-                        <InputField label="Apellido" value={lastName} onChange={onInputChange} icon={lastNameValid === null
-                            ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                            : changeFields?.lastName === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={lastNameValid === null} error={changeFields?.lastName} addStyles="h-12" name="lastName" id="lastName" type="text" />
+            {resDataStatus
+                ? (
+                    <div className="flex flex-col text-center   text-pretty gap-2 py-3 px-6 mx-2 my-20">
+                        {/*  {!formError && formSubmitted && <Toast message={toastMsg} isVisible={formSubmitted} icon={<WarningAlertIcon />} customStyles="flex   z-10 gap-2 border-2 border-primary-border-msb bg-[#EFF0F2]" duration={3000} />} */}
+                        <h1 class={'font-bold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>Bienvenido
+                            <span class={'text-primary-msb py-5'}> {firstName} {lastName}</span>
+                        </h1>
+                        <p class="text-primary-text-msb text-pretty font-gotham font-normal text-sm  lg:text-2xl md:text-xl w-full">
+                            {toastMsg}
+                        </p>
+                        <IconCheckCircle className={'size-12 my-5 self-center fill-primary-hover-msb'} />
                     </div>
 
-                    {(changeFields?.firstName && firstNameValid)
-                        ? <label htmlFor="firstName" className="text-xs px-2 mx-2 font-thin text-red-700">{firstNameValid}</label>
-                        : lastNameValid && changeFields?.lastName
-                            ? <label htmlFor="lastName" className="text-xs px-2 mx-2 font-thin text-red-700">{lastNameValid}</label>
-                            : null}
+                )
+                : (
+                    <>
+                        <h1 className={'font-bold  relative text-center mx-auto px-6 pt-5'}>CREAR CUENTA</h1>
+                        <div className={'p-4 md:px-6 lg:px-5 h-fit'}>
+                            <form className="grid grid-cols text-start gap-3 h-fit font-thin font-gotham" noValidate onSubmit={register}>
+                                <div className="flex gap-2">
+                                    <InputField label="Nombre" value={firstName} onChange={onInputChange} icon={firstNameValid === null
+                                        ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
+                                        : changeFields?.firstName === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={firstNameValid === null} error={changeFields?.firstName} addStyles="h-12" name="firstName" id="firstName" type="text" />
 
-                    <InputField label="Email" value={email} onChange={onInputChange} icon={emailValid === null
-                        ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                        : changeFields?.email === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={emailValid === null} error={changeFields?.email} addStyles="h-12" name="email" id="email" type="email" />
-                    {(changeFields?.email && emailValid)
-                        ? <label htmlFor="email" className="text-xs px-2 mx-2 font-thin text-red-700">{emailValid}</label>
-                        : <label htmlFor="email" className="text-xs px-2 mx-2 text-gray-400">Ingresá tu email</label>}
-                    <InputField label="Contraseña" type="password" value={password} onChange={onInputChange} icon={passwordValid === null ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} /> : changeFields?.password === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={passwordValid === null} error={changeFields?.password} addStyles="h-12" name="password" id="password" />
-                    {(changeFields?.password && passwordValid)
-                        ? <label htmlFor="password" className="text-xs px-2  mx-2 font-thin text-red-700">{passwordValid}</label>
-                        : <label htmlFor="password" className="text-xs px-2 mx-2 text-gray-400">Ingresá tu contraseña</label>}
-                    <hr className={'divide-x-2 divide-slate-800 mx-2'} />
-                    {formError && <div className="flex gap-2  py-3 px-3 text-sm z-10 border border-red-500 rounded bg-red-200 ">{toastMsg}</div>}
-                    {isFormValid && !formError && formSubmitted && <div className="text-sm text-[#45484C] p-3 flex gap-2 border-2 border-primary-border-msb bg-[#EFF0F2]">{toastMsg}</div>}
-                    <div className={'flex justify-center items-center gap-2'}>
-                        <Button variant="outline" type="button" addStyles="w-full py-1 px-5  hover:bg-bg-2-msb hover:text-white" onClick={onSwitchToLogin}> Ya tengo cuenta</Button>
-                        <Button variant={`${isFormValid ? "primary" : "disabled"}`} addStyles="flex w-full py-1 px-5  gap-2 justify-center text-white border border-gray-400" type="submit"><span>Crear cuenta</span> {formSubmitted && isFormValid && <Spinner />}</Button>
-                    </div>
-                   
-                </form>
-            </div>
+                                    <InputField label="Apellido" value={lastName} onChange={onInputChange} icon={lastNameValid === null
+                                        ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
+                                        : changeFields?.lastName === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={lastNameValid === null} error={changeFields?.lastName} addStyles="h-12" name="lastName" id="lastName" type="text" />
+                                </div>
+
+                                {(changeFields?.firstName && firstNameValid)
+                                    ? <label htmlFor="firstName" className="text-xs px-2 mx-2 font-thin text-red-700">{firstNameValid}</label>
+                                    : lastNameValid && changeFields?.lastName
+                                        ? <label htmlFor="lastName" className="text-xs px-2 mx-2 font-thin text-red-700">{lastNameValid}</label>
+                                        : null}
+
+                                <InputField label="Email" value={email} onChange={onInputChange} icon={emailValid === null
+                                    ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
+                                    : changeFields?.email === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={emailValid === null} error={changeFields?.email} addStyles="h-12" name="email" id="email" type="email" />
+                                {(changeFields?.email && emailValid)
+                                    ? <label htmlFor="email" className="text-xs px-2 mx-2 font-thin text-red-700">{emailValid}</label>
+                                    : <label htmlFor="email" className="text-xs px-2 mx-2 text-gray-400">Ingresá tu email</label>}
+                                <InputField label="Contraseña" type="password" value={password} onChange={onInputChange} icon={passwordValid === null ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} /> : changeFields?.password === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={passwordValid === null} error={changeFields?.password} addStyles="h-12" name="password" id="password" />
+                                {(changeFields?.password && passwordValid)
+                                    ? <label htmlFor="password" className="text-xs px-2  mx-2 font-thin text-red-700">{passwordValid}</label>
+                                    : <label htmlFor="password" className="text-xs px-2 mx-2 text-gray-400">Ingresá tu contraseña</label>}
+                                <hr className={'divide-x-2 divide-slate-800 mx-2'} />
+                                {formError && <div className="flex gap-2  py-3 px-3 text-sm z-10 border border-red-500 rounded bg-red-200 ">{toastMsg}</div>}
+
+                                <div className={'flex justify-center items-center gap-2'}>
+                                    <Button variant="outline" type="button" addStyles="w-full py-1 px-5  hover:bg-bg-2-msb hover:text-white" onClick={onSwitchToLogin}> Ya tengo cuenta</Button>
+                                    <Button variant={`${isFormValid ? "primary" : "disabled"}`} addStyles="flex w-full py-1 px-5  gap-2 justify-center text-white border border-gray-400" type="submit"><span>Crear cuenta</span> {formSubmitted && isFormValid && <Spinner />}</Button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </>
+                )
+            }
         </>
     )
 }

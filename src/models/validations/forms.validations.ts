@@ -28,8 +28,8 @@ export interface formCheckedValues {
 
 export const formRegisterValidator = {
   email: [
-    (value: string): boolean => /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value.trim()),
-    'El correo debe tener un formato válido'
+    (value: string): boolean => isValidEmail(value.trim()),
+    'El correo debe tener un formato válido y debe tener un máximo de 50 caracteres'
   ],
   firstName: [
     (value: string): boolean => isValidName(value.trim()),
@@ -39,7 +39,7 @@ export const formRegisterValidator = {
     (value: string): boolean => isValidName(value.trim()),
     'El apellido es requerido y debe ser de 3 a 50 caracteres'
   ],
-  password: [(value: string): boolean => isValidPassword(value.trim()), 'La contraseña es requerida y debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial']
+  password: [(value: string): boolean => isValidPassword(value.trim()), 'La contraseña debe tener entre 8 y 50 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial.']
 }
 
 export const formLoginValidator = {
@@ -47,7 +47,7 @@ export const formLoginValidator = {
     (value: string): boolean => isValidEmail(value.trim()),
     'El correo debe tener un formato válido y debe tener un máximo de 50 caracteres'
   ],
-  password: [(value: string): boolean => isValidPassword(value.trim()), 'La contraseña es requerida y debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial']
+  password: [(value: string): boolean => isValidPassword(value.trim()), 'La contraseña debe tener entre 8 y 50 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial.']
 }
 
 export const formContactValidator = {

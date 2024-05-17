@@ -144,21 +144,24 @@ export async function POST(context: APIContext): Promise<Response> {
         return new Response(
           JSON.stringify({
             message: "Gracias por registrarte, revisa tu correo para confirmar tu cuenta.",
-            status: 200,
+           
             success: true,
             id: send.data.id,
-          })
+          }) , {
+            status: 200
+          }
         )
       } else {
         // Si no lo puede enviar da un error
         return new Response(
           JSON.stringify({
             message: 'Hubo un problema al enviar el correo',
-            status: 500,
             success: false,
             statusText: send.error
 
-          })
+          }), {
+            status: 500
+          }
         )
       }
     } else {
