@@ -2,9 +2,9 @@ import type { APIRoute } from "astro";
 import { Favorites, Session, User, db, eq } from "astro:db";
 
 export const PATCH: APIRoute = async ({ params, request }) => {
-  const { firstName, lastName, /* password */ phone, phoneAlternative, street, addressNumber, location } = await request.json();
+  const { firstName, lastName, phone, phoneAlternative, street, addressNumber, location } = await request.json();
   const id = params.id
-  /* let newPassword: string; */
+
   // Handler de los campos requeridos para el registro 
   if (!firstName || !lastName) {
     return new Response(
@@ -56,7 +56,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
         })
       );
     } else {
-      throw new Error("prob, bob");
+      throw new Error("No se pudo actualizar la información del usuario.");
     }
   } catch (e) {
     console.error(e);

@@ -41,13 +41,25 @@ export const PATCH: APIRoute = async ({ request }) => {
       );
     }
     //If password is not valid
-    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\!@#\$%\^&*()_+<>?-])[A-Za-z\d@\$!%*?-]{8,}$/;
+    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\!@#$%^&*()_+<>?])[A-Za-z\d@$!%*?&]{8,50}$/
   
-    if (!regexPassword.test(password.trim())) {
+    if (!regexPassword.test(password)) {
       return new Response(
         JSON.stringify({
           success: false,
-          message: "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial.",
+          message: "La contraseña debe tener entre 8 y 50 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial.",
+        }),
+        {
+          status: 400,
+        }
+      );
+    }
+    //minimo 8 caracteres y maximo 50. 
+    if (password.length < 8 || password.length > 50) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: "La contraseña debe tener entre 8 y 50 caracteres",
         }),
         {
           status: 400,

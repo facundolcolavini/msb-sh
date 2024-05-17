@@ -46,7 +46,7 @@ export async function POST(context: APIContext): Promise<Response> {
     }
 
     // Validate email with regex pattern 
-
+    const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\!@#$%^&*()_+<>?])[A-Za-z\d@$!%*?&]{8,50}$/
     const emailPattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (typeof email !== "string" || !emailPattern.test(email.trim())) {
@@ -60,15 +60,28 @@ export async function POST(context: APIContext): Promise<Response> {
       });
     }
 
-    if (typeof password !== "string" || password.length < 4) {
+    if (!regexPassword.test(password)) {
       return new Response(
-        JSON.stringify(
-          {
-            message: "La contraseña debe de contener 4 caracteres de largo",
-            success: false
-          }), {
-        status: 400,
-      });
+        JSON.stringify({
+          success: false,
+          message: "La contraseña debe tener entre 8 y 50 caracteres, una letra mayúscula, una letra minúscula, un número y un caracter especial.",
+        }),
+        {
+          status: 400,
+        }
+      );
+    }
+    //minimo 8 caracteres y maximo 50. 
+    if (password.length < 8 || password.length > 50) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: "La contraseña debe tener entre 8 y 50 caracteres",
+        }),
+        {
+          status: 400,
+        }
+      );
     }
 
     // Insert user into db
