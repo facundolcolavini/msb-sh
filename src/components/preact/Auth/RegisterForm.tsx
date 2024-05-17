@@ -67,7 +67,6 @@ const RegisterForm = ({ onSwitchToLogin }: Props) => {
                 }
             );
             if (!data.success) {
-                console.log('AAA')
                 setResDataStatus(false)
                 setFormSubmitted(false)
                 setFormError(true);
