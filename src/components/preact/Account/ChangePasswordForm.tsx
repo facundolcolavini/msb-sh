@@ -130,7 +130,7 @@ const ChangePasswordForm = ({ userData }: Props) => {
                     <div className={'flex justify-center gap-2 md:justify-end lg:justify-end font-bold h-fit w-full bg-gr px-5 text-pretty p-3 rounded border border-primary-msb'}>
                         <WarningAlertIcon addStyles={'size-8 flex items-center justify-center fill-white'} />
                         <p className="text-black  text-xs">{
-                            'La contraseña actual es requerida y debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.'
+                            `La contraseña actual es requerida y debe tener entre 8 y 50 caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.`
                         }</p></div>
                 </div>
                 <div className={' lg:col-span-2  flex justify-center md:justify-end lg:justify-end h-full'}>

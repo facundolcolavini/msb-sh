@@ -4,7 +4,6 @@ import { db, eq, User } from "astro:db";
 import { Argon2id } from "oslo/password";
 
 export async function POST(context: APIContext): Promise<Response> {
-  /*   console.log(context.locals.session) */
   //read the form data
   const formData = await context.request.json()
   const { password, email } = formData;
@@ -101,7 +100,7 @@ export async function POST(context: APIContext): Promise<Response> {
 
   const session = await lucia.createSession(foundUser.id, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
-  console.log(sessionCookie)
+
   context.cookies.set(
     sessionCookie.name,
     sessionCookie.value,
