@@ -53,7 +53,56 @@ export const PATCH: APIRoute = async ({ params, request }) => {
                 from: 'Matias Szpira - Cambio de clave <onboarding@resend.dev>',
                 to: [`${email}`],
                 subject: 'Nueva contraseña generada',
-                html: `<p>Que tal  tu nueva contraseña es : ${newPassword}</p>`,
+                html: `
+                <div style="
+                background-color:#939B41;
+                padding: 20px;
+                color: white;
+                border-radius: 10px;
+                text-align: center;
+                font-family: Arial, sans-serif;
+                font-size: 20px;
+                margin: 20px;
+              ">
+                <h1 >Restablecimiento de contraseña</h1>
+                </div>
+                <div style="
+                background-color:#f8f9fa;
+                color: white;
+                padding: 20px;
+                border-radius: 10px;
+                text-align: center;
+                font-family: Arial;
+                height: 100%;
+                font-size: 20px;
+                font-weight: bold;
+                margin: 20px;
+              "> 
+           
+              <p style="
+                color: #6c757d;
+                font-size: 18px;
+                margin-bottom: 20px;
+              ">Hola ${foundUser.firstName} ${foundUser.lastName},</p>
+              <p style="
+                color: #6c757d;
+                font-size: 18px;
+                margin-bottom: 20px;
+              ">Hemos restablecido tu contraseña. Tu nueva contraseña es:</p>
+              <p style="
+                color: #dc3545;
+                font-size: 18px;
+                font-weight: bold;
+                margin-bottom: 20px;
+              ">${newPassword}</p>
+              <p style="
+                color: #6c757d;
+                font-size: 18px;
+                margin-bottom: 20px;
+              ">Por favor, inicia sesión y cambia tu contraseña lo antes posible por seguridad.</p>
+            </div>
+            
+                `,
                 text: `Que tal tu nueva contraseña es : ${newPassword}`
             })
 

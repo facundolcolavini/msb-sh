@@ -8,9 +8,11 @@ import { lucia } from "../../../auth";
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
 export async function POST(context: APIContext): Promise<Response> {
+  
   //Parse the form data
   const formData = await context.request.json()
   const { password, email, firstName, lastName, url } = formData;
+  const logo = url + '/logo.png'
   //Validate the form data
   //search the user
   try {
@@ -124,17 +126,76 @@ export async function POST(context: APIContext): Promise<Response> {
         from: 'Matias Szpira - Bienvenida  <onboarding@resend.dev>',
         to: [`${email}`],
         subject: 'Bienvenido a la plataforma',
+
         html: `
-      <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
-      <div>
-        <div class="text-xl font-medium text-black">Cuenta creada con éxito</div>
-        <p class="text-gray-500">Hola, ${firstName}</p>
-        <p class="text-gray-500">Te damos la bienvenida a nuestra plataforma, tu cuenta ha sido creada con éxito.</p>
-        <p class="text-gray-500">Por favor logueate en la plataforma para comenzar a disfrutar de nuestros servicios.</p>
-        <a href="${url}" class="mt-3 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">Iniciar sesión</a>
-      </div>
-    </div>
-      `,
+        <div style="
+          background-color: #939B41;
+          color: white;
+          padding: 20px;
+          border-radius: 10px;
+          text-align: center;
+          font-family: Arial;
+          font-size: 20px;
+          font-weight: bold;
+          margin: 20px;
+        "> 
+        <h1> Bienvenido a la plataforma </h1>
+        </div>
+        <div style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+          font-family: Arial;
+          font-size: 20px;
+          font-weight: bold;
+          margin: 20px;
+          border-radius: 10px;
+          background-color: white;
+          color: black;
+        ">
+        <div>
+          <div style="
+            font-size: 30px;
+            font-weight: bold;
+            color: #1B1B1B;
+          ">Cuenta creada con éxito</div>
+          <p style="
+            font-size: 20px;
+            color: gray;
+          ">Hola, ${firstName}</p>
+          <p style="
+            font-size: 20px;
+            color: gray;
+          ">Te damos la bienvenida a nuestra plataforma, tu cuenta ha sido creada con éxito.</p>
+          <p style="
+            font-size: 20px;
+            color: gray;
+          ">Por favor logueate en la plataforma para comenzar a disfrutar de nuestros servicios.</p>
+          <p style="
+            font-size: 20px;
+            color: gray;
+          ">
+          Gracias por confiar en nosotros.
+          </p>
+          <p style=" 
+            font-size: 20px;
+            color: #939B41;
+          ">
+            Matias Szpira
+          </p>
+          <a href="${url}" style="
+            background-color: #4E5A2B;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+          ">Iniciar sesión</a>
+        </div>
+        </div>
+        `,
         text: ` 
         Hola , ${firstName}
         Te damos la bienvenida a nuestra plataforma, tu cuenta ha sido creada con éxito.
@@ -144,12 +205,12 @@ export async function POST(context: APIContext): Promise<Response> {
         return new Response(
           JSON.stringify({
             message: "Gracias por registrarte, revisa tu correo para confirmar tu cuenta.",
-           
+
             success: true,
             id: send.data.id,
-          }) , {
-            status: 200
-          }
+          }), {
+          status: 200
+        }
         )
       } else {
         // Si no lo puede enviar da un error
@@ -160,8 +221,8 @@ export async function POST(context: APIContext): Promise<Response> {
             statusText: send.error
 
           }), {
-            status: 500
-          }
+          status: 500
+        }
         )
       }
     } else {

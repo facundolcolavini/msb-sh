@@ -59,7 +59,7 @@ const ContactForm = ({ codsuc = 'MSB', tipo = '', desde = 'pagweb' }: ContactFor
 
                 throw data
             } else {
-                    setToastMsg("Consulta enviada")
+                setToastMsg("Consulta enviada")
                 setTimeout(() => {
                     setFormSubmitted(false);
                     // navigate('/servicios/administracion');

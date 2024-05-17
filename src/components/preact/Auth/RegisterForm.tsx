@@ -42,6 +42,7 @@ const RegisterForm = ({ onSwitchToLogin }: Props) => {
         formData.append('creationDate', Date.now().toString());
         formData.append('lastUpdate', Date.now().toString());
         formData.append('url', window.location.href);
+        // Pasa la imagen de public logo a la api
         const values = Object.fromEntries(formData);
 
         try {
