@@ -226,7 +226,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             <section className="h-full md:px-5 lg:px-10">
                 <header className="container mx-auto lg:flex justify-between items-center px-0 transition-all">
                     {isLoading ? <BreadCrumbSkeleton /> : props.breadCrumbChild}
-                    <Button onClick={toggleModal} addStyles="bg-primary-bg-hover-msb py-3 w-100 rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer">Consultar</Button>
+                    <Button onClick={toggleModal} addStyles="bg-primary-bg-hover-msb py-3 w-100 rounded-lg px-12 lg:text-lg md:text-md text-white tracking-wide cursor-pointer lg:w-fit w-full">Consultar</Button>
                 </header>
                 {modalState.isOpen && (
                     <Modal
