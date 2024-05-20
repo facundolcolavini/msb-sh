@@ -1,9 +1,4 @@
 ---
-import propertyItuzaingo from "@/assets/ituzaingo-property.webp";
-import teamImage from "@/assets/team-background.webp";
-import heroImage from "@/assets/us-background.webp";
-import propertyRobles from "@/assets/robles-property.webp";
-import propertyMoron from "@/assets/moron-property.webp";
 import HeroContainer from "@/components/HeroContainer.astro";
 import TitleSections from "@/components/TitleSections.astro";
 import Layout from "@/layouts/Layout.astro";
@@ -16,7 +11,10 @@ const description =
 
 <Layout title={title} description={description}>
   <article>
-    <HeroContainer transition:animate={"fade"} img={heroImage}>
+    <HeroContainer
+      transition:animate={"fade"}
+      img={"/images/us-background.webp"}
+    >
       <div
         class="drop-shadow-md container px-8 mx-auto w-full h-full grid grid-cols-1 lg:grid-cols gap-14 place-content-center place-items-center md:place-items-center lg:place-items-start text-white text-start md:text-center lg:text-start text-pretty self-center lg:self-start font-gotham"
       >
@@ -75,7 +73,7 @@ const description =
             width={840}
             height={491}
             class="w-full h-100"
-            src={teamImage}
+            src={"/images/team-background.webp"}
             alt="Matías Szpira Bienes Raíces"
           />
         </div>
@@ -226,23 +224,24 @@ const description =
             width={648}
             height={403}
             alt="Propiedad en Ituzaingó"
-            src={propertyItuzaingo}
+            src={"/images/ituzaingo-property.webp"}
           />
         </div>
         <div></div>
         <div>
           <Image
-            src={propertyRobles}
+            src={"/images/robles-property.webp"}
             alt="Propiedad en Robles"
             width={428}
             height={304}
-            class="w-full" />
+            class="w-full"
+          />
         </div>
         <div>
           <Image
             width={836}
             height={548}
-            src={propertyMoron}
+            src={"/images/moron-property.webp"}
             alt="Propiedad en Morón"
             class="lg:relative md:relative md:-top-20 lg:-top-20 w-full aspect-auto"
           />

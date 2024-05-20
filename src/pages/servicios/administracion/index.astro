@@ -3,7 +3,6 @@ import HeroContainer from "@/components/HeroContainer.astro";
 import FormContact from "@/components/preact/Administration/FormContact";
 import Layout from "@/layouts/Layout.astro";
 
-import heroImage from "@/assets/building-background.webp";
 const title = "Administración - Matías Szpira Bienes Raíces";
 const description =
   "Administración de propiedades en Matías Szpira Bienes Raíces. Nos encargamos de la administración de tu propiedad, para que no tengas que preocuparte por nada.";
@@ -13,7 +12,7 @@ const description =
   <article>
     <HeroContainer
       transition:animate={"fade"}
-      img={heroImage}
+      img={"/images/building-background.webp"}
     >
       <div
         class="drop-shadow-md container px-8 mx-auto w-full h-full grid grid-cols-1 lg:grid-cols gap-7 place-content-center place-items-center md:place-items-center lg:place-items-start text-white text-start md:text-center lg:text-start self-center lg:self-start font-gotham"

@@ -4,8 +4,7 @@
     "paths": {
       "@/*":[
         "./src/*"
-      ],
-      "@assets/*": ["src/assets/*"]
+      ]
     }
   },
   "extends": "astro/tsconfigs/strict",
