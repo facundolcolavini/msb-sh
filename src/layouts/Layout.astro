@@ -48,13 +48,19 @@ const { title, description, img } = Astro.props;
     </div>
   </body><style is:global>
     @font-face {
+      font-family: "Gotham-Medium";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("/fonts/Gotham-Medium.otf") format("opentype");
+    }
+    @font-face {
       font-family: "Gotham";
       font-style: normal;
       font-weight: 400;
       font-display: swap;
       src: url("/fonts/Gotham-Light.otf") format("opentype");
     }
-
     * {
       box-sizing: border-box;
       min-width: 0;

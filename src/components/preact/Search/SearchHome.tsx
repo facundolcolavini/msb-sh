@@ -1,4 +1,4 @@
-import type { APIResponseLocations, FilterDefault, FilterSelects, Location, ResultLocation, Results } from '@/interfaces/selects.form.interfaces';
+import type { APIResponseLocations, FilterDefault, FilterSelects, Results } from '@/interfaces/selects.form.interfaces';
 
 import { useSearch } from '@/hooks/useSearch.ts';
 import { defaultsFilters, filterResultToFill, labelMappingResultForQuerys } from '@/utils/filter-default';
@@ -83,8 +83,11 @@ const SearchHome = ({ selects }: Props) => {
     <>
 
       <div className="container z-1 ">
-        <div className="grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-12 gap-4 md:px-0 px-3 ">
-          <div className="lg:col-start-1 lg:col-end-3  md:grid-col-start-1 md:grid-col-end-2 flex gap-4">
+        <div className="mx-auto grid bg-[#D9D9D9] bg-opacity-40 rounded grid-cols lg:grid-cols-12 gap-4 lg:py-5 lg:px-0 md:p-5 p-5  ">
+          <div class="lg:col-start-1 lg:col-end-1 lg:w-[100px]">
+            {' '}
+          </div>
+          <div className="col-start-1 col-end-12 lg:col-start-2 lg:col-end-4">
             <Button
               variant="outline"
               onClick={handleSelect}
@@ -95,7 +98,7 @@ const SearchHome = ({ selects }: Props) => {
               Venta
             </Button>
           </div>
-          <div className="lg:col-start-3 lg:col-end-5  md:grid-col-start-2 md:grid-col-end-4 flex gap-4">
+          <div className="col-start-1 col-end-12  lg:col-start-4 lg:col-end-6">
             <Button
               variant="outline"
               onClick={handleSelect}
@@ -106,7 +109,7 @@ const SearchHome = ({ selects }: Props) => {
               Alquiler
             </Button>
           </div>
-          <div className="lg:col-start-5 lg:col-end-9  md:grid-col-start-4 md:grid-col-end-2 flex gap-4">
+          <div className="col-start-1 col-end-12 lg:col-start-6 lg:col-end-9">
             <Button
               variant="outline"
               onClick={handleSelect}
@@ -114,56 +117,45 @@ const SearchHome = ({ selects }: Props) => {
               addStyles={`sm:text-sm md:text-md lg:text-lg  text-ellipsis overflow-hidden ... w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
               id="tipo_operacion"
             >
-              Temporiario
+              Alquiler Temporario
             </Button>
           </div>
-          <div className="lg:col-start-9 lg:col-end-13 flex col-start-1 col-end-4  md:grid-col-start-2 md:grid-col-end-4 gap-4">
+          <div className="lg:col-start-9 lg:col-end-12 col-start-1 col-end-12 text-ellipsis overflow-hidden ... text-nowrap">
             <Button
               variant="outline"
-              onClick={handleSelect} // Llama a handleSelect cuando se hace clic en el botón
+              onClick={handleSelect}
               value={filtersSelected?.in_tpr?.value}
-              addStyles={`sm:text-sm md:text-md lg:text-lg text-ellipsis overflow-hidden ... w-full ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
+              addStyles={`sm:text-sm md:text-md lg:text-lg  w-full ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
               id="in_tpr"
             >
               Barrios Cerrados y Countries
             </Button>
           </div>
-          {/* Selector e input de la fila inferior */}
-          <div className="lg:col-start-1   lg:col-end-3 col-start-1 col-end-4 flex  h-full  ">
-            <SelectField addStyles='h-fit md:h-fit lg:h-full' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
+          <div className="col-start-1 col-end-12 lg:col-start-2 lg:col-end-4">
+            <SelectField addStyles='lg:h-full' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
           </div>
-          <div className="md:col-1 lg:col-start-3 col-span-3  lg:col-end-13 md:col-start-1 md:col-end-4 flex gap-4  w-full flex-grow ">
+          <div className=" col-start-1 col-end-12 lg:col-start-4 lg:col-end-9">
             <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />
-            <div className="gap-4">
-              <Button
-                variant="primary"
-                onClick={send}
-                className="lg:w-auto text-base lg:text-lg xl:text-xl  bg-red-500 text-white"
-                addStyles="sm:text-sm md:text-md lg:text-lg border-2 border-gray-300 rounded-md  flex w-full justify-center items-center"
-              >
-                <div className={'flex gap-2 justify-center items-center lg:pr-3'}>
-                  <SearchIcon className={'size-7'} />
-                  <span className={'hidden md:hidden lg:flex '}>BUSCAR</span>
-                </div>
-
-              </Button>
-            </div>
           </div>
-          {/* Botón de búsqueda de la fila inferior */}
-          {/*  <div className=" md:hidden lg:flex lg:col-start-11  lg:col-end-13 flex  gap-4">
+          <div className="col-start-1 col-end-12 lg:col-start-9 lg:col-end-12">
             <Button
               variant="primary"
               onClick={send}
-              className="lg:w-auto text-base lg:text-lg xl:text-xl p-3 bg-red-500 text-white"
-              addStyles='w-full sm:text-sm md:text-md lg:text-lg flex lg:flex-grow justify-center items-center gap-2'
+              addStyles="rounded-md  shadow-lg w-full h-[56px] py-3 active:bg-bg-2-msb text-pretty hover:bg-bg-2-msb transition duration-500 ease-in-out"
             >
-              <div><SearchIcon /></div>
-
-              BUSCAR
+               <div className={'flex gap-2 justify-center items-center lg:pr-3'}>
+                <SearchIcon className={'hidden lg:flex size-7 lg:size-9'} />
+                <span className={'lg:flex lg:text-lg '}>BUSCAR</span>
+              </div>
             </Button>
-          </div> */}
-
+          </div>
+          <div class="lg:col-start-11 lg:col-end-12 lg:w-[100px]">
+            {' '}
+          </div>
         </div>
+
+
+
       </div>
 
 

@@ -5,7 +5,7 @@ import animations from "tailwindcss-animated";
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
-    animate: ["responsive", "hover", "focus"],
+    animate: ["responsive", "hover", "focus", "group-hover"	],
     animation: {
       none: "none",
       spin: "spin 1s linear infinite",
@@ -128,6 +128,7 @@ export default {
         cormorant: ["Cormorant","Inter", ...defaultTheme.fontFamily.sans],
         inter: ["Inter", ...defaultTheme.fontFamily.sans],
         gotham : ["Gotham", ...defaultTheme.fontFamily.sans],
+        gothamMedium : ["GothamMedium", ...defaultTheme.fontFamily.sans],
         // Añade aquí cualquier otra familia de fuentes personalizada que necesites.
       },
     },

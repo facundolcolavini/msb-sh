@@ -38,6 +38,7 @@ const SearchEntrepreneurship = ({ selects,locations }: Props) => {
     resetFilter({})
     resetSelect(defaultOptions)
   }, [])
+  
   const navigateToPage = (e: JSXInternal.TargetedMouseEvent<HTMLButtonElement>) => {
     handleSelect(e)
     navigate(`/emprendimientos${searchPStore.length > 0 ? `?${searchPStore}` : ''}`);

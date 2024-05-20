@@ -1,7 +1,13 @@
 ---
+import propertyItuzaingo from "@/assets/ituzaingo-property.webp";
+import teamImage from "@/assets/team-background.webp";
+import heroImage from "@/assets/us-background.webp";
+import propertyRobles from "@/assets/robles-property.webp";
+import propertyMoron from "@/assets/moron-property.webp";
 import HeroContainer from "@/components/HeroContainer.astro";
 import TitleSections from "@/components/TitleSections.astro";
 import Layout from "@/layouts/Layout.astro";
+import { Image } from "astro:assets";
 
 const title = "Nosotros - Matías Szpira Bienes Raíces";
 const description =
@@ -10,7 +16,7 @@ const description =
 
 <Layout title={title} description={description}>
   <article>
-    <HeroContainer transition:animate={"fade"} img="/images/us-background.webp">
+    <HeroContainer transition:animate={"fade"} img={heroImage}>
       <div
         class="drop-shadow-md container px-8 mx-auto w-full h-full grid grid-cols-1 lg:grid-cols gap-14 place-content-center place-items-center md:place-items-center lg:place-items-start text-white text-start md:text-center lg:text-start text-pretty self-center lg:self-start font-gotham"
       >
@@ -65,9 +71,11 @@ const description =
         class="grid grid-cols gap-5 md:grid-cols lg:grid-cols-2 container px-8 mx-auto"
       >
         <div class="">
-          <img
+          <Image
+            width={840}
+            height={491}
             class="w-full h-100"
-            src="/images/team-background.webp"
+            src={teamImage}
             alt="Matías Szpira Bienes Raíces"
           />
         </div>
@@ -213,14 +221,29 @@ const description =
       <div
         class="container px-8 mx-auto relative grid lg:grid lg:grid-cols-2 md:grid md:grid-cols-2 w-100 py-10"
       >
-        <div><img src="/images/ituzaingo-property.webp" class="" /></div>
+        <div>
+          <Image
+            width={648}
+            height={403}
+            alt="Propiedad en Ituzaingó"
+            src={propertyItuzaingo}
+          />
+        </div>
         <div></div>
         <div>
-          <img src="/images/robles-property.webp" class="w-full aspect-auto" />
+          <Image
+            src={propertyRobles}
+            alt="Propiedad en Robles"
+            width={428}
+            height={304}
+            class="w-full" />
         </div>
         <div>
-          <img
-            src="/images/moron-property.webp "
+          <Image
+            width={836}
+            height={548}
+            src={propertyMoron}
+            alt="Propiedad en Morón"
             class="lg:relative md:relative md:-top-20 lg:-top-20 w-full aspect-auto"
           />
         </div>

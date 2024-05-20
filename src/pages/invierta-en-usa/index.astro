@@ -2,12 +2,12 @@
 import HeroContainer from "@/components/HeroContainer.astro";
 import SliderA from "@/components/SliderA.astro";
 
+import heroImage from "@/assets/background-usa.webp";
+import heroImageMiami from "@/assets/miami-city.jpg";
 import TitleSections from "@/components/TitleSections.astro";
-import PDFViewer from "@/components/preact/PDFViewer";
 import CardProperty from "@/components/preact/ui/Cards/CardProperty";
 import Link from "@/components/ui/Link.astro";
 import type { APIResponseResultsRecords } from "@/interfaces/results.records.interfaces";
-
 import Layout from "@/layouts/Layout.astro";
 
 const response = await fetch(
@@ -23,10 +23,7 @@ const description =
 
 <Layout title={title} description={description}>
   <article>
-    <HeroContainer
-      transition:animate={"fade"}
-      img="/images/panorama-noche-chicago.webp"
-    >
+    <HeroContainer transition:animate={"fade"} img={heroImage}>
       <div
         class="drop-shadow-md container px-8 mx-auto w-full h-full grid grid-cols-1 lg:grid-cols gap-14 place-content-center place-items-center md:place-items-center lg:place-items-start text-white text-start md:text-center lg:text-start text-pretty self-center lg:self-start font-gotham"
       >
@@ -70,7 +67,7 @@ const description =
         </p>
       </div>
     </section>
-    <HeroContainer transition:animate={"fade"} img="/images/miami-city.jpg" />
+    <HeroContainer transition:animate={"fade"} img={heroImageMiami} />
     <section class="bg-secondary-bg-msb">
       <div
         class="md:px-22 py-12 md:py-22 lg:py-24 w-100 text-center md:text-start lg:text-start lg:text-2xl md:text-xl container mx-auto px-8"
@@ -94,14 +91,12 @@ const description =
           internacionales en todos los Estados Unidos de América.
         </p>
         <div class="flex justify-center items-center">
-          <Link 
-            href={'https://matiasszpira.com.ar/oasis.pdf'}
+          <Link
+            href={"https://matiasszpira.com.ar/oasis.pdf"}
             target="_blank"
-           
             class="bg-primary-msb text-white border-primary-msb hover:bg-primary-hover-msb border-primary-hover-msb border px-16 text-lg py-2 rounded"
             >Ver más
           </Link>
-         
         </div>
       </div>
     </section>
@@ -117,21 +112,19 @@ const description =
         >
           La mejor selección de inmuebles en las zonas que estás buscando.
         </p>
-        
-        <SliderA colsNr={3} height={10} width={10} classSlide="slider1" >
+
+        <SliderA colsNr={3} height={10} width={10} classSlide="slider1">
           {
             Array.isArray(fichas) &&
               fichas.map((result) => (
-    
                 <CardProperty
-                 data-astro-prefetch="false"
+                  data-astro-prefetch="false"
                   client:load
                   cardData={result}
                   addStyles={"card my-3"}
                   key={`unique-key`}
                   href={`resultados-de-busqueda/${result?.operacion}/${result?.in_loc}/${result?.direccion_completa}/${result?.in_suc}-${result?.in_num}`}
                 />
-
               ))
           }
         </SliderA>
@@ -142,29 +135,28 @@ const description =
 
 <script>
   /* Modal */
-// Obtén los elementos del DOM
-const openModalButton = document.getElementById('openModal');
-const modal = document.getElementById('modal');
-const closeModalButton = modal?.querySelector('button');
+  // Obtén los elementos del DOM
+  const openModalButton = document.getElementById("openModal");
+  const modal = document.getElementById("modal");
+  const closeModalButton = modal?.querySelector("button");
 
-// Función para abrir el modal
-function openModal() {
-  if (modal) {
-    (modal as HTMLDialogElement).showModal();
+  // Función para abrir el modal
+  function openModal() {
+    if (modal) {
+      (modal as HTMLDialogElement).showModal();
+    }
   }
-}
 
-// Función para cerrar el modal
-function closeModal() {
-  modal?.closest('dialog')?.close();
-}
+  // Función para cerrar el modal
+  function closeModal() {
+    modal?.closest("dialog")?.close();
+  }
 
-// Agrega los controladores de eventos
-if (openModalButton) {
-  openModalButton.addEventListener('click', openModal);
-}
-if (closeModalButton) {
-  closeModalButton.addEventListener('click', closeModal);
-}
-
+  // Agrega los controladores de eventos
+  if (openModalButton) {
+    openModalButton.addEventListener("click", openModal);
+  }
+  if (closeModalButton) {
+    closeModalButton.addEventListener("click", closeModal);
+  }
 </script>
