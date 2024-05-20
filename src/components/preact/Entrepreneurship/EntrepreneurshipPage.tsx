@@ -7,12 +7,13 @@ import { type OutputOption } from "@/utils/formats";
 import he from "he";
 import { useEffect, useState } from "preact/compat";
 import { filterItems, resetFilter, searchParamsStore } from "src/store/filterStore";
-import { ArrowSortIcon } from "../Icons/ArrowSortIcon";
+
 import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
 import Button from "../ui/Buttons/Button";
 import CardEntrepreneurship from "../ui/Cards/CardEntrepreneurship";
 import SelectField from "../ui/Selects/SelectField";
 import type { Session } from "lucia";
+import ArrowSortIcon from "../Icons/ArrowSortIcon";
 
 
 interface Props {
@@ -160,13 +161,13 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 md:px-0 px-3">
           <div class="lg:col-start-4 lg:col-end-13 md:hidden hidden lg:flex items-end justify-between w-full">
-            <p className="font-bold text-primary-text-msb text-base">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.emprendimiento) ? results?.emprendimiento.length : 0}</span> resultados con tu búsqueda</p>
-            <Button onClick={orderAscDesc} addStyles="bg-transparent hover:bg-transparent p-0 m-0">
+            <p className="font-bold text-primary-text-msb text-base font-gothamMedium">Tenemos <span className={'font-gothamMedium text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.emprendimiento) ? results?.emprendimiento.length : 0}</span> resultados con tu búsqueda</p>
+          {/*   <Button onClick={orderAscDesc} addStyles="bg-transparent hover:bg-transparent p-0 m-0">
               <div className="flex items-center text-primary-text-msb text-sm md:text-md lg:text-lg font-bold  gap-1"> Ordenar <ArrowSortIcon /></div>
-            </Button>
+            </Button> */}
           </div>
           {/* Aside para filtros */}
-          <aside className="md:col-12 lg:col-start-1 lg:col-end-4">
+          <aside className="md:col-12 lg:col-start-1 lg:col-end-4 font-gothamMedium">
             <div className="flex flex-col">
               <div className="flex mb-4">
                 <SelectField id="ed_tip" onChange={handleSelect} defaultOption={filterStore.ed_tip} opts={filtersformatted.ed_tip} />
@@ -196,10 +197,10 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
                 </Button>
               </div>
               <div class="lg:col-start-4 lg:col-end-13 lg:hidden flex items-end justify-between w-full mt-4">
-                <p className="font-bold text-primary-text-msb text-base">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.emprendimiento) ? results?.emprendimiento.length : 0}</span> resultados con tu búsqueda</p>
-                <Button onClick={orderAscDesc} addStyles="bg-transparent hover:bg-transparent p-0 m-0">
+                <p className="font-bold text-primary-text-msb text-base">Tenemos <span className={'font-[800] text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.emprendimiento) ? results?.emprendimiento.length : 0}</span> resultados con tu búsqueda</p>
+{/*                 <Button onClick={orderAscDesc} addStyles="bg-transparent hover:bg-transparent p-0 m-0">
                   <div className="flex items-center text-primary-text-msb text-sm md:text-md lg:text-lg font-bold  gap-1"> Ordenar <ArrowSortIcon /></div>
-                </Button>
+                </Button> */}
               </div>
             </div>
           </aside>
@@ -224,6 +225,7 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
                 <>
                   {results?.emprendimiento?.map((result: EntrePreneurShip) => (
                     <CardEntrepreneurship
+                    addStyles="font-gothamMedium"
                       cardData={
                         {
                           ed_nom: result.ed_nom,

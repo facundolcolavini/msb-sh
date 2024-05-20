@@ -16,9 +16,14 @@ const locations = (await getLocations()) as ResultLocation;
 ---
 
 <Layout title="Resultados de Busqueda" description="Busca tu propiedad">
-  <article class="bg-secondary-bg-msb h-full">
-    <div class="container mx-auto font-gotham" style="view-transition-name: image">
+  <article class="bg-secondary-bg-msb h-full md:px-8 lg:px-10">
+    <div class="container mx-auto font-gothamMedium font-thin" style="view-transition-name: image">
       <ResultsPage session={session  || null} selects={selects} locations={locations} client:only transition:persist  />
     </div>
   </article>
 </Layout>
+<!-- <article class="bg-secondary-bg-msb h-full relative  w-100 lg:block md:px-8 lg:px-10">
+  <div  class="container mx-auto flex justify-between items-center py-4" style="view-transition-name: image">
+    <ResultsPage session={session  || null} selects={selects} locations={locations} client:only transition:persist  />
+  </div>
+</article> -->

@@ -4,7 +4,7 @@ import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@/in
 import { type OutputOption } from "@/utils/formats"
 import { useEffect, useState } from "preact/hooks"
 import { addFilterValue, filterItems, resetFilter, searchParamsStore } from "src/store/filterStore"
-import { ArrowSortIcon } from "../Icons/ArrowSortIcon"
+ 
 import SearchIcon from "../Icons/SearchIcon"
 import CardResultSkeleton from "../Skeletons/CardResultSkeleton"
 import Button from "../ui/Buttons/Button"
@@ -16,6 +16,7 @@ import { formatAndUseSearch } from "@/utils/formatAndUseSearch"
 import type { Session } from "lucia"
 import SearchDebounce from "../Search/SearchDebounce"
 import SelectField from "../ui/Selects/SelectField"
+import ArrowSortIcon from "../Icons/ArrowSortIcon"
 
 
 
@@ -33,7 +34,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     locations,
     default: defaultsFilters,
   };
-  
+
   const filterToFill: FilterDefault[] = filterResultToFill;
   const filtersformatted = formatAndUseSearch(filters, filterToFill, labelMappingResultForQuerys);
 
@@ -71,7 +72,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
     ...defaultOptions, moneda:
       monedaSeleccionada
     , ...filterStore,
- 
+
     tipo_operacion: {
       value: window.location.search?.includes('tipo_operacion') ?
         window.location.search?.includes('tipo_operacion=A') ? 'A' :
@@ -80,7 +81,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
         filterStore?.tipo_operacion?.value,
       label: ""
     },
-  
+
   })
 
   useEffect(() => {
@@ -94,7 +95,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
       setIsLoading(true);
       const response = await fetch(`/api/results.json?${searchParamsStore.get()}`);
       const data: APIResponseResultsRecords = await response.json();
-   
+
       if (data.resultado.fichas?.hasOwnProperty("error")) {
         setResults(null);
         setIsLoading(false);
@@ -109,22 +110,22 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
       console.log(error);
     }
   };
-  const handleMonedaChange = (newMoneda:OutputOption) => {
+  const handleMonedaChange = (newMoneda: OutputOption) => {
     setMonedaSeleccionada(newMoneda);
-  
+
     if (newMoneda.value === 'P') {
       if (!filtersSelected?.valor_minimo?.value) {
         // Establecer el valor mínimo en 10000 o en el primer valor que venga de la API
         const valorMinimo = /* filtersformatted.valor_minimo[0]?.value ||  */ '1';
-        addFilterValue({'valor_minimo': { value: valorMinimo, label: 'Desde' }});
+        addFilterValue({ 'valor_minimo': { value: valorMinimo, label: 'Desde' } });
       }
     } else {
       if (!filtersSelected.valor_minimo?.value) {
         // Establecer el valor mínimo en 0 si el usuario no ha seleccionado nada
-        addFilterValue({'valor_minimo': { value: '0', label: 'Desde' }});
+        addFilterValue({ 'valor_minimo': { value: '0', label: 'Desde' } });
       }
-      
-      addFilterValue({'moneda': newMoneda});
+
+      addFilterValue({ 'moneda': newMoneda });
     }
   }
 
@@ -183,10 +184,10 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
   }, [searchPStore]);
 
   return (
-    <article className="py-10">
+    <article className="py-10 mx-auto">
       {/* Buscador */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-4 md:px-0 px-3 ">
-        <div className="lg:col-start-1 lg:col-end-3 flex gap-4">
+      <div className="grid grid-cols lg:grid-cols-12 gap-4 md:px-0 px-3 font-gotham">
+        <div className="col-start-1 col-end-12 lg:col-start-1 lg:col-end-4">
           <Button
             variant="outline"
             onClick={handleSelect}
@@ -197,7 +198,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
             Venta
           </Button>
         </div>
-        <div className="lg:col-start-3 lg:col-end-5  flex gap-4">
+        <div className="col-start-1 col-end-12  lg:col-start-4 lg:col-end-7">
           <Button
             variant="outline"
             onClick={handleSelect}
@@ -208,7 +209,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
             Alquiler
           </Button>
         </div>
-        <div className="lg:col-start-5 lg:col-end-9 flex gap-4">
+        <div className="col-start-1 col-end-12 lg:col-start-7 lg:col-end-10">
           <Button
             variant="outline"
             onClick={handleSelect}
@@ -220,7 +221,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
           </Button>
 
         </div>
-        <div className="lg:col-start-9 lg:col-end-13 flex  gap-4">
+        <div className="lg:col-start-10 lg:col-end-13 col-start-1 col-end-12 text-ellipsis overflow-hidden ... text-nowrap">
           <Button
             variant="outline"
             onClick={handleSelect} // Llama a handleSelect cuando se hace clic en el botón
@@ -231,47 +232,32 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
             Barrios Cerrados y Countries
           </Button>
         </div>
-        <div className="lg:col-start-1 lg:col-end-3">
-          <SelectField id="tipo_inmueble" onChange={handleSelect} defaultOption={filterStore.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
+        <div className="col-start-1 col-end-12 lg:col-start-1 lg:col-end-4">
+          <SelectField id="tipo_inmueble" addStyles='lg:h-full font-gothamMedium' onChange={handleSelect} defaultOption={filterStore.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
         </div>
-        <div className="md:col-1 lg:col-start-3  lg:col-end-13 md:col-start-1 md:col-end-4 flex gap-4  w-full flex-grow ">
+        <div className="col-start-1 col-end-12 lg:col-start-4 lg:col-end-11">
           <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />
-          <div className="hidden md:flex lg:hidden gap-4">
-            <Button
-              variant="primary"
-              onClick={onSubmit}
-              className="lg:w-auto text-base lg:text-lg xl:text-xl p-3 bg-red-500 text-white"
-              addStyles="sm:text-sm md:text-md lg:text-lg border-2 border-gray-300 rounded-md  flex w-full justify-center items-center"
-            >
-              BUSCAR
-            </Button>
-          </div>
-
-          <div className=" md:hidden lg:flex lg:col-start-11  lg:col-end-13 flex lg:justify-between">
-            <Button
-              variant="primary"
-              onClick={onSubmit}
-              type="submit"
-              className="lg:w-auto text-base lg:text-lg xl:text-xl p-3 bg-red-500 text-white"
-              addStyles='w-full sm:text-sm md:text-md lg:text-lg flex lg:flex-grow justify-center items-center gap-x-8'
-            >
-              <div><SearchIcon /></div>
-
-              BUSCAR
-            </Button>
-
-          </div>
+        </div>
+        <div className="col-start-1 col-end-12 lg:col-start-11 lg:col-end-13">
+          <Button
+            variant="primary"
+            onClick={onSubmit}
+            addStyles="rounded-md  shadow-lg w-full h-[56px] py-3 active:bg-bg-2-msb text-pretty hover:bg-bg-2-msb transition duration-500 ease-in-out"
+          >
+            <div className={'flex gap-2 justify-center items-center lg:pr-3'}>
+              <SearchIcon className={'hidden lg:flex size-7 lg:size-9'} />
+              <span className={'lg:flex lg:text-lg '}>BUSCAR</span>
+            </div>
+          </Button>
         </div>
       </div>
+      {/* Aside para filtros */}
       <div className="py-20">
-
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 md:px-0 px-3">
-          <div class="lg:col-start-4 lg:col-end-13 md:hidden hidden lg:flex  items-end justify-between w-full">
-            <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.datos?.cantidad : 0}</span> resultados con tu búsqueda</p>
-            <SelectField id="ordenar" variant="secondary" addStyles="bg-transparent relative w-full h-[56px] transition-all flex justify-between items'end h-fit py-0 w-fit gap-8" onChange={handleSelect} defaultOption={filterStore.ordenar} opts={filtersformatted.ordenar}><ArrowSortIcon /></SelectField>
-
+          <div class="lg:col-start-4 lg:col-end-13 md:hidden hidden lg:flex items-end justify-between w-full">
+            <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg ">Tenemos <span className={'font-[800] text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.datos?.cantidad : 0}</span> resultados con tu búsqueda</p>
+            <SelectField id="ordenar" variant="secondary" addStyles="bg-transparent  relative w-full h-[56px] transition-all flex justify-between items'end h-fit py-0 w-max gap-7" onChange={handleSelect} defaultOption={filterStore.ordenar} opts={filtersformatted.ordenar}><ArrowSortIcon className={'size-7'} /></SelectField>
           </div>
-          {/* Aside para filtros */}
           <aside className="md:col-12 lg:col-start-1 lg:col-end-4">
             <div className="flex flex-col">
 
@@ -304,7 +290,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
                     <div className={`rounded-full border bg-tertiary-bg-msb w-5 h-5 flex items-center justify-center ${filterStore.moneda?.value === 'P' ? 'bg-tertiary-bg-msb' : 'bg-white border-5 border-separate'}`}>
                       {filterStore.moneda?.value === 'P' && <div className="w-4 h-4 border-2 rounded-full"></div>}
                     </div>
-                    <span className={"text-secondary-text-msb font-base  text-sm md:text-md lg:text-lg"}>Pesos</span>
+                    <span className={"text-secondary-text-msb md:text-md lg:text-lg"}>Pesos</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -338,15 +324,15 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
                   onClick={
                     resetAndFetch
                   }
-                  addStyles="w-full text-md border-2 border-gray-300 rounded-md flex justify-center items-center"
+                  addStyles="w-full  h-[56px] text-md border-2 border-gray-300 rounded-md flex justify-center items-center"
                 >
                   Limpiar búsqueda
                 </Button>
               </div>
-              <div class="lg:col-start-4 lg:col-end-13 lg:hidden flex items-end justify-between w-full mt-4">
-                <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-bold text-bg-2-msb text-sm md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.datos?.cantidad : 0}</span> resultados con tu búsqueda</p>
-                <SelectField id="ordenar" variant="secondary" addStyles="bg-transparent relative w-full h-[56px] transition-all flex justify-between items'end h-fit py-0 w-fit" onChange={handleSelect} defaultOption={filterStore.ordenar} opts={filtersformatted.ordenar}><ArrowSortIcon /></SelectField>
+              <div class="lg:col-start-4 lg:col-end-13 lg:hidden  w-full mt-4">
+                <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Tenemos <span className={'font-gothamMedium text-base font-bold text-bg-2-msb md:text-md lg:text-lg'}>{Array.isArray(results?.fichas) ? results?.datos?.cantidad : 0}</span> resultados con tu búsqueda</p>
               </div>
+              <SelectField id="ordenar" variant="secondary" addStyles=" lg:hidden flex justify-end self-end bg-transparent relative w-fit h-[56px] transition-all " onChange={handleSelect} defaultOption={filterStore.ordenar} opts={filtersformatted.ordenar}><ArrowSortIcon className="size-7" /></SelectField>
             </div>
           </aside>
 
@@ -370,11 +356,11 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
                 <>
                   {Array.isArray(results?.fichas) && results.fichas.map((result: File,) => (
                     <div style={`view-transition-name: ${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`}>
-                    <CardProperty
-                      cardData={result}
-                      key={`${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`} // Aquí estás utilizando result.id como clave
-                      href={`resultados-de-busqueda/${result.operacion}/${result.in_loc}/${result.direccion_completa}/${result.in_suc}-${result.in_num}`}
-                    />
+                      <CardProperty
+                        cardData={result}
+                        key={`${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`} // Aquí estás utilizando result.id como clave
+                        href={`resultados-de-busqueda/${result.operacion}/${result.in_loc}/${result.direccion_completa}/${result.in_suc}-${result.in_num}`}
+                      />
                     </div>
                   ))}
                 </>

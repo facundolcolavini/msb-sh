@@ -18,7 +18,7 @@ let session = user ? true : false;
 
 <!-- Menú de navegación para pantallas grandes --><!-- Navbar para pantallas grandes -->
 <nav
-  class="relative hidden lg:block bg-secondary-msb shadow-lg border-t-8 border-primary-msb lg:px-10"
+  class="relative hidden lg:block bg-secondary-msb shadow-lg border-t-8 font-gotham font-[1500] border-primary-msb lg:px-10"
 >
   <div class="container mx-auto flex justify-between items-center py-4">
     <!-- Logo y enlace principal -->
@@ -36,16 +36,16 @@ let session = user ? true : false;
           navItems.map((item) => {
             return (
               <li class="flex items-center ">
-                <Link class="flex justify-between mt-1 items-start gap-5 font-gotham ">
+                <Link class="flex justify-between mt-1 items-start gap-5 font-bold  ">
                   {item.dropdown ? (
-                    <Link class="rounded-none hover:border-b-4 text-xs font-gotham hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb ">
+                    <Link class="rounded-none hover:border-b-4 text-xs font-bold  hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb ">
                       <NavDropDown client:load>
                         <span
                           slot="label"
                           class={`${
                             item?.dropdown?.some((h) => h.href === pathname)
-                              ? "rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb border-b-4 border-b-primary-msb border-primary-msb transition-all font-primary-font-msb uppercase font-gotham hover:text-primary-msb text-primary-msb "
-                              : "rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb uppercase font-gotham hover:text-primary-msb  "
+                              ? "rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb border-b-4 border-b-primary-msb border-primary-msb transition-all font-primary-font-msb uppercase font-bold  hover:text-primary-msb text-primary-msb "
+                              : "rounded-none hover:border-b-4 hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb uppercase font-bold  hover:text-primary-msb  "
                           }`}
                         >
                           {item.label}
@@ -60,7 +60,7 @@ let session = user ? true : false;
                                   <Link
                                     checkActive={item.href === pathname}
                                     href={item.href ?? ""}
-                                    class:list="block px-3 py-2  font-primary-font-msb text-xs border border-none uppercase"
+                                    class:list="block px-3 py-2  font-primary-font-msb text-xs border border-none "
                                   >
                                     <span class:list="font-primary-font-msb text-gray-600 font-semibold text-xs  hover:text-primary-msb hover:border-b-primary-msb uppercase ">
                                       {item.label}
@@ -87,7 +87,7 @@ let session = user ? true : false;
                       href={item.dropdown ? "" : item.href}
                       class="flex flex-row items-center rounded-none hover:border-b-4 px-0"
                     >
-                      <span class=" flex items-center justify-end h-10 font-gotham text-xs border border-tertiary-msb px-2 bg-white text-gray-600 uppercase font-bold hover:bg-tertiary-bg-msb hover:text-white cursor-pointer rounded-md hover:border-tertiary-msb transition hover:transition-all tracking-wide">
+                      <span class=" flex items-center justify-end h-10 text-xs border border-tertiary-msb px-2 bg-white text-gray-600 uppercase font-bold hover:bg-tertiary-bg-msb hover:text-white cursor-pointer rounded-md hover:border-tertiary-msb transition hover:transition-all tracking-wide">
                         {item.label}
                       </span>
                     </Link>
@@ -95,12 +95,12 @@ let session = user ? true : false;
                     <Link
                       checkActive={item.href === pathname}
                       href={item.dropdown ? "" : item.href}
-                      class="rounded-none hover:border-b-4 font-gotham uppercase font-semibold text-xs hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb transition-all"
+                      class="rounded-none hover:border-b-4 font-bold  uppercase  text-xs hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb transition-all"
                     >
                       <span
                         class={`${
                           item.href !== pathname &&
-                          "rounded-none font-gotham  hover:text-primary-msb uppercase hover:border-b-primary-msb hover:border-primary-msb hover:border-b-4 hover:transition-all"
+                          "rounded-none font-bold   hover:text-primary-msb uppercase hover:border-b-primary-msb hover:border-primary-msb hover:border-b-4 hover:transition-all"
                         }`}
                       >
                         {item.label}

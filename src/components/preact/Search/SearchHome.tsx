@@ -82,7 +82,7 @@ const SearchHome = ({ selects }: Props) => {
   return (
     <>
 
-      <div className="container z-1 ">
+      <div className="container z-1 font-gotham">
         <div className="mx-auto grid bg-[#D9D9D9] bg-opacity-40 rounded grid-cols lg:grid-cols-12 gap-4 lg:py-5 lg:px-0 md:p-5 p-5  ">
           <div class="lg:col-start-1 lg:col-end-1 lg:w-[100px]">
             {' '}
@@ -132,7 +132,7 @@ const SearchHome = ({ selects }: Props) => {
             </Button>
           </div>
           <div className="col-start-1 col-end-12 lg:col-start-2 lg:col-end-4">
-            <SelectField addStyles='lg:h-full' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
+            <SelectField addStyles='lg:h-full font-gothamMedium' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
           </div>
           <div className=" col-start-1 col-end-12 lg:col-start-4 lg:col-end-9">
             <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />

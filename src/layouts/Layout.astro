@@ -37,10 +37,7 @@ const { title, description, img } = Astro.props;
         <Navbar user={user} />
       </header>
       <main class="[grid-area:main] font-gotham">
-        <!--  <LoadingLayout > -->
-
         <slot id="main-content" />
-        <!-- </LoadingLayout> -->
       </main>
       <footer class="[grid-area:footer]">
         <Footer />
@@ -48,10 +45,10 @@ const { title, description, img } = Astro.props;
     </div>
   </body><style is:global>
     @font-face {
-      font-family: "Gotham-Medium";
+      font-family: "GothamMedium";
       font-style: normal;
-      font-weight: 400;
-      font-display: swap;
+      font-weight: 200;
+      font-display: unset;
       src: url("/fonts/Gotham-Medium.otf") format("opentype");
     }
     @font-face {
