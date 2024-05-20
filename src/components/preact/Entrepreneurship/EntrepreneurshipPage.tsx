@@ -167,7 +167,7 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
             </Button> */}
           </div>
           {/* Aside para filtros */}
-          <aside className="md:col-12 lg:col-start-1 lg:col-end-4 font-gothamMedium">
+          <aside className="md:col-12 lg:col-start-1 lg:col-end-4">
             <div className="flex flex-col">
               <div className="flex mb-4">
                 <SelectField id="ed_tip" onChange={handleSelect} defaultOption={filterStore.ed_tip} opts={filtersformatted.ed_tip} />
@@ -225,7 +225,6 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
                 <>
                   {results?.emprendimiento?.map((result: EntrePreneurShip) => (
                     <CardEntrepreneurship
-                    addStyles="font-gothamMedium"
                       cardData={
                         {
                           ed_nom: result.ed_nom,

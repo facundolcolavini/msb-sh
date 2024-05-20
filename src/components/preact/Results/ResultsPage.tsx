@@ -233,7 +233,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
           </Button>
         </div>
         <div className="col-start-1 col-end-12 lg:col-start-1 lg:col-end-4">
-          <SelectField id="tipo_inmueble" addStyles='lg:h-full font-gothamMedium' onChange={handleSelect} defaultOption={filterStore.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
+          <SelectField id="tipo_inmueble" addStyles='lg:h-full' onChange={handleSelect} defaultOption={filterStore.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
         </div>
         <div className="col-start-1 col-end-12 lg:col-start-4 lg:col-end-11">
           <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />

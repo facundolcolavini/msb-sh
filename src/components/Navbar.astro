@@ -13,7 +13,6 @@ const { user } = Astro.props;
 
 const { pathname } = Astro.url;
 let session = user ? true : false;
-
 ---
 
 <!-- Menú de navegación para pantallas grandes --><!-- Navbar para pantallas grandes -->
@@ -151,16 +150,15 @@ let session = user ? true : false;
                     Mi cuenta
                   </Link>
                   <hr class="divide divide-x-2" />
-                    <Link
-                      checkActive={false}
-                      class="p-3 text-base gap-2 hover:bg-gray-200 cursor-pointer transition-all transition-duration-400 "
-                    >
-                      <Icon size={20} class="fill fill-black" name="logout" />
-                  <form method="POST" action="/api/auth/signout.json">
-
+                  <Link
+                    checkActive={false}
+                    class="p-3 text-base gap-2 hover:bg-gray-200 cursor-pointer transition-all transition-duration-400 "
+                  >
+                    <Icon size={20} class="fill fill-black" name="logout" />
+                    <form method="POST" action="/api/auth/signout.json">
                       <button class="underline"> Cerrar sesión</button>
-                  </form>
-                    </Link>
+                    </form>
+                  </Link>
                 </div>
               </div>
             </NavDropDown>
@@ -189,7 +187,7 @@ let session = user ? true : false;
         <Image
           width={150}
           height={20}
-          src={'/images/logo.png'}
+          src={"/images/logo.png"}
           alt="Logo"
           class="h-8 text-center items-center"
         />
@@ -223,7 +221,9 @@ let session = user ? true : false;
               <Icon size={40} scale={20} name="userDefault" />
               <div>
                 <h2 class="text-lg">Usuario</h2>
-                <p class="text-gray-600">{user?.firstName} {user?.lastName}</p>
+                <p class="text-gray-600">
+                  {user?.firstName} {user?.lastName}
+                </p>
               </div>
               <Icon size={20} class="fill fill-black" name="chevron-down" />
             </div>
@@ -250,15 +250,19 @@ let session = user ? true : false;
                   Mi cuenta
                 </Link>
                 <hr class="divide divide-x-2" />
-                  <Link
-                    class="py-3 relative px-6 text-base gap-2 hover:bg-gray-200  cursor-pointer transition-all transition-duration-400"
-                    checkActive={false}
-                  >
-                    <Icon size={20} class="fill-[#494949] stroke-[#494949]" name="logout" />
-                <form method="POST" action="/api/auth/signout.json">
+                <Link
+                  class="py-3 relative px-6 text-base gap-2 hover:bg-gray-200  cursor-pointer transition-all transition-duration-400"
+                  checkActive={false}
+                >
+                  <Icon
+                    size={20}
+                    class="fill-[#494949] stroke-[#494949]"
+                    name="logout"
+                  />
+                  <form method="POST" action="/api/auth/signout.json">
                     <button> Cerrar sesión </button>
-                  </Link>
-                </form>
+                  </form>
+                </Link>
                 <hr class="divide divide-x-2 border-b-2 shadow-current" />
               </div>
             </div>
