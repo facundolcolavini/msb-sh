@@ -192,7 +192,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'V'}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full   ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  '}`}
+            addStyles={`sm:text-sm md:text-md lg:text-lg lg:h-[48px] w-full   ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  '}`}
             id="tipo_operacion"
           >
             Venta
@@ -203,7 +203,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'A'}
-            addStyles={` sm:text-sm md:text-md lg:text-lg  w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  '}`}
+            addStyles={` sm:text-sm md:text-md lg:text-lg lg:h-[48px] w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  '}`}
             id="tipo_operacion"
           >
             Alquiler
@@ -214,7 +214,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'T'}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && '  text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+            addStyles={`sm:text-sm md:text-md lg:text-lg lg:h-[48px] w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && '  text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
             id="tipo_operacion"
           >
             Alquiler Temporiario
@@ -226,27 +226,27 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
             variant="outline"
             onClick={handleSelect} // Llama a handleSelect cuando se hace clic en el botón
             value={filtersSelected?.in_tpr?.value}
-            addStyles={`sm:text-sm md:text-md lg:text-lg  w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? ' text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
+            addStyles={`sm:text-sm md:text-md lg:text-lg lg:h-[48px] w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? ' text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
             id="in_tpr"
           >
             Barrios Cerrados y Countries
           </Button>
         </div>
         <div className="col-start-1 col-end-12 lg:col-start-1 lg:col-end-4">
-          <SelectField id="tipo_inmueble" addStyles='lg:h-full' onChange={handleSelect} defaultOption={filterStore.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
+          <SelectField id="tipo_inmueble" addStyles='sm:text-sm md:text-md lg:text-lg lg:h-full' onChange={handleSelect} defaultOption={filterStore.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
         </div>
         <div className="col-start-1 col-end-12 lg:col-start-4 lg:col-end-11">
-          <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />
+          <SearchDebounce filterOptsLocations={filtersformatted.in_iub} addstyles='lg:h-[56px]' propIdRef={"in_iub"} />
         </div>
         <div className="col-start-1 col-end-12 lg:col-start-11 lg:col-end-13">
           <Button
             variant="primary"
             onClick={onSubmit}
-            addStyles="rounded-md  shadow-lg w-full h-[56px] py-3 active:bg-bg-2-msb text-pretty hover:bg-bg-2-msb transition duration-500 ease-in-out"
+            addStyles="rounded-md  shadow-lg w-full h-[42px] lg:h-[56px] py-3 active:bg-bg-2-msb text-pretty hover:bg-bg-2-msb transition duration-500 ease-in-out"
           >
             <div className={'flex gap-2 justify-center items-center lg:pr-3'}>
               <SearchIcon className={'hidden lg:flex size-7 lg:size-9'} />
-              <span className={'lg:flex lg:text-lg '}>BUSCAR</span>
+              <span className={'lg:flex sm:text-sm md:text-md lg:text-lg'}>BUSCAR</span>
             </div>
           </Button>
         </div>
@@ -260,19 +260,17 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
           </div>
           <aside className="md:col-12 lg:col-start-1 lg:col-end-4">
             <div className="flex flex-col">
-
-
               <div className="flex mb-4">
-                <SelectField id="Ambientes" onChange={handleSelect} defaultOption={filterStore.Ambientes} opts={filtersformatted.Ambientes} />
+                <SelectField id="Ambientes" addStyles="lg:h-[56px]" onChange={handleSelect} defaultOption={filterStore.Ambientes} opts={filtersformatted.Ambientes} />
               </div>
               <div className="flex mb-4">
-                <SelectField id="calles" onChange={handleSelect} defaultOption={filterStore.calles} opts={filtersformatted.calles} />
+                <SelectField id="calles" addStyles="lg:h-[56px]" onChange={handleSelect} defaultOption={filterStore.calles} opts={filtersformatted.calles} />
               </div>
               <div className="flex mb-4">
-                <SelectField id="sellocalidades" onChange={handleSelect} defaultOption={filterStore.sellocalidades} opts={filtersformatted.sellocalidades} />
+                <SelectField id="sellocalidades" addStyles="lg:h-[56px]" onChange={handleSelect} defaultOption={filterStore.sellocalidades} opts={filtersformatted.sellocalidades} />
               </div>
               <div className="flex">
-                <SelectField id="barrios1" onChange={handleSelect} defaultOption={filterStore.barrios1} opts={filtersformatted.barrios1} />
+                <SelectField id="barrios1" addStyles="lg:h-[56px]" onChange={handleSelect} defaultOption={filterStore.barrios1} opts={filtersformatted.barrios1} />
               </div>
               {/* Radio buttons Pesos / USD */}
               <div className="mt-4">
@@ -313,8 +311,8 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
               <div className="mt-4">
                 <p className="font-bold text-primary-text-msb text-sm md:text-md lg:text-lg">Valores</p>
                 <div className="flex gap-4">
-                  <SelectField id="valor_minimo" onChange={handleSelect} defaultOption={filterStore.valor_minimo} opts={filtersformatted.valor_minimo} />
-                  <SelectField id="valor_maximo" onChange={handleSelect} defaultOption={filterStore.valor_maximo} opts={filtersformatted.valor_maximo} />
+                  <SelectField id="valor_minimo" addStyles="lg:h-[56px]" onChange={handleSelect} defaultOption={filterStore.valor_minimo} opts={filtersformatted.valor_minimo} />
+                  <SelectField id="valor_maximo" addStyles="lg:h-[56px]" onChange={handleSelect} defaultOption={filterStore.valor_maximo} opts={filtersformatted.valor_maximo} />
                 </div>
               </div>
               <div className="mt-4">
@@ -324,7 +322,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
                   onClick={
                     resetAndFetch
                   }
-                  addStyles="w-full  h-[56px] text-md border-2 border-gray-300 rounded-md flex justify-center items-center"
+                  addStyles="w-full  h-[42px] lg:h-[56px] text-md border-2 border-gray-300 rounded-md flex justify-center items-center"
                 >
                   Limpiar búsqueda
                 </Button>

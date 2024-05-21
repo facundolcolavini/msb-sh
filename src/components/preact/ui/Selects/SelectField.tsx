@@ -27,7 +27,7 @@ const SelectField = ({ opts, id, onChange, defaultOption, addStyles, variant = '
     'bg-gray-400 text-gray-800 cursor-not-allowed': variant === 'disabled', */
     // Agrega más clases condicionales según necesites.
   });
-  const baseStyles = twMerge(clsx("relative w-full h-[56px] transition-all", addStyles))
+  const baseStyles = twMerge(clsx("relative w-full h-full transition-all", addStyles))
   const styles = twMerge(clsx(baseStyles, variantStyles, addStyles));
   const [selectedOption, setSelectedOption] = useState(defaultOption ? defaultOption.label : '');
   const [isOpen, setIsOpen] = useState(false);

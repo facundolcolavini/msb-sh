@@ -3,13 +3,18 @@ import InputField from '../ui/Inputs/InputField';
 
 import { addFilterValue, filterItems, searchParamsStore } from '../../../store/filterStore';
 import "../ui/Selects/selectsField.css";
+import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 interface Props {
     filterOptsLocations: OutputOption[]
     propIdRef: string;
+    addstyles?:string
 }
-/* AJUSTA LOS PARAMETROS DE BUSCA Y LA LISTA DE OPCIONES  */
-const SearchDebounce = ({ filterOptsLocations, propIdRef }: Props) => {
+
+const SearchDebounce = ({ filterOptsLocations, propIdRef, addstyles }: Props) => {
+    const inputSearch = twMerge(clsx("border border-primary-msb focus:border-b-1 rounded-md px-4 flex w-full lg:h-[48px] py-2 focus:outline-none focus:ring-0 sticky z-0", addstyles));
+
     const filters = filterItems.get();
     const params = searchParamsStore.get();
     const [searchTerm, setSearchTerm] = useState<OutputOption>(filters[propIdRef]);
@@ -113,15 +118,14 @@ const SearchDebounce = ({ filterOptsLocations, propIdRef }: Props) => {
         return () => document.removeEventListener('keydown', handleKeyPress);
     }, [showResults, listOpts, searchTerm]);
 
-
-
+ 
     return (
         <div className={`relative top-0 w-full`}>
             <InputField
                 id={propIdRef}
                 type='search'
                 value={searchTerm?.label} // Usar el valor del estado como valor del input
-                className='border border-primary-msb focus:border-b-1 rounded-md px-4 flex w-full h-[56px] py-2 focus:outline-none focus:ring-0 sticky z-0'
+                className={inputSearch}
                 onChange={handleInputChange}
                 autoComplete="off"
                 placeholder="Buscar por barrio o localidad"

@@ -87,23 +87,23 @@ const SearchHome = ({ selects }: Props) => {
           <div class="lg:col-start-1 lg:col-end-1 lg:w-[100px]">
             {' '}
           </div>
-          <div className="col-start-1 col-end-12 lg:col-start-2 lg:col-end-4">
+          <div className="col-start-1 col-end-12 lg:col-start-2 lg:col-end-4 lg:h-[34px]">
             <Button
               variant="outline"
               onClick={handleSelect}
               value={'V'}
-              addStyles={`sm:text-sm md:text-md lg:text-lg  text-ellipsis overflow-hidden ... w-full ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+              addStyles={`sm:text-sm md:text-md lg:text-md lg:flex lg:self-center lg:justify-center lg:items-center text-ellipsis overflow-hidden ... w-full ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
               id="tipo_operacion"
             >
               Venta
             </Button>
           </div>
-          <div className="col-start-1 col-end-12  lg:col-start-4 lg:col-end-6">
+          <div className="col-start-1 col-end-12  lg:col-start-4 lg:col-end-6 lg:h-[34px]">
             <Button
               variant="outline"
               onClick={handleSelect}
               value={'A'}
-              addStyles={` sm:text-sm md:text-md lg:text-lg text-ellipsis overflow-hidden ... w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+              addStyles={` sm:text-sm md:text-md lg:text-md lg:flex lg:self-center lg:justify-center lg:items-center text-ellipsis overflow-hidden ... w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
               id="tipo_operacion"
             >
               Alquiler
@@ -114,7 +114,7 @@ const SearchHome = ({ selects }: Props) => {
               variant="outline"
               onClick={handleSelect}
               value={'T'}
-              addStyles={`sm:text-sm md:text-md lg:text-lg  text-ellipsis overflow-hidden ... w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+              addStyles={`sm:text-sm md:text-md lg:text-md lg:flex lg:self-center lg:justify-center lg:items-center  text-ellipsis overflow-hidden ... w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
               id="tipo_operacion"
             >
               Alquiler Temporario
@@ -125,26 +125,26 @@ const SearchHome = ({ selects }: Props) => {
               variant="outline"
               onClick={handleSelect}
               value={filtersSelected?.in_tpr?.value}
-              addStyles={`sm:text-sm md:text-md lg:text-lg  w-full ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
+              addStyles={`sm:text-sm md:text-md lg:text-md lg:flex lg:self-center lg:justify-center lg:items-center  w-full ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
               id="in_tpr"
             >
               Barrios Cerrados y Countries
             </Button>
           </div>
           <div className="col-start-1 col-end-12 lg:col-start-2 lg:col-end-4">
-            <SelectField addStyles='lg:h-full' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
+            <SelectField addStyles='sm:text-sm md:text-md lg:text-base lg:h-[48px] lg:text-md' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
           </div>
-          <div className=" col-start-1 col-end-12 lg:col-start-4 lg:col-end-10">
+          <div className=" col-start-1 col-end-12 lg:col-start-4 lg:col-end-10 sm:text-sm md:text-md lg:text-base">
             <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />
           </div>
           <div className="col-start-1 col-end-12 lg:col-start-10 lg:col-end-12">
             <Button
               variant="primary"
               onClick={send}
-              addStyles="rounded-md  shadow-lg w-full h-[56px] py-3 active:bg-bg-2-msb text-pretty hover:bg-bg-2-msb transition duration-500 ease-in-out"
+              addStyles="rounded-md  shadow-lg w-full h-[42px] lg:h-[48px] py-3 active:bg-bg-2-msb text-pretty hover:bg-bg-2-msb transition duration-500 ease-in-out"
             >
                <div className={'flex gap-2 justify-center items-center lg:pr-3'}>
-                <SearchIcon className={'hidden lg:flex size-7 lg:size-9'} />
+                <SearchIcon className={'hidden lg:flex size-7 lg:size-7'} />
                 <span className={'lg:flex lg:text-lg '}>BUSCAR</span>
               </div>
             </Button>
