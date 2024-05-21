@@ -52,10 +52,10 @@ const selects = (await getAllSelects()) as Results;
 
 <Layout title={titlePage} description={description}>
   <HeroContainer
-    className="justify-end md:justify-end pb-20 lg:pb-40"
+    className="justify-end md:justify-end pb-0 md:pb-4  h-100 lg:pb-32"
     img={'/images/background-hero-2.webp'}
   >
-    <div class="relative inset-0 flex flex-col justify-end items-center w-full">
+    <div class="relative inset-0 flex flex-col h-100 justify-end items-center w-full">
       <SearchHome client:visible selects={selects} />
     </div>
   </HeroContainer>

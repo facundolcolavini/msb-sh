@@ -134,10 +134,10 @@ const SearchHome = ({ selects }: Props) => {
           <div className="col-start-1 col-end-12 lg:col-start-2 lg:col-end-4">
             <SelectField addStyles='lg:h-full' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
           </div>
-          <div className=" col-start-1 col-end-12 lg:col-start-4 lg:col-end-9">
+          <div className=" col-start-1 col-end-12 lg:col-start-4 lg:col-end-10">
             <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />
           </div>
-          <div className="col-start-1 col-end-12 lg:col-start-9 lg:col-end-12">
+          <div className="col-start-1 col-end-12 lg:col-start-10 lg:col-end-12">
             <Button
               variant="primary"
               onClick={send}
