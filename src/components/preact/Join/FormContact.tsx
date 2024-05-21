@@ -84,7 +84,7 @@ const FormContact = () => {
         {isFormValid && !formError && formSubmitted
           ? (
             <div className="flex flex-col text-center gap-2 py-3 px-3 my-20">
-              <h1 class={'font-bold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>Gracias por tu interés en pertenecer a nuestro equipo</h1>
+              <h1 class={'font-gothamBold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>Gracias por tu interés en pertenecer a nuestro equipo</h1>
               <p class="text-primary-text-msb text-pretty font-gotham font-normal  lg:text-2xl md:text-xl w-full">
                 ¡Consulta enviada con éxito!
               </p>
@@ -93,7 +93,7 @@ const FormContact = () => {
           )
           : (
             <div>
-              <h1 class={'font-bold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>Potenciá tu desarrollo profesional con nosotros</h1>
+              <h1 class={'font-gothamBold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>Potenciá tu desarrollo profesional con nosotros</h1>
               <p
                 class="text-primary-text-msb text-center text-pretty font-gotham font-normal lg:text-2xl md:text-xl w-full pb-6"
               >

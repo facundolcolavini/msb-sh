@@ -81,7 +81,7 @@ const ContactForm = ({ codsuc = 'MSB', tipo = '', desde = 'pagweb' }: ContactFor
         <>
             <div className={'p-5 md:px-6 lg:px-10 h-fit'}>
                 <header>
-                    <h1 className={'font-bold text-center tracking-normal pb-5 text-base md:text-md lg:text-lg'}>FORMULARIO DE CONTACTO</h1>
+                    <h1 className={'font-gothamBold text-center tracking-normal pb-5 text-base md:text-md lg:text-lg'}>FORMULARIO DE CONTACTO</h1>
                 </header>
                 <form className="grid grid-cols text-start gap-3 h-fit" noValidate onSubmit={sendContactForm}>
                     <InputField label={'Nombre'} value={contactName} onChange={onInputChange} icon={contactNameValid === null ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} /> : changeFields?.contactName === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={contactNameValid === null} error={changeFields?.contactName} addStyles="h-12" name="contactName" id="contactName" type="text" />
