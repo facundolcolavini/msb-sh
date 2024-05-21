@@ -346,12 +346,12 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                 <EntrepreneurshipFeatureList building={results?.emprendimiento[0]?.tipo} enviroments={results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : `${results?.emprendimiento[0]?.ed_amb?.split('A')[0]}`} location={he.decode(results?.emprendimiento[0]?.ed_loc)} />
                                 <hr className={'border-secondary-text-msb '} />
                                 <div className={'flex flex-col gap-5 py-5'}>
-                                    <h2 className={'font-gotham text-base text-start  font-bold text-primary-text-msb'}>Descripción</h2>
+                                    <h2 className={'text-base  md:text-xl lg:text-2xl  md:text-start text-start font-gothamMedium text-primary-text-msb pt-5'}>Descripción</h2>
 
                                     <Description htmlText={results?.emprendimiento[0]?.ed_pre} />
                                     <Description htmlText={results?.emprendimiento[0]?.ed_cue} />
                                 </div>
-                                <h2 className={'font-gotham text-base   md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle del Edificio | Emprendimiento {results?.emprendimiento[0]?.ed_est !== '' ? `${results?.emprendimiento[0]?.ed_est.includes('En') ? `${capitalize(he.decode(results?.emprendimiento[0]?.ed_est)).replace('En', 'en')}` : ` ${capitalize(results?.emprendimiento[0]?.ed_est)}`}` : ''}</h2>
+                                <h2 className={'text-base  md:text-xl lg:text-2xl  md:text-start text-start font-gothamMedium text-primary-text-msb pt-5'}>Detalle del Edificio | Emprendimiento {results?.emprendimiento[0]?.ed_est !== '' ? `${results?.emprendimiento[0]?.ed_est.includes('En') ? `${capitalize(he.decode(results?.emprendimiento[0]?.ed_est)).replace('En', 'en')}` : ` ${capitalize(results?.emprendimiento[0]?.ed_est)}`}` : ''}</h2>
                                 <hr className={'border-secondary-text-msb my-3'} />
                                 <EntrepreneurshipDetailList
                                     name={he.decode(results?.emprendimiento[0]?.ed_nom)}

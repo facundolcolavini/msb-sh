@@ -365,11 +365,11 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
                                 <hr className={'border-secondary-text-msb w-100 relative '} />
                                 <div className={'flex flex-col gap-5 py-5 relative text-pretty'}>
-                                    <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl   md:text-start text-start  font-bold text-primary-text-msb'}>Descripción</h2>
+                                    <h2 className={'text-base  md:text-xl lg:text-2xl   md:text-start text-start  font-gothamMedium text-primary-text-msb'}>Descripción</h2>
 
                                     <Description htmlText={results?.ficha[0]?.in_obs} />
                                 </div>
-                                <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Detalle de la propiedad</h2>
+                                <h2 className={'text-base  md:text-xl lg:text-2xl  md:text-start text-start font-gothamMedium text-primary-text-msb pt-5'}>Detalle de la propiedad</h2>
                                 <hr className={'border-secondary-text-msb my-3'} />
                                 <DetailsList
                                     operation={results?.ficha[0]?.operacion ?? ''}
@@ -396,7 +396,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                                     sewer={results?.ficha[0]?.in_clo ?? ''}
                                     telephoneLine={results?.ficha[0]?.in_lin ?? ''}
                                 />
-                                <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Medidas</h2>
+                                <h2 className={'text-base  md:text-xl lg:text-2xl  md:text-start text-start font-gothamMedium text-primary-text-msb pt-5'}>Medidas</h2>
                                 <hr className={'border-secondary-text-msb my-3'} />
                                 <ul className="mb-5">
                                     {results?.superficie?.dato[3] !== "" ? (<li className="flex gap-2 pb-3">
@@ -410,7 +410,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                                 </ul>
                                 {results!?.caracteristicas_generales_personalizadas && results!?.caracteristicas_generales_personalizadas.length > 0 && (
                                     <>
-                                        <h2 className={'font-gotham text-base  md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pt-5'}>Servicios:</h2>
+                                        <h2 className={'text-base  md:text-xl lg:text-2xl  md:text-start text-start font-gothamMedium text-primary-text-msb pt-5'}>Servicios:</h2>
                                         <hr className={'border-secondary-text-msb my-3'} />
                                         <ServiceList characteristics={results?.caracteristicas_generales_personalizadas} />
                                     </>)}

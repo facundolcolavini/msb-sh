@@ -15,7 +15,7 @@ const ListPublications = ({ cardList }: Props) => {
 
             {Array.isArray(maxCarList) && maxCarList.length > 0 && (
                 <>
-                    <h2 className={'font-gotham pt-20 text-xl md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pb-3'}>Publicaciones de tu interés</h2>
+                    <h2 className={'pt-20 text-xl md:text-xl lg:text-2xl  md:text-start text-start  font-bold text-primary-text-msb pb-3 font-gothamMedium'}>Publicaciones de tu interés</h2>
                     <p className={'text-sm md:text-md lg:text-lg font-base pb-8'}>Te mostramos otros anuncios relacionados con tu búsqueda</p>
                 </>
             )}
