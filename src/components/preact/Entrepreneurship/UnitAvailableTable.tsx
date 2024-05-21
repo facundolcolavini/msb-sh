@@ -36,7 +36,7 @@ const UnitAvailableTable = ({ unitAvailable }: Props) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <DoorOpen w="28" h="24" addStyles='text-center mx-auto' /><div className={'grid grid-col'}>Ambientes<span  className="font-medium text-secondary-text-msb">{unit?.ti_tip?.split('A')[0] === "1"  ? "Monoambiente" :  unit?.ti_tip?.split('A')[0] === "0" ?  "-": unit?.ti_tip?.split('A')[0] }</span>
+                                    <DoorOpen className='h-[24px] w-[28px] text-center mx-auto' /><div className={'grid grid-col'}>Ambientes<span  className="font-medium text-secondary-text-msb">{unit?.ti_tip?.split('A')[0] === "1"  ? "Monoambiente" :  unit?.ti_tip?.split('A')[0] === "0" ?  "-": unit?.ti_tip?.split('A')[0] }</span>
                                     </div>
                                 </div>
                                 <div>

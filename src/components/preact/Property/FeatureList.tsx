@@ -48,7 +48,7 @@ const FeatureList = ({
             )}
             {environments !== "" && (
                 <div className={'flex justify-center flex-col text-center'}>
-                    <DoorOpen addStyles="mx-auto" h={"24"} w={"24"} />
+                    <DoorOpen className="mx-auto h-[24px] w-[24px]" />
                     <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center w-max self-center"}>{environments} dorm.</p>
                 </div>
             )}
@@ -60,7 +60,7 @@ const FeatureList = ({
             )}
             {location !== "" && (
                 <div className={'flex justify-center flex-col text-center'}>
-                    <CurtainsIcon addStyles="mx-auto" h={"24"} w={"24"} />
+                    <CurtainsIcon className="mx-auto"  />
                     <p className={"text-secondary-text-msb font-medium font-gotham text-sm text-center w-max self-center capitalize"}>{location}</p>
                 </div>
             )}

@@ -6,11 +6,12 @@ import { useEffect, useState } from "preact/hooks";
 
 import type { APIResponseDetailEntrepreneurShip, APIResponseEntrepreneurShipUnit, APIResponseEntrepreneurship, DetailEntrepreneurship, EntrePreneurShip, ResultEntrePreneurShipUnit } from "@/interfaces/entrepreneurship.interfaces";
 import { capitalize } from '@/utils/formats';
+import type { Session } from 'lucia';
 import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import GalleryProperty from "../Gallery/GalleryProperty";
 import MapLocationIcon from '../Icons/MapLocationIcon';
-import PrintIcon from "../Icons/PrintIcon";
 import PropertyBuildIcon from '../Icons/PropertyBuildIcon';
+import WarningAlertIcon from '../Icons/WarningAlertIcon';
 import PDFViewer from '../PDFViewer';
 import ContactForm from '../Property/ContactForm';
 import Description from '../Property/Description';
@@ -21,16 +22,13 @@ import CardResultSkeleton from "../Skeletons/CardResultSkeleton";
 import DetailsPropertySkeleton from "../Skeletons/DetailsPropertySkeleton";
 import GalleryPropertySkeleton from "../Skeletons/GalleryPropertySkeleton";
 import Button from "../ui/Buttons/Button";
+import FavoriteButton from '../ui/Buttons/FavoriteButton';
 import { Modal } from '../ui/Modals/Modal';
+import { Toast } from '../ui/Toast/Toast';
 import EntrepreneurshipDetailList from './EntrepreneurshipDetailList';
 import EntrepreneurshipFeatureList from './EntrepreneurshipFeatureList';
-import UnitAvailableTable from './UnitAvailableTable';
-import FavoriteButton from '../ui/Buttons/FavoriteButton';
-import WarningAlertIcon from '../Icons/WarningAlertIcon';
-import { Toast } from '../ui/Toast/Toast';
-import type { Session } from 'lucia';
-import { navigate } from 'astro:transitions/client';
 import ListPublications from './ListPublications';
+import UnitAvailableTable from './UnitAvailableTable';
 
 
 
@@ -52,7 +50,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
     const [toastMessage, setToastMessage] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [tabMenuProperty, setTabMenuProperty] = useState(
-        tabMenuPropertyStore.get() 
+        tabMenuPropertyStore.get()
     );
     const [modalState, setModalState] = useState({ isOpen: false });
 
@@ -82,7 +80,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
             });
         // Limpiar la suscripción al desmontar
         return () => unsubscribe();
-        
+
     }, []);
 
 
@@ -97,22 +95,22 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
             const data: APIResponseDetailEntrepreneurShip = await response.json();
             const responsePub = await fetch(`/api/emprendimientos.json?ed_est=${data?.resultado?.emprendimiento[0]?.ed_est}`);
             const dataPub = await responsePub.json() as APIResponseEntrepreneurship;
-  
-            if (data?.hasOwnProperty("error") ) {
+
+            if (data?.hasOwnProperty("error")) {
                 setResults(null);
                 setIsLoading(false);
                 throw data;
-            }else if (response?.ok) {
+            } else if (response?.ok) {
                 setIsLoading(false);
-                setResults(data?.resultado );
-                setResultPub(dataPub.resultado.emprendimiento )
+                setResults(data?.resultado);
+                setResultPub(dataPub.resultado.emprendimiento)
             }
         } catch (error) {
-        /*     navigate('/404'); */
+            /*     navigate('/404'); */
             console.log(error, 'ERROR');
         }
     };
-  
+
     const fetchUnits = async () => {
         try {
             setIsLoading(true);
@@ -131,8 +129,8 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
         }
     };
 
-     // Fetch Favprotes from API server
-     const fetchFavorites = async () => {
+    // Fetch Favprotes from API server
+    const fetchFavorites = async () => {
         try {
             const response = await fetch(`/api/favorites/${props?.session?.userId}`);
             const data = await response.json();
@@ -248,7 +246,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 )}
                 <div className="container mx-auto pt-5 flex justify-between ">
                     {isLoading ? <BreadCrumbSkeleton /> : <TabMenu videoUrl={null} unitData={resultsUnit?.unidadesDisponibles.length} unitList={resultsUnit?.unidadesDisponibles ? true : false} pdf={(results?.pdf?.length ?? 0) > 0 && !isLoading} blueprint={(resultsUnit?.unidadesDisponibles?.map(emp => emp.img_princ) ?? []).length > 0 && !isLoading} />}
-                    {isLoading ? <BreadCrumbSkeleton /> :   <FavoriteButton toggleFavorite={isFavorited ? removeFavorite : addFavorite} initialIsFavorited={isFavorited} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center"><span className={'font-semibold'}>Favorito</span></FavoriteButton>}
+                    {isLoading ? <BreadCrumbSkeleton /> : <FavoriteButton toggleFavorite={isFavorited ? removeFavorite : addFavorite} initialIsFavorited={isFavorited} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center"><span className={'font-semibold'}>Favorito</span></FavoriteButton>}
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16  md:px-5 lg:px-0"><GalleryPropertySkeleton /></div> : (
                     <div className={'grid pb-16 container mx-auto'}>
@@ -301,9 +299,8 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                         {
                             results?.emprendimiento[0]?.ed_bar !== "" ? (
                                 <div className=" flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5 ">
-                                    <div className="flex items-center justify-center w-100">
-
-                                        <MapLocationIcon addStyles="fill-white" h={"56"} w={"56"} />
+                                    <div className="flex items-center justify-center w-100 h-100">
+                                        <MapLocationIcon className="fill-white h-[56px] w-[56px]" />
                                     </div>
                                     <span className="text-2xl md:text-2xl lg:text-4xl   font-cormorant font-base tracking-wide flex items-center justify-center">Barrio</span>
                                     <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide w-max "}>{he.decode(results?.emprendimiento[0]?.ed_bar || '')}</span>
@@ -313,25 +310,23 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                     </div>
                 }
             </section>
-            <section className="container mx-auto flex justify-between gap-2 pt-16 pb-5 relative md:px-5 lg:px-10">
-
-                {isLoading ? (<div className="container mx-auto pb-16"><BreadCrumbSkeleton /> </div>) : (
-                    <div className="flex items-end gap-1 w-fit">
-                        <MapLocationIcon />
-                        <span className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold capitalize">{capitalize(he.decode(`${results?.emprendimiento[0]?.ed_nom}, ${results?.emprendimiento[0]?.ed_loc}`))}</span>
+            <section className="container mx-auto flex flex-col lg:flex-row justify-between gap-2 pt-16 pb-5 relative md:px-5 lg:px-10">
+                {isLoading ? (<div className="container mx-auto lg:flex hidden"><BreadCrumbSkeleton /> </div>) : (
+                    <div className="hidden lg:flex lg:justify-start lg:items-end gap-1 h-100">
+                        <MapLocationIcon className={'h-[24px] w-[24px]'} />
+                        <p className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold">{capitalize(he.decode(`${results?.emprendimiento[0]?.ed_nom}, ${results?.emprendimiento[0]?.ed_loc}`))}</p>
                     </div>)
                 }
-                <div className={'flex flex-col md:flex-row lg:flex-row  md:justify-center lg:justify-center gap-5'} >
-                    <ShareButton />
-                    <button onClick={handlePrint} className="flex gap-1 cursor-pointer">
-                        <span className={'font-semibold flex gap-1'}>
-                            Imprimir <PrintIcon />
-                        </span>
-                    </button>
-                </div>
+                <ShareButton />
             </section>
             <section className="container mx-auto grid grid-cols md:gap-5 lg:gap-7 md:px-5 lg:px-10">
                 {/* Google map iframe */}
+                {isLoading ? (<div className="container mx-auto flex lg:hidden"><BreadCrumbSkeleton /> </div>) : (
+                    <div className="flex lg:hidden justify-start pb-2 items-center gap-1 h-100 w-full text-pretty">
+                        <MapLocationIcon className={'h-full'} />
+                        <p className="text-sm  text-primary-text-msb w-fit text-pretty font-semibold">{capitalize(he.decode(`${results?.emprendimiento[0]?.ed_nom}, ${results?.emprendimiento[0]?.ed_loc}`))}</p>
+                    </div>)
+                }
                 <div className={'col-start-1 cold-end-7'}>
                     {isLoading || !results?.emprendimiento[0]?.ed_coo
                         ? <div className="h-[400px] w-full aspect-video bg-gray-300 rounded-xl container mx-auto h-100 animate-pulse">
@@ -376,15 +371,17 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                 />
 
                             </div>
-                        )}
+                        )
+                    }
+                    
                 </div>
                 <div className={'bg-[#D9D9D9]  h-fit w-100  lg:col-start-7 lg-col-end-12 relative  lg:sticky lg:inset-0'}>
                     <ContactForm id={results?.emprendimiento[0]?.ed_idl ?? ''} tipo={results?.emprendimiento[0].tipo} codsuc={results?.datos?.codemp ?? ''} contact_prop={results?.emprendimiento[0]?.celular ? `https://api.whatsapp.com/send?phone=${123}&text=¡Hola%21+Me+contacto+por+la+siguiente+propiedad%3A+${encodeURIComponent(window.location.href)}&source=&data=` : ''} />
                 </div>
             </section>
             <section className={'container mx-auto  my-30 md:px-5 lg:px-10'}>
-            {!isLoading ? (
-                    <ListPublications cardList={ (resultPub as EntrePreneurShip[])?.filter(pub => pub.ed_idl !== props.propertyCode) as EntrePreneurShip[] } />
+                {!isLoading ? (
+                    <ListPublications cardList={(resultPub as EntrePreneurShip[])?.filter(pub => pub.ed_idl !== props.propertyCode) as EntrePreneurShip[]} />
                 ) : (
                     <div className="container mx-auto py-16">
                         <BreadCrumbSkeleton />

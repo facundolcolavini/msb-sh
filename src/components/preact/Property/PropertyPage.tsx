@@ -13,7 +13,6 @@ import { capitalize } from '../../../utils/formats';
 import GalleryProperty from "../Gallery/GalleryProperty";
 import BathIcon from "../Icons/BathIcon";
 import MapLocationIcon from "../Icons/MapLocationIcon";
-import PrintIcon from "../Icons/PrintIcon";
 import WarningAlertIcon from "../Icons/WarningAlertIcon";
 import PDFViewer from "../PDFViewer";
 import ShareButton from "../ShareButton/ShareButton";
@@ -81,10 +80,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
     }, []);
 
 
-    // Función para imprimir la página
-    const handlePrint = () => {
-        window.print();
-    };
+
 
     const fetchResults = async () => {
         try {
@@ -320,25 +316,24 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     </div>
                 }
             </section>
-            <section className="container mx-auto flex justify-between gap-2 pt-16 pb-5 md:px-5 lg:px-10">
-
-                {isLoading ? (<div className="container mx-auto"><BreadCrumbSkeleton /> </div>) : (
-                    <div className="flex items-end gap-1 w-fit">
-                        <MapLocationIcon />
+            <section className="container mx-auto flex flex-col lg:flex-row justify-between gap-2 pt-16 pb-5 md:px-5 lg:px-10">
+                {isLoading ? (<div className="container mx-auto lg:flex hidden"><BreadCrumbSkeleton /> </div>) : (
+                    <div className="hidden lg:flex lg:justify-center lg:items-end gap-1 h-100">
+                        <MapLocationIcon className={'h-full'} />
                         <span className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold">{capitalize(he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`))}</span>
                     </div>)
                 }
-                <div className={'flex flex-col md:flex-row lg:flex-row  md:justify-center lg:justify-center gap-5'} >
-                    <ShareButton />
-                    <button onClick={handlePrint} className="flex gap-1 cursor-pointer">
-                        <span className={'font-semibold flex gap-1'}>
-                            Imprimir <PrintIcon />
-                        </span>
-                    </button>
-                </div>
+                <ShareButton />
+               
             </section>
             <section className="container mx-auto grid grid-cols md:gap-5 lg:gap-7 md:px-5 lg:px-10">
                 {/* Google map iframe */}
+                {isLoading ? (<div className="container mx-auto flex lg:hidden"><BreadCrumbSkeleton /> </div>) : (
+                    <div className="flex lg:hidden justify-start pb-2 items-center gap-1 h-100 w-full text-pretty">
+                         <MapLocationIcon className={'h-full'} />
+                        <p className="text-sm  text-primary-text-msb w-fit text-pretty font-semibold">{capitalize(he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`))}</p>
+                    </div>)
+                }
                 <div className={'col-start-1 cold-end-7 w-full'}>
                     {isLoading || !results?.ficha[0]?.direccion
                         ? <div className="h-[400px] w-full aspect-video bg-gray-300 rounded-xl container mx-auto h-100 animate-pulse">

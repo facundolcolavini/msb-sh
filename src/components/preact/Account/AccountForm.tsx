@@ -5,7 +5,6 @@ import type { User } from "lucia";
 import { useState } from "preact/hooks";
 import IconCheckCircle from "../Icons/CheckIcon";
 import EmailIcon from "../Icons/EmailIcon";
-import ErrorIcon from "../Icons/ErrorIcon";
 import MapLocationIcon from "../Icons/MapLocationIcon";
 import PhoneIcon from "../Icons/PhoneIcon";
 import UserIcon from "../Icons/UserIcon";
@@ -70,13 +69,13 @@ const AccountForm = ({ userData }: Props) => {
                 setFormSubmitted(false)
                 setFormError(true);
                 throw data
-            } else {    
+            } else {
                 setToastMsg(data.message);
                 setTimeout(() => {
                     setFormSubmitted(false); // Add this line
                     navigate('/cuenta');
                 }, 3000)
-                
+
                 onResetForm();
                 /*  setModalAuth({ changeToLogin: false, changeToRegister: false }); */
             }
@@ -107,7 +106,7 @@ const AccountForm = ({ userData }: Props) => {
         // Si el campo no ha cambiado, considera que es válido
         return true;
     });
-   
+
     return (
         <div className={'px-5'}>
             <form className="font-gotham mx-auto" noValidate onSubmit={updateUser}>
@@ -116,7 +115,7 @@ const AccountForm = ({ userData }: Props) => {
                     <div className={'space-y-5 h-full'}>
                         <InputField label="Nombre" value={firstName} onChange={onInputChange} icon={firstNameValid === null && firstName !== userData?.firstName
                             ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                            :  <UserIcon className={'flex size-5 mx-2 justify-center items-center h-100 fill-secondary-text-msb self-center place-content-center'} />} success={firstNameValid === null} error={changeFields?.firstName} addStyles="h-12 w-100" name="firstName" id="firstName" type="text" />
+                            : <UserIcon className={'flex size-5 mx-2 justify-center items-center h-100 fill-secondary-text-msb self-center place-content-center'} />} success={firstNameValid === null} error={changeFields?.firstName} addStyles="h-12 w-100" name="firstName" id="firstName" type="text" />
                         {(changeFields?.firstName && firstNameValid)
                             && <label htmlFor="firstName" className="text-xs px-2 mx-2 font-thin text-red-700">{firstNameValid}</label>}
                     </div>
@@ -159,7 +158,7 @@ const AccountForm = ({ userData }: Props) => {
                     <div className={'space-y-5 h-full'}>
                         <InputField label="Calle" value={street} onChange={onInputChange} icon={streetValid === null && street !== userData?.street
                             ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                            : <MapLocationIcon addStyles={'flex size-5 mx-2 justify-center items-center h-100 fill-secondary-text-msb self-center place-content-center'} />} success={streetValid === null} error={changeFields?.street} addStyles="h-12 w-100" name="street" id="street" type="text" />
+                            : <MapLocationIcon className={'flex size-5 mx-2 justify-center items-center h-100 fill-secondary-text-msb self-center place-content-center'} />} success={streetValid === null} error={changeFields?.street} addStyles="h-12 w-100" name="street" id="street" type="text" />
                         {(changeFields?.street && streetValid)
                             && <label htmlFor="street" className="text-xs px-2 mx-2 font-thin text-red-700">{streetValid}</label>}
                     </div>
@@ -167,28 +166,28 @@ const AccountForm = ({ userData }: Props) => {
                     <div className={'space-y-5 h-full'}>
                         <InputField label="Altura" value={addressNumber} onChange={onInputChange} icon={addressNumberValid === null && addressNumber !== userData?.addressNumber
                             ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                            :  <MapLocationIcon addStyles={'flex size-5 mx-2 justify-center items-center h-100 fill-secondary-text-msb self-center place-content-center'} />} success={addressNumberValid === null} error={changeFields?.addressNumber} addStyles="h-12 w-100" name="addressNumber" id="addressNumber" type="text" />
+                            : <MapLocationIcon className={'flex size-5 mx-2 justify-center items-center h-100 fill-secondary-text-msb self-center place-content-center'} />} success={addressNumberValid === null} error={changeFields?.addressNumber} addStyles="h-12 w-100" name="addressNumber" id="addressNumber" type="text" />
                         {(changeFields?.addressNumber && addressNumberValid)
                             && <label htmlFor="addressNumber" className="text-xs px-2 mx-2 font-thin text-red-700">{addressNumberValid}</label>}
                     </div>
                     <div className={'space-y-5 h-full'}>
                         <InputField label="Localidad" value={location} onChange={onInputChange} icon={locationValid === null && location !== userData?.location
                             ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
-                            : <MapLocationIcon addStyles={'flex size-5 mx-2 justify-center items-center h-100 fill-secondary-text-msb self-center place-content-center'} />} success={locationValid === null} error={changeFields?.location} addStyles="h-12 w-100" name="location" id="location" type="text" />
+                            : <MapLocationIcon className={'flex size-5 mx-2 justify-center items-center h-100 fill-secondary-text-msb self-center place-content-center'} />} success={locationValid === null} error={changeFields?.location} addStyles="h-12 w-100" name="location" id="location" type="text" />
                         {(changeFields?.location && locationValid)
                             && <label htmlFor="location" className="text-xs px-2 mx-2 font-thin text-red-700">{locationValid}</label>}
                     </div>
 
 
                 </div>
-                <div className={' lg:col-span-3  flex justify-center md:justify-end lg:justify-end h-full'}>
-                    <Button variant={`${fieldsChangedAndValid && !formSubmitted ? "primary" : "disabled"}`} addStyles="mt-5 w-full flex text-center  text-center justify-center w-full lg:text-center md:w-fit lg:w-fit py-2 px-8 h-full gap-2 items-center  text-base  text-white border border-gray-400" type="submit">{formSubmitted  ? <>{"Guardando"} <Spinner /></> : "Guardar Cambios"}</Button>
+                <div className={'lg:col-span-3  flex justify-center md:justify-end lg:justify-end h-full'}>
+                    <Button variant={`${fieldsChangedAndValid && !formSubmitted ? "primary" : "disabled"}`} addStyles="mt-5 w-full flex text-center  text-center justify-center w-full lg:text-center md:w-fit lg:w-fit py-2 px-8 h-full gap-2 items-center  text-base  text-white border border-gray-400" type="submit">{formSubmitted ? <>{"Guardando"} <Spinner /></> : "Guardar Cambios"}</Button>
                 </div>
                 <hr className={' divide-y-2 divide-gray-800 my-5'} />
             </form>
 
 
-            {!formError && <Toast message={toastMsg} isVisible={formSubmitted} icon={<WarningAlertIcon />} customStyles="flex   z-10 gap-2 border-2 border-primary-border-msb bg-[#EFF0F2]" duration={3000} />}
+            {!formError && <Toast message={toastMsg} isVisible={formSubmitted} icon={<WarningAlertIcon />} customStyles="flex z-10 gap-2 border-2 border-primary-border-msb bg-[#EFF0F2]" duration={3000} />}
             {formError && <Toast message={toastMsg} isVisible={formError} icon={<WarningAlertIcon />} customStyles="flex gap-2  z-10  border-2 border-primary-border-msb bg-[#EFF0F2]" duration={3000} />}
         </div>
     )

@@ -127,11 +127,11 @@ const ChangePasswordForm = ({ userData }: Props) => {
                         {(changeFields?.confirmPassword && confirmPasswordValid)
                             && <label htmlFor="confirmPassword" className="text-xs px-2 mx-2 font-thin text-red-700">{confirmPasswordValid}</label>}
                     </div>
-                    <div className={'flex justify-center gap-2 md:justify-end lg:justify-end font-bold h-fit w-full bg-gr px-5 text-pretty p-3 rounded border border-primary-msb'}>
-                        <WarningAlertIcon addStyles={'size-8 flex items-center justify-center fill-white'} />
-                        <p className="text-black  text-xs">{
+                    <div className={'flex lg:flex-cols flex-row justify-center gap-2 md:justify-end lg:justify-end font-bold   bg-gr px-5 text-pretty p-3 rounded border border-primary-msb'}>
+                        <WarningAlertIcon className={'fill-primary-msb flex items-center  text-white strokes-primary-msb h-full lg:w-[100px] w-[50px]'} />
+                        <span className="text-black  text-xs">{
                             `La contraseña actual es requerida y debe tener entre 8 y 50 caracteres, al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.`
-                        }</p></div>
+                        }</span></div>
                 </div>
                 <div className={' lg:col-span-2  flex justify-center md:justify-end lg:justify-end h-full'}>
                     <Button

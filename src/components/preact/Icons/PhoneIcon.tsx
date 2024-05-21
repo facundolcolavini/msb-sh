@@ -1,6 +1,8 @@
+import type { JSX } from 'preact';
+interface Props extends JSX.SVGAttributes<SVGSVGElement> {
+}
 
-
-function PhoneIcon(props: React.SVGProps<SVGSVGElement>) {
+function PhoneIcon(props: Props) {
   return (
     <svg
       fill="currentColor"
