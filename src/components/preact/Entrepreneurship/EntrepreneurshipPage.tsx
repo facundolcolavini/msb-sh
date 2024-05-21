@@ -128,7 +128,7 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'En Pozo'}
-            addStyles={`text-base  w-full  h-[56px] ${he.decode(filtersSelected?.ed_est?.value) === 'En Pozo' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[56px]'}`}
+            addStyles={`text-base  w-full  h-[42px] lg:h-[56px] ${he.decode(filtersSelected?.ed_est?.value) === 'En Pozo' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  h-[42px] lg:h-[56px]'}`}
             id="ed_est"
           >
             En Pozo
@@ -139,7 +139,7 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'En Construccion'}
-            addStyles={` text-base h-[56px] w-full ${filtersSelected?.ed_est.value === 'En Construccion' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[56px]'}`}
+            addStyles={` text-base  h-[42px] lg:h-[56px] w-full ${filtersSelected?.ed_est.value === 'En Construccion' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  h-[42px] lg:h-[56px]'}`}
             id="ed_est"
           >
             En Construcción
@@ -150,7 +150,7 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'Terminado'}
-            addStyles={`text-base h-[56px] w-full  ${he.decode(filtersSelected?.ed_est?.value) === 'Terminado' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[56px]'}`}
+            addStyles={`text-base  h-[42px] lg:h-[56px] w-full  ${he.decode(filtersSelected?.ed_est?.value) === 'Terminado' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  h-[42px] lg:h-[56px]'}`}
             id="ed_est"
           >
             Terminado
@@ -170,19 +170,19 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
           <aside className="md:col-12 lg:col-start-1 lg:col-end-4">
             <div className="flex flex-col">
               <div className="flex mb-4">
-                <SelectField id="ed_tip" onChange={handleSelect} defaultOption={filterStore.ed_tip} opts={filtersformatted.ed_tip} />
+                <SelectField id="ed_tip" addStyles="lg:h-[56px]" onChange={handleSelect} defaultOption={filterStore.ed_tip} opts={filtersformatted.ed_tip} />
               </div>
               <div className="flex mb-4">
-                <SelectField id="ed_loc" onChange={handleSelect} defaultOption={filterStore.ed_loc} opts={filtersformatted.ed_loc} />
+                <SelectField id="ed_loc" addStyles="lg:h-[56px]" onChange={handleSelect} defaultOption={filterStore.ed_loc} opts={filtersformatted.ed_loc} />
               </div>
               <div className="flex mb-4">
-                <SelectField id="ed_bar" onChange={handleSelect} defaultOption={filterStore.ed_bar} opts={filtersformatted.ed_bar} />
+                <SelectField id="ed_bar" addStyles="lg:h-[56px]" onChange={handleSelect} defaultOption={filterStore.ed_bar} opts={filtersformatted.ed_bar} />
               </div>
               <div className="flex mb-4">
-                <SelectField id="ed_cal" onChange={handleSelect} defaultOption={filterStore.ed_cal} opts={filtersformatted.ed_cal} />
+                <SelectField id="ed_cal" addStyles="lg:h-[56px]" onChange={handleSelect} defaultOption={filterStore.ed_cal} opts={filtersformatted.ed_cal} />
               </div>
               <div className="flex mb-4">
-                <SelectField id="ed_cat" onChange={handleSelect} defaultOption={filterStore.ed_cat} opts={filtersformatted.ed_cat} />
+                <SelectField id="ed_cat" addStyles="lg:h-[56px]" onChange={handleSelect} defaultOption={filterStore.ed_cat} opts={filtersformatted.ed_cat} />
               </div>
               <div className="mt-4">
                 <Button
@@ -191,7 +191,7 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
                   onClick={
                     resetAndFetch
                   }
-                  addStyles="w-full h-[56px] text-md border-2 border-gray-300 rounded-md flex justify-center items-center"
+                  addStyles="w-full  h-[42px] lg:h-[56px] text-md border-2 border-gray-300 rounded-md flex justify-center items-center"
                 >
                   Limpiar búsqueda
                 </Button>

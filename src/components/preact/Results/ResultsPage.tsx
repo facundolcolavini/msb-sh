@@ -192,7 +192,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'V'}
-            addStyles={`sm:text-sm md:text-md lg:text-lg lg:h-[48px] w-full   ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  '}`}
+            addStyles={`sm:text-sm md:text-md lg:text-lg h-[42px] lg:h-[48px] w-full   ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[42px] lg:h-[48px] '}`}
             id="tipo_operacion"
           >
             Venta
@@ -203,7 +203,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'A'}
-            addStyles={` sm:text-sm md:text-md lg:text-lg lg:h-[48px] w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  '}`}
+            addStyles={` sm:text-sm md:text-md lg:text-lg h-[42px] lg:h-[48px] w-full ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[42px] lg:h-[48px] '}`}
             id="tipo_operacion"
           >
             Alquiler
@@ -214,7 +214,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
             variant="outline"
             onClick={handleSelect}
             value={'T'}
-            addStyles={`sm:text-sm md:text-md lg:text-lg lg:h-[48px] w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && '  text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out'}`}
+            addStyles={`sm:text-sm md:text-md lg:text-lg h-[42px] lg:h-[48px] w-full  ${filtersSelected?.tipo_operacion?.value === 'T' && '  text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[42px] lg:h-[48px]'}`}
             id="tipo_operacion"
           >
             Alquiler Temporiario
@@ -226,7 +226,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
             variant="outline"
             onClick={handleSelect} // Llama a handleSelect cuando se hace clic en el botón
             value={filtersSelected?.in_tpr?.value}
-            addStyles={`sm:text-sm md:text-md lg:text-lg lg:h-[48px] w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? ' text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out' : ''}`}
+            addStyles={`sm:text-sm md:text-md lg:text-lg h-[42px] lg:h-[48px] w-full  ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? ' text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[42px] lg:h-[48px]' : ''}`}
             id="in_tpr"
           >
             Barrios Cerrados y Countries
