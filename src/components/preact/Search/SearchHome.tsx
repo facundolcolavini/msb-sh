@@ -83,7 +83,7 @@ const SearchHome = ({ selects }: Props) => {
     <>
 
       <div className="container z-1 font-gotham">
-        <div className="mx-auto grid bg-[#D9D9D9] bg-opacity-40 rounded grid-cols lg:grid-cols-12 gap-4 lg:py-5 lg:px-0 md:p-5 p-5  ">
+        <div className="mx-auto grid bg-[#D9D9D9] bg-opacity-40 rounded grid-cols lg:grid-cols-12 gap-4  lg:pt-5 lg:pb-2 lg:px-0 md:p-5 p-5  ">
           <div class="lg:col-start-1 lg:col-end-1 lg:w-[100px]">
             {' '}
           </div>
