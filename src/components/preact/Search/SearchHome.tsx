@@ -92,7 +92,7 @@ const SearchHome = ({ selects }: Props) => {
               variant="outline"
               onClick={handleSelect}
               value={'V'}
-              addStyles={`sm:text-sm md:text-md lg:text-md lg:flex lg:self-center h-[42px] lg:h-[34px] lg:justify-center lg:items-center text-ellipsis overflow-hidden ... w-full ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[42px] lg:h-[34px]'}`}
+              addStyles={`sm:text-sm md:text-md lg:text-base lg:flex lg:self-center h-[42px] lg:h-[34px] lg:justify-center lg:items-center text-ellipsis overflow-hidden ... w-full ${filtersSelected?.tipo_operacion?.value === 'V' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[42px] lg:h-[34px]'}`}
               id="tipo_operacion"
             >
               Venta
@@ -103,7 +103,7 @@ const SearchHome = ({ selects }: Props) => {
               variant="outline"
               onClick={handleSelect}
               value={'A'}
-              addStyles={` sm:text-sm md:text-md lg:text-md lg:flex lg:self-center lg:justify-center lg:items-center text-ellipsis overflow-hidden ... w-full  h-[42px] lg:h-[34px]  ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[42px] lg:h-[34px]'}`}
+              addStyles={` sm:text-sm md:text-md lg:text-base lg:flex lg:self-center lg:justify-center lg:items-center text-ellipsis overflow-hidden ... w-full  h-[42px] lg:h-[34px]  ${filtersSelected?.tipo_operacion?.value === 'A' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[42px] lg:h-[34px]'}`}
               id="tipo_operacion"
             >
               Alquiler
@@ -114,7 +114,7 @@ const SearchHome = ({ selects }: Props) => {
               variant="outline"
               onClick={handleSelect}
               value={'T'}
-              addStyles={`sm:text-sm md:text-md lg:text-md lg:flex lg:self-center lg:justify-center lg:items-center  text-ellipsis overflow-hidden ... w-full h-[42px] lg:h-[34px] ${filtersSelected?.tipo_operacion?.value === 'T' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  h-[42px] lg:h-[34px] '}`}
+              addStyles={`sm:text-sm md:text-md lg:text-base lg:flex lg:self-center lg:justify-center lg:items-center  text-ellipsis overflow-hidden ... w-full h-[42px] lg:h-[34px] ${filtersSelected?.tipo_operacion?.value === 'T' && 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out  h-[42px] lg:h-[34px] '}`}
               id="tipo_operacion"
             >
               Alquiler Temporario
@@ -125,14 +125,14 @@ const SearchHome = ({ selects }: Props) => {
               variant="outline"
               onClick={handleSelect}
               value={filtersSelected?.in_tpr?.value}
-              addStyles={`sm:text-sm md:text-md lg:text-md lg:flex lg:self-center lg:justify-center lg:items-center h-[42px] lg:h-[34px] w-full ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[42px] lg:h-[34px] ' : ''}`}
+              addStyles={`sm:text-sm md:text-md lg:text-base lg:flex lg:self-center lg:justify-center lg:items-center h-[42px] lg:h-[34px] w-full ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'text-secondary-msb bg-bg-2-msb border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out h-[42px] lg:h-[34px] ' : ''}`}
               id="in_tpr"
             >
               Barrios Cerrados y Countries
             </Button>
           </div>
           <div className="col-start-1 col-end-12 lg:col-start-2 lg:col-end-4">
-            <SelectField addStyles='sm:text-sm md:text-md lg:text-base h-[42px] lg:h-[48px] lg:text-md' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
+            <SelectField addStyles='sm:text-sm md:text-md lg:text-base h-[42px] lg:h-[48px]' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
           </div>
           <div className=" col-start-1 col-end-12 lg:col-start-4 lg:col-end-10 sm:text-sm md:text-md lg:text-base">
             <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />
