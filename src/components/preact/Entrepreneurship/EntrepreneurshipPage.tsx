@@ -225,6 +225,7 @@ const EntrepreneurshipPage = ({ selects, locations,session }: Props) => {
                 <>
                   {results?.emprendimiento?.map((result: EntrePreneurShip) => (
                     <CardEntrepreneurship
+                      cardContentStyles="h-[144px]"
                       cardData={
                         {
                           ed_nom: result.ed_nom,

@@ -91,7 +91,6 @@ export default {
       gridTemplateColumns: {
         'custom': 'repeat(auto-fill,minmax(302px, 1fr))',  
         'mdgridCustom': 'repeat(2, minmax(302px, 1fr))',
-
       },
       minHeight: {
         'custom': '440px', // Añade tu altura mínima personalizada aquí

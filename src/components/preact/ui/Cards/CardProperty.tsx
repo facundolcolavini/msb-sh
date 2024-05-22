@@ -40,7 +40,7 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key
             <div class={contentCardStyles}>
                 <div className="">
                     <div className="lg:text-xl md:text-lg text-lg font-gothamMedium font-thin truncate ..."><span className="font-gothamBold ">{cardData.precio}</span> | {he.decode(cardData.in_cal)} {cardData.in_nro}</div>
-                    <p className="text-bg-2-msb font-gothamMedium  ">
+                    <p className="text-bg-2-msb font-gothamMedium">
                         {he.decode(cardData.in_loc)} {he.decode(cardData.in_bar) ? `- ${he.decode(cardData.in_bar)}` : ""}
                     </p>
                 </div>
@@ -51,13 +51,13 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key
                     {he.decode(cardData.ti_dor) !== "" && he.decode(cardData.ti_dor) !== "0" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1 truncate ..."><DoorOpen /> {he.decode(cardData.ti_dor)} dorm.</span>}
                     {he.decode(cardData?.in_bao) !== "" && he.decode(cardData?.in_bao) !== "0" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1  truncate ..."><BathIcon />{`${he.decode(cardData?.in_bao) === "1" ? `${he.decode(cardData?.in_bao)} baño` : `${he.decode(cardData?.in_bao)} baños`}`} </span>}
                 </div>
-                <div className="flex justify-between  absolute p-3 items-center bottom-0 right-0 left-0 h-100 place-content-end">
+                <div className="flex justify-between absolute p-3 items-center bottom-0 right-0 left-0 h-100 place-content-end">
                     <div>
                     <button className="text-base bg-bg-2-msb rounded-full px-3 py-2  hover:bg-bg-1-msb text-white font-bold uppercase">
                         {he.decode(cardData.operacion)}
                     </button>
                     </div>
-                    <div class="flex place-content-center self-center items-center justify-center gap-1 ">
+                    <div class="flex place-content-center self-center items-center justify-center gap-1">
                         <a href={`https://api.whatsapp.com/send/?phone=5491144161700&text=Hola%2C+me+contactaba+desde+http%3A%2F%2Fmatiasszpira.com.ar%2F+para+consultarles&type=phone_number&app_absent=0`} target="_blank"><WhatsAppIcon className={'size-6 fill-gray-700'} /></a>
                     </div>
 
