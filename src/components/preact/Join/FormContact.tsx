@@ -80,22 +80,22 @@ const FormContact = () => {
 
   return (
     <>
-      <div className={'p-4 md:px-6 lg:px-5 h-fit'}>
-        {isFormValid && !formError && formSubmitted
+      <div className={'md:px-6 lg:px-5 h-fit'}>
+        {isFormValid && !formError && formSubmitted 
           ? (
             <div className="flex flex-col text-center gap-2 py-3 px-3 my-20">
-              <h1 class={'font-gothamBold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>Gracias por tu interés en pertenecer a nuestro equipo</h1>
-              <p class="text-primary-text-msb text-pretty font-gotham font-normal  lg:text-2xl md:text-xl w-full">
-                ¡Consulta enviada con éxito!
+              <h1 class={'font-gothamBold text-center tracking-normal pb-5 md:text-md w-full text-base md:text-2xl lg:text-3xl'}>GRACIAS POR QUERER FORMAR PARTE</h1>
+              <p class="text-primary-text-msb text-pretty font-gothamMedium font-thin  lg:text-2xl md:text-xl w-full">
+              ¡Tu CV fue enviado con éxito!
               </p>
               <IconCheckCircle className={'size-12 my-5 self-center fill-primary-hover-msb'} />
             </div>
           )
           : (
             <div>
-              <h1 class={'font-gothamBold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>Potenciá tu desarrollo profesional con nosotros</h1>
+              <h1 class={'font-gothamBold text-center tracking-normal pb-5 text-base md:text-xl lg:text-3xl'}>Potenciá tu desarrollo profesional con nosotros</h1>
               <p
-                class="text-primary-text-msb text-center text-pretty font-gotham font-normal lg:text-2xl md:text-xl w-full pb-6"
+                class="text-primary-text-msb text-center text-pretty font-gotham font-bold lg:text-2xl md:text-xl w-full pb-6"
               >
                 Dejanos tu mensaje y nos contactamos a la brevedad
               </p>
@@ -141,7 +141,7 @@ const FormContact = () => {
                     && <label htmlFor="contactMessage" className="text-xs px-2  mx-2 font-thin text-red-700">{contactMessageValid}</label>}
                 </div>
                 <div>
-                  <InputField label={  contactFile?.name!?.length > 20 ? `${contactFile?.name.slice(0, 25)}...` : contactFile?.name ?? "Adjuntar CV (.doc,.docx, .pdf)"}  type="file"  accept={'.doc,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf'} onChange={onUploadFile} icon={contactFileValid === null
+                  <InputField label={  contactFile?.name!?.length > 20 ? `${contactFile?.name.slice(0, 25)}...` : contactFile?.name ?? "Adjuntar CV (.doc,.docx, .pdf)"}  type="file" accept={'.doc,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.pdf'} onChange={onUploadFile} icon={contactFileValid === null
                     ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />
                     : changeFields?.contactFile === true ? <ErrorIcon addStyles="stroke-red-500" /> :<AttachmentIcon className={'flex size-5 mx-2 justify-center items-center fill-secondary-text-msb h-100 self-center place-content-center'}/>} success={contactFileValid === null} error={changeFields?.contactFile} addStyles="h-12" name="contactFile" id="contactFile" />
                   {(changeFields?.contactFile && contactFileValid)

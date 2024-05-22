@@ -77,13 +77,13 @@ const FormContact = () => {
 
   return (
     <>
-      <div className={'p-4 md:px-6 lg:px-5 h-fit'}>
+      <div className={'md:px-6 lg:px-5 h-fit'}>
         {!formError && formSubmitted
           ? (
             <div className="flex flex-col text-center gap-2 py-3 px-3 my-20">
                {/*  {!formError && formSubmitted && <Toast message={toastMsg} isVisible={formSubmitted} icon={<WarningAlertIcon />} customStyles="flex   z-10 gap-2 border-2 border-primary-border-msb bg-[#EFF0F2]" duration={3000} />} */}
-              <h1 class={'font-gothamBold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>GRACIAS POR TU CONSULTA</h1>
-              <p class="text-primary-text-msb text-pretty font-gotham font-normal  lg:text-2xl md:text-xl w-full">
+              <h1 class={'font-gothamBold text-center tracking-normal pb-5 w-full text-base md:text-2xl lg:text-3xl'}>GRACIAS POR TU CONSULTA</h1>
+              <p class="text-primary-text-msb text-pretty font-gothamMedium font-thin  lg:text-2xl md:text-xl w-full">
                 ¡Consulta enviada con éxito!
               </p>
               <IconCheckCircle className={'size-12 my-5 self-center fill-primary-hover-msb'} />
@@ -92,9 +92,9 @@ const FormContact = () => {
           )
           : (
             <div>
-              <h1 class={'font-gothamBold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>ENVIANOS TU CONSULTA</h1>
+              <h1 class={'font-gothamBold  w-full text-center tracking-normal pb-5 md:text-md text-base md:text-xl lg:text-3xl'}>ENVIANOS TU CONSULTA</h1>
               <p
-                class="text-primary-text-msb text-center text-pretty font-gotham font-normal lg:text-2xl md:text-xl w-full pb-6"
+                class="text-primary-text-msb text-center text-pretty font-gotham font-bold lg:text-2xl md:text-xl w-full pb-6"
               >
                 Dejanos tu mensaje y nos contactamos a la brevedad
               </p>
