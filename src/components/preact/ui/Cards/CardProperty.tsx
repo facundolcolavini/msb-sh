@@ -17,13 +17,15 @@ interface Props extends HTMLAttributes<"a"> {
     cardData: File
     addStyles?: string;
     defaultImgeProperty?: string;
+    cardContentStyles?: string;
     href: string;
     key: string;
 }
-const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key, defaultImgeProperty }: Props) => {
+const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key, defaultImgeProperty,cardContentStyles }: Props) => {
 
     const styles = twMerge(clsx("rounded relative overflow-hidden shadow-lg animate-fade", addStyles));
-
+    const contentCardStyles = twMerge(clsx("bg-secondary-msb relative rounded-b-md border h-[148px] md:px-3 p-3 md:py-3 lg:px-3 lg:py-3", cardContentStyles));
+ 
     //Add To Favorite
 
 
@@ -31,25 +33,25 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key
 /*         <div className={addStyles}>
               <img className={`  text-balance ${cardData.img_princ === "" ?  "object-contain" : "object-cover"}`} loading="eager" width={408} height={248} src={cardData.img_princ === "" ? '/images/msz-logo.webp' : cardData.img_princ  } alt="Imagen del interior de la vivienda" />
         </div> */
-          <div className={''}>
+          <div >
             <a href={href} className={styles} key={key}>
                 <img className={`w-full h-[248px] rounded-t-md border-[#a4a4a4] text-balance ${cardData.img_princ === "" ?  "object-contain" : "object-cover"}`} loading="eager" width={408} height={248} src={cardData.img_princ === "" ? '/images/msz-logo.webp' : cardData.img_princ  } alt="Imagen del interior de la vivienda" />
            
-            <div class="bg-secondary-msb relative rounded-b-md border border- h-[210px] md:px-3 p-3 md:py-3 lg:px-3 lg:py-3">
+            <div class={contentCardStyles}>
                 <div className="">
                     <div className="lg:text-xl md:text-lg text-lg font-gothamMedium font-thin truncate ..."><span className="font-gothamBold ">{cardData.precio}</span> | {he.decode(cardData.in_cal)} {cardData.in_nro}</div>
                     <p className="text-bg-2-msb font-gothamMedium  ">
                         {he.decode(cardData.in_loc)} {he.decode(cardData.in_bar) ? `- ${he.decode(cardData.in_bar)}` : ""}
                     </p>
                 </div>
-                <div className="flex justify-start  flex-wrap items-center mt-1  gap-x-5">
+                <div className="flex justify-start  items-center mt-1 gap-x-5">
 
-                    {he.decode(cardData.in_cub) !== "0.00" && he.decode(cardData.in_cub) !== "" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1"><RuleIcon h="16" w="16" /> {he.decode(cardData?.in_cub)}mt2</span>}
-                    {he.decode(cardData.in_sto) !== "0.00" && he.decode(cardData.in_sto) !== "" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1"><SquareMeterIcon  h="16" w="16"/> {he.decode(cardData?.in_sto)}mt2</span>}
-                    {he.decode(cardData.ti_dor) !== "" && he.decode(cardData.ti_dor) !== "0" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1"><DoorOpen /> {he.decode(cardData.ti_dor)} dorm.</span>}
-                    {he.decode(cardData?.in_bao) !== "" && he.decode(cardData?.in_bao) !== "0" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1"><BathIcon />{`${he.decode(cardData?.in_bao) === "1" ? `${he.decode(cardData?.in_bao)} baño` : `${he.decode(cardData?.in_bao)} baños`}`} </span>}
+                    {he.decode(cardData.in_cub) !== "0.00" && he.decode(cardData.in_cub) !== "" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1  truncate ..."><RuleIcon h="16" w="16" /> {he.decode(cardData?.in_cub)}mt2</span>}
+                    {he.decode(cardData.in_sto) !== "0.00" && he.decode(cardData.in_sto) !== "" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1  truncate ..."><SquareMeterIcon  h="16" w="16"/> {he.decode(cardData?.in_sto)}mt2</span>}
+                    {he.decode(cardData.ti_dor) !== "" && he.decode(cardData.ti_dor) !== "0" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1 truncate ..."><DoorOpen /> {he.decode(cardData.ti_dor)} dorm.</span>}
+                    {he.decode(cardData?.in_bao) !== "" && he.decode(cardData?.in_bao) !== "0" && <span className="flex items-center text-base font-thin text-gray-700 mr-2 mb-2 gap-1  truncate ..."><BathIcon />{`${he.decode(cardData?.in_bao) === "1" ? `${he.decode(cardData?.in_bao)} baño` : `${he.decode(cardData?.in_bao)} baños`}`} </span>}
                 </div>
-                <div className=" bg-red-500 flex justify-between items-end absolute p-3 bottom-0 right-0 left-0 h-100 place-content-end self bg-transparent ">
+                <div className="flex justify-between  absolute p-3 items-center bottom-0 right-0 left-0 h-100 place-content-end">
                     <div>
                     <button className="text-base bg-bg-2-msb rounded-full px-3 py-2  hover:bg-bg-1-msb text-white font-bold uppercase">
                         {he.decode(cardData.operacion)}
