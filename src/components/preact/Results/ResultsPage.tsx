@@ -337,7 +337,7 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
           {/* Grilla de Resultados */}
           <div className="lg:col-start-4 lg:col-end-13">
             {/* Mostrar indicador de carga si los datos están cargando */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 z-1 gap-4 animate-fade">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-custom lg:grid-cols-custom min-h-custom z-1 gap-4 animate-fade">
               {isLoading ? (
 
                 <>
@@ -353,9 +353,10 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
               ) : (
                 <>
                   {Array.isArray(results?.fichas) && results.fichas.map((result: File,) => (
-                    <div style={`view-transition-name: ${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`}>
+                    <div className={'w-full h-full'} style={`view-transition-name: ${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`}>
                       <CardProperty
                         cardData={result}
+                        
                         key={`${result.id}${result.in_suc}-${result.in_num}-${result.direccion_completa}`} // Aquí estás utilizando result.id como clave
                         href={`resultados-de-busqueda/${result.operacion}/${result.in_loc}/${result.direccion_completa}/${result.in_suc}-${result.in_num}`}
                       />
