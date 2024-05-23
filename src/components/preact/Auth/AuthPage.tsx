@@ -1,10 +1,11 @@
 import { modalAuthPropertyStore, setModalAuth } from "@/store/modalsAuthStore";
 
-import { useEffect, useState } from "preact/hooks";
+import type { JSX } from "astro/jsx-runtime";
+import { useCallback, useEffect, useState } from 'preact/hooks';
+import ResetPasswordForm from "../ResetPassword/ResetPasswordForm";
 import { Modal } from "../ui/Modals/Modal";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
-import type { JSX } from "astro/jsx-runtime";
 
 interface AuthProps {
     children?: JSX.Element | JSX.Element[]
@@ -20,24 +21,29 @@ const AuthPage = ({ children }: AuthProps) => {
     }, []);
 
     const toggleModal = () => {
-        setModalAuth({ changeToLogin: false, changeToRegister: false });
+        setModalAuth({ changeToLogin: false, changeToRegister: false, changeToForgetPassword: false });
         setIsOpenModal((prev) =>
             !prev
         );
     };
 
-    const handleSwitchToRegister = (event: Event) => {
+    const handleSwitchToRegister = useCallback((event: Event) => {
         event.preventDefault();
         event.stopPropagation();
-        setModalAuth({ changeToLogin: false, changeToRegister: true });
-    };
+        setModalAuth({ changeToLogin: false, changeToRegister: true, changeToForgetPassword: false });
+    }, [modalType.changeToRegister]);
 
-    const handleSwitchToLogin = (event: Event) => {
+    const handleSwitchToLogin = useCallback((event: Event) => {
         event.preventDefault();
         event.stopPropagation();
-        setModalAuth({ changeToLogin: true, changeToRegister: false });
-    };
+        setModalAuth({ changeToLogin: true, changeToRegister: false, changeToForgetPassword: false });
+    }, [modalType.changeToLogin]);
 
+    const handleSwitchToForgetPassword = useCallback((event: Event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        setModalAuth({ changeToLogin: false, changeToRegister: false, changeToForgetPassword: true });
+    }, [modalType.changeToLogin]);
     return (
         <>
             {
@@ -50,13 +56,21 @@ const AuthPage = ({ children }: AuthProps) => {
                         onBackdropClick={toggleModal}
                     >
                         {
-                            modalType.changeToRegister ? (
-                                <RegisterForm onSwitchToLogin={handleSwitchToLogin} />
+                            modalType.changeToRegister
+                                ? (
+                                    <RegisterForm onSwitchToLogin={handleSwitchToLogin} />
 
-                            ) : (
-                                <LoginForm  onSwitchToRegister={handleSwitchToRegister}/>
+                                )
+                                : (
+                                    /* Si esta en el login o en olvide mi contraseia */
+                                    modalType.changeToForgetPassword
+                                        ? (
+                                            <ResetPasswordForm onSwitchToLogin={handleSwitchToLogin} />
+                                        ) : (
+                                            <LoginForm onSwitchToRegister={handleSwitchToRegister} onSwitchToForgetPassword={handleSwitchToForgetPassword} />
+                                        )
 
-                            )
+                                )
                         }
                     </Modal>
                 )

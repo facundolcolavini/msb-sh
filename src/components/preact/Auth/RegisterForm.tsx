@@ -78,7 +78,7 @@ const RegisterForm = ({ onSwitchToLogin }: Props) => {
                 setTimeout(() => {
                     setFormSubmitted(false);
                     setResDataStatus(false)
-                    setModalAuth({ changeToLogin: false, changeToRegister: false });
+                    setModalAuth({ changeToLogin: false, changeToRegister: false, changeToForgetPassword: false});
                     navigate(window.location.pathname);
                     onResetForm();
                 }, 4000)
@@ -95,7 +95,7 @@ const RegisterForm = ({ onSwitchToLogin }: Props) => {
 
             {resDataStatus
                 ? (
-                    <div className="flex flex-col text-center   text-pretty gap-2 py-3 px-6 mx-2 my-20">
+                    <div className="flex animate-fadeIn transition-opacity duration-400 flex-col text-center   text-pretty gap-2 py-3 px-6 mx-2 my-20">
                         {/*  {!formError && formSubmitted && <Toast message={toastMsg} isVisible={formSubmitted} icon={<WarningAlertIcon />} customStyles="flex   z-10 gap-2 border-2 border-primary-border-msb bg-[#EFF0F2]" duration={3000} />} */}
                         <h1 class={'font-bold text-center tracking-normal pb-5 md:text-md text-2xl md:text-xl lg:text-3xl'}>Bienvenido
                             <span class={'text-primary-msb py-5'}> {firstName} {lastName}</span>
@@ -109,7 +109,7 @@ const RegisterForm = ({ onSwitchToLogin }: Props) => {
                 )
                 : (
                     <>
-                        <h1 className={'font-bold  relative text-center mx-auto px-6 pt-5'}>CREAR CUENTA</h1>
+                        <h1 className={'font-thin font-gothamMedium animate-fadeIn transition-opacity duration-400  relative text-center mx-auto px-6 pt-5'}>CREAR CUENTA</h1>
                         <div className={'p-4 md:px-6 lg:px-5 h-fit'}>
                             <form className="grid grid-cols text-start gap-3 h-fit font-thin font-gotham" noValidate onSubmit={register}>
                                 <div className="flex gap-2">

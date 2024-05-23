@@ -12,9 +12,10 @@ import InputField from "../ui/Inputs/InputField";
 
 interface Props {
     onSwitchToRegister: (event: Event) => void
+    onSwitchToForgetPassword: (event: Event) => void
 }
 
-const LoginForm = ({ onSwitchToRegister }: Props) => {
+const LoginForm = ({ onSwitchToRegister,onSwitchToForgetPassword }: Props) => {
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [formError, setFormError] = useState(false);
     const [toastMsg, setToastMsg] = useState('');
@@ -59,7 +60,7 @@ const LoginForm = ({ onSwitchToRegister }: Props) => {
                 setToastMsg(data.message);
                 navigate(window.location.pathname);
                 onResetForm();
-                setModalAuth({ changeToLogin: false, changeToRegister: false });
+                setModalAuth({ changeToLogin: false, changeToRegister: false, changeToForgetPassword: false });
             }
 
         } catch (e) {
@@ -69,8 +70,8 @@ const LoginForm = ({ onSwitchToRegister }: Props) => {
     };
 
     return (
-        <>
-            <h1 className={'font-bold  text-center mx-auto px-6 pt-5'}>INICIAR SESIÓN</h1>
+        <div className={'animate-fadeIn transition-opacity duration-400'}>
+            <h1 className={'font-extralight font-gothamMedium text-center mx-auto px-6 pt-5'}>INICIAR SESIÓN</h1>
             <div className={'p-4 md:px-6 lg:px-5 h-fit'}>
                 <form className="grid grid-cols text-start gap-3 h-fit font-thin font-gotham" noValidate onSubmit={login}>
                     <InputField label="Email" value={email} onChange={onInputChange} icon={emailValid === null
@@ -88,16 +89,17 @@ const LoginForm = ({ onSwitchToRegister }: Props) => {
 
                     <hr className={'divide-x-2 divide-slate-800 mx-2'} />
                     <div className="flex justify-end">
-                        <a href="/restablecer-clave" className="text-xs px-2 hover:text-bg-2-msb w-fit text-start text-primary-msb font-thin">Olvidé mi contraseña</a>
+                        <button  onClick={onSwitchToForgetPassword} className="text-xs px-2 hover:text-bg-2-msb w-fit text-start text-primary-msb font-thin">Olvidé mi contraseña</button>
+                       {/*  <a href="/restablecer-clave" className="text-xs px-2 hover:text-bg-2-msb w-fit text-start text-primary-msb font-thin">Olvidé mi contraseña</a> */}
                     </div>
                     {formError && <div className="flex gap-2  py-3 px-3 text-sm z-10 border border-red-500 rounded bg-red-200 ">{toastMsg}</div>}
                     <div className={'flex justify-center items-center gap-2'}>
-                        <Button variant="outline" addStyles="w-full py-1 px-5  hover:bg-bg-2-msb hover:text-white" type="button" onClick={onSwitchToRegister}> Crear cuenta</Button>
+                        <Button variant="outline" addStyles="w-full py-1 px-5  hover:bg-bg-2-msb hover:text-white" type="button" onClick={onSwitchToRegister}>Crear cuenta</Button>
                         <Button variant={`${isFormValid ? "primary" : "disabled"}`} addStyles="flex w-full py-1 px-5  gap-2 justify-center text-white border border-gray-400" type="submit"><span>Iniciar Sesión</span> {formSubmitted && isFormValid && <Spinner />}</Button>
                     </div>
                 </form>
             </div>
-        </>
+        </div>
     )
 }
 
