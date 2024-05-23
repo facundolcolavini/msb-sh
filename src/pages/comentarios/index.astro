@@ -39,21 +39,20 @@ const description = "Reseñas de nuestros clientes sobre nuestros servicios.";
       </div>
     </section>
     <section class="bg-secondary-bg-msb">
-      <div class="container mx-auto grid grid-cols md:grid-cols-2 lg:grid-cols-3 gap-5 py-10 px-8">
+      <div
+        class="container mx-auto grid grid-cols md:grid-cols-2 lg:grid-cols-3 gap-5 py-10 px-8"
+      >
         {
           reviewsMock.map(({ userFullName, review, id }) => (
-           
-              <CardReview userFullName={userFullName} review={review} id={id} />
-           
+            <CardReview userFullName={userFullName} review={review} id={id} />
           ))
         }
       </div>
     </section>
     <section class="bg-secondary-bg-msb">
       <div class="container mx-auto py-10 px-8">
-     
-    <FormContact client:load/>
-     </div>
+        <FormContact client:load />
+      </div>
     </section>
   </article>
 </Layout>
