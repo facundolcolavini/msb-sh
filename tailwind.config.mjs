@@ -129,6 +129,7 @@ export default {
         "primary-text-msb": "#1B1B1B",
         "secondary-text-msb": "#494949",
         "tertiary-text-msb": "#FFFFFF", // Puesto que blanco es común, puedes usar directamente 'white'.
+        "primary-text-bold-msb": "#637229",
       },
       // Si necesitas definir familias de fuentes personalizadas, añádelas aquí.
       fontFamily: {
