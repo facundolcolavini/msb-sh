@@ -8,6 +8,8 @@ import BannerSlider from "@/components/preact/BannerSlider";
 import SearchHome from "@/components/preact/Search/SearchHome";
 import he from "he";
 
+import heroImage from "/images/background-hero-2.webp";
+import bgUsaImage from "/images/background-usa.webp";
 import Button from "@/components/preact/ui/Buttons/Button";
 import CardBranch from "@/components/preact/ui/Cards/CardBranch";
 import CardEntrepreneurship from "@/components/preact/ui/Cards/CardEntrepreneurship";
@@ -51,11 +53,9 @@ const selects = (await getAllSelects()) as Results;
 <Layout title={titlePage} description={description}>
   <HeroContainer
     className="justify-end md:justify-end pb-0 md:pb-4 h-100 lg:pb-20"
-    img={"/images/background-hero-2.webp"}
+    img={'/images/background-hero-2.webp'}
   >
-    <div
-      class="relative inset-0 flex flex-col h-100 justify-end items-center w-full h-full"
-    >
+    <div class="relative inset-0 flex flex-col h-100 justify-end items-center w-full h-full">
       <SearchHome client:visible selects={selects} />
     </div>
   </HeroContainer>
@@ -186,7 +186,7 @@ const selects = (await getAllSelects()) as Results;
         >
           <Link
             data-astro-prefetch="load"
-            class="bg-primary-msb font-gothamMedium font-thin text-white border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
+            class="bg-primary-msb font-gothamMedium font text-white border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
             href="emprendimientos?ed_est=En+Pozo"
           >
             En Pozo</Link
@@ -194,14 +194,14 @@ const selects = (await getAllSelects()) as Results;
           <Link
             data-astro-prefetch="load"
             href="emprendimientos?ed_est=En+Construccion"
-            class="bg-primary-msb text-white font-gothamMedium font-thin border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
+            class="bg-primary-msb text-white border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
           >
             En Construcción</Link
           >
           <Link
             data-astro-prefetch="load"
             href="emprendimientos?ed_est=Terminado"
-            class="bg-primary-msb text-white font-gothamMedium font-thin border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
+            class="bg-primary-msb text-white border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
           >
             Terminado</Link
           >
@@ -270,7 +270,7 @@ const selects = (await getAllSelects()) as Results;
     </BannerSlider>
   </section>
   <section class="" transition:animate={"fade"}>
-    <HeroContainer img={"/images/background-usa.webp"}>
+    <HeroContainer img={'/images/background-usa.webp'}>
       <div
         class="grid h-full items-center justify-center lg:justify-center self-end place-content-center text-center lg:text-center container mx-auto relative"
       >
@@ -375,7 +375,7 @@ const selects = (await getAllSelects()) as Results;
       >
         Comentarios y opiniones de nuestros usuarios
       </p>
-      <div class="grid md:grid-cols lg:grid-cols-3 ms:px-3 gap-10 md:px-5">
+      <div class="grid md:grid-cols lg:grid-cols-3 ms:px-3 gap-10 md:mx-auto md:w-[450px] lg:w-full">
         {
           reviewsMockIndexPage.map(({ userFullName, review, id }) => (
             <CardReview userFullName={userFullName} review={review} id={id} />

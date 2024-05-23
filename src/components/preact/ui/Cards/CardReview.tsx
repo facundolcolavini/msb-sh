@@ -17,14 +17,14 @@ export const CardReview = ({
                {/*  <img src={'/images/user-experiece.png'} className={' h-[28.44px]'} style={{ width: '28.44px', height: '26.67px' }}></img> */}
                <UserIcon  class="fill-primary-msb" style={{ width: '28.44px', height: '28px' }}/>
             </div>
-            <div className="grid h-full text-pretty place-content-center self-center  gap-y-1">
+            <div className="grid md:mx-auto  md:w-fit h-full w-full text-pretty place-content-center self-center  gap-y-1">
             <h1
                     class="text-base md:text-md lg:text-lg place-content-center self-center text-balance text-primary-text-msb text-left font-gothamMedium font-bold"
                 >
                     {userFullName}
                 </h1>
                     
-                <p class="text-clip overflow-hidden italic w-full lg:text-xs text-primary-text-msb text-left font-normal font-italic " style={{ overflow: 'hidden' }}>
+                <p class="text-clip overflow-hidden italic w-full lg:text-xs text-primary-text-msb text-left font-normal font-italic " >
                     {review}
                 </p>
             </div>
