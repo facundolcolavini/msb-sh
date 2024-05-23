@@ -12,21 +12,19 @@ export const CardReview = ({
 }: Props
 ) => {
     return (
-        <div id={id} class="flex items-center gap-5 p-3 bg-[#ffff] shadow-md justify-start rounded-md">
-            <div class="bg-[#D9D9D9] mx-5 flex justify-center items-center  rounded-full px-4 py-3 md:py-2 lg:py-2 md:px-4 lg:px-4">
-                <UserIcon
-                    class="md:size-12 lg:size-12 size-10 fill-primary-msb mx-auto" />
+        <div id={id} class="grid grid-cols-[auto,1fr] justify-center items-center gap-5 p-3 bg-[#ffff] shadow-md  rounded-md">
+            <div className="bg-[#D9D9D9] p-5 rounded-full">
+               {/*  <img src={'/images/user-experiece.png'} className={' h-[28.44px]'} style={{ width: '28.44px', height: '26.67px' }}></img> */}
+               <UserIcon  class="fill-primary-msb" style={{ width: '28.44px', height: '28px' }}/>
             </div>
-
-            <div class="flex flex-col gap-0 w-full lg:w-fit md:w-fit text-balance truncate ">
-                <h1
-                    class="text-base md:text-md lg:text-xl text-balance font-semibold text-primary-text-msb text-left"
+            <div className="grid h-full text-pretty place-content-center self-center  gap-y-1">
+            <h1
+                    class="text-base md:text-md lg:text-lg place-content-center self-center text-balance text-primary-text-msb text-left font-gothamMedium font-bold"
                 >
                     {userFullName}
                 </h1>
-                <p
-                    class=" text-clip overflow-hidden  italic  lg:text-lg  text-primary-text-msb text-left font-normal font-italic"
-                >
+                    
+                <p class="text-clip overflow-hidden italic w-full lg:text-xs text-primary-text-msb text-left font-normal font-italic " style={{ overflow: 'hidden' }}>
                     {review}
                 </p>
             </div>
