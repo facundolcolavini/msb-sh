@@ -35,9 +35,9 @@ let session = user ? true : false;
           navItems.map((item) => {
             return (
               <li class="flex items-center ">
-                <Link class="flex justify-between mt-1 items-start gap-5 font-bold  ">
+                <Link class="flex justify-between mt-1 items-start gap-5 font-bold font-gotham   ">
                   {item.dropdown ? (
-                    <Link class="rounded-none hover:border-b-4 text-xs font-bold  hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb ">
+                    <Link class="rounded-none hover:border-b-4 text-xs hover:border-b-primary-msb items-center hover:border-primary-msb hover:transition-all font-primary-font-msb ">
                       <NavDropDown client:load>
                         <span
                           slot="label"

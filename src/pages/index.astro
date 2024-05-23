@@ -52,16 +52,14 @@ const selects = (await getAllSelects()) as Results;
 
 <Layout title={titlePage} description={description}>
   <HeroContainer
-    className="justify-end md:justify-end pb-0 md:pb-4  h-100 lg:pb-32"
+    className="justify-end md:justify-end pb-0 md:pb-4 h-100 lg:pb-20"
     img={'/images/background-hero-2.webp'}
   >
     <div class="relative inset-0 flex flex-col h-100 justify-end items-center w-full h-full">
       <SearchHome client:visible selects={selects} />
     </div>
   </HeroContainer>
-
   <Chat />
-
   <!--  <section class="bg-secondary-bg-msb py-10">
     <div class="container mx-auto px-3 md:px-0 lg:px-0">
       <TitleSections
