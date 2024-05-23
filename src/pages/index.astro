@@ -8,8 +8,6 @@ import BannerSlider from "@/components/preact/BannerSlider";
 import SearchHome from "@/components/preact/Search/SearchHome";
 import he from "he";
 
-import heroImage from "/images/background-hero-2.webp";
-import bgUsaImage from "/images/background-usa.webp";
 import Button from "@/components/preact/ui/Buttons/Button";
 import CardBranch from "@/components/preact/ui/Cards/CardBranch";
 import CardEntrepreneurship from "@/components/preact/ui/Cards/CardEntrepreneurship";
@@ -53,9 +51,11 @@ const selects = (await getAllSelects()) as Results;
 <Layout title={titlePage} description={description}>
   <HeroContainer
     className="justify-end md:justify-end pb-0 md:pb-4 h-100 lg:pb-20"
-    img={'/images/background-hero-2.webp'}
+    img={"/images/background-hero-2.webp"}
   >
-    <div class="relative inset-0 flex flex-col h-100 justify-end items-center w-full h-full">
+    <div
+      class="relative inset-0 flex flex-col h-100 justify-end items-center w-full h-full"
+    >
       <SearchHome client:visible selects={selects} />
     </div>
   </HeroContainer>
@@ -136,7 +136,7 @@ const selects = (await getAllSelects()) as Results;
     </div>
   </section> -->
   <section class="bg-primary-msb">
-    <div class="container mx-auto px-3 md:px-0 lg:px-0 py-20">
+    <div class="container mx-auto px-3 md:px-0 lg:px-0 py-16">
       <TitleSections
         class="drop-shadow-2xl text-white font-base font-medium font-cormorant text-pretty text-center"
       >
@@ -164,7 +164,7 @@ const selects = (await getAllSelects()) as Results;
       </article>
     </div>
   </section>
-  <section class="bg-secondary-bg-msb px-3 md:px-0 lg:px-0 py-20">
+  <section class="bg-secondary-bg-msb px-3 md:px-0 lg:px-0 py-16">
     <div class="container mx-auto">
       <div
         class="flex justify-end gap-10 gap-y-4 flex-col self-center lg:px-20 p-6"
@@ -181,18 +181,12 @@ const selects = (await getAllSelects()) as Results;
         </p>
       </div>
       <div>
-        <!--         <SearchEntrepreneurship
-          client:idle
-          selects={selects}
-          locations={null}
-        
-        /> -->
         <div
           class="flex md:flex-row lg:flex-row flex-col justify-center w-100 gap-4 p-6 lg:px-2 md:px-6"
         >
           <Link
             data-astro-prefetch="load"
-            class="bg-primary-msb text-white border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
+            class="bg-primary-msb font-gothamMedium font-thin text-white border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
             href="emprendimientos?ed_est=En+Pozo"
           >
             En Pozo</Link
@@ -200,14 +194,14 @@ const selects = (await getAllSelects()) as Results;
           <Link
             data-astro-prefetch="load"
             href="emprendimientos?ed_est=En+Construccion"
-            class="bg-primary-msb text-white border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
+            class="bg-primary-msb text-white font-gothamMedium font-thin border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
           >
             En Construcción</Link
           >
           <Link
             data-astro-prefetch="load"
             href="emprendimientos?ed_est=Terminado"
-            class="bg-primary-msb text-white border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
+            class="bg-primary-msb text-white font-gothamMedium font-thin border-primary-msb hover:bg-primary-hover-msb text-center flex justify-center rounded-md shadow-lg w-full md:w-[192px] lg:w-[192px] h-full py-3 active:bg-primary-bg-msb text-pretty"
           >
             Terminado</Link
           >
@@ -276,7 +270,7 @@ const selects = (await getAllSelects()) as Results;
     </BannerSlider>
   </section>
   <section class="" transition:animate={"fade"}>
-    <HeroContainer img={'/images/background-usa.webp'}>
+    <HeroContainer img={"/images/background-usa.webp"}>
       <div
         class="grid h-full items-center justify-center lg:justify-center self-end place-content-center text-center lg:text-center container mx-auto relative"
       >
@@ -307,7 +301,7 @@ const selects = (await getAllSelects()) as Results;
   </section>
   <section
     id="branchs"
-    class="bg-secondary-bg-msb py-20"
+    class="bg-secondary-bg-msb py-16"
     transition:animate="fade"
   >
     <div>
@@ -317,7 +311,7 @@ const selects = (await getAllSelects()) as Results;
         Nuestras Sucursales
       </TitleSections>
       <p
-        class="text-secondary-text-msb text-center text-md md:text-lg lg:text-2xl font-extralight p-10"
+        class="text-secondary-text-msb text-center text-md md:text-lg lg:text-2xl font-extralight pt-5 pb-9"
       >
         Elegí tu sucursal más cercana
       </p>
