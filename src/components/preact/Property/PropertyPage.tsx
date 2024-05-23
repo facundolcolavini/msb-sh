@@ -12,6 +12,7 @@ import { tabMenuPropertyStore } from "src/store/tabMenuPropertyStore";
 import { capitalize } from '../../../utils/formats';
 import GalleryProperty from "../Gallery/GalleryProperty";
 import BathIcon from "../Icons/BathIcon";
+import DoorOpen from "../Icons/DoorOpen";
 import MapLocationIcon from "../Icons/MapLocationIcon";
 import WarningAlertIcon from "../Icons/WarningAlertIcon";
 import PDFViewer from "../PDFViewer";
@@ -249,7 +250,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                             {/*   <div className="h-[700px] w-full bg-gray-300 rounded-xl aspect-square"></div> */}
                             {(videoUrl && tabMenuProperty.video) ?
 
-                                (<iframe className=" container mx-auto" width="100%" height="700" src={`https://www.youtube.com/embed/${videoUrl ?? ''}?autoplay=1&mute=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>) :
+                                (<iframe className=" container mx-auto aspect-video" width="100%" height={600} src={`https://www.youtube.com/embed/${videoUrl ?? ''}?autoplay=1&mute=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>) :
                                 tabMenuProperty.blueprint ? <GalleryProperty addStyles="container mx-auto grid grid-cols pb-16 lg:grid-cols-2 gap-5 animate-fade animate-duration-500  transition-all" galleryID={`gallery-blueprint-${results?.datos?.codemp}-${results?.datos?.codigo_ficha}`} images={results!?.plano !== "" && results!?.plano !== "null" ? [results!?.plano] : []} />
                                     : tabMenuProperty.pdf && (results?.emprendimiento?.ed_pdf !== "null" && results?.emprendimiento?.ed_pdf !== "") ? (
                                         <PDFViewer file={`https://ficha.amaira.com.ar/view_pdf.php?file=emprendimientos/pdf/${results?.emprendimiento?.ed_pdf}`} />
@@ -298,7 +299,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                             results?.ficha[0]?.in_amb?.split('A')[0].length !== 0 ? (
                                 <div className="text-center  w-full flex justify-center items-center flex-col md:px-20 lg:px-14 p-5">
                                     <div className="flex items-center justify-center">
-                                        <img className="object-contain aspect-square" src={'/images/puerta.png'} alt="superficie" />
+                                        <DoorOpen  className={"h-[56px] w-[56px]"}/>
                                     </div>
                                     <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex w-max ">Ambientes</span>
                                     <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide "}>{results?.ficha[0]?.in_amb?.split('A')[0] === "0" ? "Monoambiente" : results?.ficha[0]?.in_amb?.split('A')[0]}</span>
@@ -324,13 +325,13 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                     </div>)
                 }
                 <ShareButton />
-               
+
             </section>
             <section className="container mx-auto grid grid-cols md:gap-5 lg:gap-7 md:px-5 lg:px-10">
                 {/* Google map iframe */}
                 {isLoading ? (<div className="container mx-auto flex lg:hidden"><BreadCrumbSkeleton /> </div>) : (
                     <div className="flex lg:hidden justify-start pb-2 items-center gap-1 h-100 w-full text-pretty">
-                         <MapLocationIcon className={'h-full'} />
+                        <MapLocationIcon className={'h-full'} />
                         <p className="text-sm  text-primary-text-msb w-fit text-pretty font-semibold">{capitalize(he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`))}</p>
                     </div>)
                 }

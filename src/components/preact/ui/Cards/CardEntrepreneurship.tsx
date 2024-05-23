@@ -59,7 +59,7 @@ const CardEntrepreneurship: FunctionComponent<Props> = ({ cardData, addStyles, h
 
                 <div className="flex justify-between absolute w-full p-3 items-center bottom-0 right-0 left-0 h-100 ">
              
-                        <button className={`${colorEst} text-base rounded-full px-3 py-2  hover:bg-bg-1-msb text-white font-bold uppercase`}>
+                        <button className={`${colorEst} text-xs rounded-full px-3 py-2  hover:bg-bg-1-msb text-white font-bold uppercase`}>
                             {cardData?.ed_est.replace("&oacute;", "ó")}
                         </button>
                         <div class="flex place-content-center self-center items-center justify-center gap-1">
