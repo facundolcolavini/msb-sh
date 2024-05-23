@@ -13,7 +13,7 @@ export const CardReview = ({
 ) => {
     return (
         <div id={id} class="grid grid-cols-[auto,1fr] justify-center items-center gap-5 p-3 bg-[#ffff] shadow-md  rounded-md">
-            <div className="bg-[#D9D9D9] p-5 rounded-full">
+            <div className="bg-[#D9D9D9] p-4 rounded-full">
                {/*  <img src={'/images/user-experiece.png'} className={' h-[28.44px]'} style={{ width: '28.44px', height: '26.67px' }}></img> */}
                <UserIcon  class="fill-primary-msb" style={{ width: '28.44px', height: '28px' }}/>
             </div>
