@@ -92,7 +92,7 @@ const FormContact = () => {
           )
           : (
             <div>
-              <h1 class={'font-gothamBold  w-full text-center tracking-normal pb-5 md:text-md text-base md:text-xl lg:text-3xl'}>ENVIANOS TU CONSULTA</h1>
+              <h1 class={'font-gothamBold w-full text-center tracking-normal pb-5 md:text-md text-base md:text-xl lg:text-3xl'}>ENVIANOS TU CONSULTA</h1>
               <p
                 class="text-primary-text-msb text-center text-pretty font-gotham font-bold lg:text-2xl md:text-xl w-full pb-6"
               >
