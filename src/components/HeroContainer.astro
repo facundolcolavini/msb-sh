@@ -1,31 +1,35 @@
 ---
-
-import { Image } from 'astro:assets';
-import clsx from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { Image } from "astro:assets";
+import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 
 interface Props {
-  img:string;
-  className?:  string;
+  img: string;
+  className?: string;
+  h?: number;
+  w?: number;
 }
 
-const { img, className } = Astro.props;
-const slotStyles = twMerge( clsx("absolute inset-0 m-auto w-full h-full flex justify-center flex-col items-center bg-black bg-opacity-30", className));
+const { img, className, h = 700, w = 1440 } = Astro.props;
+const slotStyles = twMerge(
+  clsx(
+    "absolute inset-0 m-auto w-full h-full flex justify-center flex-col items-center bg-black bg-opacity-30",
+    className
+  )
+);
 ---
 
 <section
   class="relative bg-no-repeat z-0 bg-origin-content h-[100vh] md:h-[80vh] lg:h-100 w-full max-w-[100vw]"
 >
   <Image
-    width={1440}
-    height={700}
+    width={w}
+    height={h}
     class="absolute h-full w-full animate-fadeIn object-cover object-center animate-duration-1000 animate-ease-in-out z-0"
     src={img}
     alt="Hero image"
   />
-  <div
-    class={slotStyles}
-  >
+  <div class={slotStyles}>
     <slot />
   </div>
 </section>

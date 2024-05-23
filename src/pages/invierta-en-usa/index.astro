@@ -6,6 +6,7 @@ import CardProperty from "@/components/preact/ui/Cards/CardProperty";
 import Link from "@/components/ui/Link.astro";
 import type { APIResponseResultsRecords } from "@/interfaces/results.records.interfaces";
 import Layout from "@/layouts/Layout.astro";
+import { Image } from "astro:assets";
 
 const response = await fetch(
   `${Astro.url.origin}/api/results.json?sellocalidades=miami`
@@ -58,13 +59,13 @@ const description =
         >
           Para más información comunicarse a <Link
             href="mailto:info@matiasszpira.com.ar"
-            class="text-[#4e5a2b] text-center self-center font-gothamMedium  lg:text-2xl md:text-xl md:self-end "
+            class:list="text-[#637229] text-center text-md self-center font-gothamMedium  lg:text-2xl md:text-xl md:self-end "
             >info@matiasszpira.com.ar</Link
           >
         </p>
       </div>
     </section>
-    <HeroContainer transition:animate={"fade"} img={"/images/miami-city.jpg"} />
+    <img transition:animate={"fade"} class:list={"h-[429px] object-cover"} alt="" src={"/images/miami-city.jpg"} />
     <section class="bg-secondary-bg-msb">
       <div
         class="md:px-22 py-12 md:py-22 lg:py-24 w-100 text-center md:text-start lg:text-start lg:text-2xl md:text-xl container mx-auto px-8"
