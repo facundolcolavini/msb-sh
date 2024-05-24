@@ -65,7 +65,7 @@ const description =
         </p>
       </div>
     </section>
-    <img transition:animate={"fade"} class:list={"h-[429px] object-cover"} alt="" src={"/images/miami-city.jpg"} />
+    <img transition:animate={"fade"} class:list={"h-[429px] object-cover lg:w-full"} alt="" src={"/images/miami-city.jpg"} />
     <section class="bg-secondary-bg-msb">
       <div
         class="md:px-22 py-12 md:py-22 lg:py-24 w-100 text-center md:text-start lg:text-start lg:text-2xl md:text-xl container mx-auto px-8"
@@ -118,6 +118,7 @@ const description =
                 <CardProperty
                   data-astro-prefetch="false"
                   client:load
+                  cardContentStyles="h-[180px] bg-[#ffffff]"
                   cardData={result}
                   addStyles={"card my-3"}
                   key={`unique-key`}

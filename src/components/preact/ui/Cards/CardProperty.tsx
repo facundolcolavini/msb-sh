@@ -39,14 +39,14 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key
                             {he.decode(cardData.in_loc)} {he.decode(cardData.in_bar) ? `- ${he.decode(cardData.in_bar)}` : ""}
                         </p>
                     </div>
-                    <div className="flex flex-wrap w-100 justify-start  items-center mt-1 gap-x-1 overflow-hidden ">
+                    <div className="flex flex-auto w-100 justify-start  items-center mt-1 gap-x-1 overflow-hidden ">
 
                         {he.decode(cardData.in_cub) !== "0.00" && he.decode(cardData.in_cub) !== "" && <span className="flex items-center text-sm font-thin text-gray-700 mr-2 mb-2 gap-1 "><RuleIcon h="16" w="16" /> {he.decode(cardData?.in_cub)}m²</span>}
-                        {he.decode(cardData.in_sto) !== "0.00" && he.decode(cardData.in_sto) !== "" && <span className="flex items-center text-sm font-thin text-gray-700 mr-2 mb-2 gap-1 "><SquareMeterIcon h="16" w="16" /> {he.decode(cardData?.in_sto)}m²</span>}
-                        {he.decode(cardData.ti_dor) !== "" && he.decode(cardData.ti_dor) !== "0" && <span className="flex items-center text-sm font-thin text-gray-700 mr-2 mb-2 gap-1 "><DoorOpen /> {he.decode(cardData.ti_dor)} dorm.</span>}
+                        {he.decode(cardData.in_sto) !== "0.00" && he.decode(cardData.in_sto) !== "" && <span className="flex items-center text-sm font-thin text-gray-700 mr-2 mb-2 gap-1 truncate ..."><SquareMeterIcon h="16" w="16" /> {he.decode(cardData?.in_sto)}m²</span>}
+                        {he.decode(cardData.ti_dor) !== "" && he.decode(cardData.ti_dor) !== "0" && <span className="flex items-center text-sm font-thin text-gray-700 mr-2 mb-2 gap-1 truncate ..."><DoorOpen /> {he.decode(cardData.ti_dor)} dorm.</span>}
                         {he.decode(cardData?.in_bao) !== "" && he.decode(cardData?.in_bao) !== "0" && <span className="flex items-center text-sm font-thin text-gray-700 mr-2 mb-2 gap-1 overflow-hidden truncate ..."><BathIcon />{`${he.decode(cardData?.in_bao) === "1" ? `${he.decode(cardData?.in_bao)} baño` : `${he.decode(cardData?.in_bao)} baños`}`} </span>}
                     </div>
-                    <div className="flex justify-between h-100 absolute p-3 items-center bottom-0 right-0 left-0 h-100 place-content-end">
+                    <div className="flex justify-between h-fit absolute p-3 items-center bottom-0 right-0 left-0 h-100 place-content-end">
                         <div>
                             <button className="text-xs bg-bg-2-msb rounded-full px-3 py-2  hover:bg-bg-1-msb text-white uppercase">
                                 {he.decode(cardData.operacion)}
