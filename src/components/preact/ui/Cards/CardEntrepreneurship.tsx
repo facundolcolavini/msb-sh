@@ -42,33 +42,31 @@ const CardEntrepreneurship: FunctionComponent<Props> = ({ cardData, addStyles, h
     colorEstLabel(cardData.ed_est)
     return (
         <div>
-        <a href={href} className={styles} key={cardData} >
-            <img className="w-full h-[248px] rounded-t-md border-[#a4a4a4]  text-balance object-cover" width={407} height={248} src={cardData.img_princ} style={{
-                aspectRatio: "380/192",
-                objectFit: "cover",
-            }} alt="Imagen del interior de la vivienda" />
+            <a href={href} className={styles} key={cardData} >
+                <img className="w-full h-[248px] rounded-t-md border-[#a4a4a4]  text-balance object-cover" width={407} height={248} src={cardData.img_princ} style={{
+                    aspectRatio: "380/192",
+                    objectFit: "cover",
+                }} alt="Imagen del interior de la vivienda" />
 
-            <div class={contentCardStyles}>
-                <div className="">
-                    <div className="lg:text-xl md:text-lg text-lg font-gothamMedium font-thin truncate ..."><span className="font-gothamBold capitalize">{cardData.ed_nom}</span></div>
-                    <p className="text-primary-text-msb font-gotham flex gap-1">
-                        <span className={'text-primary-text-msb font-gothamMedium'}>Posesión:</span>
-                        {cardData.ed_pos || "No disponible"}
-                    </p>
-                </div>
+                <div class={contentCardStyles}>
+                    <div className="">
+                        <div className="lg:text-xl md:text-lg text-lg font-gothamMedium font-thin truncate ..."><span className="font-gothamBold capitalize">{cardData.ed_nom}</span></div>
+                        <p className="text-primary-text-msb font-gotham flex gap-1">
+                            <span className={'text-primary-text-msb font-gothamMedium'}>Posesión:</span>
+                            {cardData.ed_pos || "No disponible"}
+                        </p>
+                    </div>
 
-                <div className="flex justify-between absolute w-full p-3 items-center bottom-0 right-0 left-0 h-100 ">
-             
+                    <div className="flex justify-between absolute w-full p-3 items-center place-content-end top-10 bottom-0 right-0 left-0 h-full">
                         <button className={`${colorEst} text-xs rounded-full px-3 py-2  hover:bg-bg-1-msb text-white font-bold uppercase`}>
                             {cardData?.ed_est.replace("&oacute;", "ó")}
                         </button>
-                        <div class="flex place-content-center self-center items-center justify-center gap-1">
+                        <div className="flex place-content-center self-center items-center justify-center gap-1">
                             <a href={`https://api.whatsapp.com/send/?phone=5491144161700&text=Hola%2C+me+contactaba+desde+http%3A%2F%2Fmatiasszpira.com.ar%2F+para+consultarles&type=phone_number&app_absent=0`} target="_blank"><WhatsAppIcon className={'size-6 fill-gray-700'} /></a>
                         </div>
-                
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
         </div>
 
     )
