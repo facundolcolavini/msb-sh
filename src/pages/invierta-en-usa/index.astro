@@ -1,7 +1,7 @@
 ---
 import HeroContainer from "@/components/HeroContainer.astro";
-import Slider2 from "@/components/Slider2.astro";
-import SliderA from "@/components/SliderA.astro";
+import Slider from "../../components/Slider.astro";
+/* import SliderA from "@/components/Otro.astro"; */
 import TitleSections from "@/components/TitleSections.astro";
 import CardProperty from "@/components/preact/ui/Cards/CardProperty";
 import Link from "@/components/ui/Link.astro";
@@ -112,15 +112,13 @@ const description =
           La mejor selección de inmuebles en las zonas que estás buscando.
         </p>
 
-        <Slider2>
+        <Slider>
           {
             Array.isArray(fichas) &&
               fichas.map((result) => (
               <div class="swiper-slide">
                 <CardProperty
-                
                   data-astro-prefetch="false"
-                  client:load
                   cardContentStyles="h-[180px] bg-[#ffffff]"
                   cardData={result}
                   addStyles={"card my-3"}
@@ -130,7 +128,7 @@ const description =
               </div>
               ))
           }
-        </Slider2>
+        </Slider >
       </div>
     </section>
   </article>

@@ -26,6 +26,7 @@ const { title, description, img } = Astro.props;
     <meta property="og:image:url" content={img ?? "/images/logo.png"} />
     <meta name="generator" content={Astro.generator} />
     <meta name="view-transition" content="same-origin" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
     <link rel="image_src" href={img ?? "/images/logo.png"} />
     <link
     rel="stylesheet"
@@ -47,6 +48,7 @@ const { title, description, img } = Astro.props;
         <Footer />
       </footer>
     </div>
+
   </body>
   <style is:global>
     @font-face {
