@@ -25,10 +25,7 @@ const ListPublications = ({ cardList }: Props) => {
                 {
                     Array.isArray(maxCarList) && maxCarList.length > 0
                         ? maxCarList?.map((cardData: File) => (
-
-                            <div >
-                                <CardProperty cardData={cardData} href={`${window.location.pathname.includes('resultados-de-busqueda') ? '/resultados-de-busqueda' : '/emprendimientos'}/${cardData?.operacion}/${cardData?.in_loc}/${cardData?.direccion_completa}/${cardData?.in_suc}-${cardData?.in_num}`} key={cardData.id} />
-                            </div>
+                                <CardProperty  cardContentStyles="h-[192px] bg-[#ffffff]" cardData={cardData} href={`${window.location.pathname.includes('resultados-de-busqueda') ? '/resultados-de-busqueda' : '/emprendimientos'}/${cardData?.operacion}/${cardData?.in_loc}/${cardData?.direccion_completa}/${cardData?.in_suc}-${cardData?.in_num}`} key={cardData.id} />
                         ))
                         : <>
 

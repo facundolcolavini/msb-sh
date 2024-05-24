@@ -153,6 +153,7 @@ const selects = (await getAllSelects()) as Results;
             cardData.map((card) => (
               <CardProperty
                 client:visible
+                cardContentStyles="bg-[#ffffff]"
                 key="unique-key"
                 href={`/resultados-de-busqueda/${card.operacion}/${card.in_loc}/${card.direccion_completa}/${card.in_suc}-${card.in_num}`}
                 addStyles={"card my-3"}
@@ -223,6 +224,7 @@ const selects = (await getAllSelects()) as Results;
                 }: EntrePreneurShip) => (
                   <CardEntrepreneurship
                     client:visible
+                    cardContentStyles="bg-[#ffffff]"
                     href={`emprendimientos/${ed_est}/${he.decode(ed_loc)}/${he.decode(ed_nom)}/${codsuc}-${ed_idl}`}
                     addStyles={"card my-20"}
                     cardData={{

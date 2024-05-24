@@ -240,7 +240,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
 
                 <div className="container mx-auto pt-5 flex justify-between">
                     <TabMenu videoUrl={videoUrl} unitRedirect={window.location.pathname.includes('unidad-disponible') ? 'Edificio' : 'Unidades disponibles'} unitList={results!?.emprendimiento ? true : false} pdf={results?.emprendimiento && results?.emprendimiento?.ed_pdf !== "" && results?.emprendimiento?.ed_pdf !== null ? true : false} blueprint={results!?.plano !== null && !isLoading} />
-                    <FavoriteButton toggleFavorite={isFavorited ? removeFavorite : addFavorite} initialIsFavorited={isFavorited} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center"><span className={'font-semibold'}>Favorito</span></FavoriteButton>
+                    <FavoriteButton toggleFavorite={isFavorited ? removeFavorite : addFavorite} initialIsFavorited={isFavorited} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center"><span className={'font-gothamMedium font-thin'}>Favorito</span></FavoriteButton>
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16 md:px-5 lg:px-0"><GalleryPropertySkeleton /></div> :
                     tabMenuProperty.gallery ?
@@ -319,9 +319,9 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
             </section>
             <section className="container mx-auto flex flex-col lg:flex-row justify-between gap-2 pt-16 pb-5 md:px-5 lg:px-10">
                 {isLoading ? (<div className="container mx-auto lg:flex hidden"><BreadCrumbSkeleton /> </div>) : (
-                    <div className="hidden lg:flex lg:justify-center lg:items-end gap-1 h-100">
+                    <div className="hidden lg:flex lg:justify-center lg:items-end gap-1 h-100 ">
                         <MapLocationIcon className={'h-full'} />
-                        <span className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold">{capitalize(he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`))}</span>
+                        <span className="text-sm md:text-md lg:text-lg font-gothamMedium font-thin text-primary-text-msb w-fit text-pretty">{capitalize(he.decode(`${results?.ficha[0]?.direccion}, ${results?.ficha[0]?.in_bar}, ${results?.ficha[0]?.in_loc}`))}</span>
                     </div>)
                 }
                 <ShareButton />
@@ -401,11 +401,11 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                                 <hr className={'border-secondary-text-msb my-3'} />
                                 <ul className="mb-5">
                                     {results?.superficie?.dato[3] !== "" ? (<li className="flex gap-2 pb-3">
-                                        <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Sup.total: </span>
+                                        <span className="text-sm md:text-md lg:text-lg font-gothamBold font-bold text-secondary-text-msb">Sup.total: </span>
                                         <p className="text-sm md:text-md lg:text-lg">{he.decode(results?.superficie?.dato[3])}</p>
                                     </li>) : null}
                                     {results?.superficie?.dato[0] !== "" ? (<li className="flex gap-2">
-                                        <span className="text-sm md:text-md lg:text-lg font-bold text-secondary-text-msb">Sup. cubierta: </span>
+                                        <span className="text-sm md:text-md lg:text-lg font-gothamBold font-bold text-secondary-text-msb">Sup. cubierta: </span>
                                         <span className="text-sm md:text-md lg:text-lg">{he.decode(results?.superficie?.dato[0])}</span>
                                     </li>) : null}
                                 </ul>

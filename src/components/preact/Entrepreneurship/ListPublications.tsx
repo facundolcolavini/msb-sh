@@ -24,6 +24,7 @@ const ListPublications = ({ cardList }: Props) => {
 
                             <div >
                                 <CardEntrepreneurship
+                                cardContentStyles="h-[192px] bg-[#ffffff]"
                                     key={cardData.ed_idl}
                                     cardData={cardData}
                                     href={`/emprendimientos/${cardData?.ed_est}/${cardData?.ed_loc}/${cardData.ed_bar}/${cardData.codsuc}-${cardData.ed_idl}`} />

@@ -75,7 +75,7 @@ const ContactForm = ({ id, codsuc, tipo = '', contact_prop, desde = 'pagweb', to
         <>
             <div className={'p-10 md:px-14 lg:px-16 h-fit'}>
                 <header>
-                    <h1 className={'font-bold text-center tracking-normal pb-5 text-base md:text-md lg:text-lg'}>CONTACTANOS</h1>
+                    <h1 className={'font-gothamBold font-bold text-center tracking-normal pb-5 text-base md:text-md lg:text-lg'}>CONTACTANOS</h1>
                     <p className={'text-center font-thin pb-5 text-secondary-text-msb'}>Envianos tu consulta y te responderemos a la brevedad</p>
                 </header>
                 <form className="grid grid-cols text-start gap-3 h-fit" noValidate onSubmit={sendContactForm}>
@@ -88,11 +88,11 @@ const ContactForm = ({ id, codsuc, tipo = '', contact_prop, desde = 'pagweb', to
                     <InputField value={contactMessage} onChange={onInputChange} icon={contactMessageValid === null ? <IconCheckCircle className={'size-5 flex items-center justify-center fill-primary-msb'} />  : changeFields?.contactMessage === true ? <ErrorIcon addStyles="stroke-red-500" /> : <></>} success={contactMessageValid === null} error={changeFields?.contactMessage} addStyles="place-content-start h-full" name="contactMessage" id="contactMessage" type="textarea" label={'Dejanos tu mensaje...'} />
                     {(changeFields?.contactMessage && contactMessageValid) && <label htmlFor="contactMessage" className="text-xs px-2 font-thin text-red-700">{contactMessageValid}</label>}
                     <Button variant={`${isFormValid ? "primary" : "disabled"}`} addStyles={`text-white transition-all h-14 text-sm md:text-md lg:text-lg border-gray-50 flex justify-center items-center gap-3`} type="submit">Enviar Consulta {formSubmitted && isFormValid && <Spinner />}</Button>
-                    <h2 className={'font-bold text-center tracking-normal pb-1 text-base md:text-md lg:text-lg'}>OTRA VÍA DE CONTACTO</h2>
+                    <h2 className={'font-gothamBold font-bold text-center tracking-normal pb-1 text-base md:text-md lg:text-lg'}>OTRA VÍA DE CONTACTO</h2>
                     {contact_prop !== "" && <a target={'_blank'} href={contact_prop} className={'mx-auto '}>
                         <WhatsAppIcon className={'h-10 w-10'}  />
                     </a>}
-                    <span className={'text-sm font-medium text-center'}>ESCRIBINOS POR WHATSAPP</span>
+                    <span className={'text-sm font-gothamBold font-thin text-center text-secondary-text-msb'}>ESCRIBINOS POR WHATSAPP</span>
                 </form>
             </div>
 

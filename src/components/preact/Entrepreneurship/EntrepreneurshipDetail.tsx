@@ -246,7 +246,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 )}
                 <div className="container mx-auto pt-5 flex justify-between ">
                     {isLoading ? <BreadCrumbSkeleton /> : <TabMenu videoUrl={null} unitData={resultsUnit?.unidadesDisponibles.length} unitList={resultsUnit?.unidadesDisponibles ? true : false} pdf={(results?.pdf?.length ?? 0) > 0 && !isLoading} blueprint={(resultsUnit?.unidadesDisponibles?.map(emp => emp.img_princ) ?? []).length > 0 && !isLoading} />}
-                    {isLoading ? <BreadCrumbSkeleton /> : <FavoriteButton toggleFavorite={isFavorited ? removeFavorite : addFavorite} initialIsFavorited={isFavorited} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center"><span className={'font-semibold'}>Favorito</span></FavoriteButton>}
+                    {isLoading ? <BreadCrumbSkeleton /> : <FavoriteButton toggleFavorite={isFavorited ? removeFavorite : addFavorite} initialIsFavorited={isFavorited} addStyles="flex bg-transparent text-primary-text-msb hover:bg-transparent sm:text-sm  px-0 md:text-md lg:text-lg  gap-2 justify-center items-center"><span className={'font-gothamMedium font-thin'}>Favorito</span></FavoriteButton>}
                 </div>
                 {isLoading ? <div className="container mx-auto pb-16  md:px-5 lg:px-0"><GalleryPropertySkeleton /></div> : (
                     <div className={'grid pb-16 container mx-auto'}>
@@ -302,7 +302,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                     <div className="flex items-center justify-center w-100 h-100">
                                         <MapLocationIcon className="fill-white h-[56px] w-[56px]" />
                                     </div>
-                                    <span className="text-2xl md:text-2xl lg:text-4xl   font-cormorant font-base tracking-wide flex items-center justify-center">Barrio</span>
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base tracking-wide flex items-center justify-center">Barrio</span>
                                     <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide w-max "}>{he.decode(results?.emprendimiento[0]?.ed_bar || '')}</span>
                                 </div>) : null
                         }
@@ -314,7 +314,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 {isLoading ? (<div className="container mx-auto lg:flex hidden"><BreadCrumbSkeleton /> </div>) : (
                     <div className="hidden lg:flex lg:justify-start lg:items-end gap-1 h-100">
                         <MapLocationIcon className={'h-[24px] w-[24px]'} />
-                        <p className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-semibold">{capitalize(he.decode(`${results?.emprendimiento[0]?.ed_nom}, ${results?.emprendimiento[0]?.ed_loc}`))}</p>
+                        <p className="text-sm md:text-md lg:text-lg text-primary-text-msb w-fit text-pretty font-gothamMedium">{capitalize(he.decode(`${results?.emprendimiento[0]?.ed_nom}, ${results?.emprendimiento[0]?.ed_loc}`))}</p>
                     </div>)
                 }
                 <ShareButton />
@@ -324,7 +324,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                 {isLoading ? (<div className="container mx-auto flex lg:hidden"><BreadCrumbSkeleton /> </div>) : (
                     <div className="flex lg:hidden justify-start pb-2 items-center gap-1 h-100 w-full text-pretty">
                         <MapLocationIcon className={'h-full'} />
-                        <p className="text-sm  text-primary-text-msb w-fit text-pretty font-semibold">{capitalize(he.decode(`${results?.emprendimiento[0]?.ed_nom}, ${results?.emprendimiento[0]?.ed_loc}`))}</p>
+                        <p className="text-sm font-gothamBold font-thin text-primary-text-msb w-fit text-pretty">{capitalize(he.decode(`${results?.emprendimiento[0]?.ed_nom}, ${results?.emprendimiento[0]?.ed_loc}`))}</p>
                     </div>)
                 }
                 <div className={'col-start-1 cold-end-7'}>
