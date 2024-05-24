@@ -28,6 +28,7 @@ import type { Results } from "@/interfaces/selects.form.interfaces";
 import Layout from "@/layouts/Layout.astro";
 import { getAllSelects } from "@/services/get-selects-form";
 import { fetchData } from "@/utils/fetch-data";
+import Slider2 from "@/components/Slider2.astro";
 
 const { resultado } = (await fetchData(
   "fichas.destacadas"
@@ -147,8 +148,23 @@ const selects = (await getAllSelects()) as Results;
       >
         La mejor selección de inmuebles en las zonas que estás buscando.
       </p>
-    
-        <SliderA colsNr={3} height={10} width={10} classSlide="slider1">
+      <Slider2  client:visible>
+      {
+        cardData.map((card) => (
+        <div class="swiper-slide">
+            <CardProperty
+              client:visible
+              cardContentStyles="bg-[#ffffff]"
+              key={card.in_num}
+              href={`/resultados-de-busqueda/${card.operacion}/${card.in_loc}/${card.direccion_completa}/${card.in_suc}-${card.in_num}`}
+              addStyles={"card my-3"}
+              cardData={card as File}
+            />
+        </div>
+          ))
+        }
+        </Slider2>
+      <!--   <SliderA colsNr={3} height={10} width={10} classSlide="slider1">
           {
             cardData.map((card) => (
               <CardProperty
@@ -161,7 +177,7 @@ const selects = (await getAllSelects()) as Results;
               />
             ))
           }
-        </SliderA>
+        </SliderA> -->
     
     </div>
   </section>
@@ -208,8 +224,8 @@ const selects = (await getAllSelects()) as Results;
           >
         </div>
         <!-- Slider de emprendimientos -->
-        <article style="view-transition-name: image-empre">
-          <SliderA colsNr={3} height={10} width={0} classSlide="slider2">
+    
+        <!--   <SliderA colsNr={3} height={10} width={0} classSlide="slider2">
             {
               entrepreneurship.map(
                 ({
@@ -237,8 +253,39 @@ const selects = (await getAllSelects()) as Results;
                 )
               )
             }
-          </SliderA>
-        </article>
+          </SliderA> -->
+          <Slider2  client:visible>
+            {
+              entrepreneurship.map(
+                ({
+                  ed_nom,
+                  ed_pos,
+                  ed_loc,
+                  img_princ,
+                  ed_est,
+                  ed_idl,
+                  codsuc,
+                  ed_dir,
+                }: EntrePreneurShip) => (
+                  <div class="swiper-slide">
+                  <CardEntrepreneurship
+                      client:visible
+                      cardContentStyles="bg-[#ffffff]"
+                      href={`emprendimientos/${ed_est}/${he.decode(ed_loc)}/${he.decode(ed_nom)}/${codsuc}-${ed_idl}`}
+                      addStyles={" my-20"}
+                      cardData={{
+                        ed_nom,
+                        ed_pos,
+                        img_princ,
+                        ed_est,
+                      }}
+                      />
+                      </div>
+                  )
+                )
+              }
+          </Slider2>
+       
       </div>
     </div>
   </section>

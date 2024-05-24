@@ -1,0 +1,68 @@
+---
+
+import he from 'he';
+
+import BathIcon from "@/components/preact/Icons/BathIcon";
+import DoorOpen from "@/components/preact/Icons/DoorOpen";
+import RuleIcon from "@/components/preact/Icons/RuleIcon";
+import WhatsAppIcon from './preact/Icons/WhatsAppIcon';
+import SquareMeterIcon from '@/components/preact/Icons/SquareMeterIcon';
+export interface CardData {
+  in_num: string;
+  precio: string;
+  in_cal: string;
+  in_nro: string;
+  in_loc: string;
+  in_bar: string;
+  in_cub: string;
+  in_sto: string;
+  ti_dor: string;
+  in_bao: string;
+  operacion: string;
+  img_princ: string;
+}
+
+interface Props {
+  cardData: CardData;
+  addStyles?: string;
+  cardContentStyles?: string;
+  href: string;
+}
+
+const { cardData, addStyles, cardContentStyles, href } = Astro.props;
+---
+<div class={`card ${addStyles}`}>
+  <a href={href} class="block">
+    <img class="w-full h-[248px] object-cover" src={cardData.img_princ || '/images/msz-logo.webp'} alt="Imagen del interior de la vivienda" />
+    <div class={cardContentStyles}>
+      <div class="text-lg font-semibold">
+        <span class="font-bold">{cardData.precio}</span> | {he.decode(cardData.in_cal)} {cardData.in_nro}
+      </div>
+      <p class="text-gray-500">
+        {he.decode(cardData.in_loc)} {he.decode(cardData.in_bar) && `- ${he.decode(cardData.in_bar)}`}
+      </p>
+      <div class="flex mt-2">
+        {he.decode(cardData.in_cub) && (
+          <span class="mr-2"><RuleIcon h="16" w="16" /> {he.decode(cardData?.in_cub)}m²</span>
+        )}
+        {he.decode(cardData.in_sto) && (
+          <span class="mr-2"><SquareMeterIcon  /> {he.decode(cardData.in_sto)} m²</span>
+        )}
+        {he.decode(cardData.ti_dor) && (
+          <span class="mr-2"><DoorOpen /> {he.decode(cardData.ti_dor)} dorm.</span>
+        )}
+        {he.decode(cardData.in_bao) && (
+          <span class="mr-2"><BathIcon /> {he.decode(cardData.in_bao)} {he.decode(cardData.in_bao) === '1' ? 'baño' : 'baños'}</span>
+        )}
+      </div>
+      <div class="flex justify-between items-center mt-3">
+        <button class="bg-gray-800 text-white py-1 px-2 rounded">{he.decode(cardData.operacion)}</button>
+        <a href="https://api.whatsapp.com/send/?phone=5491144161700" target="_blank">
+          <WhatsAppIcon 
+      
+            />
+        </a>
+      </div>
+    </div>
+  </a>
+</div>

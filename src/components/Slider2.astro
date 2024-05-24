@@ -1,0 +1,149 @@
+<!-- Slider main container -->
+<div class="swiper swiper-hero">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+    <!-- <div class="swiper-slide"> -->
+    <slot />
+    <!--  </div> -->
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+
+  <!-- If we need scrollbar -->
+  <!-- <div class="swiper-scrollbar"></div> -->
+</div>
+
+<style>
+  body {
+    margin: 0;
+  }
+  .swiper-hero {
+    width: 100%;
+    max-width: 1600px;
+  }
+
+  .swiper-hero .swiper-slide {
+    width: 250px;
+  }
+
+  .swiper-hero img {
+    height: 255px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  @media (min-width: 1024px) {
+    .swiper-hero img {
+      height: 344px;
+    }
+  }
+
+  .swiper-hero .swiper-button-prev,
+  .swiper-hero .swiper-button-next {
+    --swiper-navigation-size: 20px;
+    background-color: white;
+    position: absolute;
+    left: 5;
+    height: 70px;
+    width: 50px;
+    margin-top: -35px;
+    color: black;
+    border-radius: 100%;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .swiper-hero .swiper-button-prev {
+    border-radius: 0 65px 65px 0;
+    left: -10px;
+  }
+  .swiper-hero .swiper-button-next {
+    border-radius: 65px 0 0 65px;
+    right: -10px;
+  }
+
+  .swiper-hero:hover .swiper-button-prev,
+  .swiper-hero:hover .swiper-button-next {
+    opacity: 1;
+  }
+
+  .swiper-hero .swiper-pagination {
+    --swiper-pagination-color: white;
+    --swiper-pagination-bullet-size: 6px;
+    --swiper-pagination-bullet-inactive-color: #000;
+    --swiper-pagination-bullet-inactive-opacity: 0.25;
+    --swiper-pagination-bullet-opacity: 1;
+    --swiper-pagination-bullet-horizontal-gap: 2px;
+  }
+
+  .swiper-hero .swiper-pagination-bullet {
+    box-shadow: inset 0 0 0 1px #fff;
+  }
+
+  .swiper-hero .swiper-pagination-bullet-active {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"
+></script>
+<script is:inline>
+  document.addEventListener("astro:page-load", function () {
+    const swiper = new Swiper(".swiper-hero", {
+      // Optional parameters
+      //  slidesPerView: 3,
+
+      spaceBetween: 15,
+      // slidesPerGroupAuto: true,
+      // Responsive breakpoints
+      breakpoints: {
+        "@0.75": {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        "@1.00": {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+        "@1.50": {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+      },
+      direction: "horizontal",
+      loop: true,
+      // allowTouchMove: true,
+      // effect: "cube",
+      autoplay: {
+        delay: 10000,
+        pauseOnMouseEnter: true,
+        disableOnInteraction: false,
+      },
+
+      // If we need pagination
+      /*       pagination: {
+        el: ".swiper-pagination",
+        // type: "progressbar"
+        clickable: true,
+        // dynamicBullets: true
+      }, */
+
+      // Navigation arrows
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+
+      // And if we need scrollbar
+      // scrollbar: {
+      //   el: ".swiper-scrollbar",
+      //   draggable: true,
+      // },
+    });
+    swiper;
+  });
+</script>
