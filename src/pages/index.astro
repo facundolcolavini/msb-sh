@@ -28,7 +28,7 @@ import type { Results } from "@/interfaces/selects.form.interfaces";
 import Layout from "@/layouts/Layout.astro";
 import { getAllSelects } from "@/services/get-selects-form";
 import { fetchData } from "@/utils/fetch-data";
-const session = Astro.locals.session;
+
 const { resultado } = (await fetchData(
   "fichas.destacadas"
 )) as APIResponseResultsRecords;
