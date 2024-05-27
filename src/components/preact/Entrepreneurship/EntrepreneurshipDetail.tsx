@@ -29,6 +29,7 @@ import EntrepreneurshipDetailList from './EntrepreneurshipDetailList';
 import EntrepreneurshipFeatureList from './EntrepreneurshipFeatureList';
 import ListPublications from './ListPublications';
 import UnitAvailableTable from './UnitAvailableTable';
+import DoorOpen from '../Icons/DoorOpen';
 
 
 
@@ -290,7 +291,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                             results?.emprendimiento[0]?.ed_amb?.split('A')[0].length !== 0 ? (<div className="flex justify-center flex-col  text-center  w-full px-10 md:px-20 lg:px-20 p-5">
                                 <div className="flex items-center justify-center">
 
-                                    <img className="w-[56px] h-[56px]  object-fill aspect-square" src={'/images/puerta.png'} alt="superficie" />
+                                    <DoorOpen className="fill-white h-[56px] w-[56px]" />
                                 </div>
                                 <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant font-base tracking-wide flex  items-center justify-center">Ambientes</span>
                                 <span className={"text-xl md:text-xl place-content-center self-center lg:text-3xl font-semibold tracking-wide w-max "}>{results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : results?.emprendimiento[0]?.ed_amb?.split('A')[0]}</span>
