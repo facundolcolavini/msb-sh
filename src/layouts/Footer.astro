@@ -9,7 +9,7 @@ import { Image } from "astro:assets";
   class="bg-secondary-msb text-black shadow-inner flex justify-between items-center"
 >
   <div
-    class="mx-auto py-20 container lg:px-6 grid grid-col lg:grid-cols-2 gap-5 lg:gap-0 md:gap-5"
+    class="mx-auto py-20 container lg:px-6 grid grid-col lg:grid-cols-2 gap-5 lg:gap-5 md:gap-5"
   >
       <div class="flex flex-col lg:col-starts-1 lg:col-ends-2">
         <h2
@@ -221,21 +221,22 @@ import { Image } from "astro:assets";
     </div>
   </div>
 
-  <script>
-    // Script para obtener los btnOps y hacer una navegacion con el valor de cada boton a /resultados-de-busqueda?tipo_operacion=valorDelBoton
-    document.addEventListener("astro:page-load", (event) => {
-      const btnOps = document.querySelectorAll("#btnOp");
-      btnOps.forEach((btnOp) => {
-        btnOp.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          // Dejar la viewtransition
-          btnOp.scrollIntoView({ behavior: "smooth" });
-          window.location.href = `/resultados-de-busqueda?tipo_operacion=${
-            (e.target as HTMLButtonElement).value
-          }`;
-        });
+  
+</footer>
+<script>
+  // Script para obtener los btnOps y hacer una navegacion con el valor de cada boton a /resultados-de-busqueda?tipo_operacion=valorDelBoton
+  document.addEventListener("astro:page-load", (event) => {
+    const btnOps = document.querySelectorAll("#btnOp");
+    btnOps.forEach((btnOp) => {
+      btnOp.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        // Dejar la viewtransition
+        btnOp.scrollIntoView({ behavior: "smooth" });
+        window.location.href = `/resultados-de-busqueda?tipo_operacion=${
+          (e.target as HTMLButtonElement).value
+        }`;
       });
     });
-  </script>
-</footer>
+  });
+</script>
