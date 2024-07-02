@@ -7,10 +7,10 @@ import { Modal } from '../ui/Modals/Modal';
 
 interface PopupProps {
     message: string;
-
+    title: string;
 }
 
-const Popup = ({ message }: PopupProps) => {
+const Popup = ({ message,title }: PopupProps) => {
     const [isVisible, setIsVisible] = useState(true);
     const [modalType, setModalType] = useState(modalAuthPropertyStore.get());
 
@@ -41,22 +41,26 @@ const Popup = ({ message }: PopupProps) => {
 
     return (
         <>
-        <div className="fixed right-3 bottom-20 m-2 md:m-5  lg:m-5 z-10 transition-opacity animate-slide">
-            <div className="bg-secondary-msb/90 p-6 pb-4 pt-8 md:pt-8 lg:pt-8 rounded-lg shadow-lg max-w-md mx-auto">
-                <div className="absolute top-2 right-5 cursor-pointer z-50" onClick={handleClose}>
+        <div className="fixed top-20 right-0 md:top-20  md:right-5 bottom-20 m-2 md:m-5  lg:m-5 z-10 transition-opacity animate-slide">
+            <div className="bg-gray-100  p-6 pb-4 pt-8 md:pt-8 lg:pt-8 rounded-lg shadow-xl max-w-md mx-auto">
+                <div className="absolute top-5 right-5 cursor-pointer z-50" onClick={handleClose}>
                     <CloseIcon />
                 </div>
 
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                    <p className="text-black font-ghotam text-sm md:text-base  md:max-w-sm">{message}</p>
+                 {/* Popup */}
+                
+                    <h1 className="text-black text-xl md:text-2xl font-gothamBold mb-4">{title}</h1>
+                    <div>
+                    <div className="text-black mb-10 font-ghotam text-sm md:text-base">{message}</div>
+
                     <button
-                     
-                        className='bg-primary-msb text-white font-ghotam  md:text-base ml-auto  px-6 text-sm w-fit md:w-1/2 py-2 rounded-lg mt-4 md:mt-0 md:ml-4'
+                        className="bg-primary-msb text-white font-ghotam flex justify-end text-sm md:text-base ml-auto px-6 py-2 rounded-lg mt-4 md:mt-0 "
                         onClick={handleSwitchToRegister}
                     >
                         Registrarse
                     </button>
-                </div>
+                    </div>
+               
             </div>
         </div>
 
