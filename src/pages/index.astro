@@ -29,7 +29,10 @@ import Layout from "@/layouts/Layout.astro";
 import { getAllSelects } from "@/services/get-selects-form";
 import { fetchData } from "@/utils/fetch-data";
 import Slider from "../components/Slider.astro";
+import Popup from "@/components/preact/Popup/Popup";
 
+const user = Astro.locals.user;
+let session = user ? true : false;
 const { resultado } = (await fetchData(
   "fichas.destacadas"
 )) as APIResponseResultsRecords;
@@ -61,6 +64,7 @@ const selects = (await getAllSelects()) as Results;
     </div>
   </HeroContainer>
   <Chat />
+  {!session &&<Popup message="¡Regístrate ahora para agregar a favoritos!" client:idle/>}
   <!--  <section class="bg-secondary-bg-msb py-10">
     <div class="container mx-auto px-3 md:px-0 lg:px-0">
       <TitleSections
