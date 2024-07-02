@@ -34,9 +34,9 @@ const CardProperty: FunctionComponent<Props> = ({ cardData, addStyles, href, key
 
                 <div class={contentCardStyles}>
                     <div className="">
-                        <div className="lg:text-xl md:text-lg text-lg font-gotham font-semibold truncate ..."><span className="font-gothamBold ">{cardData.precio}</span> | {he.decode(cardData.in_cal)} {cardData.in_nro}</div>
+                        <div className="lg:text-xl md:text-lg text-lg font-gotham font-semibold truncate ..."><span className="font-gothamBold ">{he.decode(cardData.in_loc)} {he.decode(cardData.in_bar) ? `- ${he.decode(cardData.in_bar)}` : ""}</span> | {he.decode(cardData.in_cal)} {cardData.in_nro}</div>
                         <p className="text-bg-2-msb font-gothamMedium truncate ...">
-                            {he.decode(cardData.in_loc)} {he.decode(cardData.in_bar) ? `- ${he.decode(cardData.in_bar)}` : ""}
+                        {cardData.precio}
                         </p>
                     </div>
                     <div className="flex flex-auto w-100 justify-start  items-center mt-1 gap-x-1 overflow-hidden ">
