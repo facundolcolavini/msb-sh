@@ -40,39 +40,38 @@ const Popup = ({ message }: PopupProps) => {
 
 
     return (
-
         <>
-            <div className="fixed right-3 bottom-20 m-2 md:m-5 lg:m-5 z-50 transition-opacity animate-slide">
-                <div className="bg-secondary-msb/90 p-6 pb-4 py-7 rounded-lg shadow-lg max-w-md mx-auto">
-                    <div className="absolute cursor-pointer right-5 top-2 z-50" onClick={handleClose}>
-                        <CloseIcon />
-                    </div>
+        <div className="fixed right-3 bottom-20 m-2 md:m-5  lg:m-5 z-10 transition-opacity animate-slide">
+            <div className="bg-secondary-msb/90 p-6 pb-4 pt-8 md:pt-8 lg:pt-8 rounded-lg shadow-lg max-w-md mx-auto">
+                <div className="absolute top-2 right-5 cursor-pointer z-50" onClick={handleClose}>
+                    <CloseIcon />
+                </div>
 
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                        <p className="text-black font-ghotam text-sm mb-4 md:mb-0 md:mr-4">{message}</p>
-                        <Button
-                            variant='primary'
-                            className='bg-primary-msb text-white font-ghotam text-xs  rounded-lg w-full md:w-auto'
-                            onClick={handleSwitchToRegister}
-                        >
-                            Registrarse
-                        </Button>
-                    </div>
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <p className="text-black font-ghotam text-sm md:text-base  md:max-w-sm">{message}</p>
+                    <button
+                     
+                        className='bg-primary-msb text-white font-ghotam  md:text-base ml-auto  px-6 text-sm w-fit md:w-1/2 py-2 rounded-lg mt-4 md:mt-0 md:ml-4'
+                        onClick={handleSwitchToRegister}
+                    >
+                        Registrarse
+                    </button>
                 </div>
             </div>
+        </div>
 
-            {modalType.changeToRegister && (
-                <Modal
-                    header={<div className="flex justify-center items-center p-3 relative"><img src="/images/logo.png" className="w-100 self-center" width={140} height={40} /></div>}
-                    footer=""
-                    addStyles="bg-secondary-bg-msb shadow-lg rounded w-11/12 md:max-w-md mx-auto transform transition-transform duration-300"
-                    onHeaderCloseClick={handleClose}
-                    onBackdropClick={handleClose}
-                >
-                    <RegisterForm onSwitchToLogin={() => handleClose()} />
-                </Modal>
-            )}
-        </>
+        {modalType.changeToRegister && (
+            <Modal
+                header={<div className="flex justify-center items-center p-3 relative"><img src="/images/logo.png" className="w-100 self-center" width={140} height={40} /></div>}
+                footer=""
+                addStyles="bg-secondary-bg-msb shadow-lg rounded w-11/12 md:max-w-md mx-auto transform transition-transform duration-300"
+                onHeaderCloseClick={handleClose}
+                onBackdropClick={handleClose}
+            >
+                <RegisterForm onSwitchToLogin={() => handleClose()} />
+            </Modal>
+        )}
+    </>
     );
 
 };
