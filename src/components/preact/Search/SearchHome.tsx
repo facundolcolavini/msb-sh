@@ -120,8 +120,8 @@ const SearchHome = ({ selects }: Props) => {
               Alquiler Temporario
             </Button>
           </div>
-          <div className="lg:col-start-9 lg:col-end-12 col-start-1 col-end-12 text-ellipsis overflow-hidden ... text-nowrap">
-            <Button
+          <div className="hidden lg:flex lg:col-start-9 lg:col-end-12 col-start-1 col-end-12 text-ellipsis overflow-hidden ... text-nowrap">
+            {/*  <Button
               variant="outline"
               onClick={handleSelect}
               value={filtersSelected?.in_tpr?.value}
@@ -129,7 +129,26 @@ const SearchHome = ({ selects }: Props) => {
               id="in_tpr"
             >
               Barrios Cerrados y Countries
-            </Button>
+            </Button> */}
+            <label
+              for={'in_tpr'}
+              className={`lg:gap-x-2 sm:text-sm md:text-md lg:text-md lg:flex lg:self-center lg:justify-center lg:items-center h-[42px] lg:h-[34px] w-full  text-secondary-msb ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? '  border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out accent:text-bg-1-msb h-[42px] lg:h-[34px] ' : ''}`}
+            >
+
+              <input
+                type="checkbox"
+                id="in_tpr"
+                value="COUNTRY"
+                className="accent-primary-msb h-3 w-3 sm:text-sm md:text-md lg:text-md"
+                checked={filtersSelected?.in_tpr?.value === 'COUNTRY'}
+                onChange={
+                  () => {
+                    handleSelect({ target: { id: 'in_tpr', value: 'COUNTRY' } })
+                  }
+                }
+              />
+              Barrios Cerrados y Countries
+            </label>
           </div>
           <div className="col-start-1 col-end-12 lg:col-start-2 lg:col-end-4">
             <SelectField addStyles='sm:text-sm md:text-md lg:text-base h-[42px] lg:h-[48px] lg:text-md' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />
@@ -138,12 +157,31 @@ const SearchHome = ({ selects }: Props) => {
             <SearchDebounce filterOptsLocations={filtersformatted.in_iub} propIdRef={"in_iub"} />
           </div>
           <div className="col-start-1 col-end-12 lg:col-start-10 lg:col-end-12">
+          <div className={'lg:hidden flex self-center align-baseline gap-x-2 my-2 sm:text-sm md:text-md   transition duration-500 ease-in-out'}>
+  <label
+      htmlFor={'in_tpr'} // Cambiado de 'for' a 'htmlFor' para cumplir con JSX
+      className={`flex items-center gap-2 my-auto text-white ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out accent:text-bg-1-msb' : ''}`}
+    >
+      <input
+        type="checkbox"
+        id="in_tpr"
+        value="COUNTRY"
+        className="accent-primary-msb self-center h-4 w-4 rounded-sm"
+        checked={filtersSelected?.in_tpr?.value === 'COUNTRY'}
+        onChange={() => {
+          handleSelect({ target: { id: 'in_tpr', value: 'COUNTRY' } })
+        }}
+      />
+     <span>Barrios Cerrados y Countries</span>
+  </label>
+</div>
+
             <Button
               variant="primary"
               onClick={send}
               addStyles="rounded-md  shadow-lg w-full h-[42px] lg:h-[48px] py-3 active:bg-bg-2-msb text-pretty hover:bg-bg-2-msb transition duration-500 ease-in-out"
             >
-               <div className={'flex gap-2 justify-center items-center lg:pr-3'}>
+              <div className={'flex gap-2 justify-center items-center lg:pr-3'}>
                 <SearchIcon className={'hidden lg:flex size-7 lg:size-7'} />
                 <span className={'lg:flex lg:text-lg '}>BUSCAR</span>
               </div>
