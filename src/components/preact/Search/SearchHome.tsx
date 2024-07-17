@@ -120,7 +120,7 @@ const SearchHome = ({ selects }: Props) => {
               Alquiler Temporario
             </Button>
           </div>
-          <div className="hidden lg:flex lg:col-start-9 lg:col-end-12 col-start-1 col-end-12 text-ellipsis overflow-hidden ... text-nowrap">
+          <div className="hidden lg:flex lg:col-start-9 lg:col-end-12 col-start-1 col-end-12 text-ellipsis overflow-hidden lg:w-100 ... text-nowrap lg:justify-between">
             {/*  <Button
               variant="outline"
               onClick={handleSelect}
@@ -131,24 +131,21 @@ const SearchHome = ({ selects }: Props) => {
               Barrios Cerrados y Countries
             </Button> */}
             <label
-            for={'in_tpr'}
-            className={`hidden lg:gap-x-2 sm:text-sm md:text-md lg:text-xl lg:flex lg:self-center lg:justify-center lg:items-center h-[42px] lg:h-[34px] w-full  text-white ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? '  border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out accent:text-bg-1-msb' : ''}`}
-          >
-
-            <input
-              type="checkbox"
-              id="in_tpr"
-              value="COUNTRY"
-              className="accent-primary-msb h-4 w-4 "
-              checked={filtersSelected?.in_tpr?.value === 'COUNTRY'}
-              onChange={
-                () => {
+              htmlFor={'in_tpr'} // Cambiado de 'for' a 'htmlFor' para cumplir con JSX
+              className={`flex items-center gap-2  my-auto text-white ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out accent:text-bg-1-msb' : ''}`}
+            >
+              <input
+                type="checkbox"
+                id="in_tpr"
+                value="COUNTRY"
+                className="accent-primary-msb self-center h-4 w-4 rounded-sm"
+                checked={filtersSelected?.in_tpr?.value === 'COUNTRY'}
+                onChange={() => {
                   handleSelect({ target: { id: 'in_tpr', value: 'COUNTRY' } } as any)
-                }
-              }
-            />
-            Barrios Cerrados y Countries
-          </label>
+                }}
+              />
+              <span className={'lg:text-md'}>Barrios Cerrados y Countries</span>
+            </label>
           </div>
           <div className="col-start-1 col-end-12 lg:col-start-2 lg:col-end-4">
             <SelectField addStyles='sm:text-sm md:text-md lg:text-base h-[42px] lg:h-[48px] lg:text-md' id="tipo_inmueble" onChange={handleSelect} defaultOption={filtersSelected?.tipo_inmueble} opts={filtersformatted.tipo_inmueble} />

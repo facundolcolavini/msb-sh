@@ -41,7 +41,7 @@ const Popup = ({ message,title }: PopupProps) => {
 
     return (
         <>
-        <div className="fixed top-20 right-0 md:top-20  md:right-5 bottom-20 m-2 md:m-5  lg:m-5 z-10 transition-opacity animate-slide">
+        <div className="fixed top-20 right-0 h-fit md:top-20  md:right-5 bottom-20 m-2 md:m-5  lg:m-5 z-10 transition-opacity animate-slide">
             <div className="bg-gray-100  p-6 pb-4 pt-8 md:pt-8 lg:pt-8 rounded-lg shadow-xl max-w-md mx-auto">
                 <div className="absolute top-5 right-5 cursor-pointer z-50" onClick={handleClose}>
                     <CloseIcon />
