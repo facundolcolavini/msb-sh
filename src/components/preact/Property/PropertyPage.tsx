@@ -271,7 +271,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                         {
                             results?.ficha[0]?.in_amb?.split('A')[0].length !== 0 && results?.ficha[0]?.moneda ? (
                                 <div className="text-center  w-full flex justify-center items-center flex-col md:px-20 lg:px-14 p-5">
-                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex  w-max ">Valor</span>
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-raleway font-base flex  w-max ">Valor</span>
                                     <p className="text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide w-max">
                                         {results?.ficha[0]?.precio !== '' && results?.ficha[0]?.precio !== 'Consultar' && (
                                             results?.ficha[0]?.moneda === 'U$S' ? `U$S ${results?.ficha[0]?.precio.replace('U$S', '')}` :
@@ -290,7 +290,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                                     <div className="flex items-center justify-center ">
                                         <img className="  object-contain aspect-square" src={'/images/superficie.png'} alt="superficie" />
                                     </div>
-                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex w-max ">Sup.Total</span>
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-raleway font-base flex w-max ">Sup.Total</span>
                                     <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide "}>{results?.superficie.dato[3].replaceAll(".00", "")}</span>
                                 </div>) : null
 
@@ -301,7 +301,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                                     <div className="flex items-center justify-center">
                                         <DoorOpen  className={"h-[56px] w-[56px]"}/>
                                     </div>
-                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex w-max ">Ambientes</span>
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-raleway font-base flex w-max ">Ambientes</span>
                                     <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide "}>{results?.ficha[0]?.in_amb?.split('A')[0] === "0" ? "Monoambiente" : results?.ficha[0]?.in_amb?.split('A')[0]}</span>
                                 </div>) : null
                         }
@@ -309,7 +309,7 @@ const PropertyPage: FunctionComponent<PropsWithChildren<Props>> = (props) => {
                             results?.ficha[0]?.in_bao ? (
                                 <div className="text-center  w-full flex justify-center items-center flex-col md:px-20 lg:px-14 p-5">
                                     <BathIcon h="56" w="56" addStyles="object-contain flex items-center justify-center" />
-                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex w-max ">Baños</span>
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-raleway font-base flex w-max ">Baños</span>
                                     <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide "}>{results?.ficha[0]?.in_bao}</span>
                                 </div>) : null
                         }

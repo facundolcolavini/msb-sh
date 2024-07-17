@@ -133,7 +133,7 @@ export default {
       },
       // Si necesitas definir familias de fuentes personalizadas, añádelas aquí.
       fontFamily: {
-        cormorant: ["Cormorant","Inter", ...defaultTheme.fontFamily.sans],
+        raleway: ["Raleway","Inter", ...defaultTheme.fontFamily.sans],
         inter: ["Inter", ...defaultTheme.fontFamily.sans],
         gotham : ["Gotham", ...defaultTheme.fontFamily.sans],
         gothamThin : ["GothamThin", ...defaultTheme.fontFamily.sans],

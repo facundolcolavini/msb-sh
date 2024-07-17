@@ -4,7 +4,7 @@ import type { FilterDefault, FilterSelects, ResultLocation, Results } from "@/in
 import { type OutputOption } from "@/utils/formats"
 import { useEffect, useState } from "preact/hooks"
 import { addFilterValue, filterItems, resetFilter, searchParamsStore } from "src/store/filterStore"
- 
+
 import SearchIcon from "../Icons/SearchIcon"
 import CardResultSkeleton from "../Skeletons/CardResultSkeleton"
 import Button from "../ui/Buttons/Button"
@@ -14,9 +14,9 @@ import Pagination from "@/components/preact/Pagination"
 import { defaultsFilters, filterResultToFill, labelMappingResultForQuerys } from "@/utils/filter-default"
 import { formatAndUseSearch } from "@/utils/formatAndUseSearch"
 import type { Session } from "lucia"
+import ArrowSortIcon from "../Icons/ArrowSortIcon"
 import SearchDebounce from "../Search/SearchDebounce"
 import SelectField from "../ui/Selects/SelectField"
-import ArrowSortIcon from "../Icons/ArrowSortIcon"
 
 
 
@@ -221,29 +221,29 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
           </Button>
 
         </div>
-        <div className="lg:col-start-10 lg:col-end-13 col-start-1 col-end-12 text-ellipsis overflow-hidden ... text-nowrap text-primary-msb sm:text-sm md:text-md lg:text-lg">
+        <div className="lg:col-start-10 lg:col-end-13 col-start-1 col-end-12 text-ellipsis overflow-hidden ... text-nowrap text-primary-msb sm:text-sm md:text-md lg:text-lg lg:self-center">
           {/* Change barrios cerrados y countries to checkbox  */}
-          
-          <label
-              for={'in_tpr'}
-              className={`hidden lg:gap-x-2 sm:text-sm md:text-md lg:text-xl lg:flex lg:self-center lg:justify-center lg:items-center h-[42px] lg:h-[34px] w-full  text-primary-msb ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? '  border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out accent:text-bg-1-msb' : ''}`}
-            >
 
-              <input
-                type="checkbox"
-                id="in_tpr"
-                value="COUNTRY"
-                className="accent-primary-msb h-4 w-4 "
-                checked={filtersSelected?.in_tpr?.value === 'COUNTRY'}
-                onChange={
-                  () => {
-                    handleSelect({ target: { id: 'in_tpr', value: 'COUNTRY' } })
-                  }
+          <label
+            for={'in_tpr'}
+            className={`hidden lg:gap-x-2 sm:text-sm md:text-md lg:text-xl lg:flex lg:self-center lg:justify-center lg:items-center h-[42px] lg:h-[34px] w-full  text-primary-msb ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? '  border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out accent:text-bg-1-msb' : ''}`}
+          >
+
+            <input
+              type="checkbox"
+              id="in_tpr"
+              value="COUNTRY"
+              className="accent-primary-msb h-4 w-4 "
+              checked={filtersSelected?.in_tpr?.value === 'COUNTRY'}
+              onChange={
+                () => {
+                  handleSelect({ target: { id: 'in_tpr', value: 'COUNTRY' } } as any)
                 }
-              />
-              Barrios Cerrados y Countries
-            </label>
-         {/*  <Button
+              }
+            />
+            Barrios Cerrados y Countries
+          </label>
+          {/*  <Button
             variant="outline"
             onClick={handleSelect} // Llama a handleSelect cuando se hace clic en el botón
             value={filtersSelected?.in_tpr?.value}
@@ -259,25 +259,26 @@ const ResultsPage = ({ selects, locations, session }: Props) => {
         <div className="col-start-1 col-end-12 lg:col-start-4 lg:col-end-11">
           <SearchDebounce filterOptsLocations={filtersformatted.in_iub} addstyles='lg:h-[56px]' propIdRef={"in_iub"} />
         </div>
+        <div className={'lg:hidden flex  col-start-1 col-end-12 align-baseline gap-x-2 my-2 sm:text-sm md:text-md   transition duration-500 ease-in-out self-center'}>
+            <label
+              htmlFor={'in_tpr'} // Cambiado de 'for' a 'htmlFor' para cumplir con JSX
+              className={`flex items-center gap-2 my-auto text-primary-msb ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out accent:text-bg-1-msb' : ''}`}
+            >
+              <input
+                type="checkbox"
+                id="in_tpr"
+                value="COUNTRY"
+                className="accent-primary-msb self-center h-4 w-4 rounded-sm"
+                checked={filtersSelected?.in_tpr?.value === 'COUNTRY'}
+                onChange={() => {
+                  handleSelect({ target: { id: 'in_tpr', value: 'COUNTRY' } } as any)
+                }}
+              />
+              <span>Barrios Cerrados y Countries</span>
+            </label>
+          </div>
         <div className="col-start-1 col-end-12 lg:col-start-11 lg:col-end-13">
-        <div className={'lg:hidden flex self-center align-baseline gap-x-2 my-2 sm:text-sm md:text-md   transition duration-500 ease-in-out'}>
-  <label
-      htmlFor={'in_tpr'} // Cambiado de 'for' a 'htmlFor' para cumplir con JSX
-      className={`flex items-center gap-2 my-auto text-primary-msb ${filtersSelected?.in_tpr?.value === 'COUNTRY' ? 'border-bg-2-msb border-none hover:border-none transition duration-500 ease-in-out accent:text-bg-1-msb' : ''}`}
-    >
-      <input
-        type="checkbox"
-        id="in_tpr"
-        value="COUNTRY"
-        className="accent-primary-msb self-center h-4 w-4 rounded-sm"
-        checked={filtersSelected?.in_tpr?.value === 'COUNTRY'}
-        onChange={() => {
-          handleSelect({ target: { id: 'in_tpr', value: 'COUNTRY' } })
-        }}
-      />
-     <span>Barrios Cerrados y Countries</span>
-  </label>
-</div>
+
           <Button
             variant="primary"
             onClick={onSubmit}

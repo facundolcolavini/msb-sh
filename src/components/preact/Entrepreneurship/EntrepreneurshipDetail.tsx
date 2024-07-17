@@ -273,7 +273,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                         {
                             (results?.emprendimiento[0]?.valor_desde !== "0" && results?.emprendimiento[0]?.valor_desde !== "") ? (
                                 <div className="text-center  w-full flex justify-center items-center flex-col md:px-20 lg:px-14 p-5">
-                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base flex  w-max">Valor desde</span>
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-raleway font-base flex  w-max">Valor desde</span>
                                     <p className="text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide w-max">U$S {results?.emprendimiento[0]?.valor_desde}</p>
                                 </div>) : null}
                         {
@@ -282,7 +282,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                     <PropertyBuildIcon addStyles="fill-white pb-1" h={"56"} w={"64"} />
                                     {/*     <img className="w-[56px] h-[56px]  " src={'/images/home-property.png'} alt="home property" /> */}
                                 </div>
-                                <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant font-base tracking-wide flex items-center justify-center">Tipo</span>
+                                <span className="text-2xl md:text-2xl lg:text-4xl font-raleway font-base tracking-wide flex items-center justify-center">Tipo</span>
                                 <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide "}>{results?.emprendimiento[0]?.tipo}</span>
                             </div>) : null
 
@@ -293,7 +293,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
 
                                     <DoorOpen className="fill-white h-[56px] w-[56px]" />
                                 </div>
-                                <span className="text-2xl md:text-2xl lg:text-4xl font-cormorant font-base tracking-wide flex  items-center justify-center">Ambientes</span>
+                                <span className="text-2xl md:text-2xl lg:text-4xl font-raleway font-base tracking-wide flex  items-center justify-center">Ambientes</span>
                                 <span className={"text-xl md:text-xl place-content-center self-center lg:text-3xl font-semibold tracking-wide w-max "}>{results?.emprendimiento[0]?.ed_amb?.split('A')[0] === "0" ? "Monoambiente" : results?.emprendimiento[0]?.ed_amb?.split('A')[0]}</span>
                             </div>) : null
                         }
@@ -303,7 +303,7 @@ const EntrepreneurshipDetail: FunctionComponent<PropsWithChildren<Props>> = (pro
                                     <div className="flex items-center justify-center w-100 h-100">
                                         <MapLocationIcon className="fill-white h-[56px] w-[56px]" />
                                     </div>
-                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-cormorant font-base tracking-wide flex items-center justify-center">Barrio</span>
+                                    <span className="text-2xl md:text-2xl lg:text-4xl  font-raleway font-base tracking-wide flex items-center justify-center">Barrio</span>
                                     <span className={"text-xl md:text-xl lg:text-3xl self-center font-semibold tracking-wide w-max "}>{he.decode(results?.emprendimiento[0]?.ed_bar || '')}</span>
                                 </div>) : null
                         }
