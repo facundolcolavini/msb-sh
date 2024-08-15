@@ -58,7 +58,7 @@ const selects = (await getAllSelects()) as Results;
     <div
       class="relative inset-0 flex flex-col h-100 justify-end items-center w-full h-full"
     >
-      <SearchHome client:visible selects={selects} />
+      <SearchHome client:idle selects={selects} />
     </div>
   </HeroContainer>
   <Chat />
@@ -164,7 +164,7 @@ const selects = (await getAllSelects()) as Results;
             cardData.map((card) => (
               <div class="swiper-slide">
                 <CardProperty
-                  client:visible
+                  client:idle
                   cardContentStyles="bg-[#ffffff]"
                   key={card.in_num}
                   href={`/resultados-de-busqueda/${card.operacion}/${card.in_loc}/${card.direccion_completa}/${card.in_suc}-${card.in_num}`}
@@ -281,7 +281,7 @@ const selects = (await getAllSelects()) as Results;
                 }: EntrePreneurShip) => (
                   <div class="swiper-slide">
                     <CardEntrepreneurship
-                      client:visible
+                      client:idle
                       cardContentStyles="bg-[#ffffff]"
                       href={`/emprendimientos/${ed_est}/${he.decode(ed_loc)}/${he.decode(ed_nom)}/${codsuc}-${ed_idl}`}
                       cardData={{
@@ -301,7 +301,7 @@ const selects = (await getAllSelects()) as Results;
     </div>
   </section>
   <section class="" transition:animate={"fade"}>
-    <BannerSlider slides={img[3]} sliderTime={8000} client:visible>
+    <BannerSlider slides={img[3]} sliderTime={8000} client:idle>
       <div
         class="grid h-full items-center justify-center lg:justify-center self-end place-content-center text-center lg:text-center container mx-auto relative"
       >
