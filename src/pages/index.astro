@@ -31,23 +31,15 @@ import Slider from "../components/Slider.astro";
 
 const user = Astro.locals.user;
 let session = user ? true : false;
-const { resultado } = (await fetchData(
-  "fichas.destacadas"
-)) as APIResponseResultsRecords;
-const { resultado: resEmprendimientos } = (await fetchData(
-  "resultados.emprendimientos"
-)) as APIResponseEntrepreneurship;
+import { loadData } from "@/utils/load-data";
+const { fichas, img, entrepreneurship, selects } = await loadData();
 
-const { emprendimiento: entrepreneurship, img } =
-  resEmprendimientos as ResultEntrepreureShip;
-const { fichas } = resultado;
 
 const cardData: File[] = fichas as File[]; // Update the type of cardData
 const titlePage = "Inicio - Matías Szpira Bienes Raíces";
 const description =
   "Propiedades en alquiler y venta - Matías Szpira Bienes Raíces";
 
-const selects = (await getAllSelects()) as Results;
 ---
 
 <Layout title={titlePage} description={description}>
@@ -180,7 +172,7 @@ const selects = (await getAllSelects()) as Results;
           {
             cardData.map((card) => (
               <CardProperty
-                client:visible
+                client:idle
                 cardContentStyles="bg-[#ffffff]"
                 key="unique-key"
                 href={`/resultados-de-busqueda/${card.operacion}/${card.in_loc}/${card.direccion_completa}/${card.in_suc}-${card.in_num}`}
@@ -250,7 +242,7 @@ const selects = (await getAllSelects()) as Results;
                   ed_dir,
                 }: EntrePreneurShip) => (
                   <CardEntrepreneurship
-                    client:visible
+                    client:idle
                     cardContentStyles="bg-[#ffffff]"
                     href={`emprendimientos/${ed_est}/${he.decode(ed_loc)}/${he.decode(ed_nom)}/${codsuc}-${ed_idl}`}
                     addStyles={"card my-20"}
