@@ -14,20 +14,40 @@ import CardBranch from "@/components/preact/ui/Cards/CardBranch";
 import CardEntrepreneurship from "@/components/preact/ui/Cards/CardEntrepreneurship";
 import CardProperty from "@/components/preact/ui/Cards/CardProperty";
 import Link from "@/components/ui/Link.astro";
-import type { EntrePreneurShip } from "@/interfaces/entrepreneurship.interfaces";
-import type { File } from "@/interfaces/results.records.interfaces";
+import type {
+  APIResponseEntrepreneurship,
+  EntrePreneurShip,
+  Results as ResultEntrepreureShip,
+} from "@/interfaces/entrepreneurship.interfaces";
+import type {
+  APIResponseResultsRecords,
+  File,
+} from "@/interfaces/results.records.interfaces";
+import type { Results } from "@/interfaces/selects.form.interfaces";
 import Layout from "@/layouts/Layout.astro";
-import { loadData } from "@/utils/load-data";
+import { getAllSelects } from "@/services/get-selects-form";
+import { fetchData } from "@/utils/fetch-data";
 import Slider from "../components/Slider.astro";
 
 const user = Astro.locals.user;
 let session = user ? true : false;
-const { fichas, img, entrepreneurship, selects } = await loadData();
+const { resultado } = (await fetchData(
+  "fichas.destacadas"
+)) as APIResponseResultsRecords;
+const { resultado: resEmprendimientos } = (await fetchData(
+  "resultados.emprendimientos"
+)) as APIResponseEntrepreneurship;
+
+const { emprendimiento: entrepreneurship, img } =
+  resEmprendimientos as ResultEntrepreureShip;
+const { fichas } = resultado;
 
 const cardData: File[] = fichas as File[]; // Update the type of cardData
 const titlePage = "Inicio - Matías Szpira Bienes Raíces";
 const description =
   "Propiedades en alquiler y venta - Matías Szpira Bienes Raíces";
+
+const selects = (await getAllSelects()) as Results;
 ---
 
 <Layout title={titlePage} description={description}>
@@ -248,7 +268,7 @@ const description =
         <article style="view-transition-name: image-empre">
           <Slider>
             {
-              entrepreneurship?.map(
+              entrepreneurship.map(
                 ({
                   ed_nom,
                   ed_pos,
