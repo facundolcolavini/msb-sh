@@ -1,13 +1,20 @@
 import type {
-    APIResponseEntrepreneurship
+    APIResponseEntrepreneurship,
+    EntrePreneurShip
 } from "@/interfaces/entrepreneurship.interfaces";
-import type { APIResponseResultsRecords } from "@/interfaces/results.records.interfaces";
+import type { APIResponseResultsRecords, hasErrorResult } from "@/interfaces/results.records.interfaces";
 import type { Results } from "@/interfaces/selects.form.interfaces";
 import { getAllSelects } from "@/services/get-selects-form";
 import NodeCache from "node-cache";
 import { fetchData } from "./fetch-data";
 const cache = new NodeCache({ stdTTL: 600 }); // Cache TTL de 10 minutos
 
+interface Data {
+    fichas:  File[];
+    img: string[][];
+    entrepreneurship: EntrePreneurShip[]
+    selects: Results;
+}
 export async function loadData() {
     const cacheKey = "loadData";
     const cachedData = cache.get(cacheKey);
@@ -20,7 +27,7 @@ export async function loadData() {
     const { fichas } = resultado;
     const { resultado: resEmprendimientos } = await fetchData("resultados.emprendimientos") as APIResponseEntrepreneurship;
     const { emprendimiento: entrepreneurship, img } = resEmprendimientos;
-    const selects = await getAllSelects()  as Results;
+    const selects = await getAllSelects() as Results;
 
     const data = {
         fichas: fichas || [],
