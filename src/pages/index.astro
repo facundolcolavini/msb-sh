@@ -28,10 +28,11 @@ import Layout from "@/layouts/Layout.astro";
 import { getAllSelects } from "@/services/get-selects-form";
 import { fetchData } from "@/utils/fetch-data";
 import Slider from "../components/Slider.astro";
+import { loadData } from "@/utils/load-data";
 
 const user = Astro.locals.user;
 let session = user ? true : false;
-const { resultado } = (await fetchData(
+/* const { resultado } = (await fetchData(
   "fichas.destacadas"
 )) as APIResponseResultsRecords;
 const { resultado: resEmprendimientos } = (await fetchData(
@@ -41,13 +42,14 @@ const { resultado: resEmprendimientos } = (await fetchData(
 const { emprendimiento: entrepreneurship, img } =
   resEmprendimientos as ResultEntrepreureShip;
 const { fichas } = resultado;
+const selects = (await getAllSelects()) as Results; */
+const { fichas, img, entrepreneurship, selects } = await loadData();
 
 const cardData: File[] = fichas as File[]; // Update the type of cardData
 const titlePage = "Inicio - Matías Szpira Bienes Raíces";
 const description =
   "Propiedades en alquiler y venta - Matías Szpira Bienes Raíces";
 
-const selects = (await getAllSelects()) as Results;
 ---
 
 <Layout title={titlePage} description={description}>
@@ -67,7 +69,7 @@ const selects = (await getAllSelects()) as Results;
       <Popup
         title="Registrate y accede a tus propiedades"
         message="¡Regístrate ahora para ver tus propiedades favoritas!"
-        client:idle
+        client:visible
       />
     )
   }
@@ -164,7 +166,7 @@ const selects = (await getAllSelects()) as Results;
             cardData.map((card) => (
               <div class="swiper-slide">
                 <CardProperty
-                  client:idle
+                  client:visible
                   cardContentStyles="bg-[#ffffff]"
                   key={card.in_num}
                   href={`/resultados-de-busqueda/${card.operacion}/${card.in_loc}/${card.direccion_completa}/${card.in_suc}-${card.in_num}`}
@@ -281,7 +283,7 @@ const selects = (await getAllSelects()) as Results;
                 }: EntrePreneurShip) => (
                   <div class="swiper-slide">
                     <CardEntrepreneurship
-                      client:idle
+                      client:visible
                       cardContentStyles="bg-[#ffffff]"
                       href={`/emprendimientos/${ed_est}/${he.decode(ed_loc)}/${he.decode(ed_nom)}/${codsuc}-${ed_idl}`}
                       cardData={{
@@ -301,7 +303,7 @@ const selects = (await getAllSelects()) as Results;
     </div>
   </section>
   <section class="" transition:animate={"fade"}>
-    <BannerSlider slides={img[3]} sliderTime={8000} client:idle>
+    <BannerSlider slides={img[3]} sliderTime={8000} client:visible>
       <div
         class="grid h-full items-center justify-center lg:justify-center self-end place-content-center text-center lg:text-center container mx-auto relative"
       >

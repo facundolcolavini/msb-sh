@@ -19,7 +19,7 @@ let id = prop?.split("-")[1] ?? "";
   <section class="bg-[#FFFBF4] h-full py-2">
 
       <PropertyPage
-      client:only
+      client:only="preact"
       session={session  ?? null}
         propertyCode={id}
         branchCode={suc}

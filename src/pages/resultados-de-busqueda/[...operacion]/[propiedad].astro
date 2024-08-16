@@ -26,7 +26,7 @@ const {titulo,img_princ,in_tip, direccion,in_loc} = data.resultado?.ficha[0]
   <section class="bg-[#FFFBF4] h-full py-2 ">
     <article  style="view-transition-name: image">
       <PropertyPage 
-        client:only
+        client:only="preact"
         session={session}
         propertyCode={id}
         branchCode={suc}
